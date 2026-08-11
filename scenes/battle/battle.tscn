@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://holuf_battle01"]
+[gd_scene load_steps=6 format=3 uid="uid://holuf_battle01"]
 
 [ext_resource type="Script" path="res://scripts/battle/battle_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://scripts/battle/battle_ui.gd" id="2_ui"]
@@ -22,6 +22,14 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.4, 0.6, 0.9, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_turn"]
+bg_color = Color(0.1, 0.1, 0.1, 0.8)
+border_color = Color(0.5, 0.5, 0.5, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [node name="BattleScene" type="Node2D"]
 script = ExtResource("1_controller")
@@ -59,6 +67,30 @@ theme_override_colors/font_color = Color(0.9, 0.8, 0.2, 1)
 theme_override_font_sizes/font_size = 28
 text = "BATTLE START"
 horizontal_alignment = 1
+
+[node name="TurnOrderPanel" type="PanelContainer" parent="UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -250.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_turn")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/TurnOrderPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 5
+
+[node name="TurnOrderLabel" type="Label" parent="UI/TurnOrderPanel/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "[Hero] -> [Forest Beast]"
+horizontal_alignment = 2
 
 [node name="Hint" type="Label" parent="UI"]
 anchors_preset = 7
@@ -128,6 +160,13 @@ theme_override_font_sizes/font_size = 18
 text = "HP: 100 / 100"
 horizontal_alignment = 1
 
+[node name="MPLabel" type="Label" parent="UI/PlayerStats/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "MP: 40 / 40"
+horizontal_alignment = 1
+
 [node name="EnemyStats" type="Control" parent="UI"]
 layout_mode = 3
 anchors_preset = 0
@@ -157,6 +196,13 @@ theme_override_font_sizes/font_size = 18
 text = "HP: 80 / 80"
 horizontal_alignment = 1
 
+[node name="MPLabel" type="Label" parent="UI/EnemyStats/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.6, 0.6, 0.8, 1)
+theme_override_font_sizes/font_size = 16
+text = "MP: 0 / 0"
+horizontal_alignment = 1
+
 [node name="CommandPanel" type="PanelContainer" parent="UI"]
 offset_left = 50.0
 offset_top = 580.0
@@ -171,7 +217,39 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Label" type="Label" parent="UI/CommandPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CommandPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Attack" type="Label" parent="UI/CommandPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
 text = "> ATTACK"
+
+[node name="Skill" type="Label" parent="UI/CommandPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "  SKILL"
+
+[node name="Defend" type="Label" parent="UI/CommandPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "  DEFEND"
+
+[node name="SkillPanel" type="PanelContainer" parent="UI"]
+offset_left = 300.0
+offset_top = 530.0
+offset_right = 600.0
+offset_bottom = 680.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_cmd")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/SkillPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/SkillPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10

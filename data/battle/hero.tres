@@ -1,10 +1,17 @@
-[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3 uid="uid://combatant_hero01"]
+[gd_resource type="Resource" script_class="CombatantData" load_steps=4 format=3 uid="uid://combatant_hero01"]
 
-[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" uid="uid://skill_fireslash01" path="res://data/battle/skills/fire_slash.tres" id="1_fire"]
+[ext_resource type="Resource" uid="uid://skill_heal01" path="res://data/battle/skills/heal.tres" id="2_heal"]
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="3_data"]
 
 [resource]
-script = ExtResource("1_data")
+script = ExtResource("3_data")
 display_name = "Hero"
 max_hp = 100
+max_mp = 40
 attack = 20
 defense = 5
+magic_attack = 15
+magic_defense = 5
+speed = 30
+skills = [ExtResource("1_fire"), ExtResource("2_heal")]

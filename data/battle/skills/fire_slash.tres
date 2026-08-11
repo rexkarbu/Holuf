@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3 uid="uid://skill_fireslash01"]
+
+[ext_resource type="Script" path="res://scripts/battle/skill_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+skill_id = "fire_slash"
+display_name = "Fire Slash"
+mp_cost = 8
+skill_type = 1
+target_type = 1
+scaling_type = 0
+power = 1.4

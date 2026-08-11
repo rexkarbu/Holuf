@@ -2,7 +2,7 @@ extends Node2D
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
-enum State { STARTING, PLAYER_TURN, PLAYER_ACTION, ENEMY_TURN, ENEMY_ACTION, VICTORY, DEFEAT }
+enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
 
 @export var hero_data: CombatantData
 @export var enemy_data: CombatantData
@@ -11,71 +11,246 @@ var player: Combatant
 var enemy: Combatant
 var current_state: State = State.STARTING
 
+var turn_queue: Array[Combatant] = []
+var current_combatant: Combatant
+
+var command_index: int = 0
+const COMMAND_COUNT: int = 3 # ATTACK, SKILL, DEFEND
+
+var skill_index: int = 0
+
 @onready var ui = $UI
 
 func _ready() -> void:
-	# Load default stat jika belum di-assign (untuk kemudahan testing langsung scene ini)
 	if not hero_data: hero_data = load("res://data/battle/hero.tres")
 	if not enemy_data: enemy_data = load("res://data/battle/forest_beast.tres")
 	
 	player = Combatant.new(hero_data)
 	enemy = Combatant.new(enemy_data)
 	
-	_update_all_hp_ui()
+	_update_all_hp_mp_ui()
 	ui.set_hint("")
 	ui.show_commands(false)
+	ui.show_skills(false)
+	
+	ui.command_hovered.connect(_on_ui_command_hovered)
+	ui.command_clicked.connect(_on_ui_command_clicked)
+	ui.skill_hovered.connect(_on_ui_skill_hovered)
+	ui.skill_clicked.connect(_on_ui_skill_clicked)
 	
 	_set_state(State.STARTING)
 	ui.add_log("Battle Started!")
 	
-	# Delay singkat sebelum turn pertama
 	await get_tree().create_timer(1.0).timeout
-	_set_state(State.PLAYER_TURN)
-
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		match current_state:
-			State.PLAYER_TURN:
-				get_viewport().set_input_as_handled()
-				_process_player_attack()
-			State.VICTORY, State.DEFEAT:
-				get_viewport().set_input_as_handled()
-				GameManager.return_to_world()
-
+	_set_state(State.ROUND_START)
 
 func _set_state(new_state: State) -> void:
 	current_state = new_state
 	match current_state:
-		State.PLAYER_TURN:
+		State.ROUND_START:
+			_process_round_start()
+		State.TURN_START:
+			_process_turn_start()
+		State.PLAYER_COMMAND:
 			ui.set_turn_title("PLAYER TURN")
+			command_index = 0
+			ui.set_command_selection(command_index)
 			ui.show_commands(true)
-		State.ENEMY_TURN:
+			ui.show_skills(false)
+			ui.set_hint("")
+		State.PLAYER_SKILL_SELECT:
+			skill_index = 0
+			ui.show_commands(false)
+			ui.populate_skill_menu(player.base_data.skills)
+			if player.base_data.skills.size() > 0:
+				ui.set_skill_selection(skill_index, player.base_data.skills)
+			ui.show_skills(true)
+			ui.set_hint("Press ESC to cancel")
+		State.ENEMY_ACTION:
 			ui.set_turn_title("ENEMY TURN")
 			ui.show_commands(false)
+			ui.show_skills(false)
 			_process_enemy_turn()
 		State.VICTORY:
 			ui.set_turn_title("VICTORY")
 			ui.add_log("%s defeated!" % enemy.base_data.display_name)
 			ui.show_commands(false)
+			ui.show_skills(false)
 			ui.set_hint("Press ENTER to return")
 		State.DEFEAT:
 			ui.set_turn_title("DEFEAT")
 			ui.add_log("%s has fallen." % player.base_data.display_name)
 			ui.show_commands(false)
+			ui.show_skills(false)
 			ui.set_hint("Press ENTER to return")
 
+func _process_round_start() -> void:
+	turn_queue.clear()
+	if not player.is_dead(): turn_queue.append(player)
+	if not enemy.is_dead(): turn_queue.append(enemy)
+	
+	# Sort berdasarkan speed. Jika sama, Player duluan.
+	turn_queue.sort_custom(func(a, b): 
+		if a.base_data.speed == b.base_data.speed:
+			return a == player
+		return a.base_data.speed > b.base_data.speed
+	)
+	
+	_update_turn_order_ui()
+	_set_state(State.TURN_START)
+
+func _process_turn_start() -> void:
+	if turn_queue.is_empty():
+		_set_state(State.ROUND_START)
+		return
+		
+	current_combatant = turn_queue.pop_front()
+	_update_turn_order_ui()
+	
+	if current_combatant.is_dead():
+		_set_state(State.TURN_START)
+		return
+		
+	current_combatant.is_defending = false
+	
+	if current_combatant == player:
+		_set_state(State.PLAYER_COMMAND)
+	else:
+		_set_state(State.ENEMY_ACTION)
+
+func _update_turn_order_ui() -> void:
+	var names = []
+	if current_combatant and not current_combatant.is_dead():
+		names.append("> " + current_combatant.base_data.display_name)
+	for c in turn_queue:
+		if not c.is_dead():
+			names.append(c.base_data.display_name)
+	ui.update_turn_order(names)
+
+func _unhandled_input(event: InputEvent) -> void:
+	match current_state:
+		State.PLAYER_COMMAND:
+			if event.is_action_pressed("ui_down"):
+				command_index = (command_index + 1) % COMMAND_COUNT
+				ui.set_command_selection(command_index)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_up"):
+				command_index = (command_index - 1 + COMMAND_COUNT) % COMMAND_COUNT
+				ui.set_command_selection(command_index)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				_execute_player_command()
+		State.PLAYER_SKILL_SELECT:
+			var skills = player.base_data.skills
+			if event.is_action_pressed("ui_cancel"):
+				get_viewport().set_input_as_handled()
+				_set_state(State.PLAYER_COMMAND)
+			elif event.is_action_pressed("ui_down"):
+				if skills.size() > 0:
+					skill_index = (skill_index + 1) % skills.size()
+					ui.set_skill_selection(skill_index, skills)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_up"):
+				if skills.size() > 0:
+					skill_index = (skill_index - 1 + skills.size()) % skills.size()
+					ui.set_skill_selection(skill_index, skills)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				if skills.size() > 0:
+					_execute_player_skill(skills[skill_index])
+		State.VICTORY, State.DEFEAT:
+			if event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				GameManager.return_to_world()
+
+func _execute_player_command() -> void:
+	match command_index:
+		0: # ATTACK
+			_process_player_attack()
+		1: # SKILL
+			_set_state(State.PLAYER_SKILL_SELECT)
+		2: # DEFEND
+			_set_state(State.PLAYER_ACTION)
+			ui.show_commands(false)
+			player.is_defending = true
+			ui.add_log("%s braces for the next attack." % player.base_data.display_name)
+			await get_tree().create_timer(0.8).timeout
+			_set_state(State.TURN_START)
+
+func _execute_player_skill(skill: SkillData) -> void:
+	if not player.can_spend_mp(skill.mp_cost):
+		ui.add_log("Not enough MP.")
+		return
+		
+	player.spend_mp(skill.mp_cost)
+	_update_all_hp_mp_ui()
+	
+	_set_state(State.PLAYER_ACTION)
+	ui.show_skills(false)
+	ui.set_hint("")
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	if skill.target_type == SkillData.TargetType.ENEMY:
+		var base_damage = 0
+		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
+			base_damage = player.base_data.attack - enemy.base_data.defense
+		else:
+			base_damage = player.base_data.magic_attack - enemy.base_data.magic_defense
+			
+		var final_damage = max(1, round(base_damage * skill.power))
+		if enemy.is_defending:
+			final_damage = max(1, round(final_damage * 0.5))
+			
+		enemy.take_damage(final_damage)
+		_update_all_hp_mp_ui()
+		ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, final_damage])
+		
+		await get_tree().create_timer(0.8).timeout
+		
+		if enemy.is_dead():
+			_set_state(State.VICTORY)
+		else:
+			_set_state(State.TURN_START)
+			
+	elif skill.target_type == SkillData.TargetType.SELF:
+		var base_heal = 0
+		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
+			base_heal = player.base_data.attack
+		else:
+			base_heal = player.base_data.magic_attack
+			
+		var heal_amount = max(1, round(base_heal * skill.power))
+		var old_hp = player.current_hp
+		player.current_hp += heal_amount
+		if player.current_hp > player.base_data.max_hp:
+			player.current_hp = player.base_data.max_hp
+			
+		var actual_heal = player.current_hp - old_hp
+		_update_all_hp_mp_ui()
+		
+		ui.add_log("%s casts %s and restores %d HP!" % [player.base_data.display_name, skill.display_name, actual_heal])
+		
+		await get_tree().create_timer(0.8).timeout
+		_set_state(State.TURN_START)
+
+func _calculate_damage(attacker: Combatant, defender: Combatant) -> int:
+	var damage = max(1, attacker.base_data.attack - defender.base_data.defense)
+	if defender.is_defending:
+		damage = max(1, round(damage * 0.5))
+	return damage
 
 func _process_player_attack() -> void:
 	_set_state(State.PLAYER_ACTION)
 	ui.show_commands(false)
 	
-	# Delay untuk memberikan kesan 'action'
 	await get_tree().create_timer(0.3).timeout
 	
-	var damage = max(1, player.base_data.attack - enemy.base_data.defense)
+	var damage = _calculate_damage(player, enemy)
 	enemy.take_damage(damage)
-	_update_all_hp_ui()
+	_update_all_hp_mp_ui()
 	
 	ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, damage])
 	
@@ -84,18 +259,14 @@ func _process_player_attack() -> void:
 	if enemy.is_dead():
 		_set_state(State.VICTORY)
 	else:
-		_set_state(State.ENEMY_TURN)
-
+		_set_state(State.TURN_START)
 
 func _process_enemy_turn() -> void:
-	# Delay berfikir musuh
 	await get_tree().create_timer(0.7).timeout
 	
-	_set_state(State.ENEMY_ACTION)
-	
-	var damage = max(1, enemy.base_data.attack - player.base_data.defense)
+	var damage = _calculate_damage(enemy, player)
 	player.take_damage(damage)
-	_update_all_hp_ui()
+	_update_all_hp_mp_ui()
 	
 	ui.add_log("%s attacks %s for %d damage!" % [enemy.base_data.display_name, player.base_data.display_name, damage])
 	
@@ -104,10 +275,40 @@ func _process_enemy_turn() -> void:
 	if player.is_dead():
 		_set_state(State.DEFEAT)
 	else:
-		_set_state(State.PLAYER_TURN)
+		_set_state(State.TURN_START)
 
-
-func _update_all_hp_ui() -> void:
+func _update_all_hp_mp_ui() -> void:
 	ui.update_player_hp(player.current_hp, player.base_data.max_hp)
+	ui.update_player_mp(player.current_mp, player.base_data.max_mp)
 	ui.update_enemy_hp(enemy.current_hp, enemy.base_data.max_hp)
+	ui.update_enemy_mp(enemy.current_mp, enemy.base_data.max_mp)
+
+func _on_ui_command_hovered(index: int) -> void:
+	if current_state == State.PLAYER_COMMAND:
+		command_index = index
+		ui.set_command_selection(command_index)
+
+func _on_ui_command_clicked(index: int) -> void:
+	if current_state == State.PLAYER_COMMAND:
+		command_index = index
+		ui.set_command_selection(command_index)
+		_execute_player_command()
+
+func _on_ui_skill_hovered(index: int) -> void:
+	if current_state == State.PLAYER_SKILL_SELECT:
+		var skills = player.base_data.skills
+		if skills.size() > 0:
+			skill_index = index
+			ui.set_skill_selection(skill_index, skills)
+
+func _on_ui_skill_clicked(index: int) -> void:
+	if current_state == State.PLAYER_SKILL_SELECT:
+		var skills = player.base_data.skills
+		if skills.size() > 0:
+			skill_index = index
+			ui.set_skill_selection(skill_index, skills)
+			_execute_player_skill(skills[skill_index])
+
+
+
 
