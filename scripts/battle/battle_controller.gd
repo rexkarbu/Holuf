@@ -2,13 +2,13 @@ extends Node2D
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
-enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
+enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
 
 @export var hero_data: CombatantData
-@export var enemy_data: CombatantData
+@export var enemy_data: CombatantData # Fallback
 
 var player: Combatant
-var enemy: Combatant
+var enemies: Array[Combatant] = []
 var current_state: State = State.STARTING
 
 var turn_queue: Array[Combatant] = []
@@ -18,22 +18,31 @@ var command_index: int = 0
 const COMMAND_COUNT: int = 3 # ATTACK, SKILL, DEFEND
 
 var skill_index: int = 0
+var selected_target_index: int = 0
+var pending_action: Callable
+
+var debug_bonus_mode: int = BreakBonus.DebugMode.RANDOM
 
 @onready var ui = $UI
 
 func _ready() -> void:
 	if not hero_data: hero_data = load("res://data/battle/hero.tres")
-	if not enemy_data: enemy_data = load("res://data/battle/forest_beast.tres")
-	
 	player = Combatant.new(hero_data)
-	enemy = Combatant.new(enemy_data)
+	
+	# Instantiate multiple enemies
+	var forest_beast_data = load("res://data/battle/forest_beast.tres")
+	var wolf_data = load("res://data/battle/wolf.tres")
+	if forest_beast_data: enemies.append(Combatant.new(forest_beast_data))
+	if wolf_data: enemies.append(Combatant.new(wolf_data))
+	
+	ui.setup_enemies(enemies)
 	
 	_update_all_hp_mp_ui()
-	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+	_update_all_shield_ui()
+	
 	ui.set_hint("")
 	ui.show_commands(false)
 	ui.show_skills(false)
-	ui.init_weakness_display(enemy.base_data.weaknesses)
 	
 	ui.command_hovered.connect(_on_ui_command_hovered)
 	ui.command_clicked.connect(_on_ui_command_clicked)
@@ -59,6 +68,7 @@ func _set_state(new_state: State) -> void:
 			ui.set_command_selection(command_index)
 			ui.show_commands(true)
 			ui.show_skills(false)
+			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("")
 		State.PLAYER_SKILL_SELECT:
 			skill_index = 0
@@ -67,34 +77,47 @@ func _set_state(new_state: State) -> void:
 			if player.base_data.skills.size() > 0:
 				ui.set_skill_selection(skill_index, player.base_data.skills)
 			ui.show_skills(true)
+			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ESC to cancel")
+		State.PLAYER_TARGET_SELECT:
+			ui.show_commands(false)
+			ui.show_skills(false)
+			_ensure_valid_target_selection()
+			ui.set_enemy_target_indicator(selected_target_index, enemies)
+			ui.set_hint("Select Target / ESC to cancel")
 		State.ENEMY_ACTION:
 			ui.set_turn_title("ENEMY TURN")
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.clear_enemy_target_indicator(enemies)
 			_process_enemy_turn()
 		State.VICTORY:
 			ui.set_turn_title("VICTORY")
-			ui.add_log("%s defeated!" % enemy.base_data.display_name)
+			ui.add_log("All enemies defeated!")
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ENTER to return")
 		State.DEFEAT:
 			ui.set_turn_title("DEFEAT")
 			ui.add_log("%s has fallen." % player.base_data.display_name)
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ENTER to return")
 
 func _process_round_start() -> void:
 	turn_queue.clear()
 	if not player.is_dead(): turn_queue.append(player)
-	if not enemy.is_dead(): turn_queue.append(enemy)
+	for e in enemies:
+		if not e.is_dead(): turn_queue.append(e)
 	
 	turn_queue.sort_custom(func(a, b):
-		if a.base_data.speed == b.base_data.speed:
+		var a_spd = a.get_effective_speed() if a.has_method("get_effective_speed") else a.base_data.speed
+		var b_spd = b.get_effective_speed() if b.has_method("get_effective_speed") else b.base_data.speed
+		if a_spd == b_spd:
 			return a == player
-		return a.base_data.speed > b.base_data.speed
+		return a_spd > b_spd
 	)
 	
 	_update_turn_order_ui()
@@ -128,67 +151,102 @@ func _update_turn_order_ui() -> void:
 			names.append(c.base_data.display_name)
 	ui.update_turn_order(names)
 
+func _check_victory() -> bool:
+	for e in enemies:
+		if not e.is_dead(): return false
+	return true
+
+# ==============================================================
+# TARGET SELECTION
+# ==============================================================
+func _ensure_valid_target_selection() -> void:
+	if enemies.size() == 0: return
+	if not enemies[selected_target_index].is_dead(): return
+	_next_valid_target(1)
+
+func _next_valid_target(direction: int) -> void:
+	var count = enemies.size()
+	if count == 0: return
+	for i in range(count):
+		selected_target_index = (selected_target_index + direction + count) % count
+		if not enemies[selected_target_index].is_dead():
+			return
+
 # ==============================================================
 # DAMAGE PIPELINE
 # ==============================================================
 
-## Pipeline terpusat:
-## base → × skill_power → × 1.25 (weakness) → × break_multiplier → × 0.5 (defend) → max(1, roundi)
-func _calculate_damage(attacker: Combatant, defender: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
+func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
 	var base: int
+	var def_stat = target.get_effective_defense() if target.has_method("get_effective_defense") else target.base_data.defense
+	
 	if use_magic_scaling:
-		base = attacker.base_data.magic_attack - defender.base_data.magic_defense
+		base = attacker.base_data.magic_attack - target.base_data.magic_defense
 	else:
-		base = attacker.base_data.attack - defender.base_data.defense
+		base = attacker.base_data.attack - def_stat
 	
 	base = max(0, base)
-	
 	var amount: float = float(base) * skill_power
+	var is_weakness: bool = damage_type in target.base_data.weaknesses
 	
-	var is_weakness: bool = damage_type in defender.base_data.weaknesses
 	if is_weakness:
 		amount *= 1.25
 	
-	# Break vulnerability — berlaku jika target SUDAH broken SEBELUM hit ini.
-	if defender.is_broken:
-		amount *= defender.base_data.get_break_multiplier()
+	if target.is_broken:
+		var mult = target.base_data.get_break_multiplier()
+		if target.current_break_bonus == BreakBonus.Type.DEEP_STAGGER and target.base_data.tier == CombatantData.EnemyTier.BOSS:
+			mult += 0.05
+		amount *= mult
 	
-	if defender.is_defending:
+	if target.is_defending:
 		amount *= 0.5
 	
 	return { "amount": max(1, roundi(amount)), "is_weakness": is_weakness }
 
-## Proses pengurangan Shield setelah hit. Dipanggil setelah take_damage().
-## Mengurus Shield reduction dan Break trigger jika shield mencapai 0.
-func _process_shield_after_hit(result: Dictionary) -> void:
-	# Hanya weakness hit yang mengurangi shield
-	if not result.is_weakness:
-		return
-	# Tidak proses jika sudah broken
-	if enemy.is_broken:
-		return
-	# Tidak proses jika tidak punya shield
-	if enemy.base_data.max_shield <= 0:
-		return
+func _process_shield_after_hit(target: Combatant, result: Dictionary) -> void:
+	if not result.is_weakness: return
+	if target.is_broken: return
+	if target.base_data.max_shield <= 0: return
 	
-	var break_triggered = enemy.process_shield_hit()
-	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+	var break_triggered = target.process_shield_hit()
+	_update_all_shield_ui()
 	
-	if break_triggered and not enemy.is_dead():
-		_trigger_break()
+	if break_triggered and not target.is_dead():
+		_trigger_break(target)
 
-## Memicu Break pada enemy. Set state dan log feedback.
-func _trigger_break() -> void:
-	enemy.is_broken = true
-	enemy.break_skips_remaining = 1
-	ui.add_log("BREAK! %s is staggered!" % enemy.base_data.display_name)
-	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+func _roll_break_bonus() -> int:
+	if debug_bonus_mode == BreakBonus.DebugMode.FORCE_ARMOR_SHATTER: return BreakBonus.Type.ARMOR_SHATTER
+	if debug_bonus_mode == BreakBonus.DebugMode.FORCE_DISORIENT: return BreakBonus.Type.DISORIENT
+	if debug_bonus_mode == BreakBonus.DebugMode.FORCE_DEEP_STAGGER: return BreakBonus.Type.DEEP_STAGGER
+	
+	var roll = randi() % 100
+	if roll < 40: return BreakBonus.Type.ARMOR_SHATTER
+	elif roll < 75: return BreakBonus.Type.DISORIENT
+	else: return BreakBonus.Type.DEEP_STAGGER
 
-## Simpan weakness yang ditemukan dan update UI slot.
+func _trigger_break(target: Combatant) -> void:
+	target.is_broken = true
+	target.current_break_bonus = _roll_break_bonus()
+	
+	if target.current_break_bonus == BreakBonus.Type.DEEP_STAGGER and target.base_data.tier != CombatantData.EnemyTier.BOSS:
+		target.break_skips_remaining = 2
+	else:
+		target.break_skips_remaining = 1
+		
+	ui.add_log("BREAK! %s is staggered!" % target.base_data.display_name)
+	match target.current_break_bonus:
+		BreakBonus.Type.ARMOR_SHATTER: ui.add_log("Break Bonus: Armor Shatter! DEF reduced.")
+		BreakBonus.Type.DISORIENT: ui.add_log("Break Bonus: Disorient! SPEED reduced.")
+		BreakBonus.Type.DEEP_STAGGER: ui.add_log("Break Bonus: Deep Stagger!")
+		
+	_update_all_shield_ui()
+
 func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
 	if damage_type not in target.discovered_weaknesses:
 		target.discovered_weaknesses.append(damage_type)
-	ui.update_weakness_display(target.base_data.weaknesses, target.discovered_weaknesses)
+	var idx = enemies.find(target)
+	if idx != -1:
+		ui.update_enemy_weakness(idx, target.base_data.weaknesses, target.discovered_weaknesses)
 
 # ==============================================================
 # INPUT HANDLING
@@ -197,11 +255,11 @@ func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	match current_state:
 		State.PLAYER_COMMAND:
-			if event.is_action_pressed("ui_down"):
+			if event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
 				command_index = (command_index + 1) % COMMAND_COUNT
 				ui.set_command_selection(command_index)
 				get_viewport().set_input_as_handled()
-			elif event.is_action_pressed("ui_up"):
+			elif event.is_action_pressed("ui_up") or (event is InputEventKey and event.keycode == KEY_W and event.pressed and not event.echo):
 				command_index = (command_index - 1 + COMMAND_COUNT) % COMMAND_COUNT
 				ui.set_command_selection(command_index)
 				get_viewport().set_input_as_handled()
@@ -213,12 +271,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			if event.is_action_pressed("ui_cancel"):
 				get_viewport().set_input_as_handled()
 				_set_state(State.PLAYER_COMMAND)
-			elif event.is_action_pressed("ui_down"):
+			elif event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
 				if skills.size() > 0:
 					skill_index = (skill_index + 1) % skills.size()
 					ui.set_skill_selection(skill_index, skills)
 				get_viewport().set_input_as_handled()
-			elif event.is_action_pressed("ui_up"):
+			elif event.is_action_pressed("ui_up") or (event is InputEventKey and event.keycode == KEY_W and event.pressed and not event.echo):
 				if skills.size() > 0:
 					skill_index = (skill_index - 1 + skills.size()) % skills.size()
 					ui.set_skill_selection(skill_index, skills)
@@ -227,6 +285,24 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				if skills.size() > 0:
 					_execute_player_skill(skills[skill_index])
+		State.PLAYER_TARGET_SELECT:
+			if event.is_action_pressed("ui_cancel"):
+				get_viewport().set_input_as_handled()
+				if command_index == 1: _set_state(State.PLAYER_SKILL_SELECT)
+				else: _set_state(State.PLAYER_COMMAND)
+			elif event.is_action_pressed("ui_right") or (event is InputEventKey and event.keycode == KEY_D and event.pressed and not event.echo):
+				_next_valid_target(1)
+				ui.set_enemy_target_indicator(selected_target_index, enemies)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_left") or (event is InputEventKey and event.keycode == KEY_A and event.pressed and not event.echo):
+				_next_valid_target(-1)
+				ui.set_enemy_target_indicator(selected_target_index, enemies)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				_ensure_valid_target_selection()
+				var target = enemies[selected_target_index]
+				pending_action.call(target)
 		State.VICTORY, State.DEFEAT:
 			if event.is_action_pressed("ui_accept"):
 				get_viewport().set_input_as_handled()
@@ -239,7 +315,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func _execute_player_command() -> void:
 	match command_index:
 		0: # ATTACK
-			_process_player_attack()
+			pending_action = _process_player_attack
+			_set_state(State.PLAYER_TARGET_SELECT)
 		1: # SKILL
 			_set_state(State.PLAYER_SKILL_SELECT)
 		2: # DEFEND
@@ -250,29 +327,33 @@ func _execute_player_command() -> void:
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 
-func _process_player_attack() -> void:
+func _process_player_attack(target: Combatant) -> void:
 	_set_state(State.PLAYER_ACTION)
-	ui.show_commands(false)
+	ui.clear_enemy_target_indicator(enemies)
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	var result = _calculate_damage(player, enemy, DamageType.Type.SWORD)
-	enemy.take_damage(result.amount)
+	var result = _calculate_damage(player, target, DamageType.Type.SWORD)
+	target.take_damage(result.amount)
 	_update_all_hp_mp_ui()
 	
 	if result.is_weakness:
-		_handle_weakness_hit(DamageType.Type.SWORD, enemy)
+		_handle_weakness_hit(DamageType.Type.SWORD, target)
 	
-	_process_shield_after_hit(result)
+	_process_shield_after_hit(target, result)
 	
 	if result.is_weakness:
-		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
+		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, target.base_data.display_name, result.amount])
 	else:
-		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
+		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, target.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
-	if enemy.is_dead():
+	if target.is_dead():
+		var idx = enemies.find(target)
+		if idx != -1: ui.hide_enemy_ui(idx)
+	
+	if _check_victory():
 		_set_state(State.VICTORY)
 	else:
 		_set_state(State.TURN_START)
@@ -282,88 +363,101 @@ func _execute_player_skill(skill: SkillData) -> void:
 		ui.add_log("Not enough MP.")
 		return
 	
+	if skill.target_type == SkillData.TargetType.ENEMY:
+		pending_action = func(tgt): _process_skill_attack(skill, tgt)
+		_set_state(State.PLAYER_TARGET_SELECT)
+	elif skill.target_type == SkillData.TargetType.SELF:
+		_process_skill_heal(skill)
+
+func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	player.spend_mp(skill.mp_cost)
 	_update_all_hp_mp_ui()
+	_set_state(State.PLAYER_ACTION)
+	ui.clear_enemy_target_indicator(enemies)
 	
+	await get_tree().create_timer(0.3).timeout
+	
+	var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
+	var result = _calculate_damage(player, target, skill.damage_type, skill.power, use_magic)
+	
+	target.take_damage(result.amount)
+	_update_all_hp_mp_ui()
+	
+	if result.is_weakness:
+		_handle_weakness_hit(skill.damage_type, target)
+	
+	_process_shield_after_hit(target, result)
+	
+	if result.is_weakness:
+		ui.add_log("WEAK! %s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
+	else:
+		ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
+	
+	await get_tree().create_timer(0.8).timeout
+	
+	if target.is_dead():
+		var idx = enemies.find(target)
+		if idx != -1: ui.hide_enemy_ui(idx)
+	
+	if _check_victory():
+		_set_state(State.VICTORY)
+	else:
+		_set_state(State.TURN_START)
+
+func _process_skill_heal(skill: SkillData) -> void:
+	player.spend_mp(skill.mp_cost)
+	_update_all_hp_mp_ui()
 	_set_state(State.PLAYER_ACTION)
 	ui.show_skills(false)
 	ui.set_hint("")
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	if skill.target_type == SkillData.TargetType.ENEMY:
-		var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-		var result = _calculate_damage(player, enemy, skill.damage_type, skill.power, use_magic)
-		
-		enemy.take_damage(result.amount)
-		_update_all_hp_mp_ui()
-		
-		if result.is_weakness:
-			_handle_weakness_hit(skill.damage_type, enemy)
-		
-		_process_shield_after_hit(result)
-		
-		if result.is_weakness:
-			ui.add_log("WEAK! %s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
-		else:
-			ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
-		
-		await get_tree().create_timer(0.8).timeout
-		
-		if enemy.is_dead():
-			_set_state(State.VICTORY)
-		else:
-			_set_state(State.TURN_START)
+	var base_heal: int
+	if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
+		base_heal = player.base_data.attack
+	else:
+		base_heal = player.base_data.magic_attack
 	
-	elif skill.target_type == SkillData.TargetType.SELF:
-		# Heal — tidak mengecek weakness atau shield
-		var base_heal: int
-		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
-			base_heal = player.base_data.attack
-		else:
-			base_heal = player.base_data.magic_attack
-		
-		var heal_amount = max(1, roundi(float(base_heal) * skill.power))
-		var old_hp = player.current_hp
-		player.current_hp = min(player.current_hp + heal_amount, player.base_data.max_hp)
-		var actual_heal = player.current_hp - old_hp
-		
-		_update_all_hp_mp_ui()
-		ui.add_log("%s casts %s and restores %d HP!" % [player.base_data.display_name, skill.display_name, actual_heal])
-		
-		await get_tree().create_timer(0.8).timeout
-		_set_state(State.TURN_START)
+	var heal_amount = max(1, roundi(float(base_heal) * skill.power))
+	var old_hp = player.current_hp
+	player.current_hp = min(player.current_hp + heal_amount, player.base_data.max_hp)
+	var actual_heal = player.current_hp - old_hp
+	
+	_update_all_hp_mp_ui()
+	ui.add_log("%s casts %s and restores %d HP!" % [player.base_data.display_name, skill.display_name, actual_heal])
+	
+	await get_tree().create_timer(0.8).timeout
+	_set_state(State.TURN_START)
 
 # ==============================================================
 # ENEMY TURN — BREAK-AWARE
 # ==============================================================
 
 func _process_enemy_turn() -> void:
+	var enemy_actor = current_combatant
 	await get_tree().create_timer(0.7).timeout
 	
 	# --- Break State Check ---
-	if enemy.is_broken:
-		if enemy.break_skips_remaining > 0:
-			# Giliran ini diskip
-			enemy.break_skips_remaining -= 1
-			ui.add_log("%s is Broken and cannot act!" % enemy.base_data.display_name)
+	if enemy_actor.is_broken:
+		if enemy_actor.break_skips_remaining > 0:
+			enemy_actor.break_skips_remaining -= 1
+			ui.add_log("%s is Broken and cannot act!" % enemy_actor.base_data.display_name)
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 			return
 		else:
-			# Skip sudah dilakukan, sekarang recovery
-			enemy.recover_from_break()
-			ui.add_log("%s recovered from Break." % enemy.base_data.display_name)
-			ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+			enemy_actor.recover_from_break()
+			ui.add_log("%s recovered from Break." % enemy_actor.base_data.display_name)
+			_update_all_shield_ui()
 			await get_tree().create_timer(0.6).timeout
-			# Jatuh ke aksi normal di bawah
 	
 	# --- Aksi Normal ---
-	var result = _calculate_damage(enemy, player, DamageType.Type.SWORD)
+	var result = _calculate_damage(enemy_actor, player, DamageType.Type.SWORD)
 	player.take_damage(result.amount)
 	_update_all_hp_mp_ui()
 	
-	ui.add_log("%s attacks %s for %d damage!" % [enemy.base_data.display_name, player.base_data.display_name, result.amount])
+	ui.add_log("%s attacks %s for %d damage!" % [enemy_actor.base_data.display_name, player.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
@@ -379,8 +473,15 @@ func _process_enemy_turn() -> void:
 func _update_all_hp_mp_ui() -> void:
 	ui.update_player_hp(player.current_hp, player.base_data.max_hp)
 	ui.update_player_mp(player.current_mp, player.base_data.max_mp)
-	ui.update_enemy_hp(enemy.current_hp, enemy.base_data.max_hp)
-	ui.update_enemy_mp(enemy.current_mp, enemy.base_data.max_mp)
+	for i in range(enemies.size()):
+		var e = enemies[i]
+		ui.update_enemy_hp(i, e.current_hp, e.base_data.max_hp)
+		ui.update_enemy_mp(i, e.current_mp, e.base_data.max_mp)
+
+func _update_all_shield_ui() -> void:
+	for i in range(enemies.size()):
+		var e = enemies[i]
+		ui.update_enemy_shield(i, e.current_shield, e.base_data.max_shield, e.is_broken)
 
 func _on_ui_command_hovered(index: int) -> void:
 	if current_state == State.PLAYER_COMMAND:

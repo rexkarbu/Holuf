@@ -19,6 +19,7 @@ func _ready() -> void:
 	# Hubungkan sinyal dari DialogueManager
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	PartyManager.party_ui_toggled.connect(_on_party_ui_toggled)
 
 
 func _physics_process(_delta: float) -> void:
@@ -43,6 +44,15 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("party_menu"):
+		if not is_locked and PartyManager.ui_instance == null:
+			PartyManager.open_party_ui()
+			get_viewport().set_input_as_handled()
+		elif PartyManager.ui_instance != null:
+			# Esc or P will be handled by UI, but we can also close it here if P is pressed again
+			# Actually PartyUI handles ESC, but let's let PartyUI handle closing itself via P too or handle it here
+			pass
+
 	if is_locked:
 		return
 
@@ -81,3 +91,8 @@ func _on_dialogue_started(_speaker_name: String) -> void:
 func _on_dialogue_ended() -> void:
 	is_locked = false
 
+func _on_party_ui_toggled(is_open: bool) -> void:
+	is_locked = is_open
+	if is_open:
+		current_interactable = null
+		interactable_undetected.emit()

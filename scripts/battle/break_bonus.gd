@@ -1,0 +1,15 @@
+class_name BreakBonus
+
+enum Type {
+	NONE,
+	ARMOR_SHATTER,
+	DISORIENT,
+	DEEP_STAGGER
+}
+
+enum DebugMode {
+	RANDOM,
+	FORCE_ARMOR_SHATTER,
+	FORCE_DISORIENT,
+	FORCE_DEEP_STAGGER
+}

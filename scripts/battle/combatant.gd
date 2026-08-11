@@ -17,6 +17,8 @@ var current_shield: int = 0
 var is_broken: bool = false
 var break_skips_remaining: int = 0  # jumlah giliran yang tersisa untuk diskip
 
+var current_break_bonus: int = BreakBonus.Type.NONE
+
 
 func _init(data: CombatantData) -> void:
 	base_data = data
@@ -67,3 +69,31 @@ func recover_from_break() -> void:
 	is_broken = false
 	break_skips_remaining = 0
 	current_shield = base_data.max_shield
+	current_break_bonus = BreakBonus.Type.NONE
+
+
+# ==============================================================
+# EFFECTIVE STATS
+# ==============================================================
+
+func get_effective_defense() -> int:
+	var def = base_data.defense
+	if is_broken and current_break_bonus == BreakBonus.Type.ARMOR_SHATTER:
+		var multiplier = 1.0
+		match base_data.tier:
+			CombatantData.EnemyTier.NORMAL: multiplier = 0.80
+			CombatantData.EnemyTier.MINI_BOSS: multiplier = 0.85
+			CombatantData.EnemyTier.BOSS: multiplier = 0.90
+		def = max(0, roundi(def * multiplier))
+	return def
+
+func get_effective_speed() -> int:
+	var spd = base_data.speed
+	if is_broken and current_break_bonus == BreakBonus.Type.DISORIENT:
+		var multiplier = 1.0
+		match base_data.tier:
+			CombatantData.EnemyTier.NORMAL: multiplier = 0.75
+			CombatantData.EnemyTier.MINI_BOSS: multiplier = 0.85
+			CombatantData.EnemyTier.BOSS: multiplier = 0.90
+		spd = max(1, roundi(spd * multiplier))
+	return spd
