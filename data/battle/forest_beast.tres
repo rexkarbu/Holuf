@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3 uid="uid://combatant_beast01"]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Forest Beast"
+max_hp = 80
+attack = 15
+defense = 4
