@@ -12,12 +12,17 @@ var is_defending: bool = false
 ## Runtime — weakness types yang sudah ditemukan selama battle ini. Reset setiap battle baru.
 var discovered_weaknesses: Array = []
 
+## Runtime — Shield & Break state. Tidak disimpan ke Resource.
+var current_shield: int = 0
+var is_broken: bool = false
+var break_skips_remaining: int = 0  # jumlah giliran yang tersisa untuk diskip
 
 
 func _init(data: CombatantData) -> void:
 	base_data = data
 	current_hp = data.max_hp
 	current_mp = data.max_mp
+	current_shield = data.max_shield
 
 
 ## Mengurangi HP berdasarkan damage. Mengembalikan damage aktual yang diterima.
@@ -26,7 +31,6 @@ func take_damage(amount: int) -> int:
 	current_hp -= amount
 	if current_hp < 0:
 		current_hp = 0
-	
 	return old_hp - current_hp
 
 
@@ -49,3 +53,17 @@ func restore_mp(amount: int) -> void:
 	if current_mp > base_data.max_mp:
 		current_mp = base_data.max_mp
 
+
+## Proses weakness hit ke Shield.
+## Mengembalikan true jika Break baru saja dipicu (shield baru mencapai 0).
+## JANGAN panggil jika is_broken == true atau max_shield == 0.
+func process_shield_hit() -> bool:
+	current_shield = max(0, current_shield - 1)
+	return current_shield <= 0
+
+
+## Recovery dari Break. Dipanggil pada giliran Enemy setelah skip action selesai.
+func recover_from_break() -> void:
+	is_broken = false
+	break_skips_remaining = 0
+	current_shield = base_data.max_shield

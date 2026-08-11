@@ -2,8 +2,11 @@ class_name CombatantData
 extends Resource
 
 ## Data statis (base stats) untuk karakter atau musuh.
+enum EnemyTier { NORMAL, MINI_BOSS, BOSS }
 
 @export var display_name: String = "Combatant"
+@export var tier: EnemyTier = EnemyTier.NORMAL
+
 @export var max_hp: int = 100
 @export var max_mp: int = 40
 @export var attack: int = 10
@@ -16,6 +19,21 @@ extends Resource
 
 ## Array of DamageType.Type integers representing this combatant's weaknesses.
 @export var weaknesses: Array = []
+
+## Maximum Shield points. 0 means no shield mechanic for this combatant.
+@export var max_shield: int = 0
+
+## Mendapatkan damage multiplier ketika karakter ini dalam status Broken.
+func get_break_multiplier() -> float:
+	match tier:
+		EnemyTier.MINI_BOSS:
+			return 1.20
+		EnemyTier.BOSS:
+			return 1.10
+		EnemyTier.NORMAL, _:
+			return 1.30
+
+
 
 
 

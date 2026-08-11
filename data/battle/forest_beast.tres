@@ -13,3 +13,4 @@ magic_attack = 5
 magic_defense = 4
 speed = 20
 weaknesses = [0, 2]
+max_shield = 3

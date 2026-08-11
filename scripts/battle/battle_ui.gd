@@ -16,6 +16,7 @@ signal skill_clicked(index: int)
 
 @onready var enemy_hp_label: Label = $EnemyStats/VBoxContainer/HPLabel
 @onready var enemy_mp_label: Label = $EnemyStats/VBoxContainer/MPLabel
+@onready var shield_label: Label = $EnemyStats/VBoxContainer/ShieldLabel
 
 @onready var command_panel: PanelContainer = $CommandPanel
 @onready var command_vbox: VBoxContainer = $CommandPanel/MarginContainer/VBoxContainer
@@ -122,6 +123,23 @@ func set_skill_selection(index: int, skills: Array) -> void:
 
 func set_hint(text: String) -> void:
 	hint_label.text = text
+
+## Update tampilan Shield musuh. Tampilkan diamonds, atau BREAK! saat broken.
+func update_shield_display(current: int, max_shield: int, is_broken: bool) -> void:
+	if max_shield <= 0:
+		shield_label.text = ""
+		return
+	if is_broken:
+		shield_label.text = "BREAK!"
+		shield_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.1, 1))
+	else:
+		var diamonds = ""
+		for i in range(current):
+			if i > 0:
+				diamonds += " "
+			diamonds += "\u25C6"
+		shield_label.text = "SHIELD: " + diamonds
+		shield_label.add_theme_color_override("font_color", Color(0.4, 0.85, 1.0, 1))
 
 ## Inisialisasi 5 slot weakness dengan "?" di awal battle.
 func init_weakness_display(_actual_weaknesses: Array) -> void:

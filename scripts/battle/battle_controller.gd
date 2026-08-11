@@ -29,6 +29,7 @@ func _ready() -> void:
 	enemy = Combatant.new(enemy_data)
 	
 	_update_all_hp_mp_ui()
+	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
 	ui.set_hint("")
 	ui.show_commands(false)
 	ui.show_skills(false)
@@ -90,7 +91,7 @@ func _process_round_start() -> void:
 	if not player.is_dead(): turn_queue.append(player)
 	if not enemy.is_dead(): turn_queue.append(enemy)
 	
-	turn_queue.sort_custom(func(a, b): 
+	turn_queue.sort_custom(func(a, b):
 		if a.base_data.speed == b.base_data.speed:
 			return a == player
 		return a.base_data.speed > b.base_data.speed
@@ -103,14 +104,14 @@ func _process_turn_start() -> void:
 	if turn_queue.is_empty():
 		_set_state(State.ROUND_START)
 		return
-		
+	
 	current_combatant = turn_queue.pop_front()
 	_update_turn_order_ui()
 	
 	if current_combatant.is_dead():
 		_set_state(State.TURN_START)
 		return
-		
+	
 	current_combatant.is_defending = false
 	
 	if current_combatant == player:
@@ -127,8 +128,12 @@ func _update_turn_order_ui() -> void:
 			names.append(c.base_data.display_name)
 	ui.update_turn_order(names)
 
-## Damage pipeline terpusat. Mengembalikan Dictionary {amount: int, is_weakness: bool}.
-## Pipeline: base → × skill_power → weakness ×1.25 → defend ×0.5 → max(1, roundi)
+# ==============================================================
+# DAMAGE PIPELINE
+# ==============================================================
+
+## Pipeline terpusat:
+## base → × skill_power → × 1.25 (weakness) → × break_multiplier → × 0.5 (defend) → max(1, roundi)
 func _calculate_damage(attacker: Combatant, defender: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
 	var base: int
 	if use_magic_scaling:
@@ -144,15 +149,50 @@ func _calculate_damage(attacker: Combatant, defender: Combatant, damage_type: in
 	if is_weakness:
 		amount *= 1.25
 	
+	# Break vulnerability — berlaku jika target SUDAH broken SEBELUM hit ini.
+	if defender.is_broken:
+		amount *= defender.base_data.get_break_multiplier()
+	
 	if defender.is_defending:
 		amount *= 0.5
 	
 	return { "amount": max(1, roundi(amount)), "is_weakness": is_weakness }
 
+## Proses pengurangan Shield setelah hit. Dipanggil setelah take_damage().
+## Mengurus Shield reduction dan Break trigger jika shield mencapai 0.
+func _process_shield_after_hit(result: Dictionary) -> void:
+	# Hanya weakness hit yang mengurangi shield
+	if not result.is_weakness:
+		return
+	# Tidak proses jika sudah broken
+	if enemy.is_broken:
+		return
+	# Tidak proses jika tidak punya shield
+	if enemy.base_data.max_shield <= 0:
+		return
+	
+	var break_triggered = enemy.process_shield_hit()
+	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+	
+	if break_triggered and not enemy.is_dead():
+		_trigger_break()
+
+## Memicu Break pada enemy. Set state dan log feedback.
+func _trigger_break() -> void:
+	enemy.is_broken = true
+	enemy.break_skips_remaining = 1
+	ui.add_log("BREAK! %s is staggered!" % enemy.base_data.display_name)
+	ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+
+## Simpan weakness yang ditemukan dan update UI slot.
 func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
 	if damage_type not in target.discovered_weaknesses:
 		target.discovered_weaknesses.append(damage_type)
 	ui.update_weakness_display(target.base_data.weaknesses, target.discovered_weaknesses)
+
+# ==============================================================
+# INPUT HANDLING
+# ==============================================================
 
 func _unhandled_input(event: InputEvent) -> void:
 	match current_state:
@@ -192,6 +232,10 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				GameManager.return_to_world()
 
+# ==============================================================
+# PLAYER ACTIONS
+# ==============================================================
+
 func _execute_player_command() -> void:
 	match command_index:
 		0: # ATTACK
@@ -206,11 +250,38 @@ func _execute_player_command() -> void:
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 
+func _process_player_attack() -> void:
+	_set_state(State.PLAYER_ACTION)
+	ui.show_commands(false)
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	var result = _calculate_damage(player, enemy, DamageType.Type.SWORD)
+	enemy.take_damage(result.amount)
+	_update_all_hp_mp_ui()
+	
+	if result.is_weakness:
+		_handle_weakness_hit(DamageType.Type.SWORD, enemy)
+	
+	_process_shield_after_hit(result)
+	
+	if result.is_weakness:
+		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
+	else:
+		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
+	
+	await get_tree().create_timer(0.8).timeout
+	
+	if enemy.is_dead():
+		_set_state(State.VICTORY)
+	else:
+		_set_state(State.TURN_START)
+
 func _execute_player_skill(skill: SkillData) -> void:
 	if not player.can_spend_mp(skill.mp_cost):
 		ui.add_log("Not enough MP.")
 		return
-		
+	
 	player.spend_mp(skill.mp_cost)
 	_update_all_hp_mp_ui()
 	
@@ -229,6 +300,10 @@ func _execute_player_skill(skill: SkillData) -> void:
 		
 		if result.is_weakness:
 			_handle_weakness_hit(skill.damage_type, enemy)
+		
+		_process_shield_after_hit(result)
+		
+		if result.is_weakness:
 			ui.add_log("WEAK! %s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
 		else:
 			ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
@@ -239,15 +314,15 @@ func _execute_player_skill(skill: SkillData) -> void:
 			_set_state(State.VICTORY)
 		else:
 			_set_state(State.TURN_START)
-			
+	
 	elif skill.target_type == SkillData.TargetType.SELF:
-		# Heal — tidak mengecek weakness
+		# Heal — tidak mengecek weakness atau shield
 		var base_heal: int
 		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
 			base_heal = player.base_data.attack
 		else:
 			base_heal = player.base_data.magic_attack
-			
+		
 		var heal_amount = max(1, roundi(float(base_heal) * skill.power))
 		var old_hp = player.current_hp
 		player.current_hp = min(player.current_hp + heal_amount, player.base_data.max_hp)
@@ -259,32 +334,31 @@ func _execute_player_skill(skill: SkillData) -> void:
 		await get_tree().create_timer(0.8).timeout
 		_set_state(State.TURN_START)
 
-func _process_player_attack() -> void:
-	_set_state(State.PLAYER_ACTION)
-	ui.show_commands(false)
-	
-	await get_tree().create_timer(0.3).timeout
-	
-	var result = _calculate_damage(player, enemy, DamageType.Type.SWORD)
-	enemy.take_damage(result.amount)
-	_update_all_hp_mp_ui()
-	
-	if result.is_weakness:
-		_handle_weakness_hit(DamageType.Type.SWORD, enemy)
-		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
-	else:
-		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
-	
-	await get_tree().create_timer(0.8).timeout
-	
-	if enemy.is_dead():
-		_set_state(State.VICTORY)
-	else:
-		_set_state(State.TURN_START)
+# ==============================================================
+# ENEMY TURN — BREAK-AWARE
+# ==============================================================
 
 func _process_enemy_turn() -> void:
 	await get_tree().create_timer(0.7).timeout
 	
+	# --- Break State Check ---
+	if enemy.is_broken:
+		if enemy.break_skips_remaining > 0:
+			# Giliran ini diskip
+			enemy.break_skips_remaining -= 1
+			ui.add_log("%s is Broken and cannot act!" % enemy.base_data.display_name)
+			await get_tree().create_timer(0.8).timeout
+			_set_state(State.TURN_START)
+			return
+		else:
+			# Skip sudah dilakukan, sekarang recovery
+			enemy.recover_from_break()
+			ui.add_log("%s recovered from Break." % enemy.base_data.display_name)
+			ui.update_shield_display(enemy.current_shield, enemy.base_data.max_shield, enemy.is_broken)
+			await get_tree().create_timer(0.6).timeout
+			# Jatuh ke aksi normal di bawah
+	
+	# --- Aksi Normal ---
 	var result = _calculate_damage(enemy, player, DamageType.Type.SWORD)
 	player.take_damage(result.amount)
 	_update_all_hp_mp_ui()
@@ -297,6 +371,10 @@ func _process_enemy_turn() -> void:
 		_set_state(State.DEFEAT)
 	else:
 		_set_state(State.TURN_START)
+
+# ==============================================================
+# UI HELPERS
+# ==============================================================
 
 func _update_all_hp_mp_ui() -> void:
 	ui.update_player_hp(player.current_hp, player.base_data.max_hp)
