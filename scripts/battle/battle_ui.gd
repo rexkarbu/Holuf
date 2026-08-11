@@ -25,6 +25,8 @@ signal skill_clicked(index: int)
 @onready var skill_panel: PanelContainer = $SkillPanel
 @onready var skill_vbox: VBoxContainer = $SkillPanel/MarginContainer/VBoxContainer
 
+@onready var weakness_slots: HBoxContainer = $WeaknessPanel/WeaknessSlots
+
 func _ready() -> void:
 	command_panel.hide()
 	skill_panel.hide()
@@ -120,3 +122,27 @@ func set_skill_selection(index: int, skills: Array) -> void:
 
 func set_hint(text: String) -> void:
 	hint_label.text = text
+
+## Inisialisasi 5 slot weakness dengan "?" di awal battle.
+func init_weakness_display(_actual_weaknesses: Array) -> void:
+	for child in weakness_slots.get_children():
+		var label = child as Label
+		if label:
+			label.text = "?"
+			label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5, 1))
+
+## Update slot weakness sesuai discovered list. Hanya tampilkan yang sudah ditemukan.
+func update_weakness_display(actual_weaknesses: Array, discovered: Array) -> void:
+	var types = DamageType.OFFENSIVE_TYPES
+	var children = weakness_slots.get_children()
+	for i in range(min(types.size(), children.size())):
+		var label = children[i] as Label
+		if label == null:
+			continue
+		var t = types[i]
+		if t in discovered and t in actual_weaknesses:
+			label.text = DamageType.DISPLAY_NAMES[t]
+			label.add_theme_color_override("font_color", Color(1.0, 0.5, 0.1, 1))
+		else:
+			label.text = "?"
+			label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5, 1))

@@ -9,6 +9,10 @@ var current_mp: int
 
 var is_defending: bool = false
 
+## Runtime — weakness types yang sudah ditemukan selama battle ini. Reset setiap battle baru.
+var discovered_weaknesses: Array = []
+
+
 
 func _init(data: CombatantData) -> void:
 	base_data = data

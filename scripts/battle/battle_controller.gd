@@ -32,6 +32,7 @@ func _ready() -> void:
 	ui.set_hint("")
 	ui.show_commands(false)
 	ui.show_skills(false)
+	ui.init_weakness_display(enemy.base_data.weaknesses)
 	
 	ui.command_hovered.connect(_on_ui_command_hovered)
 	ui.command_clicked.connect(_on_ui_command_clicked)
@@ -89,7 +90,6 @@ func _process_round_start() -> void:
 	if not player.is_dead(): turn_queue.append(player)
 	if not enemy.is_dead(): turn_queue.append(enemy)
 	
-	# Sort berdasarkan speed. Jika sama, Player duluan.
 	turn_queue.sort_custom(func(a, b): 
 		if a.base_data.speed == b.base_data.speed:
 			return a == player
@@ -126,6 +126,33 @@ func _update_turn_order_ui() -> void:
 		if not c.is_dead():
 			names.append(c.base_data.display_name)
 	ui.update_turn_order(names)
+
+## Damage pipeline terpusat. Mengembalikan Dictionary {amount: int, is_weakness: bool}.
+## Pipeline: base → × skill_power → weakness ×1.25 → defend ×0.5 → max(1, roundi)
+func _calculate_damage(attacker: Combatant, defender: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
+	var base: int
+	if use_magic_scaling:
+		base = attacker.base_data.magic_attack - defender.base_data.magic_defense
+	else:
+		base = attacker.base_data.attack - defender.base_data.defense
+	
+	base = max(0, base)
+	
+	var amount: float = float(base) * skill_power
+	
+	var is_weakness: bool = damage_type in defender.base_data.weaknesses
+	if is_weakness:
+		amount *= 1.25
+	
+	if defender.is_defending:
+		amount *= 0.5
+	
+	return { "amount": max(1, roundi(amount)), "is_weakness": is_weakness }
+
+func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
+	if damage_type not in target.discovered_weaknesses:
+		target.discovered_weaknesses.append(damage_type)
+	ui.update_weakness_display(target.base_data.weaknesses, target.discovered_weaknesses)
 
 func _unhandled_input(event: InputEvent) -> void:
 	match current_state:
@@ -194,19 +221,17 @@ func _execute_player_skill(skill: SkillData) -> void:
 	await get_tree().create_timer(0.3).timeout
 	
 	if skill.target_type == SkillData.TargetType.ENEMY:
-		var base_damage = 0
-		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
-			base_damage = player.base_data.attack - enemy.base_data.defense
-		else:
-			base_damage = player.base_data.magic_attack - enemy.base_data.magic_defense
-			
-		var final_damage = max(1, round(base_damage * skill.power))
-		if enemy.is_defending:
-			final_damage = max(1, round(final_damage * 0.5))
-			
-		enemy.take_damage(final_damage)
+		var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
+		var result = _calculate_damage(player, enemy, skill.damage_type, skill.power, use_magic)
+		
+		enemy.take_damage(result.amount)
 		_update_all_hp_mp_ui()
-		ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, final_damage])
+		
+		if result.is_weakness:
+			_handle_weakness_hit(skill.damage_type, enemy)
+			ui.add_log("WEAK! %s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
+		else:
+			ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
 		
 		await get_tree().create_timer(0.8).timeout
 		
@@ -216,31 +241,23 @@ func _execute_player_skill(skill: SkillData) -> void:
 			_set_state(State.TURN_START)
 			
 	elif skill.target_type == SkillData.TargetType.SELF:
-		var base_heal = 0
+		# Heal — tidak mengecek weakness
+		var base_heal: int
 		if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
 			base_heal = player.base_data.attack
 		else:
 			base_heal = player.base_data.magic_attack
 			
-		var heal_amount = max(1, round(base_heal * skill.power))
+		var heal_amount = max(1, roundi(float(base_heal) * skill.power))
 		var old_hp = player.current_hp
-		player.current_hp += heal_amount
-		if player.current_hp > player.base_data.max_hp:
-			player.current_hp = player.base_data.max_hp
-			
+		player.current_hp = min(player.current_hp + heal_amount, player.base_data.max_hp)
 		var actual_heal = player.current_hp - old_hp
-		_update_all_hp_mp_ui()
 		
+		_update_all_hp_mp_ui()
 		ui.add_log("%s casts %s and restores %d HP!" % [player.base_data.display_name, skill.display_name, actual_heal])
 		
 		await get_tree().create_timer(0.8).timeout
 		_set_state(State.TURN_START)
-
-func _calculate_damage(attacker: Combatant, defender: Combatant) -> int:
-	var damage = max(1, attacker.base_data.attack - defender.base_data.defense)
-	if defender.is_defending:
-		damage = max(1, round(damage * 0.5))
-	return damage
 
 func _process_player_attack() -> void:
 	_set_state(State.PLAYER_ACTION)
@@ -248,11 +265,15 @@ func _process_player_attack() -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	var damage = _calculate_damage(player, enemy)
-	enemy.take_damage(damage)
+	var result = _calculate_damage(player, enemy, DamageType.Type.SWORD)
+	enemy.take_damage(result.amount)
 	_update_all_hp_mp_ui()
 	
-	ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, damage])
+	if result.is_weakness:
+		_handle_weakness_hit(DamageType.Type.SWORD, enemy)
+		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
+	else:
+		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, enemy.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
@@ -264,11 +285,11 @@ func _process_player_attack() -> void:
 func _process_enemy_turn() -> void:
 	await get_tree().create_timer(0.7).timeout
 	
-	var damage = _calculate_damage(enemy, player)
-	player.take_damage(damage)
+	var result = _calculate_damage(enemy, player, DamageType.Type.SWORD)
+	player.take_damage(result.amount)
 	_update_all_hp_mp_ui()
 	
-	ui.add_log("%s attacks %s for %d damage!" % [enemy.base_data.display_name, player.base_data.display_name, damage])
+	ui.add_log("%s attacks %s for %d damage!" % [enemy.base_data.display_name, player.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
@@ -308,7 +329,3 @@ func _on_ui_skill_clicked(index: int) -> void:
 			skill_index = index
 			ui.set_skill_selection(skill_index, skills)
 			_execute_player_skill(skills[skill_index])
-
-
-
-

@@ -12,4 +12,4 @@ defense = 4
 magic_attack = 5
 magic_defense = 4
 speed = 20
-
+weaknesses = [0, 2]

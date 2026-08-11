@@ -14,4 +14,8 @@ extends Resource
 
 @export var skills: Array = []
 
+## Array of DamageType.Type integers representing this combatant's weaknesses.
+@export var weaknesses: Array = []
+
+
 
