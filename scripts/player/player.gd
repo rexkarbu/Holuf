@@ -1,0 +1,83 @@
+extends CharacterBody2D
+
+## Player — menangani input movement, physics, dan interaksi.
+## Camera2D sebagai child mengikuti player secara otomatis.
+
+signal interactable_detected(interactable: Interactable)
+signal interactable_undetected()
+
+@export var move_speed: float = 150.0
+
+@onready var interaction_detector: Area2D = $InteractionDetector
+
+var current_interactable: Interactable = null
+var is_locked: bool = false
+
+
+func _ready() -> void:
+	add_to_group("player")
+	# Hubungkan sinyal dari DialogueManager
+	DialogueManager.dialogue_started.connect(_on_dialogue_started)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+
+
+func _physics_process(_delta: float) -> void:
+	if is_locked:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+
+	# --- MOVEMENT LOGIC ---
+	var direction := Vector2.ZERO
+	direction.x = Input.get_axis("move_left", "move_right")
+	direction.y = Input.get_axis("move_up", "move_down")
+
+	if direction.length() > 0.0:
+		direction = direction.normalized()
+
+	velocity = direction * move_speed
+	move_and_slide()
+
+	# --- INTERACTION DETECTION ---
+	_update_interaction()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if is_locked:
+		return
+
+	if event.is_action_pressed("interact"):
+		if current_interactable != null:
+			current_interactable.interact(self)
+
+
+func _update_interaction() -> void:
+	var overlaps := interaction_detector.get_overlapping_areas()
+	var closest_interactable: Interactable = null
+	var min_distance := INF
+
+	for area in overlaps:
+		if area is Interactable:
+			var dist := global_position.distance_to(area.global_position)
+			if dist < min_distance:
+				min_distance = dist
+				closest_interactable = area
+
+	if closest_interactable != current_interactable:
+		current_interactable = closest_interactable
+		if current_interactable != null:
+			interactable_detected.emit(current_interactable)
+		else:
+			interactable_undetected.emit()
+
+
+func _on_dialogue_started(_speaker_name: String) -> void:
+	is_locked = true
+	# Bersihkan deteksi interactable ketika mulai dialog agar prompt hilang
+	current_interactable = null
+	interactable_undetected.emit()
+
+
+func _on_dialogue_ended() -> void:
+	is_locked = false
+

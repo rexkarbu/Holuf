@@ -1,0 +1,39 @@
+[gd_scene load_steps=9 format=3 uid="uid://holuf_elder01"]
+
+[ext_resource type="Script" path="res://scripts/character/npc.gd" id="1_npc"]
+[ext_resource type="Script" path="res://scripts/core/interactable.gd" id="2_interactable"]
+[ext_resource type="Resource" uid="uid://elder_dialogue_01" path="res://data/characters/elder_dialogue.tres" id="3_dialogue"]
+[ext_resource type="Resource" uid="uid://elder_quest_active_01" path="res://data/characters/elder_quest_active.tres" id="4_quest_active"]
+[ext_resource type="Resource" uid="uid://elder_quest_return_01" path="res://data/characters/elder_quest_return.tres" id="5_quest_return"]
+[ext_resource type="Resource" uid="uid://elder_quest_completed_01" path="res://data/characters/elder_quest_completed.tres" id="6_quest_completed"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_col"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
+radius = 45.0
+
+[node name="Elder" type="StaticBody2D"]
+script = ExtResource("1_npc")
+npc_name = "Elder"
+dialogue_resource = ExtResource("3_dialogue")
+managed_quest_id = "whispers_beneath_forest"
+dialogue_quest_active_obj1 = ExtResource("4_quest_active")
+dialogue_quest_return = ExtResource("5_quest_return")
+dialogue_quest_completed = ExtResource("6_quest_completed")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.9, 0.65, 0.2, 1)
+polygon = PackedVector2Array(0, -20, 15, 0, 0, 20, -15, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_col")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("2_interactable")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_interact")
+debug_color = Color(0.2, 0.8, 0.2, 0.15)

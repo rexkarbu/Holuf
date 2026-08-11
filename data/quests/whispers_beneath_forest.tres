@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="QuestData" load_steps=2 format=3 uid="uid://whispers_quest_01"]
+
+[ext_resource type="Script" path="res://scripts/quest/quest_data.gd" id="1_questdata"]
+
+[resource]
+script = ExtResource("1_questdata")
+quest_id = "whispers_beneath_forest"
+title = "Whispers Beneath the Forest"
+description = "Elder believes something ancient has awakened near the old ruins."
+objectives = ["Investigate the old ruins.", "Return to Elder."]

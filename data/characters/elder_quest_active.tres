@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="DialogueResource" load_steps=5 format=3 uid="uid://elder_quest_active_01"]
+
+[ext_resource type="Script" path="res://scripts/core/dialogue_resource.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/core/dialogue_node.gd" id="2_node"]
+
+[sub_resource type="Resource" id="Node_A1"]
+script = ExtResource("2_node")
+id = "a1"
+speaker_name = "Elder"
+text = "Be careful on your way to the ruins."
+choices = []
+next_id = "a2"
+
+[sub_resource type="Resource" id="Node_A2"]
+script = ExtResource("2_node")
+id = "a2"
+speaker_name = "Elder"
+text = "Ancient things slumber there. Do not linger."
+choices = []
+next_id = ""
+
+[resource]
+script = ExtResource("1_script")
+start_id = "a1"
+nodes = [SubResource("Node_A1"), SubResource("Node_A2")]

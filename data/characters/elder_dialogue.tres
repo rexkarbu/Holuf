@@ -1,0 +1,83 @@
+[gd_resource type="Resource" script_class="DialogueResource" load_steps=14 format=3 uid="uid://elder_dialogue_01"]
+
+[ext_resource type="Script" path="res://scripts/core/dialogue_resource.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/core/dialogue_node.gd" id="2_node"]
+[ext_resource type="Script" path="res://scripts/core/dialogue_choice.gd" id="3_choice"]
+
+[sub_resource type="Resource" id="Choice_1"]
+script = ExtResource("3_choice")
+text = "Tell me more."
+next_id = "node5"
+
+[sub_resource type="Resource" id="Choice_2"]
+script = ExtResource("3_choice")
+text = "I will investigate."
+next_id = "node6"
+action = "start_quest"
+action_data = "whispers_beneath_forest"
+
+[sub_resource type="Resource" id="Choice_3"]
+script = ExtResource("3_choice")
+text = "I should leave."
+next_id = "node7"
+
+[sub_resource type="Resource" id="Node_1"]
+script = ExtResource("2_node")
+id = "node1"
+speaker_name = "Elder"
+text = "Welcome, traveler."
+choices = []
+next_id = "node2"
+
+[sub_resource type="Resource" id="Node_2"]
+script = ExtResource("2_node")
+id = "node2"
+speaker_name = "Elder"
+text = "You should not venture too deep into the forest."
+choices = []
+next_id = "node3"
+
+[sub_resource type="Resource" id="Node_3"]
+script = ExtResource("2_node")
+id = "node3"
+speaker_name = "Elder"
+text = "Something ancient has awakened beneath these lands."
+choices = []
+next_id = "node4"
+
+[sub_resource type="Resource" id="Node_4"]
+script = ExtResource("2_node")
+id = "node4"
+speaker_name = "Elder"
+text = "What will you do?"
+choices = [SubResource("Choice_1"), SubResource("Choice_2"), SubResource("Choice_3")]
+next_id = ""
+
+[sub_resource type="Resource" id="Node_5"]
+script = ExtResource("2_node")
+id = "node5"
+speaker_name = "Elder"
+text = "Few remember what lies beneath the old ruins."
+choices = []
+next_id = ""
+
+[sub_resource type="Resource" id="Node_6"]
+script = ExtResource("2_node")
+id = "node6"
+speaker_name = "Elder"
+text = "Then you will need courage. The forest does not forgive the careless."
+choices = []
+next_id = ""
+
+[sub_resource type="Resource" id="Node_7"]
+script = ExtResource("2_node")
+id = "node7"
+speaker_name = "Elder"
+text = "Perhaps that is wise."
+choices = []
+next_id = ""
+
+[resource]
+script = ExtResource("1_script")
+start_id = "node1"
+nodes = [SubResource("Node_1"), SubResource("Node_2"), SubResource("Node_3"), SubResource("Node_4"), SubResource("Node_5"), SubResource("Node_6"), SubResource("Node_7")]

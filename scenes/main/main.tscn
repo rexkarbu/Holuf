@@ -1,0 +1,21 @@
+[gd_scene load_steps=7 format=3 uid="uid://holuf_main01"]
+
+[ext_resource type="Script" path="res://scripts/core/main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://holuf_world01" path="res://scenes/world/world.tscn" id="2_world"]
+[ext_resource type="PackedScene" uid="uid://holuf_player01" path="res://scenes/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" uid="uid://holuf_interaction_ui01" path="res://scenes/ui/interaction_ui.tscn" id="4_ui"]
+[ext_resource type="PackedScene" uid="uid://holuf_quest_tracker01" path="res://scenes/ui/quest_tracker.tscn" id="5_quest_tracker"]
+[ext_resource type="PackedScene" uid="uid://holuf_quest_notification01" path="res://scenes/ui/quest_notification.tscn" id="6_quest_notif"]
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(1000, 1000)
+
+[node name="UI" parent="." instance=ExtResource("4_ui")]
+
+[node name="QuestTrackerUI" parent="." instance=ExtResource("5_quest_tracker")]
+
+[node name="QuestNotificationUI" parent="." instance=ExtResource("6_quest_notif")]
