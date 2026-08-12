@@ -48,7 +48,9 @@ func _ready() -> void:
 	players.clear()
 	for char_id in PartyManager.active_party:
 		var data = _get_fallback_combatant_data(char_id)
-		players.append(Combatant.new(data))
+		var combatant = Combatant.new(data, char_id)
+		combatant.character_id = char_id
+		players.append(combatant)
 	
 	ui.setup_players(players)
 	
@@ -194,7 +196,7 @@ func _set_state(new_state: State) -> void:
 			ui.show_commands(false)
 			ui.show_skills(false)
 			ui.clear_enemy_target_indicator(enemies)
-			ui.set_hint("Press ENTER to return")
+			_process_victory_rewards()
 		State.DEFEAT:
 			ui.set_turn_title("DEFEAT")
 			ui.add_log("The party has fallen.")
@@ -303,12 +305,15 @@ func _next_valid_target(direction: int) -> void:
 
 func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
 	var base: int
-	var def_stat = target.get_effective_defense() if target.has_method("get_effective_defense") else target.base_data.defense
+	var def_stat = target.get_effective_defense()
 	
 	if use_magic_scaling:
-		base = attacker.base_data.magic_attack - target.base_data.magic_defense
+		var atk_mag = attacker.get_effective_magic_attack() if attacker.has_method("get_effective_magic_attack") else attacker.base_data.magic_attack
+		var def_mag = target.get_effective_magic_defense() if target.has_method("get_effective_magic_defense") else target.base_data.magic_defense
+		base = atk_mag - def_mag
 	else:
-		base = attacker.base_data.attack - def_stat
+		var atk_phys = attacker.get_effective_attack() if attacker.has_method("get_effective_attack") else attacker.base_data.attack
+		base = atk_phys - def_stat
 	
 	base = max(0, base)
 	var amount: float = float(base) * skill_power
@@ -570,13 +575,14 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	
 	var base_heal: int
 	if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
-		base_heal = current_combatant.base_data.attack
+		base_heal = current_combatant.get_effective_attack() if current_combatant.has_method("get_effective_attack") else current_combatant.base_data.attack
 	else:
-		base_heal = current_combatant.base_data.magic_attack
+		base_heal = current_combatant.get_effective_magic_attack() if current_combatant.has_method("get_effective_magic_attack") else current_combatant.base_data.magic_attack
 	
 	var heal_amount = max(1, roundi(float(base_heal) * skill.power))
 	var old_hp = target.current_hp
-	target.current_hp = min(target.current_hp + heal_amount, target.base_data.max_hp)
+	var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
+	target.current_hp = min(target.current_hp + heal_amount, target_max_hp)
 	var actual_heal = target.current_hp - old_hp
 	
 	_update_all_hp_mp_ui()
@@ -655,10 +661,10 @@ func _process_enemy_turn() -> void:
 func _update_all_hp_mp_ui() -> void:
 	for i in range(players.size()):
 		var p = players[i]
-		ui.update_player_hp(i, p.current_hp, p.base_data.max_hp)
-	for i in range(players.size()):
-		var p = players[i]
-		ui.update_player_mp(i, p.current_mp, p.base_data.max_mp)
+		var max_hp = p.get_effective_max_hp() if p.has_method("get_effective_max_hp") else p.base_data.max_hp
+		var max_mp = p.get_effective_max_mp() if p.has_method("get_effective_max_mp") else p.base_data.max_mp
+		ui.update_player_hp(i, p.current_hp, max_hp)
+		ui.update_player_mp(i, p.current_mp, max_mp)
 	for i in range(enemies.size()):
 		var e = enemies[i]
 		ui.update_enemy_hp(i, e.current_hp, e.base_data.max_hp)
@@ -713,3 +719,29 @@ func _arena_update_enemy_target(target_idx: int) -> void:
 		var view = enemy_views[i] as BattleCombatantView
 		if view == null: continue
 		view.set_targeted(i == target_idx)
+
+# ==============================================================
+# VICTORY REWARDS (MILESTONE 20)
+# ==============================================================
+
+var rewards_processed: bool = false
+
+func _process_victory_rewards() -> void:
+	if rewards_processed:
+		return
+	rewards_processed = true
+	
+	# Calculate total rewards
+	var total_exp: int = 0
+	var total_gold: int = 0
+	
+	for enemy in enemies:
+		total_exp += enemy.base_data.exp_reward
+		total_gold += enemy.base_data.gold_reward
+	
+	# Grant rewards through PartyManager
+	var level_up_messages = PartyManager.grant_rewards(total_exp, total_gold)
+	
+	# Show reward UI
+	ui.show_victory_rewards(total_exp, total_gold, level_up_messages, players)
+	ui.set_hint("Press ENTER to return")

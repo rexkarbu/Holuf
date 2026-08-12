@@ -16,3 +16,5 @@ speed = 20
 skills = [ExtResource("2_skill")]
 weaknesses = [0, 2]
 max_shield = 3
+exp_reward = 40
+gold_reward = 15

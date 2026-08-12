@@ -15,3 +15,4 @@ magic_attack = 15
 magic_defense = 5
 speed = 30
 skills = [ExtResource("1_fire"), ExtResource("2_heal")]
+mp_growth = 2

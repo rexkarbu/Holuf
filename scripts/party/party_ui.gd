@@ -126,7 +126,10 @@ func _refresh_ui() -> void:
 		if i < PartyManager.active_party.size():
 			var cid = PartyManager.active_party[i]
 			var data = PartyManager.roster[cid]
-			lbl.text = "  " + data.display_name
+			var prog = PartyManager.character_progress[cid]
+			var exp_req = PartyManager.get_exp_required(prog.level)
+			var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
+			lbl.text = "  %s  •  %s" % [data.display_name, exp_text]
 			lbl.add_theme_color_override("font_color", Color(1, 1, 1))
 		else:
 			lbl.text = "  [EMPTY]"
@@ -138,8 +141,11 @@ func _refresh_ui() -> void:
 	for i in range(PartyManager.reserve_party.size()):
 		var cid = PartyManager.reserve_party[i]
 		var data = PartyManager.roster[cid]
+		var prog = PartyManager.character_progress[cid]
+		var exp_req = PartyManager.get_exp_required(prog.level)
+		var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
 		var lbl = Label.new()
-		lbl.text = "  " + data.display_name
+		lbl.text = "  %s  •  %s" % [data.display_name, exp_text]
 		lbl.add_theme_font_size_override("font_size", 20)
 		reserve_vbox.add_child(lbl)
 		reserve_labels.append(lbl)
@@ -163,7 +169,12 @@ func _update_cursors() -> void:
 	# Reset active labels
 	for i in range(active_labels.size()):
 		if i < real_active:
-			var text = PartyManager.roster[PartyManager.active_party[i]].display_name
+			var cid = PartyManager.active_party[i]
+			var data = PartyManager.roster[cid]
+			var prog = PartyManager.character_progress[cid]
+			var exp_req = PartyManager.get_exp_required(prog.level)
+			var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
+			var text = "%s  •  %s" % [data.display_name, exp_text]
 			if i == selected_active_index:
 				active_labels[i].text = "[S] " + text
 				active_labels[i].add_theme_color_override("font_color", Color(0.3, 1.0, 0.3))
@@ -176,14 +187,24 @@ func _update_cursors() -> void:
 	
 	# Reset reserve labels
 	for i in range(reserve_labels.size()):
-		var text = PartyManager.roster[PartyManager.reserve_party[i]].display_name
+		var cid = PartyManager.reserve_party[i]
+		var data = PartyManager.roster[cid]
+		var prog = PartyManager.character_progress[cid]
+		var exp_req = PartyManager.get_exp_required(prog.level)
+		var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
+		var text = "%s  •  %s" % [data.display_name, exp_text]
 		reserve_labels[i].text = "  " + text
 		reserve_labels[i].add_theme_color_override("font_color", Color(1, 1, 1))
 	
 	# Apply active highlight (hanya pada member nyata)
 	if is_selecting_active:
 		if active_cursor < real_active:
-			var text = PartyManager.roster[PartyManager.active_party[active_cursor]].display_name
+			var cid = PartyManager.active_party[active_cursor]
+			var data = PartyManager.roster[cid]
+			var prog = PartyManager.character_progress[cid]
+			var exp_req = PartyManager.get_exp_required(prog.level)
+			var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
+			var text = "%s  •  %s" % [data.display_name, exp_text]
 			if active_cursor == selected_active_index:
 				active_labels[active_cursor].text = "[S]> " + text
 			else:
@@ -191,7 +212,12 @@ func _update_cursors() -> void:
 			active_labels[active_cursor].add_theme_color_override("font_color", Color(1, 1, 0.4))
 	else:
 		if reserve_labels.size() > 0 and reserve_cursor < reserve_labels.size():
-			var text = PartyManager.roster[PartyManager.reserve_party[reserve_cursor]].display_name
+			var cid = PartyManager.reserve_party[reserve_cursor]
+			var data = PartyManager.roster[cid]
+			var prog = PartyManager.character_progress[cid]
+			var exp_req = PartyManager.get_exp_required(prog.level)
+			var exp_text = "Lv%d (%d/%d EXP)" % [prog.level, prog.current_exp, exp_req]
+			var text = "%s  •  %s" % [data.display_name, exp_text]
 			reserve_labels[reserve_cursor].text = "> " + text
 			reserve_labels[reserve_cursor].add_theme_color_override("font_color", Color(1, 1, 0.4))
 

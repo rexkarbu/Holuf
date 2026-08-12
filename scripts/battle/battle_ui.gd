@@ -270,3 +270,100 @@ func _on_skill_hovered(index: int) -> void:
 func _on_skill_gui_input(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		skill_clicked.emit(index)
+
+# ==============================================================
+# VICTORY REWARDS UI (MILESTONE 20)
+# ==============================================================
+
+var victory_panel: PanelContainer = null
+var victory_rewards_label: Label = null
+var victory_level_ups_vbox: VBoxContainer = null
+
+func show_victory_rewards(total_exp: int, total_gold: int, level_up_messages: Array, _players: Array) -> void:
+	# Create victory panel if not exists
+	if victory_panel == null:
+		_create_victory_panel()
+	
+	# Update content directly using stored references
+	victory_rewards_label.text = "Gained %d EXP  •  %d Gold" % [total_exp, total_gold]
+	
+	# Clear previous level up messages
+	for child in victory_level_ups_vbox.get_children():
+		child.queue_free()
+	
+	# Add new level up messages
+	if level_up_messages.size() > 0:
+		for msg in level_up_messages:
+			var label = Label.new()
+			label.text = msg
+			label.add_theme_font_size_override("font_size", 16)
+			label.add_theme_color_override("font_color", Color(1.0, 0.9, 0.3))
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			victory_level_ups_vbox.add_child(label)
+	
+	victory_panel.show()
+
+func _create_victory_panel() -> void:
+	victory_panel = PanelContainer.new()
+	add_child(victory_panel)
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0.08, 0.12, 0.18, 0.95)
+	style.border_width_left = 3
+	style.border_width_top = 3
+	style.border_width_right = 3
+	style.border_width_bottom = 3
+	style.border_color = Color(0.9, 0.8, 0.2, 1)
+	style.corner_radius_top_left = 8
+	style.corner_radius_top_right = 8
+	style.corner_radius_bottom_right = 8
+	style.corner_radius_bottom_left = 8
+	victory_panel.add_theme_stylebox_override("panel", style)
+	
+	victory_panel.anchor_left = 0.5
+	victory_panel.anchor_top = 0.5
+	victory_panel.anchor_right = 0.5
+	victory_panel.anchor_bottom = 0.5
+	victory_panel.offset_left = -300
+	victory_panel.offset_top = -200
+	victory_panel.offset_right = 300
+	victory_panel.offset_bottom = 200
+	victory_panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	victory_panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	
+	var margin = MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 24)
+	margin.add_theme_constant_override("margin_top", 20)
+	margin.add_theme_constant_override("margin_right", 24)
+	margin.add_theme_constant_override("margin_bottom", 20)
+	victory_panel.add_child(margin)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	margin.add_child(vbox)
+	
+	var title = Label.new()
+	title.name = "VictoryTitle"
+	title.text = "VICTORY!"
+	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_color_override("font_color", Color(0.9, 0.8, 0.2))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+	
+	var separator1 = HSeparator.new()
+	vbox.add_child(separator1)
+	
+	victory_rewards_label = Label.new()
+	victory_rewards_label.name = "RewardsLabel"
+	victory_rewards_label.add_theme_font_size_override("font_size", 20)
+	victory_rewards_label.add_theme_color_override("font_color", Color(0.3, 1.0, 0.3))
+	victory_rewards_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(victory_rewards_label)
+	
+	var separator2 = HSeparator.new()
+	vbox.add_child(separator2)
+	
+	victory_level_ups_vbox = VBoxContainer.new()
+	victory_level_ups_vbox.name = "LevelUpsVBox"
+	victory_level_ups_vbox.add_theme_constant_override("separation", 8)
+	vbox.add_child(victory_level_ups_vbox)

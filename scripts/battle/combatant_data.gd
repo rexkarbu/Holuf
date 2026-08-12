@@ -15,6 +15,20 @@ enum EnemyTier { NORMAL, MINI_BOSS, BOSS }
 @export var magic_defense: int = 5
 @export var speed: int = 10
 
+@export_group("Rewards (Enemies)")
+@export var exp_reward: int = 0
+@export var gold_reward: int = 0
+
+@export_group("Stat Growth (Playable)")
+@export var hp_growth: int = 5
+@export var mp_growth: int = 0
+@export var attack_growth: int = 1
+@export var defense_growth: int = 1
+@export var magic_attack_growth: int = 1
+@export var magic_defense_growth: int = 1
+@export var speed_growth: int = 1
+
+@export_group("Skills & Weaknesses")
 @export var skills: Array = []
 
 ## Array of DamageType.Type integers representing this combatant's weaknesses.
