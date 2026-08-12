@@ -3,7 +3,7 @@ extends Resource
 
 ## SkillData — Data statis untuk sebuah kemampuan (skill).
 
-enum TargetType { SELF, ENEMY }
+enum TargetType { ENEMY, ALLY, ALL_ENEMIES, ALL_ALLIES }
 enum ScalingType { PHYSICAL, MAGIC }
 
 @export var skill_id: String = ""

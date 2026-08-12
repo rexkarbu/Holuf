@@ -2,12 +2,12 @@ extends Node2D
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
-enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
+enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
 
 @export var hero_data: CombatantData
 @export var enemy_data: CombatantData # Fallback
 
-var player: Combatant
+var players: Array[Combatant] = []
 var enemies: Array[Combatant] = []
 var current_state: State = State.STARTING
 
@@ -23,11 +23,33 @@ var pending_action: Callable
 
 var debug_bonus_mode: int = BreakBonus.DebugMode.RANDOM
 
+# === Arena Views ===
+var party_views: Array = []
+var enemy_views: Array = []
+
+# Formation slot positions — diagonal party on left, staggered enemies on right.
+# Arena safe zone: y ≈ 170..490 (above BottomHUD at y=510)
+const PARTY_SLOTS: Array = [
+	Vector2(155, 440),  # Slot 0 (front / Hero)
+	Vector2(215, 370),  # Slot 1
+	Vector2(275, 305),  # Slot 2
+	Vector2(335, 245),  # Slot 3 (back)
+]
+const ENEMY_SLOTS: Array = [
+	Vector2(610, 415),  # Slot 0 (front)
+	Vector2(710, 325),  # Slot 1 (back)
+	Vector2(650, 245),  # Slot 2
+]
+
 @onready var ui = $UI
 
 func _ready() -> void:
-	if not hero_data: hero_data = load("res://data/battle/hero.tres")
-	player = Combatant.new(hero_data)
+	players.clear()
+	for char_id in PartyManager.active_party:
+		var data = _get_fallback_combatant_data(char_id)
+		players.append(Combatant.new(data))
+	
+	ui.setup_players(players)
 	
 	# Instantiate multiple enemies
 	var forest_beast_data = load("res://data/battle/forest_beast.tres")
@@ -36,6 +58,22 @@ func _ready() -> void:
 	if wolf_data: enemies.append(Combatant.new(wolf_data))
 	
 	ui.setup_enemies(enemies)
+	
+	# Spawn arena views for each party member
+	for i in range(players.size()):
+		var view = BattleCombatantView.new()
+		$Combatants.add_child(view)
+		view.position = PARTY_SLOTS[min(i, PARTY_SLOTS.size() - 1)]
+		view.setup_party(players[i], i)
+		party_views.append(view)
+	
+	# Spawn arena views for each enemy
+	for i in range(enemies.size()):
+		var view = BattleCombatantView.new()
+		$Combatants.add_child(view)
+		view.position = ENEMY_SLOTS[min(i, ENEMY_SLOTS.size() - 1)]
+		view.setup_enemy(enemies[i], i)
+		enemy_views.append(view)
 	
 	_update_all_hp_mp_ui()
 	_update_all_shield_ui()
@@ -55,6 +93,31 @@ func _ready() -> void:
 	await get_tree().create_timer(1.0).timeout
 	_set_state(State.ROUND_START)
 
+
+func _get_fallback_combatant_data(char_id: String) -> CombatantData:
+	var path = "res://data/battle/" + char_id + ".tres"
+	if ResourceLoader.exists(path):
+		return load(path)
+		
+	var data = CombatantData.new()
+	data.tier = CombatantData.EnemyTier.NORMAL
+	if char_id == "character_b":
+		data.max_hp = 95; data.attack = 18; data.defense = 5; data.magic_attack = 5; data.magic_defense = 5; data.speed = 27
+	elif char_id == "character_c":
+		data.max_hp = 105; data.attack = 17; data.defense = 7; data.magic_attack = 5; data.magic_defense = 6; data.speed = 24
+	elif char_id == "character_d":
+		data.max_hp = 90; data.attack = 19; data.defense = 4; data.magic_attack = 5; data.magic_defense = 4; data.speed = 21
+	else:
+		data.max_hp = 90; data.attack = 15; data.defense = 5; data.magic_attack = 5; data.magic_defense = 5; data.speed = 20
+		
+	data.max_mp = 0
+	if PartyManager.roster.has(char_id):
+		data.display_name = PartyManager.roster[char_id].display_name
+	else:
+		data.display_name = char_id.capitalize()
+		
+	return data
+
 func _set_state(new_state: State) -> void:
 	current_state = new_state
 	match current_state:
@@ -63,7 +126,7 @@ func _set_state(new_state: State) -> void:
 		State.TURN_START:
 			_process_turn_start()
 		State.PLAYER_COMMAND:
-			ui.set_turn_title("PLAYER TURN")
+			ui.set_turn_title(current_combatant.base_data.display_name.to_upper() + " TURN")
 			command_index = 0
 			ui.set_command_selection(command_index)
 			ui.show_commands(true)
@@ -73,9 +136,9 @@ func _set_state(new_state: State) -> void:
 		State.PLAYER_SKILL_SELECT:
 			skill_index = 0
 			ui.show_commands(false)
-			ui.populate_skill_menu(player.base_data.skills)
-			if player.base_data.skills.size() > 0:
-				ui.set_skill_selection(skill_index, player.base_data.skills)
+			ui.populate_skill_menu(current_combatant.base_data.skills)
+			if current_combatant.base_data.skills.size() > 0:
+				ui.set_skill_selection(skill_index, current_combatant.base_data.skills)
 			ui.show_skills(true)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ESC to cancel")
@@ -84,7 +147,14 @@ func _set_state(new_state: State) -> void:
 			ui.show_skills(false)
 			_ensure_valid_target_selection()
 			ui.set_enemy_target_indicator(selected_target_index, enemies)
+			_arena_update_enemy_target(selected_target_index)
 			ui.set_hint("Select Target / ESC to cancel")
+		State.ALLY_TARGET_SELECT:
+			ui.show_commands(false)
+			ui.show_skills(false)
+			_ensure_valid_ally_target_selection()
+			ui.set_ally_target_indicator(selected_target_index, players)
+			ui.set_hint("Select Ally / ESC to cancel")
 		State.ENEMY_ACTION:
 			ui.set_turn_title("ENEMY TURN")
 			ui.show_commands(false)
@@ -100,7 +170,7 @@ func _set_state(new_state: State) -> void:
 			ui.set_hint("Press ENTER to return")
 		State.DEFEAT:
 			ui.set_turn_title("DEFEAT")
-			ui.add_log("%s has fallen." % player.base_data.display_name)
+			ui.add_log("The party has fallen.")
 			ui.show_commands(false)
 			ui.show_skills(false)
 			ui.clear_enemy_target_indicator(enemies)
@@ -108,7 +178,8 @@ func _set_state(new_state: State) -> void:
 
 func _process_round_start() -> void:
 	turn_queue.clear()
-	if not player.is_dead(): turn_queue.append(player)
+	for p in players:
+		if not p.is_dead(): turn_queue.append(p)
 	for e in enemies:
 		if not e.is_dead(): turn_queue.append(e)
 	
@@ -116,7 +187,7 @@ func _process_round_start() -> void:
 		var a_spd = a.get_effective_speed() if a.has_method("get_effective_speed") else a.base_data.speed
 		var b_spd = b.get_effective_speed() if b.has_method("get_effective_speed") else b.base_data.speed
 		if a_spd == b_spd:
-			return a == player
+			return a in players
 		return a_spd > b_spd
 	)
 	
@@ -137,9 +208,13 @@ func _process_turn_start() -> void:
 	
 	current_combatant.is_defending = false
 	
-	if current_combatant == player:
+	if current_combatant in players:
+		ui.highlight_current_actor(current_combatant.base_data.display_name, players)
+		_arena_update_party_highlights()
 		_set_state(State.PLAYER_COMMAND)
 	else:
+		ui.highlight_current_actor("", players) # clear highlight
+		_arena_update_party_highlights()
 		_set_state(State.ENEMY_ACTION)
 
 func _update_turn_order_ui() -> void:
@@ -156,11 +231,34 @@ func _check_victory() -> bool:
 		if not e.is_dead(): return false
 	return true
 
+func _check_defeat() -> bool:
+	for p in players:
+		if not p.is_dead(): return false
+	return true
+
+func _ensure_valid_ally_target_selection() -> void:
+	if players.size() == 0: return
+	if selected_target_index < 0 or selected_target_index >= players.size():
+		selected_target_index = 0
+	if not players[selected_target_index].is_dead(): return
+	_next_valid_ally_target(1)
+
+func _next_valid_ally_target(direction: int) -> void:
+	var count = players.size()
+	if count == 0: return
+	for i in range(count):
+		selected_target_index = (selected_target_index + direction + count) % count
+		if not players[selected_target_index].is_dead():
+			return
+
+
 # ==============================================================
 # TARGET SELECTION
 # ==============================================================
 func _ensure_valid_target_selection() -> void:
 	if enemies.size() == 0: return
+	if selected_target_index < 0 or selected_target_index >= enemies.size():
+		selected_target_index = 0
 	if not enemies[selected_target_index].is_dead(): return
 	_next_valid_target(1)
 
@@ -267,7 +365,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				_execute_player_command()
 		State.PLAYER_SKILL_SELECT:
-			var skills = player.base_data.skills
+			var skills = current_combatant.base_data.skills
 			if event.is_action_pressed("ui_cancel"):
 				get_viewport().set_input_as_handled()
 				_set_state(State.PLAYER_COMMAND)
@@ -293,15 +391,37 @@ func _unhandled_input(event: InputEvent) -> void:
 			elif event.is_action_pressed("ui_right") or (event is InputEventKey and event.keycode == KEY_D and event.pressed and not event.echo):
 				_next_valid_target(1)
 				ui.set_enemy_target_indicator(selected_target_index, enemies)
+				_arena_update_enemy_target(selected_target_index)
 				get_viewport().set_input_as_handled()
 			elif event.is_action_pressed("ui_left") or (event is InputEventKey and event.keycode == KEY_A and event.pressed and not event.echo):
 				_next_valid_target(-1)
 				ui.set_enemy_target_indicator(selected_target_index, enemies)
+				_arena_update_enemy_target(selected_target_index)
 				get_viewport().set_input_as_handled()
 			elif event.is_action_pressed("ui_accept"):
 				get_viewport().set_input_as_handled()
 				_ensure_valid_target_selection()
+				_arena_update_enemy_target(-1) # clear arena target on confirm
 				var target = enemies[selected_target_index]
+				pending_action.call(target)
+		State.ALLY_TARGET_SELECT:
+			if event.is_action_pressed("ui_cancel"):
+				get_viewport().set_input_as_handled()
+				_set_state(State.PLAYER_SKILL_SELECT)
+				ui.clear_ally_target_indicator(players)
+			elif event.is_action_pressed("ui_right") or event.is_action_pressed("ui_down") or (event is InputEventKey and (event.keycode == KEY_D or event.keycode == KEY_S) and event.pressed and not event.echo):
+				_next_valid_ally_target(1)
+				ui.set_ally_target_indicator(selected_target_index, players)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_left") or event.is_action_pressed("ui_up") or (event is InputEventKey and (event.keycode == KEY_A or event.keycode == KEY_W) and event.pressed and not event.echo):
+				_next_valid_ally_target(-1)
+				ui.set_ally_target_indicator(selected_target_index, players)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				_ensure_valid_ally_target_selection()
+				ui.clear_ally_target_indicator(players)
+				var target = players[selected_target_index]
 				pending_action.call(target)
 		State.VICTORY, State.DEFEAT:
 			if event.is_action_pressed("ui_accept"):
@@ -322,8 +442,8 @@ func _execute_player_command() -> void:
 		2: # DEFEND
 			_set_state(State.PLAYER_ACTION)
 			ui.show_commands(false)
-			player.is_defending = true
-			ui.add_log("%s braces for the next attack." % player.base_data.display_name)
+			current_combatant.is_defending = true
+			ui.add_log("%s braces for the next attack." % current_combatant.base_data.display_name)
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 
@@ -333,7 +453,7 @@ func _process_player_attack(target: Combatant) -> void:
 	
 	await get_tree().create_timer(0.3).timeout
 	
-	var result = _calculate_damage(player, target, DamageType.Type.SWORD)
+	var result = _calculate_damage(current_combatant, target, DamageType.Type.SWORD)
 	target.take_damage(result.amount)
 	_update_all_hp_mp_ui()
 	
@@ -343,15 +463,18 @@ func _process_player_attack(target: Combatant) -> void:
 	_process_shield_after_hit(target, result)
 	
 	if result.is_weakness:
-		ui.add_log("WEAK! %s attacks %s for %d damage!" % [player.base_data.display_name, target.base_data.display_name, result.amount])
+		ui.add_log("WEAK! %s attacks %s for %d damage!" % [current_combatant.base_data.display_name, target.base_data.display_name, result.amount])
 	else:
-		ui.add_log("%s attacks %s for %d damage!" % [player.base_data.display_name, target.base_data.display_name, result.amount])
+		ui.add_log("%s attacks %s for %d damage!" % [current_combatant.base_data.display_name, target.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
 	if target.is_dead():
 		var idx = enemies.find(target)
-		if idx != -1: ui.hide_enemy_ui(idx)
+		if idx != -1:
+			ui.hide_enemy_ui(idx)
+			if idx < enemy_views.size():
+				(enemy_views[idx] as BattleCombatantView).set_defeated()
 	
 	if _check_victory():
 		_set_state(State.VICTORY)
@@ -359,18 +482,20 @@ func _process_player_attack(target: Combatant) -> void:
 		_set_state(State.TURN_START)
 
 func _execute_player_skill(skill: SkillData) -> void:
-	if not player.can_spend_mp(skill.mp_cost):
+	if not current_combatant.can_spend_mp(skill.mp_cost):
 		ui.add_log("Not enough MP.")
 		return
 	
 	if skill.target_type == SkillData.TargetType.ENEMY:
 		pending_action = func(tgt): _process_skill_attack(skill, tgt)
 		_set_state(State.PLAYER_TARGET_SELECT)
-	elif skill.target_type == SkillData.TargetType.SELF:
-		_process_skill_heal(skill)
+	elif skill.target_type == SkillData.TargetType.ALLY:
+		pending_action = func(tgt): _process_skill_heal(skill, tgt)
+		selected_target_index = players.find(current_combatant)
+		_set_state(State.ALLY_TARGET_SELECT)
 
 func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
-	player.spend_mp(skill.mp_cost)
+	current_combatant.spend_mp(skill.mp_cost)
 	_update_all_hp_mp_ui()
 	_set_state(State.PLAYER_ACTION)
 	ui.clear_enemy_target_indicator(enemies)
@@ -378,7 +503,7 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	await get_tree().create_timer(0.3).timeout
 	
 	var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-	var result = _calculate_damage(player, target, skill.damage_type, skill.power, use_magic)
+	var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic)
 	
 	target.take_damage(result.amount)
 	_update_all_hp_mp_ui()
@@ -389,23 +514,26 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	_process_shield_after_hit(target, result)
 	
 	if result.is_weakness:
-		ui.add_log("WEAK! %s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
+		ui.add_log("WEAK! %s uses %s for %d damage!" % [current_combatant.base_data.display_name, skill.display_name, result.amount])
 	else:
-		ui.add_log("%s uses %s for %d damage!" % [player.base_data.display_name, skill.display_name, result.amount])
+		ui.add_log("%s uses %s for %d damage!" % [current_combatant.base_data.display_name, skill.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
 	if target.is_dead():
 		var idx = enemies.find(target)
-		if idx != -1: ui.hide_enemy_ui(idx)
+		if idx != -1:
+			ui.hide_enemy_ui(idx)
+			if idx < enemy_views.size():
+				(enemy_views[idx] as BattleCombatantView).set_defeated()
 	
 	if _check_victory():
 		_set_state(State.VICTORY)
 	else:
 		_set_state(State.TURN_START)
 
-func _process_skill_heal(skill: SkillData) -> void:
-	player.spend_mp(skill.mp_cost)
+func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
+	current_combatant.spend_mp(skill.mp_cost)
 	_update_all_hp_mp_ui()
 	_set_state(State.PLAYER_ACTION)
 	ui.show_skills(false)
@@ -415,17 +543,17 @@ func _process_skill_heal(skill: SkillData) -> void:
 	
 	var base_heal: int
 	if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
-		base_heal = player.base_data.attack
+		base_heal = current_combatant.base_data.attack
 	else:
-		base_heal = player.base_data.magic_attack
+		base_heal = current_combatant.base_data.magic_attack
 	
 	var heal_amount = max(1, roundi(float(base_heal) * skill.power))
-	var old_hp = player.current_hp
-	player.current_hp = min(player.current_hp + heal_amount, player.base_data.max_hp)
-	var actual_heal = player.current_hp - old_hp
+	var old_hp = target.current_hp
+	target.current_hp = min(target.current_hp + heal_amount, target.base_data.max_hp)
+	var actual_heal = target.current_hp - old_hp
 	
 	_update_all_hp_mp_ui()
-	ui.add_log("%s casts %s and restores %d HP!" % [player.base_data.display_name, skill.display_name, actual_heal])
+	ui.add_log("%s casts %s on %s and restores %d HP!" % [current_combatant.base_data.display_name, skill.display_name, target.base_data.display_name, actual_heal])
 	
 	await get_tree().create_timer(0.8).timeout
 	_set_state(State.TURN_START)
@@ -453,15 +581,26 @@ func _process_enemy_turn() -> void:
 			await get_tree().create_timer(0.6).timeout
 	
 	# --- Aksi Normal ---
-	var result = _calculate_damage(enemy_actor, player, DamageType.Type.SWORD)
-	player.take_damage(result.amount)
+	var target: Combatant = null
+	for p in players:
+		if not p.is_dead():
+			target = p
+			break
+			
+	if target == null:
+		_set_state(State.DEFEAT)
+		return
+		
+	var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD)
+	target.take_damage(result.amount)
 	_update_all_hp_mp_ui()
+	_arena_update_party_highlights() # update KO state if target was a player
 	
-	ui.add_log("%s attacks %s for %d damage!" % [enemy_actor.base_data.display_name, player.base_data.display_name, result.amount])
+	ui.add_log("%s attacks %s for %d damage!" % [enemy_actor.base_data.display_name, target.base_data.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
-	if player.is_dead():
+	if _check_defeat():
 		_set_state(State.DEFEAT)
 	else:
 		_set_state(State.TURN_START)
@@ -471,8 +610,12 @@ func _process_enemy_turn() -> void:
 # ==============================================================
 
 func _update_all_hp_mp_ui() -> void:
-	ui.update_player_hp(player.current_hp, player.base_data.max_hp)
-	ui.update_player_mp(player.current_mp, player.base_data.max_mp)
+	for i in range(players.size()):
+		var p = players[i]
+		ui.update_player_hp(i, p.current_hp, p.base_data.max_hp)
+	for i in range(players.size()):
+		var p = players[i]
+		ui.update_player_mp(i, p.current_mp, p.base_data.max_mp)
 	for i in range(enemies.size()):
 		var e = enemies[i]
 		ui.update_enemy_hp(i, e.current_hp, e.base_data.max_hp)
@@ -496,15 +639,34 @@ func _on_ui_command_clicked(index: int) -> void:
 
 func _on_ui_skill_hovered(index: int) -> void:
 	if current_state == State.PLAYER_SKILL_SELECT:
-		var skills = player.base_data.skills
+		var skills = current_combatant.base_data.skills
 		if skills.size() > 0:
 			skill_index = index
 			ui.set_skill_selection(skill_index, skills)
 
 func _on_ui_skill_clicked(index: int) -> void:
 	if current_state == State.PLAYER_SKILL_SELECT:
-		var skills = player.base_data.skills
+		var skills = current_combatant.base_data.skills
 		if skills.size() > 0:
 			skill_index = index
 			ui.set_skill_selection(skill_index, skills)
 			_execute_player_skill(skills[skill_index])
+
+# ==============================================================
+# ARENA VIEW HELPERS
+# ==============================================================
+
+func _arena_update_party_highlights() -> void:
+	for i in range(party_views.size()):
+		var view = party_views[i] as BattleCombatantView
+		if view == null: continue
+		if players[i].is_dead():
+			view.set_ko()
+		else:
+			view.set_current_actor(current_combatant == players[i])
+
+func _arena_update_enemy_target(target_idx: int) -> void:
+	for i in range(enemy_views.size()):
+		var view = enemy_views[i] as BattleCombatantView
+		if view == null: continue
+		view.set_targeted(i == target_idx)

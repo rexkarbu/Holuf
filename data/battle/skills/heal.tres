@@ -8,6 +8,6 @@ skill_id = "heal"
 display_name = "Heal"
 mp_cost = 10
 damage_type = 5
-target_type = 0
+target_type = 1
 scaling_type = 1
 power = 1.2
