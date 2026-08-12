@@ -1,9 +1,12 @@
-[gd_scene load_steps=17 format=3 uid="uid://holuf_world01"]
+[gd_scene load_steps=22 format=3 uid="uid://holuf_world01"]
 
 [ext_resource type="Script" path="res://scripts/world/world.gd" id="1_world"]
 [ext_resource type="PackedScene" uid="uid://holuf_elder01" path="res://scenes/npc/elder.tscn" id="2_elder"]
 [ext_resource type="Script" path="res://scripts/world/old_ruins_trigger.gd" id="3_ruins_trigger"]
 [ext_resource type="Script" path="res://scripts/world/encounter_trigger.gd" id="4_encounter_trigger"]
+[ext_resource type="Script" path="res://scripts/world/encounter_zone.gd" id="5_encounter_zone"]
+[ext_resource type="Script" path="res://scripts/world/safe_zone.gd" id="6_safe_zone"]
+[ext_resource type="Resource" path="res://data/battle/tables/forest_table.tres" id="7_forest_table"]
 
 
 [sub_resource type="RectangleShape2D" id="Shape_WallTop"]
@@ -38,6 +41,12 @@ size = Vector2(160, 160)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_EncounterTrigger"]
 size = Vector2(200, 200)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ForestZone"]
+size = Vector2(2000, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_SafeZone"]
+size = Vector2(600, 600)
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_world")
@@ -287,3 +296,24 @@ theme_override_colors/font_color = Color(0.9, 0.2, 0.2, 1)
 text = "BATTLE ZONE"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ForestEncounterZone" type="Area2D" parent="."]
+position = Vector2(1000, 1000)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("5_encounter_zone")
+encounter_table = ExtResource("7_forest_table")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForestEncounterZone"]
+shape = SubResource("RectangleShape2D_ForestZone")
+debug_color = Color(0.1, 0.9, 0.1, 0.1)
+
+[node name="StartSafeZone" type="Area2D" parent="."]
+position = Vector2(1000, 1000)
+collision_layer = 0
+collision_mask = 1
+script = ExtResource("6_safe_zone")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartSafeZone"]
+shape = SubResource("RectangleShape2D_SafeZone")
+debug_color = Color(0.1, 0.1, 0.9, 0.2)

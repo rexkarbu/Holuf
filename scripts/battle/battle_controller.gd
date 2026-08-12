@@ -53,10 +53,36 @@ func _ready() -> void:
 	ui.setup_players(players)
 	
 	# Instantiate multiple enemies
-	var forest_beast_data = load("res://data/battle/forest_beast.tres")
-	var wolf_data = load("res://data/battle/wolf.tres")
-	if forest_beast_data: enemies.append(Combatant.new(forest_beast_data))
-	if wolf_data: enemies.append(Combatant.new(wolf_data))
+	enemies.clear()
+	if GameManager.pending_formation != null:
+		var counts: Dictionary = {}
+		for edata in GameManager.pending_formation.enemies:
+			var n = edata.display_name
+			if counts.has(n):
+				counts[n] += 1
+			else:
+				counts[n] = 1
+				
+		var current_index: Dictionary = {}
+		for edata in GameManager.pending_formation.enemies:
+			var enemy = Combatant.new(edata)
+			var n = edata.display_name
+			if counts[n] > 1:
+				if not current_index.has(n):
+					current_index[n] = 0
+				var letters = ["A", "B", "C", "D", "E"]
+				var idx = current_index[n]
+				var letter = letters[idx] if idx < letters.size() else str(idx + 1)
+				enemy.runtime_name = n + " " + letter
+				current_index[n] += 1
+			enemies.append(enemy)
+	else:
+		# Fallback to existing manual test setup
+		var forest_beast_data = load("res://data/battle/forest_beast.tres")
+		var wolf_data = load("res://data/battle/wolf.tres")
+		if forest_beast_data: enemies.append(Combatant.new(forest_beast_data))
+		if wolf_data: enemies.append(Combatant.new(wolf_data))
+
 	
 	ui.setup_enemies(enemies)
 	
@@ -127,7 +153,7 @@ func _set_state(new_state: State) -> void:
 		State.TURN_START:
 			_process_turn_start()
 		State.PLAYER_COMMAND:
-			ui.set_turn_title(current_combatant.base_data.display_name.to_upper() + " TURN")
+			ui.set_turn_title(current_combatant.get_display_name().to_upper() + " TURN")
 			command_index = 0
 			ui.set_command_selection(command_index)
 			ui.show_commands(true)
@@ -210,7 +236,7 @@ func _process_turn_start() -> void:
 	current_combatant.is_defending = false
 	
 	if current_combatant in players:
-		ui.highlight_current_actor(current_combatant.base_data.display_name, players)
+		ui.highlight_current_actor(current_combatant.get_display_name(), players)
 		_arena_update_party_highlights()
 		_set_state(State.PLAYER_COMMAND)
 	else:
@@ -221,10 +247,10 @@ func _process_turn_start() -> void:
 func _update_turn_order_ui() -> void:
 	var names = []
 	if current_combatant and not current_combatant.is_dead():
-		names.append("> " + current_combatant.base_data.display_name)
+		names.append("> " + current_combatant.get_display_name())
 	for c in turn_queue:
 		if not c.is_dead():
-			names.append(c.base_data.display_name)
+			names.append(c.get_display_name())
 	ui.update_turn_order(names)
 
 func _check_victory() -> bool:
@@ -332,7 +358,7 @@ func _trigger_break(target: Combatant) -> void:
 	else:
 		target.break_skips_remaining = 1
 		
-	ui.add_log("BREAK! %s is staggered!" % target.base_data.display_name)
+	ui.add_log("BREAK! %s is staggered!" % target.get_display_name())
 	match target.current_break_bonus:
 		BreakBonus.Type.ARMOR_SHATTER: ui.add_log("Break Bonus: Armor Shatter! DEF reduced.")
 		BreakBonus.Type.DISORIENT: ui.add_log("Break Bonus: Disorient! SPEED reduced.")
@@ -444,7 +470,7 @@ func _execute_player_command() -> void:
 			_set_state(State.PLAYER_ACTION)
 			ui.show_commands(false)
 			current_combatant.is_defending = true
-			ui.add_log("%s braces for the next attack." % current_combatant.base_data.display_name)
+			ui.add_log("%s braces for the next attack." % current_combatant.get_display_name())
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 
@@ -464,9 +490,9 @@ func _process_player_attack(target: Combatant) -> void:
 	_process_shield_after_hit(target, result)
 	
 	if result.is_weakness:
-		ui.add_log("WEAK! %s attacks %s for %d damage!" % [current_combatant.base_data.display_name, target.base_data.display_name, result.amount])
+		ui.add_log("WEAK! %s attacks %s for %d damage!" % [current_combatant.get_display_name(), target.get_display_name(), result.amount])
 	else:
-		ui.add_log("%s attacks %s for %d damage!" % [current_combatant.base_data.display_name, target.base_data.display_name, result.amount])
+		ui.add_log("%s attacks %s for %d damage!" % [current_combatant.get_display_name(), target.get_display_name(), result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
@@ -515,9 +541,9 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	_process_shield_after_hit(target, result)
 	
 	if result.is_weakness:
-		ui.add_log("WEAK! %s uses %s for %d damage!" % [current_combatant.base_data.display_name, skill.display_name, result.amount])
+		ui.add_log("WEAK! %s uses %s for %d damage!" % [current_combatant.get_display_name(), skill.display_name, result.amount])
 	else:
-		ui.add_log("%s uses %s for %d damage!" % [current_combatant.base_data.display_name, skill.display_name, result.amount])
+		ui.add_log("%s uses %s for %d damage!" % [current_combatant.get_display_name(), skill.display_name, result.amount])
 	
 	await get_tree().create_timer(0.8).timeout
 	
@@ -554,7 +580,7 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	var actual_heal = target.current_hp - old_hp
 	
 	_update_all_hp_mp_ui()
-	ui.add_log("%s casts %s on %s and restores %d HP!" % [current_combatant.base_data.display_name, skill.display_name, target.base_data.display_name, actual_heal])
+	ui.add_log("%s casts %s on %s and restores %d HP!" % [current_combatant.get_display_name(), skill.display_name, target.get_display_name(), actual_heal])
 	
 	await get_tree().create_timer(0.8).timeout
 	_set_state(State.TURN_START)
@@ -571,13 +597,13 @@ func _process_enemy_turn() -> void:
 	if enemy_actor.is_broken:
 		if enemy_actor.break_skips_remaining > 0:
 			enemy_actor.break_skips_remaining -= 1
-			ui.add_log("%s is Broken and cannot act!" % enemy_actor.base_data.display_name)
+			ui.add_log("%s is Broken and cannot act!" % enemy_actor.get_display_name())
 			await get_tree().create_timer(0.8).timeout
 			_set_state(State.TURN_START)
 			return
 		else:
 			enemy_actor.recover_from_break()
-			ui.add_log("%s recovered from Break." % enemy_actor.base_data.display_name)
+			ui.add_log("%s recovered from Break." % enemy_actor.get_display_name())
 			_update_all_shield_ui()
 			await get_tree().create_timer(0.6).timeout
 	
@@ -598,9 +624,9 @@ func _process_enemy_turn() -> void:
 		_update_all_hp_mp_ui()
 		_arena_update_party_highlights()
 		ui.add_log("%s uses %s on %s for %d damage!" % [
-			enemy_actor.base_data.display_name,
+			enemy_actor.get_display_name(),
 			skill.display_name,
-			target.base_data.display_name,
+			target.get_display_name(),
 			result.amount
 		])
 	else:
@@ -610,8 +636,8 @@ func _process_enemy_turn() -> void:
 		_update_all_hp_mp_ui()
 		_arena_update_party_highlights()
 		ui.add_log("%s attacks %s for %d damage!" % [
-			enemy_actor.base_data.display_name,
-			target.base_data.display_name,
+			enemy_actor.get_display_name(),
+			target.get_display_name(),
 			result.amount
 		])
 	

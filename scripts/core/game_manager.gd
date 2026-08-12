@@ -5,6 +5,7 @@ extends Node
 
 var player_return_position: Vector2 = Vector2.ZERO
 var consumed_encounters: Array[String] = []
+var pending_formation: EnemyFormation = null
 
 var is_transitioning: bool = false
 
@@ -28,5 +29,10 @@ func return_to_world() -> void:
 		return
 		
 	is_transitioning = true
+	pending_formation = null
+	
+	if EncounterManager:
+		EncounterManager.reset_encounter()
+		
 	# Mulai transisi kembali ke main scene
 	TransitionManager.transition_to_scene("res://scenes/main/main.tscn")

@@ -4,7 +4,11 @@ extends RefCounted
 ## Kelas runtime untuk membungkus CombatantData dan menyimpan state seperti HP/MP/Status.
 
 var base_data: CombatantData
+var runtime_name: String = ""
 var current_hp: int
+
+func get_display_name() -> String:
+	return runtime_name if runtime_name != "" else base_data.display_name
 var current_mp: int
 
 var is_defending: bool = false

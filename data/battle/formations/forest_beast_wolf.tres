@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyFormation" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/enemy_formation.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://wolf_data_01" path="res://data/battle/wolf.tres" id="2_wolf"]
+[ext_resource type="Resource" uid="uid://combatant_beast01" path="res://data/battle/forest_beast.tres" id="3_beast"]
+
+[resource]
+script = ExtResource("1_script")
+formation_id = "forest_beast_wolf"
+enemies = Array[Resource]([ExtResource("3_beast"), ExtResource("2_wolf")])
+weight = 10

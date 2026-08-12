@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EncounterTable" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/encounter_table.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/battle/formations/forest_wolf.tres" id="2_f_wolf"]
+[ext_resource type="Resource" path="res://data/battle/formations/forest_beast.tres" id="3_f_beast"]
+[ext_resource type="Resource" path="res://data/battle/formations/forest_wolf_x2.tres" id="4_f_wolf_x2"]
+[ext_resource type="Resource" path="res://data/battle/formations/forest_beast_wolf.tres" id="5_f_beast_wolf"]
+
+[resource]
+script = ExtResource("1_script")
+min_distance = 450.0
+max_distance = 850.0
+formations = Array[Resource]([ExtResource("2_f_wolf"), ExtResource("3_f_beast"), ExtResource("4_f_wolf_x2"), ExtResource("5_f_beast_wolf")])

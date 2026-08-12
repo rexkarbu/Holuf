@@ -37,7 +37,11 @@ func _physics_process(_delta: float) -> void:
 		direction = direction.normalized()
 
 	velocity = direction * move_speed
+	var old_pos = global_position
 	move_and_slide()
+	var walked = global_position.distance_to(old_pos)
+	if walked > 0.0:
+		EncounterManager.add_distance(walked)
 
 	# --- INTERACTION DETECTION ---
 	_update_interaction()
