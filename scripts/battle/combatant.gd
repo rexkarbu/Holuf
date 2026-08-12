@@ -28,25 +28,28 @@ func _init(data: CombatantData, char_id: String = "") -> void:
 	base_data = data
 	character_id = char_id  # Store for effective stat calculations
 	
-	# Apply level-based stat growth if this is a player character
-	var level = 1
+	# M21 PATCH: Initialize HP/MP from persistent state, NOT max values
 	if char_id != "" and PartyManager.character_progress.has(char_id):
-		level = PartyManager.character_progress[char_id].level
+		var progress = PartyManager.character_progress[char_id]
+		
+		# Read persistent current HP/MP
+		current_hp = progress.current_hp
+		current_mp = progress.current_mp
+		
+		# Safety clamp: ensure values don't exceed effective max
+		var level = progress.level
+		var level_bonus = level - 1
+		var effective_max_hp = data.max_hp + (data.hp_growth * level_bonus)
+		var effective_max_mp = data.max_mp + (data.mp_growth * level_bonus)
+		
+		current_hp = clamp(current_hp, 0, effective_max_hp)
+		current_mp = clamp(current_mp, 0, effective_max_mp)
+	else:
+		# Enemy or non-tracked combatant: use max values
+		current_hp = data.max_hp
+		current_mp = data.max_mp
 	
-	var level_bonus = level - 1
-	var effective_max_hp = data.max_hp + (data.hp_growth * level_bonus)
-	var effective_max_mp = data.max_mp + (data.mp_growth * level_bonus)
-	
-	current_hp = effective_max_hp
-	current_mp = effective_max_mp
 	current_shield = data.max_shield
-	
-	# Check if character needs full heal from level up (HP ONLY, not MP per design rule)
-	if char_id != "" and PartyManager.character_progress.has(char_id):
-		if PartyManager.character_progress[char_id].needs_full_heal:
-			current_hp = effective_max_hp
-			# MP is NOT restored on level up (design rule for M21)
-			PartyManager.character_progress[char_id].needs_full_heal = false
 
 
 ## Mengurangi HP berdasarkan damage. Mengembalikan damage aktual yang diterima.

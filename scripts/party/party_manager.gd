@@ -16,7 +16,7 @@ const MAX_ACTIVE: int = 4
 
 # --- PROGRESSION STATE ---
 const ACTIVE_EXP_RATE: float = 1.0
-const RESERVE_EXP_RATE: float = 0.75
+const RESERVE_EXP_RATE: float = 0.0  # M21 PATCH: Reserve characters no longer receive battle EXP
 const MAX_LEVEL: int = 99
 
 var party_gold: int = 0
@@ -33,7 +33,23 @@ func _ready() -> void:
 		var res = load("res://data/party/" + cid + ".tres")
 		if res:
 			roster[cid] = res
-			character_progress[cid] = {"level": 1, "current_exp": 0, "needs_full_heal": false}
+			# M21 PATCH: Load CombatantData to get HP/MP stats
+			var combat_data_path = "res://data/battle/" + cid + ".tres"
+			var combat_data = load(combat_data_path) if ResourceLoader.exists(combat_data_path) else null
+			
+			var initial_max_hp = 100  # Default fallback
+			var initial_max_mp = 50   # Default fallback
+			
+			if combat_data:
+				initial_max_hp = combat_data.max_hp + (combat_data.hp_growth * 0)  # Level 1
+				initial_max_mp = combat_data.max_mp + (combat_data.mp_growth * 0)  # Level 1
+			
+			character_progress[cid] = {
+				"level": 1,
+				"current_exp": 0,
+				"current_hp": initial_max_hp,  # Persistent HP
+				"current_mp": initial_max_mp   # Persistent MP
+			}
 	
 	# Inisialisasi Active Party (default: Hero, B, C, D)
 	active_party = ["hero", "character_b", "character_c", "character_d"]
@@ -107,17 +123,14 @@ func grant_rewards(total_exp: int, total_gold: int) -> Array[String]:
 	party_gold += total_gold
 	var messages: Array[String] = []
 	
-	# Active members
+	# M21 PATCH: Only Active members receive battle EXP (100% each, not divided)
 	for cid in active_party:
 		var msgs = _process_exp(cid, total_exp, true)
 		messages.append_array(msgs)
-		
-	# Reserve members
-	var reserve_exp = roundi(float(total_exp) * RESERVE_EXP_RATE)
-	for cid in reserve_party:
-		var msgs = _process_exp(cid, reserve_exp, false)
-		messages.append_array(msgs)
-		
+	
+	# Reserve members receive NO battle EXP (RESERVE_EXP_RATE = 0.0)
+	# This is intentional - removed old 75% reserve EXP behavior
+	
 	return messages
 
 func _process_exp(char_id: String, exp_amount: int, is_active: bool) -> Array[String]:
@@ -133,7 +146,19 @@ func _process_exp(char_id: String, exp_amount: int, is_active: bool) -> Array[St
 	while progress.current_exp >= exp_req and progress.level < MAX_LEVEL:
 		progress.current_exp -= exp_req
 		progress.level += 1
-		progress.needs_full_heal = true # Flags combatant to fully restore HP/MP on next load
+		
+		# M21 PATCH: Level Up does NOT restore HP/MP to full
+		# Only clamp current values if they exceed new maximum
+		var combat_data_path = "res://data/battle/" + char_id + ".tres"
+		var combat_data = load(combat_data_path) if ResourceLoader.exists(combat_data_path) else null
+		
+		if combat_data:
+			var level_bonus = progress.level - 1
+			var new_max_hp = combat_data.max_hp + (combat_data.hp_growth * level_bonus)
+			var new_max_mp = combat_data.max_mp + (combat_data.mp_growth * level_bonus)
+			
+			progress.current_hp = min(progress.current_hp, new_max_hp)
+			progress.current_mp = min(progress.current_mp, new_max_mp)
 		
 		var msg = display_name + " reached Level " + str(progress.level) + "!"
 		if not is_active:
@@ -143,10 +168,16 @@ func _process_exp(char_id: String, exp_amount: int, is_active: bool) -> Array[St
 		if progress.level >= MAX_LEVEL:
 			progress.current_exp = 0
 			break
-			
-		exp_req = get_exp_required(progress.level)
 		
+		exp_req = get_exp_required(progress.level)
+	
 	return msgs
+
+# M21 PATCH: Sync battle HP/MP back to persistent state after battle
+func sync_battle_state(char_id: String, hp: int, mp: int) -> void:
+	if char_id in character_progress:
+		character_progress[char_id].current_hp = hp
+		character_progress[char_id].current_mp = mp
 
 # --- DEBUG HELPERS ---
 func grant_test_exp(char_id: String, amount: int) -> void:

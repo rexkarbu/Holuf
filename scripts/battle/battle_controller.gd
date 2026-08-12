@@ -840,6 +840,11 @@ func _process_victory_rewards() -> void:
 		return
 	rewards_processed = true
 	
+	# M21 PATCH: Sync battle HP/MP state back to PartyManager BEFORE calculating rewards
+	for player in players:
+		if player.character_id != "":
+			PartyManager.sync_battle_state(player.character_id, player.current_hp, player.current_mp)
+	
 	# Calculate total rewards
 	var total_exp: int = 0
 	var total_gold: int = 0
