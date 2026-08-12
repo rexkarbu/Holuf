@@ -162,6 +162,7 @@ func _set_state(new_state: State) -> void:
 			ui.set_command_selection(command_index)
 			ui.show_commands(true)
 			ui.show_skills(false)
+			ui.show_items(false)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("")
 		State.PLAYER_SKILL_SELECT:
@@ -186,6 +187,7 @@ func _set_state(new_state: State) -> void:
 		State.PLAYER_TARGET_SELECT:
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.show_items(false)
 			_ensure_valid_target_selection()
 			ui.set_enemy_target_indicator(selected_target_index, enemies)
 			_arena_update_enemy_target(selected_target_index)
@@ -193,6 +195,7 @@ func _set_state(new_state: State) -> void:
 		State.ALLY_TARGET_SELECT:
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.show_items(false)
 			_ensure_valid_ally_target_selection()
 			ui.set_ally_target_indicator(selected_target_index, players)
 			ui.set_hint("Select Ally / ESC to cancel")
@@ -200,6 +203,7 @@ func _set_state(new_state: State) -> void:
 			ui.set_turn_title("ENEMY TURN")
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.show_items(false)
 			ui.clear_enemy_target_indicator(enemies)
 			_process_enemy_turn()
 		State.VICTORY:
@@ -207,6 +211,7 @@ func _set_state(new_state: State) -> void:
 			ui.add_log("All enemies defeated!")
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.show_items(false)
 			ui.clear_enemy_target_indicator(enemies)
 			_process_victory_rewards()
 		State.DEFEAT:
@@ -214,6 +219,7 @@ func _set_state(new_state: State) -> void:
 			ui.add_log("The party has fallen.")
 			ui.show_commands(false)
 			ui.show_skills(false)
+			ui.show_items(false)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ENTER to return")
 
