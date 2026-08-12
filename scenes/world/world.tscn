@@ -276,27 +276,6 @@ script = ExtResource("3_ruins_trigger")
 shape = SubResource("RectangleShape2D_RuinsTrigger")
 debug_color = Color(0.8, 0.6, 0.1, 0.2)
 
-[node name="BattleEncounter" type="Area2D" parent="."]
-position = Vector2(1200, 400)
-collision_layer = 0
-collision_mask = 1
-script = ExtResource("4_encounter_trigger")
-encounter_id = "forest_battle_1"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BattleEncounter"]
-shape = SubResource("RectangleShape2D_EncounterTrigger")
-debug_color = Color(0.9, 0.1, 0.1, 0.3)
-
-[node name="Label" type="Label" parent="BattleEncounter"]
-offset_left = -60.0
-offset_top = -20.0
-offset_right = 60.0
-offset_bottom = 20.0
-theme_override_colors/font_color = Color(0.9, 0.2, 0.2, 1)
-text = "BATTLE ZONE"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="ForestEncounterZone" type="Area2D" parent="."]
 position = Vector2(1000, 1000)
 collision_layer = 0
