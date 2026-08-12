@@ -41,11 +41,11 @@ func _init(data: CombatantData, char_id: String = "") -> void:
 	current_mp = effective_max_mp
 	current_shield = data.max_shield
 	
-	# Check if character needs full heal from level up
+	# Check if character needs full heal from level up (HP ONLY, not MP per design rule)
 	if char_id != "" and PartyManager.character_progress.has(char_id):
 		if PartyManager.character_progress[char_id].needs_full_heal:
 			current_hp = effective_max_hp
-			current_mp = effective_max_mp
+			# MP is NOT restored on level up (design rule for M21)
 			PartyManager.character_progress[char_id].needs_full_heal = false
 
 
