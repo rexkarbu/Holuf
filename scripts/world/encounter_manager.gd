@@ -10,7 +10,7 @@ var next_threshold: float = 0.0
 var is_locked: bool = false
 var encounters_enabled: bool = true
 
-var debug_mode: DebugMode = DebugMode.FAST
+var debug_mode: DebugMode = DebugMode.NORMAL
 
 func _ready() -> void:
 	_generate_threshold()
