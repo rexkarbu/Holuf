@@ -10,14 +10,15 @@ var pending_formation: EnemyFormation = null
 var is_transitioning: bool = false
 
 
-func start_battle(encounter_id: String, player_pos: Vector2) -> void:
+func start_battle(encounter_id: String, player_pos: Vector2, is_repeatable: bool = false) -> void:
 	if is_transitioning:
 		return
-	if encounter_id in consumed_encounters:
+	if not is_repeatable and encounter_id in consumed_encounters:
 		return
 	
 	is_transitioning = true
-	consumed_encounters.append(encounter_id)
+	if not is_repeatable:
+		consumed_encounters.append(encounter_id)
 	player_return_position = player_pos
 	
 	# Mulai transisi ke battle scene

@@ -10,7 +10,7 @@ var next_threshold: float = 0.0
 var is_locked: bool = false
 var encounters_enabled: bool = true
 
-var debug_mode: DebugMode = DebugMode.NORMAL
+var debug_mode: DebugMode = DebugMode.FAST
 
 func _ready() -> void:
 	_generate_threshold()
@@ -87,7 +87,7 @@ func _trigger_encounter() -> void:
 		if players.size() > 0:
 			player_pos = players[0].global_position
 			
-		GameManager.start_battle("random_encounter", player_pos)
+		GameManager.start_battle("random_encounter", player_pos, true)
 
 func reset_encounter() -> void:
 	distance_walked = 0.0
