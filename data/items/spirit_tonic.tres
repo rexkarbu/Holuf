@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://7370697269745f74"]
+
+[ext_resource type="Script" path="res://scripts/battle/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "spirit_tonic"
+display_name = "Spirit Tonic"
+description = "Restores 20 MP to one living ally."
+item_type = 0
+target_type = 0
+effect_type = 2
+power = 20
+usable_in_battle = true
+stack_limit = 99

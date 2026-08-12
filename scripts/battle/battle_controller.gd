@@ -2,7 +2,7 @@ extends Node2D
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
-enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
+enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ITEM_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
 
 @export var hero_data: CombatantData
 @export var enemy_data: CombatantData # Fallback
@@ -15,11 +15,13 @@ var turn_queue: Array[Combatant] = []
 var current_combatant: Combatant
 
 var command_index: int = 0
-const COMMAND_COUNT: int = 3 # ATTACK, SKILL, DEFEND
+const COMMAND_COUNT: int = 4 # ATTACK, SKILL, ITEM, DEFEND
 
 var skill_index: int = 0
+var item_index: int = 0
 var selected_target_index: int = 0
 var pending_action: Callable
+var pending_item: ItemData = null
 
 var debug_bonus_mode: int = BreakBonus.DebugMode.RANDOM
 var enemy_ai_mode: int = EnemyAI.Mode.RANDOM  # DEVELOPMENT: change to FORCE_SKILL / FORCE_BASIC_ATTACK for testing
@@ -471,7 +473,9 @@ func _execute_player_command() -> void:
 			_set_state(State.PLAYER_TARGET_SELECT)
 		1: # SKILL
 			_set_state(State.PLAYER_SKILL_SELECT)
-		2: # DEFEND
+		2: # ITEM
+			_set_state(State.PLAYER_ITEM_SELECT)
+		3: # DEFEND
 			_set_state(State.PLAYER_ACTION)
 			ui.show_commands(false)
 			current_combatant.is_defending = true

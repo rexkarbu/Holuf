@@ -23,6 +23,7 @@ QuestManager="*res://scripts/quest/quest_manager.gd"
 GameManager="*res://scripts/core/game_manager.gd"
 TransitionManager="*res://scenes/autoload/transition_manager.tscn"
 PartyManager="*res://scripts/party/party_manager.gd"
+InventoryManager="*res://scripts/core/inventory_manager.gd"
 EncounterManager="*res://scripts/world/encounter_manager.gd"
 
 [display]

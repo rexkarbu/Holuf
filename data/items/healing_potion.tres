@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=2 format=3 uid="uid://6865616c696e675f"]
+
+[ext_resource type="Script" path="res://scripts/battle/item_data.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "healing_potion"
+display_name = "Healing Potion"
+description = "Restores 50 HP to one living ally."
+item_type = 0
+target_type = 0
+effect_type = 1
+power = 50
+usable_in_battle = true
+stack_limit = 99
