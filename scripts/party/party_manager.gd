@@ -11,6 +11,7 @@ var reserve_party: Array[String] = []
 
 var ui_instance: Node = null
 
+const MIN_ACTIVE: int = 1
 const MAX_ACTIVE: int = 4
 
 func _ready() -> void:
@@ -35,6 +36,7 @@ func _update_reserve() -> void:
 		if not cid in active_party:
 			reserve_party.append(cid)
 
+## Swap anggota active dengan reserve.
 func swap_members(active_index: int, reserve_index: int) -> void:
 	if active_index < 0 or active_index >= active_party.size(): return
 	if reserve_index < 0 or reserve_index >= reserve_party.size(): return
@@ -46,6 +48,27 @@ func swap_members(active_index: int, reserve_index: int) -> void:
 	reserve_party[reserve_index] = a_id
 	
 	_update_reserve()
+
+## Tambahkan karakter dari reserve ke active (jika ada slot kosong).
+## Mengembalikan true jika berhasil, false jika active sudah penuh.
+func add_to_active(char_id: String) -> bool:
+	if active_party.size() >= MAX_ACTIVE: return false
+	if char_id in active_party: return false
+	if not char_id in roster: return false
+	
+	active_party.append(char_id)
+	_update_reserve()
+	return true
+
+## Hapus karakter dari active ke reserve.
+## Mengembalikan true jika berhasil, false jika melanggar minimum.
+func remove_from_active(char_id: String) -> bool:
+	if active_party.size() <= MIN_ACTIVE: return false
+	if not char_id in active_party: return false
+	
+	active_party.erase(char_id)
+	_update_reserve()
+	return true
 
 func open_party_ui() -> void:
 	if ui_instance != null: return
