@@ -6,6 +6,8 @@ signal command_hovered(index: int)
 signal command_clicked(index: int)
 signal skill_hovered(index: int)
 signal skill_clicked(index: int)
+signal item_hovered(index: int)
+signal item_clicked(index: int)
 
 @onready var title_label: Label = $Title
 @onready var hint_label: Label = $Hint
@@ -25,6 +27,9 @@ var player_stats_nodes: Array[Control] = []
 @onready var skill_panel: PanelContainer = $BottomHUD/LeftSection/SkillPanel
 @onready var skill_vbox: VBoxContainer = $BottomHUD/LeftSection/SkillPanel/MarginContainer/VBoxContainer
 
+@onready var item_panel: PanelContainer = $BottomHUD/LeftSection/ItemPanel
+@onready var item_vbox: VBoxContainer = $BottomHUD/LeftSection/ItemPanel/MarginContainer/VBoxContainer
+
 # Enemy Status Panel (in BottomHUD - horizontal layout)
 @onready var enemy_list: HBoxContainer = $BottomHUD/EnemyStatusPanel/MarginContainer/EnemyList
 @onready var base_enemy_block: PanelContainer = $BottomHUD/EnemyStatusPanel/MarginContainer/EnemyList/BaseEnemyBlock
@@ -34,6 +39,8 @@ var enemy_stats_nodes: Array[Control] = []
 func _ready() -> void:
 	command_panel.hide()
 	skill_panel.hide()
+	if item_panel:
+		item_panel.hide()
 
 	for i in range(command_vbox.get_child_count()):
 		var label = command_vbox.get_child(i) as Control
@@ -270,6 +277,56 @@ func _on_skill_hovered(index: int) -> void:
 func _on_skill_gui_input(event: InputEvent, index: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		skill_clicked.emit(index)
+
+# ==============================================================
+# ITEM MENU
+# ==============================================================
+
+func show_items(visible_state: bool) -> void:
+	if item_panel:
+		item_panel.visible = visible_state
+
+func populate_item_menu(items: Array) -> void:
+	if not item_vbox:
+		return
+	
+	for child in item_vbox.get_children():
+		child.free()
+	
+	for i in range(items.size()):
+		var item = items[i]
+		var qty = InventoryManager.get_quantity(item.item_id)
+		var label = Label.new()
+		label.text = "  %s x%d" % [item.display_name, qty]
+		label.add_theme_font_size_override("font_size", 18)
+		label.mouse_filter = Control.MOUSE_FILTER_STOP
+		label.mouse_entered.connect(_on_item_hovered.bind(i))
+		label.gui_input.connect(_on_item_gui_input.bind(i))
+		item_vbox.add_child(label)
+
+func set_item_selection(index: int, items: Array) -> void:
+	if not item_vbox:
+		return
+	
+	var children = item_vbox.get_children()
+	for i in range(children.size()):
+		var label = children[i] as Label
+		if label == null or i >= items.size(): continue
+		var item = items[i]
+		var qty = InventoryManager.get_quantity(item.item_id)
+		if i == index:
+			label.text = "> %s x%d" % [item.display_name, qty]
+			label.add_theme_color_override("font_color", Color(1, 0.8, 0.2))
+		else:
+			label.text = "  %s x%d" % [item.display_name, qty]
+			label.add_theme_color_override("font_color", Color(1, 1, 1))
+
+func _on_item_hovered(index: int) -> void:
+	item_hovered.emit(index)
+
+func _on_item_gui_input(event: InputEvent, index: int) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		item_clicked.emit(index)
 
 # ==============================================================
 # VICTORY REWARDS UI (MILESTONE 20)

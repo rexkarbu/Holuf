@@ -178,6 +178,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "  SKILL"
 
+[node name="Item" type="Label" parent="UI/BottomHUD/LeftSection/CommandPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "  ITEM"
+
 [node name="Defend" type="Label" parent="UI/BottomHUD/LeftSection/CommandPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
@@ -195,6 +200,21 @@ theme_override_constants/margin_right = 18
 theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/BottomHUD/LeftSection/SkillPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ItemPanel" type="PanelContainer" parent="UI/BottomHUD/LeftSection"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_cmd")
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/BottomHUD/LeftSection/ItemPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/BottomHUD/LeftSection/ItemPanel/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 8
 

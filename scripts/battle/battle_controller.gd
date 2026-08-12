@@ -173,6 +173,16 @@ func _set_state(new_state: State) -> void:
 			ui.show_skills(true)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ESC to cancel")
+		State.PLAYER_ITEM_SELECT:
+			item_index = 0
+			ui.show_commands(false)
+			var items = InventoryManager.get_battle_items()
+			ui.populate_item_menu(items)
+			if items.size() > 0:
+				ui.set_item_selection(item_index, items)
+			ui.show_items(true)
+			ui.clear_enemy_target_indicator(enemies)
+			ui.set_hint("Press ESC to cancel")
 		State.PLAYER_TARGET_SELECT:
 			ui.show_commands(false)
 			ui.show_skills(false)
@@ -417,6 +427,25 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				if skills.size() > 0:
 					_execute_player_skill(skills[skill_index])
+		State.PLAYER_ITEM_SELECT:
+			var items = InventoryManager.get_battle_items()
+			if event.is_action_pressed("ui_cancel"):
+				get_viewport().set_input_as_handled()
+				_set_state(State.PLAYER_COMMAND)
+			elif event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
+				if items.size() > 0:
+					item_index = (item_index + 1) % items.size()
+					ui.set_item_selection(item_index, items)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_up") or (event is InputEventKey and event.keycode == KEY_W and event.pressed and not event.echo):
+				if items.size() > 0:
+					item_index = (item_index - 1 + items.size()) % items.size()
+					ui.set_item_selection(item_index, items)
+				get_viewport().set_input_as_handled()
+			elif event.is_action_pressed("ui_accept"):
+				get_viewport().set_input_as_handled()
+				if items.size() > 0:
+					_execute_player_item(items[item_index])
 		State.PLAYER_TARGET_SELECT:
 			if event.is_action_pressed("ui_cancel"):
 				get_viewport().set_input_as_handled()
@@ -441,7 +470,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		State.ALLY_TARGET_SELECT:
 			if event.is_action_pressed("ui_cancel"):
 				get_viewport().set_input_as_handled()
-				_set_state(State.PLAYER_SKILL_SELECT)
+				if pending_item != null:
+					pending_item = null
+					_set_state(State.PLAYER_ITEM_SELECT)
+				else:
+					_set_state(State.PLAYER_SKILL_SELECT)
 				ui.clear_ally_target_indicator(players)
 			elif event.is_action_pressed("ui_right") or event.is_action_pressed("ui_down") or (event is InputEventKey and (event.keycode == KEY_D or event.keycode == KEY_S) and event.pressed and not event.echo):
 				_next_valid_ally_target(1)
@@ -594,6 +627,72 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	
 	await get_tree().create_timer(0.8).timeout
 	_set_state(State.TURN_START)
+
+func _execute_player_item(item: ItemData) -> void:
+	pending_item = item
+	if item.target_type == ItemData.TargetType.ONE_LIVING_ALLY:
+		pending_action = func(tgt): _process_item_use(item, tgt)
+		selected_target_index = players.find(current_combatant)
+		_set_state(State.ALLY_TARGET_SELECT)
+
+func _process_item_use(item: ItemData, target: Combatant) -> void:
+	# Validate target based on effect type
+	var is_valid = _validate_item_target(item, target)
+	if not is_valid:
+		return  # Stay in target selection
+	
+	# Consume item from inventory
+	if not InventoryManager.remove_item(item.item_id, 1):
+		ui.add_log("Item no longer available.")
+		_set_state(State.PLAYER_COMMAND)
+		return
+	
+	pending_item = null
+	_set_state(State.PLAYER_ACTION)
+	ui.show_items(false)
+	ui.set_hint("")
+	
+	await get_tree().create_timer(0.3).timeout
+	
+	# Apply item effect
+	match item.effect_type:
+		ItemData.EffectType.HEAL_HP:
+			var old_hp = target.current_hp
+			var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
+			target.current_hp = min(target.current_hp + item.power, target_max_hp)
+			var actual_heal = target.current_hp - old_hp
+			_update_all_hp_mp_ui()
+			ui.add_log("%s uses %s on %s. +%d HP!" % [current_combatant.get_display_name(), item.display_name, target.get_display_name(), actual_heal])
+		
+		ItemData.EffectType.RESTORE_MP:
+			var old_mp = target.current_mp
+			var target_max_mp = target.get_effective_max_mp() if target.has_method("get_effective_max_mp") else target.base_data.max_mp
+			target.current_mp = min(target.current_mp + item.power, target_max_mp)
+			var actual_restore = target.current_mp - old_mp
+			_update_all_hp_mp_ui()
+			ui.add_log("%s uses %s on %s. +%d MP!" % [current_combatant.get_display_name(), item.display_name, target.get_display_name(), actual_restore])
+	
+	await get_tree().create_timer(0.8).timeout
+	_set_state(State.TURN_START)
+
+func _validate_item_target(item: ItemData, target: Combatant) -> bool:
+	var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
+	var target_max_mp = target.get_effective_max_mp() if target.has_method("get_effective_max_mp") else target.base_data.max_mp
+	
+	match item.effect_type:
+		ItemData.EffectType.HEAL_HP:
+			if target.current_hp >= target_max_hp:
+				ui.add_log("HP is already full.")
+				return false
+		ItemData.EffectType.RESTORE_MP:
+			if target_max_mp <= 0:
+				ui.add_log("Target has no MP.")
+				return false
+			if target.current_mp >= target_max_mp:
+				ui.add_log("MP is already full.")
+				return false
+	
+	return true
 
 # ==============================================================
 # ENEMY TURN — BREAK-AWARE
