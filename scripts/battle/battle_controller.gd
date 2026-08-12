@@ -22,6 +22,7 @@ var selected_target_index: int = 0
 var pending_action: Callable
 
 var debug_bonus_mode: int = BreakBonus.DebugMode.RANDOM
+var enemy_ai_mode: int = EnemyAI.Mode.RANDOM  # DEVELOPMENT: change to FORCE_SKILL / FORCE_BASIC_ATTACK for testing
 
 # === Arena Views ===
 var party_views: Array = []
@@ -566,7 +567,7 @@ func _process_enemy_turn() -> void:
 	var enemy_actor = current_combatant
 	await get_tree().create_timer(0.7).timeout
 	
-	# --- Break State Check ---
+	# --- Break State Check (runs BEFORE AI decision) ---
 	if enemy_actor.is_broken:
 		if enemy_actor.break_skips_remaining > 0:
 			enemy_actor.break_skips_remaining -= 1
@@ -580,23 +581,39 @@ func _process_enemy_turn() -> void:
 			_update_all_shield_ui()
 			await get_tree().create_timer(0.6).timeout
 	
-	# --- Aksi Normal ---
-	var target: Combatant = null
-	for p in players:
-		if not p.is_dead():
-			target = p
-			break
-			
+	# --- Basic Enemy AI: target selection ---
+	var target: Combatant = EnemyAI.choose_target(players)
 	if target == null:
 		_set_state(State.DEFEAT)
 		return
-		
-	var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD)
-	target.take_damage(result.amount)
-	_update_all_hp_mp_ui()
-	_arena_update_party_highlights() # update KO state if target was a player
 	
-	ui.add_log("%s attacks %s for %d damage!" % [enemy_actor.base_data.display_name, target.base_data.display_name, result.amount])
+	# --- Basic Enemy AI: action selection (70% Basic / 30% Skill) ---
+	var action = EnemyAI.choose_action(enemy_actor, enemy_ai_mode)
+	
+	if action["type"] == "skill":
+		var skill: SkillData = action["skill"]
+		var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
+		var result = _calculate_damage(enemy_actor, target, skill.damage_type, skill.power, use_magic)
+		target.take_damage(result.amount)
+		_update_all_hp_mp_ui()
+		_arena_update_party_highlights()
+		ui.add_log("%s uses %s on %s for %d damage!" % [
+			enemy_actor.base_data.display_name,
+			skill.display_name,
+			target.base_data.display_name,
+			result.amount
+		])
+	else:
+		# Basic Attack
+		var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD)
+		target.take_damage(result.amount)
+		_update_all_hp_mp_ui()
+		_arena_update_party_highlights()
+		ui.add_log("%s attacks %s for %d damage!" % [
+			enemy_actor.base_data.display_name,
+			target.base_data.display_name,
+			result.amount
+		])
 	
 	await get_tree().create_timer(0.8).timeout
 	
