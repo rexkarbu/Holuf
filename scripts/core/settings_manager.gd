@@ -93,15 +93,27 @@ func apply_all_settings() -> void:
 # ==============================================================
 
 func apply_display_mode() -> void:
+	var target_mode = DisplayServer.WINDOW_MODE_WINDOWED
+	var target_borderless = false
+	
 	match current_settings["display_mode"]:
 		DisplayMode.WINDOWED:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, false)
+			target_mode = DisplayServer.WINDOW_MODE_WINDOWED
+			target_borderless = false
 		DisplayMode.BORDERLESS:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
-			DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)
+			target_mode = DisplayServer.WINDOW_MODE_WINDOWED
+			target_borderless = true
 		DisplayMode.FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+			target_mode = DisplayServer.WINDOW_MODE_FULLSCREEN
+			
+	if DisplayServer.window_get_mode() != target_mode:
+		DisplayServer.window_set_mode(target_mode)
+		
+	if current_settings["display_mode"] != DisplayMode.FULLSCREEN:
+		DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, target_borderless)
+		
+	# Pastikan game tidak kehilangan OS focus saat mode layar diatur
+	get_window().grab_focus()
 
 func apply_resolution() -> void:
 	# Hanya apply jika kita sedang di Windowed/Borderless
