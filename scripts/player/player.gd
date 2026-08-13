@@ -15,7 +15,7 @@ var is_locked: bool = false
 
 # M25: Debug save/load feedback
 var _save_feedback_label: Label = null
-var _feedback_timer: float = 0.0
+var _feedback_timer: Timer = null
 
 
 func _ready() -> void:
@@ -29,12 +29,6 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	# M25: Feedback timer tick
-	if _feedback_timer > 0.0:
-		_feedback_timer -= _delta
-		if _feedback_timer <= 0.0 and _save_feedback_label:
-			_save_feedback_label.visible = false
-
 	if is_locked:
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -152,8 +146,18 @@ func _setup_save_feedback() -> void:
 	_save_feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	canvas.add_child(_save_feedback_label)
 
+	_feedback_timer = Timer.new()
+	_feedback_timer.one_shot = true
+	_feedback_timer.process_mode = Node.PROCESS_MODE_ALWAYS
+	_feedback_timer.timeout.connect(_on_feedback_timeout)
+	add_child(_feedback_timer)
+
 func _show_save_feedback(msg: String) -> void:
 	if _save_feedback_label:
 		_save_feedback_label.text = msg
 		_save_feedback_label.visible = true
-		_feedback_timer = 2.5
+		_feedback_timer.start(2.5)
+
+func _on_feedback_timeout() -> void:
+	if _save_feedback_label:
+		_save_feedback_label.visible = false
