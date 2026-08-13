@@ -275,7 +275,10 @@ func _process_turn_start() -> void:
 	current_combatant.is_defending = false
 	
 	if current_combatant in players:
-		# M23: Reset selected boost to 0 for new turn (BP generation moved to after attack/skill)
+		# M23: Generate +1 BP on NATURAL TURN START for THIS character only
+		if current_combatant.current_bp < BoostMultiplier.MAX_BP:
+			current_combatant.current_bp += 1
+		# Reset selected boost to 0 for new turn
 		current_combatant.selected_boost_level = 0
 		
 		ui.highlight_current_actor(current_combatant.get_display_name(), players)
@@ -603,10 +606,6 @@ func _process_player_attack(target: Combatant) -> void:
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0
 	
-	# M23 REDESIGN: Generate +1 BP after successful attack (max 3)
-	if current_combatant.current_bp < BoostMultiplier.MAX_BP:
-		current_combatant.current_bp += 1
-	
 	_update_all_hp_mp_ui()
 	
 	if result.is_weakness:
@@ -663,10 +662,6 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	# M23: Consume BP after successful action
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0
-	
-	# M23 REDESIGN: Generate +1 BP after successful offensive skill (max 3)
-	if current_combatant.current_bp < BoostMultiplier.MAX_BP:
-		current_combatant.current_bp += 1
 	
 	_update_all_hp_mp_ui()
 	
