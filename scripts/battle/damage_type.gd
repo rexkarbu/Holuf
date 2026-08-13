@@ -4,7 +4,7 @@ class_name DamageType
 ## Urutan enum ini juga menentukan urutan slot pada Weakness UI.
 
 enum Type {
-	SWORD,      # 0 — Hero Basic Attack
+	SWORD,      # 0 — Basic Attack (Sword users)
 	BOW,        # 1 — belum diimplementasikan
 	FIRE,       # 2 — Fire Slash
 	ICE,        # 3 — belum diimplementasikan

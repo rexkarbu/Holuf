@@ -51,7 +51,7 @@ func _ready() -> void:
 				"current_mp": initial_max_mp   # Persistent MP
 			}
 	
-	# Inisialisasi Active Party (default: Hero, B, C, D)
+	# Inisialisasi Active Party (default: Aren, Aelia, Lyra, Neria)
 	active_party = ["hero", "character_b", "character_c", "character_d"]
 	_update_reserve()
 

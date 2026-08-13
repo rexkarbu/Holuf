@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("3_data")
-display_name = "Hero"
+display_name = "Aren"
 max_hp = 100
 max_mp = 40
 attack = 20

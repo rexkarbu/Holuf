@@ -5,4 +5,7 @@
 [resource]
 script = ExtResource("1_script")
 character_id = "character_d"
-display_name = "Character D"
+display_name = "Neria"
+race = 1
+weapon_type = 3
+element_affinity = 2
