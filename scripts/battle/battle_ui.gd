@@ -12,6 +12,7 @@ signal item_clicked(index: int)
 @onready var title_label: Label = $Title
 @onready var hint_label: Label = $Hint
 @onready var log_label: Label = $LogPanel/MarginContainer/LogLabel
+@onready var speed_indicator: Label = $SpeedIndicator
 
 # Party Status Panel (in BottomHUD)
 @onready var party_list: VBoxContainer = $BottomHUD/PartyStatusPanel/MarginContainer/PartyList
@@ -263,6 +264,29 @@ func set_skill_selection(index: int, skills: Array) -> void:
 
 func set_hint(text: String) -> void:
 	hint_label.text = text
+
+# ==============================================================
+# BATTLE SPEED INDICATOR (M22)
+# ==============================================================
+
+var speed_indicator_timer: Timer = null
+
+func update_speed_indicator() -> void:
+	speed_indicator.text = BattleSpeed.get_display_text()
+	speed_indicator.show()
+	
+	# Create timer if not exists
+	if speed_indicator_timer == null:
+		speed_indicator_timer = Timer.new()
+		speed_indicator_timer.one_shot = true
+		speed_indicator_timer.timeout.connect(_hide_speed_indicator)
+		add_child(speed_indicator_timer)
+	
+	# Restart timer (2 seconds display)
+	speed_indicator_timer.start(2.0)
+
+func _hide_speed_indicator() -> void:
+	speed_indicator.hide()
 
 func _on_command_hovered(index: int) -> void:
 	command_hovered.emit(index)

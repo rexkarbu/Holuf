@@ -2,7 +2,7 @@ extends Node2D
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
-enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ITEM_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT }
+enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ITEM_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT, FLED }
 
 @export var hero_data: CombatantData
 @export var enemy_data: CombatantData # Fallback
@@ -15,7 +15,13 @@ var turn_queue: Array[Combatant] = []
 var current_combatant: Combatant
 
 var command_index: int = 0
-const COMMAND_COUNT: int = 4 # ATTACK, SKILL, ITEM, DEFEND
+const COMMAND_COUNT: int = 5 # M22: ATTACK, SKILL, ITEM, DEFEND, FLEE
+
+# M22: Flee system constants
+const BASE_FLEE_CHANCE: float = 0.70  # 70% base flee chance
+enum FleeDebugMode { RANDOM, FORCE_SUCCESS, FORCE_FAILURE }
+var flee_debug_mode: FleeDebugMode = FleeDebugMode.RANDOM
+var can_flee_from_battle: bool = true  # Set from formation data
 
 var skill_index: int = 0
 var item_index: int = 0
@@ -55,6 +61,12 @@ func _ready() -> void:
 		players.append(combatant)
 	
 	ui.setup_players(players)
+	
+	# M22: Check if this battle allows fleeing
+	if GameManager.pending_formation != null:
+		can_flee_from_battle = GameManager.pending_formation.can_flee
+	else:
+		can_flee_from_battle = true  # Fallback: allow fleeing from test battles
 	
 	# Instantiate multiple enemies
 	enemies.clear()
@@ -121,7 +133,7 @@ func _ready() -> void:
 	_set_state(State.STARTING)
 	ui.add_log("Battle Started!")
 	
-	await get_tree().create_timer(1.0).timeout
+	await BattleSpeed.wait(1.0)
 	_set_state(State.ROUND_START)
 
 
@@ -222,6 +234,13 @@ func _set_state(new_state: State) -> void:
 			ui.show_items(false)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ENTER to return")
+		State.FLED:
+			ui.set_turn_title("FLED")
+			ui.show_commands(false)
+			ui.show_skills(false)
+			ui.show_items(false)
+			ui.clear_enemy_target_indicator(enemies)
+			_process_flee_return()
 
 func _process_round_start() -> void:
 	turn_queue.clear()
@@ -401,6 +420,13 @@ func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
 # ==============================================================
 
 func _unhandled_input(event: InputEvent) -> void:
+	# M22: Battle Speed Toggle (works in any state except menus)
+	if event.is_action_pressed("battle_speed_toggle"):
+		BattleSpeed.toggle_speed()
+		ui.update_speed_indicator()  # Update UI indicator
+		get_viewport().set_input_as_handled()
+		return
+	
 	match current_state:
 		State.PLAYER_COMMAND:
 			if event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
@@ -519,14 +545,16 @@ func _execute_player_command() -> void:
 			ui.show_commands(false)
 			current_combatant.is_defending = true
 			ui.add_log("%s braces for the next attack." % current_combatant.get_display_name())
-			await get_tree().create_timer(0.8).timeout
+			await BattleSpeed.wait(0.8)
 			_set_state(State.TURN_START)
+		4: # FLEE (M22)
+			_attempt_flee()
 
 func _process_player_attack(target: Combatant) -> void:
 	_set_state(State.PLAYER_ACTION)
 	ui.clear_enemy_target_indicator(enemies)
 	
-	await get_tree().create_timer(0.3).timeout
+	await BattleSpeed.wait(0.3)
 	
 	var result = _calculate_damage(current_combatant, target, DamageType.Type.SWORD)
 	target.take_damage(result.amount)
@@ -542,7 +570,7 @@ func _process_player_attack(target: Combatant) -> void:
 	else:
 		ui.add_log("%s attacks %s for %d damage!" % [current_combatant.get_display_name(), target.get_display_name(), result.amount])
 	
-	await get_tree().create_timer(0.8).timeout
+	await BattleSpeed.wait(0.8)
 	
 	if target.is_dead():
 		var idx = enemies.find(target)
@@ -575,7 +603,7 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	_set_state(State.PLAYER_ACTION)
 	ui.clear_enemy_target_indicator(enemies)
 	
-	await get_tree().create_timer(0.3).timeout
+	await BattleSpeed.wait(0.3)
 	
 	var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
 	var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic)
@@ -593,7 +621,7 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	else:
 		ui.add_log("%s uses %s for %d damage!" % [current_combatant.get_display_name(), skill.display_name, result.amount])
 	
-	await get_tree().create_timer(0.8).timeout
+	await BattleSpeed.wait(0.8)
 	
 	if target.is_dead():
 		var idx = enemies.find(target)
@@ -614,7 +642,7 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	ui.show_skills(false)
 	ui.set_hint("")
 	
-	await get_tree().create_timer(0.3).timeout
+	await BattleSpeed.wait(0.3)
 	
 	var base_heal: int
 	if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
@@ -631,7 +659,7 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	_update_all_hp_mp_ui()
 	ui.add_log("%s casts %s on %s and restores %d HP!" % [current_combatant.get_display_name(), skill.display_name, target.get_display_name(), actual_heal])
 	
-	await get_tree().create_timer(0.8).timeout
+	await BattleSpeed.wait(0.8)
 	_set_state(State.TURN_START)
 
 func _execute_player_item(item: ItemData) -> void:
@@ -658,7 +686,7 @@ func _process_item_use(item: ItemData, target: Combatant) -> void:
 	ui.show_items(false)
 	ui.set_hint("")
 	
-	await get_tree().create_timer(0.3).timeout
+	await BattleSpeed.wait(0.3)
 	
 	# Apply item effect
 	match item.effect_type:
@@ -678,7 +706,7 @@ func _process_item_use(item: ItemData, target: Combatant) -> void:
 			_update_all_hp_mp_ui()
 			ui.add_log("%s uses %s on %s. +%d MP!" % [current_combatant.get_display_name(), item.display_name, target.get_display_name(), actual_restore])
 	
-	await get_tree().create_timer(0.8).timeout
+	await BattleSpeed.wait(0.8)
 	_set_state(State.TURN_START)
 
 func _validate_item_target(item: ItemData, target: Combatant) -> bool:
@@ -706,21 +734,21 @@ func _validate_item_target(item: ItemData, target: Combatant) -> bool:
 
 func _process_enemy_turn() -> void:
 	var enemy_actor = current_combatant
-	await get_tree().create_timer(0.7).timeout
+	await BattleSpeed.wait(0.7)
 	
 	# --- Break State Check (runs BEFORE AI decision) ---
 	if enemy_actor.is_broken:
 		if enemy_actor.break_skips_remaining > 0:
 			enemy_actor.break_skips_remaining -= 1
 			ui.add_log("%s is Broken and cannot act!" % enemy_actor.get_display_name())
-			await get_tree().create_timer(0.8).timeout
+			await BattleSpeed.wait(0.8)
 			_set_state(State.TURN_START)
 			return
 		else:
 			enemy_actor.recover_from_break()
 			ui.add_log("%s recovered from Break." % enemy_actor.get_display_name())
 			_update_all_shield_ui()
-			await get_tree().create_timer(0.6).timeout
+			await BattleSpeed.wait(0.6)
 	
 	# --- Basic Enemy AI: target selection ---
 	var target: Combatant = EnemyAI.choose_target(players)
@@ -756,7 +784,7 @@ func _process_enemy_turn() -> void:
 			result.amount
 		])
 	
-	await get_tree().create_timer(0.8).timeout
+	await BattleSpeed.wait(0.8)
 	
 	if _check_defeat():
 		_set_state(State.DEFEAT)
@@ -859,3 +887,52 @@ func _process_victory_rewards() -> void:
 	# Show reward UI
 	ui.show_victory_rewards(total_exp, total_gold, level_up_messages, players)
 	ui.set_hint("Press ENTER to return")
+
+# ==============================================================
+# FLEE SYSTEM (M22)
+# ==============================================================
+
+func _attempt_flee() -> void:
+	# M22: Check if battle allows fleeing
+	if not can_flee_from_battle:
+		ui.add_log("Cannot flee from this battle!")
+		return  # Stay in PLAYER_COMMAND state
+	
+	_set_state(State.PLAYER_ACTION)
+	ui.show_commands(false)
+	
+	await BattleSpeed.wait(0.5)
+	
+	# Determine flee success based on debug mode or RNG
+	var flee_success: bool = false
+	match flee_debug_mode:
+		FleeDebugMode.FORCE_SUCCESS:
+			flee_success = true
+		FleeDebugMode.FORCE_FAILURE:
+			flee_success = false
+		FleeDebugMode.RANDOM:
+			var roll = randf()
+			flee_success = roll < BASE_FLEE_CHANCE
+	
+	if flee_success:
+		ui.add_log("Escaped successfully!")
+		await BattleSpeed.wait(1.0)
+		_set_state(State.FLED)
+	else:
+		ui.add_log("Failed to escape!")
+		await BattleSpeed.wait(0.8)
+		# Flee failure consumes turn, continue to next combatant
+		_set_state(State.TURN_START)
+
+func _process_flee_return() -> void:
+	# M22: Sync battle HP/MP state back to PartyManager (preserve current state)
+	for player in players:
+		if player.character_id != "":
+			PartyManager.sync_battle_state(player.character_id, player.current_hp, player.current_mp)
+	
+	# No EXP/Gold rewards on flee
+	ui.set_hint("Press ENTER to return")
+	
+	# Wait for player confirmation then return to world
+	await BattleSpeed.wait(0.5)
+	GameManager.return_to_world()

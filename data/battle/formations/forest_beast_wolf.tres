@@ -9,3 +9,4 @@ script = ExtResource("1_script")
 formation_id = "forest_beast_wolf"
 enemies = Array[Resource]([ExtResource("3_beast"), ExtResource("2_wolf")])
 weight = 10
+can_flee = true

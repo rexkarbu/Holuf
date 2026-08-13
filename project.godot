@@ -25,6 +25,7 @@ TransitionManager="*res://scenes/autoload/transition_manager.tscn"
 PartyManager="*res://scripts/party/party_manager.gd"
 InventoryManager="*res://scripts/core/inventory_manager.gd"
 EncounterManager="*res://scripts/world/encounter_manager.gd"
+BattleSpeed="*res://scripts/core/battle_speed.gd"
 
 [display]
 
@@ -73,6 +74,11 @@ party_menu={
 party_remove={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":82,"key_label":0,"unicode":114,"location":0,"echo":false,"script":null)
+]
+}
+battle_speed_toggle={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":81,"key_label":0,"unicode":113,"location":0,"echo":false,"script":null)
 ]
 }
 
