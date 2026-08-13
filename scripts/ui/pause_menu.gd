@@ -62,15 +62,15 @@ func _build_ui() -> void:
 	_btn_settings   = _make_button("SETTINGS", vbox)
 	_btn_return     = _make_button("RETURN TO MAIN MENU", vbox)
 	
-	# M27: Equipment, Quest disabled/placeholder
-	_btn_equipment.disabled = true
-	_btn_equipment.text += " (Coming Later)"
+	# M30: Equipment sekarang aktif
+	# M27: Quest masih placeholder
 	_btn_quest.disabled = true
 	_btn_quest.text += " (Coming Later)"
 	
 	_btn_resume.pressed.connect(_on_resume_pressed)
 	_btn_party.pressed.connect(_on_party_pressed)
 	_btn_inventory.pressed.connect(_on_inventory_pressed)
+	_btn_equipment.pressed.connect(_on_equipment_pressed)
 	_btn_settings.pressed.connect(_on_settings_pressed)
 	_btn_return.pressed.connect(_on_return_pressed)
 	
@@ -102,7 +102,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if visible:
 			# Jika Settings terbuka, abaikan input ini agar ditangani oleh SettingsUI
-			if has_node("SettingsUI"):
+			if has_node("SettingsUI") or has_node("EquipmentUI"):
 				return
 			
 			# Jika Confirmation terbuka, ui_cancel akan menutup dialog itu otomatis,
@@ -167,6 +167,19 @@ func _on_settings_pressed() -> void:
 		inst.tree_exited.connect(_on_settings_closed)
 		add_child(inst)
 		_panel.hide()
+
+func _on_equipment_pressed() -> void:
+	if not has_node("EquipmentUI"):
+		var eq_ui = load("res://scripts/ui/equipment_ui.gd")
+		var inst = eq_ui.new()
+		inst.name = "EquipmentUI"
+		inst.tree_exited.connect(_on_equipment_closed)
+		add_child(inst)
+		_panel.hide()
+
+func _on_equipment_closed() -> void:
+	_panel.show()
+	_btn_equipment.grab_focus()
 
 func _on_settings_closed() -> void:
 	_panel.show()

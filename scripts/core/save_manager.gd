@@ -9,7 +9,7 @@ extends Node
 ##   N = Load Game (hanya saat di world)
 
 const SAVE_PATH := "user://save_01.json"
-const SAVE_VERSION := 1
+const SAVE_VERSION := 2
 
 ## Flag untuk pending load (diapply setelah scene world dimuat ulang)
 var _has_pending_load: bool = false
@@ -140,12 +140,17 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 		player_x = player_node.global_position.x
 		player_y = player_node.global_position.y
 
+	# Equipment state (M30)
+	var equipment_save = EquipmentManager.get_save_data()
+	
 	return {
 		"save_version": SAVE_VERSION,
 		"gold": PartyManager.party_gold,
 		"characters": characters_data,
 		"active_party": active,
 		"inventory": inventory_data,
+		"owned_equipment": equipment_save["owned_equipment"],
+		"character_equipment": equipment_save["character_equipment"],
 		"world": {
 			"scene": "res://scenes/main/main.tscn",
 			"player_x": player_x,
@@ -181,6 +186,15 @@ func _validate_save_data(data: Dictionary) -> bool:
 			return false
 
 	return true
+
+# ==============================================================
+# MIGRATION HELPERS
+# ==============================================================
+
+## Kembalikan true jika save adalah versi lama (< 2) yang tidak memiliki equipment.
+func _is_legacy_save(data: Dictionary) -> bool:
+	var ver = int(data.get("save_version", 1))
+	return ver < 2 or (not data.has("owned_equipment") and not data.has("character_equipment"))
 
 # ==============================================================
 # APPLY SAVE DATA
@@ -230,7 +244,19 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 		if qty > 0:
 			InventoryManager.inventory[item_id] = qty
 
-	# 5. Player position
+	# 5. Equipment (M30) — aman untuk Save v1 (backward compat)
+	if _is_legacy_save(data):
+		# Save v1: tidak ada equipment data → mulai dengan owned prototypes, kosong semua slot
+		print("[SaveManager] Legacy save (v1) detected — initializing empty equipment state.")
+		EquipmentManager.reset_to_new_game()
+	else:
+		var equipment_data := {
+			"owned_equipment": data.get("owned_equipment", {}),
+			"character_equipment": data.get("character_equipment", {})
+		}
+		EquipmentManager.apply_save_data(equipment_data)
+	
+	# 6. Player position
 	var world_data: Dictionary = data.get("world", {})
 	if player_node and is_instance_valid(player_node):
 		var px = float(world_data.get("player_x", 0.0))

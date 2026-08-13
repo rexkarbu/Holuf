@@ -43,11 +43,13 @@ func _init(data: CombatantData, char_id: String = "") -> void:
 		current_hp = progress.current_hp
 		current_mp = progress.current_mp
 		
-		# Safety clamp: ensure values don't exceed effective max
+		# Safety clamp: ensure values don't exceed effective max (including equipment)
 		var level = progress.level
 		var level_bonus = level - 1
-		var effective_max_hp = data.max_hp + (data.hp_growth * level_bonus)
-		var effective_max_mp = data.max_mp + (data.mp_growth * level_bonus)
+		var base_max_hp = data.max_hp + (data.hp_growth * level_bonus)
+		var base_max_mp = data.max_mp + (data.mp_growth * level_bonus)
+		var effective_max_hp = base_max_hp + EquipmentManager.get_stat_bonus(char_id, "max_hp")
+		var effective_max_mp = base_max_mp + EquipmentManager.get_stat_bonus(char_id, "max_mp")
 		
 		current_hp = clamp(current_hp, 0, effective_max_hp)
 		current_mp = clamp(current_mp, 0, effective_max_mp)
@@ -84,8 +86,9 @@ func spend_mp(amount: int) -> void:
 
 func restore_mp(amount: int) -> void:
 	current_mp += amount
-	if current_mp > base_data.max_mp:
-		current_mp = base_data.max_mp
+	var effective_max_mp = get_effective_max_mp()
+	if current_mp > effective_max_mp:
+		current_mp = effective_max_mp
 
 
 ## Proses weakness hit ke Shield.
@@ -118,23 +121,28 @@ func get_level() -> int:
 
 func get_effective_max_hp() -> int:
 	var level_bonus = get_level() - 1
-	return base_data.max_hp + (base_data.hp_growth * level_bonus)
+	var base = base_data.max_hp + (base_data.hp_growth * level_bonus)
+	return base + EquipmentManager.get_stat_bonus(character_id, "max_hp")
 
 func get_effective_max_mp() -> int:
 	var level_bonus = get_level() - 1
-	return base_data.max_mp + (base_data.mp_growth * level_bonus)
+	var base = base_data.max_mp + (base_data.mp_growth * level_bonus)
+	return base + EquipmentManager.get_stat_bonus(character_id, "max_mp")
 
 func get_effective_attack() -> int:
 	var level_bonus = get_level() - 1
-	return base_data.attack + (base_data.attack_growth * level_bonus)
+	var base = base_data.attack + (base_data.attack_growth * level_bonus)
+	return base + EquipmentManager.get_stat_bonus(character_id, "atk")
 
 func get_effective_magic_attack() -> int:
 	var level_bonus = get_level() - 1
-	return base_data.magic_attack + (base_data.magic_attack_growth * level_bonus)
+	var base = base_data.magic_attack + (base_data.magic_attack_growth * level_bonus)
+	return base + EquipmentManager.get_stat_bonus(character_id, "mag_atk")
 
 func get_effective_defense() -> int:
 	var level_bonus = get_level() - 1
 	var def = base_data.defense + (base_data.defense_growth * level_bonus)
+	def += EquipmentManager.get_stat_bonus(character_id, "def")
 	
 	if is_broken and current_break_bonus == BreakBonus.Type.ARMOR_SHATTER:
 		var multiplier = 1.0
@@ -147,11 +155,13 @@ func get_effective_defense() -> int:
 
 func get_effective_magic_defense() -> int:
 	var level_bonus = get_level() - 1
-	return base_data.magic_defense + (base_data.magic_defense_growth * level_bonus)
+	var base = base_data.magic_defense + (base_data.magic_defense_growth * level_bonus)
+	return base + EquipmentManager.get_stat_bonus(character_id, "mag_def")
 
 func get_effective_speed() -> int:
 	var level_bonus = get_level() - 1
 	var spd = base_data.speed + (base_data.speed_growth * level_bonus)
+	spd += EquipmentManager.get_stat_bonus(character_id, "spd")
 	
 	if is_broken and current_break_bonus == BreakBonus.Type.DISORIENT:
 		var multiplier = 1.0

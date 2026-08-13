@@ -118,6 +118,7 @@ func close_party_ui() -> void:
 func reset_to_new_game() -> void:
 	party_gold = 0
 	active_party = ["hero", "character_b", "character_c", "character_d"]
+	EquipmentManager.reset_to_new_game()
 	
 	for cid in roster.keys():
 		var combat_data_path = "res://data/battle/" + cid + ".tres"

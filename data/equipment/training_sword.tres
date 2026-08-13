@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EquipmentData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/equipment_data.gd" id="1_eqdata"]
+
+[resource]
+script = ExtResource("1_eqdata")
+equipment_id = "training_sword"
+display_name = "Training Sword"
+description = "A simple sword used for combat training. Increases attack."
+slot_type = 0
+weapon_type = 0
+bonus_max_hp = 0
+bonus_max_mp = 0
+bonus_atk = 5
+bonus_def = 0
+bonus_mag_atk = 0
+bonus_mag_def = 0
+bonus_spd = 0
