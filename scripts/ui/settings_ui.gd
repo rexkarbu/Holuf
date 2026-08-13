@@ -189,8 +189,7 @@ func _create_control_for_option(opt: Dictionary) -> Control:
 		
 		hb.add_child(sl)
 		hb.add_child(val_lbl)
-		# Forward hover/focus signals
-		hb.mouse_entered.connect(func(): hb.emit_signal("mouse_entered"))
+		# Forward hover/focus signals dari slider ke container
 		sl.mouse_entered.connect(func(): hb.emit_signal("mouse_entered"))
 		sl.focus_entered.connect(func(): hb.emit_signal("focus_entered"))
 		
