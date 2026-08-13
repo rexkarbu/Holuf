@@ -346,7 +346,7 @@ func _next_valid_target(direction: int) -> void:
 # DAMAGE PIPELINE
 # ==============================================================
 
-func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false) -> Dictionary:
+func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false, boost_level: int = 0) -> Dictionary:
 	var base: int
 	var def_stat = target.get_effective_defense()
 	
@@ -360,6 +360,11 @@ func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int,
 	
 	base = max(0, base)
 	var amount: float = float(base) * skill_power
+	
+	# M23: Apply Boost multiplier
+	var boost_mult = BoostMultiplier.get_multiplier(boost_level)
+	amount *= boost_mult
+	
 	var is_weakness: bool = damage_type in target.base_data.weaknesses
 	
 	if is_weakness:
