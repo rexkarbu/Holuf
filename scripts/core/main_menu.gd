@@ -67,12 +67,13 @@ func _build_ui() -> void:
 	_btn_credits   = _make_button("CREDITS",   vbox)
 	_btn_quit      = _make_button("QUIT",       vbox)
 
-	_btn_settings.disabled = true
 	_btn_credits.disabled = true
-
+	_btn_credits.text += " (Coming Later)"
+	
 	_btn_new_game.pressed.connect(_on_new_game)
 	_btn_continue.pressed.connect(_on_continue)
 	_btn_load.pressed.connect(_on_load_menu)
+	_btn_settings.pressed.connect(_on_settings_pressed)
 	_btn_quit.pressed.connect(_on_quit)
 
 	# Load Game panel (hidden)
@@ -178,8 +179,24 @@ func _on_load_menu() -> void:
 		_btn_load_slot.grab_focus()
 
 func _on_load_back() -> void:
+	if _is_loading: return
 	_load_panel.hide()
-	_btn_load.grab_focus()
+	_refresh_save_state()
+
+func _on_settings_pressed() -> void:
+	if _is_loading: return
+	if not has_node("SettingsUI"):
+		var SettingsUI = load("res://scenes/ui/settings_ui.tscn")
+		var inst = SettingsUI.instantiate()
+		inst.name = "SettingsUI"
+		inst.tree_exited.connect(_on_settings_closed)
+		add_child(inst)
+		# Hide the center container (Main Menu content) while Settings is open
+		get_child(1).hide() # center container is child index 1 (after bg ColorRect)
+
+func _on_settings_closed() -> void:
+	get_child(1).show()
+	_btn_settings.grab_focus()
 
 func _on_quit() -> void:
 	get_tree().quit()

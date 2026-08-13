@@ -62,17 +62,16 @@ func _build_ui() -> void:
 	_btn_settings   = _make_button("SETTINGS", vbox)
 	_btn_return     = _make_button("RETURN TO MAIN MENU", vbox)
 	
-	# M27: Equipment, Quest, Settings disabled/placeholder
+	# M27: Equipment, Quest disabled/placeholder
 	_btn_equipment.disabled = true
 	_btn_equipment.text += " (Coming Later)"
 	_btn_quest.disabled = true
 	_btn_quest.text += " (Coming Later)"
-	_btn_settings.disabled = true
-	_btn_settings.text += " (Coming Later)"
 	
 	_btn_resume.pressed.connect(_on_resume_pressed)
 	_btn_party.pressed.connect(_on_party_pressed)
 	_btn_inventory.pressed.connect(_on_inventory_pressed)
+	_btn_settings.pressed.connect(_on_settings_pressed)
 	_btn_return.pressed.connect(_on_return_pressed)
 	
 	_build_confirmation()
@@ -102,6 +101,10 @@ func _build_confirmation() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
 		if visible:
+			# Jika Settings terbuka, abaikan input ini agar ditangani oleh SettingsUI
+			if has_node("SettingsUI"):
+				return
+			
 			# Jika Confirmation terbuka, ui_cancel akan menutup dialog itu otomatis,
 			# tapi jangan menutup menu pause.
 			if _confirm_dialog.visible:
@@ -152,10 +155,22 @@ func _on_party_pressed() -> void:
 	PartyManager.open_party_ui()
 
 func _on_inventory_pressed() -> void:
-	var script = load("res://scripts/ui/inventory_ui.gd")
-	if script:
-		var node = script.new()
-		get_tree().root.add_child(node)
+	if InventoryManager.ui_instance == null:
+		InventoryManager.open_inventory(self)
+		_panel.hide()
+
+func _on_settings_pressed() -> void:
+	if not has_node("SettingsUI"):
+		var SettingsUI = load("res://scenes/ui/settings_ui.tscn")
+		var inst = SettingsUI.instantiate()
+		inst.name = "SettingsUI"
+		inst.tree_exited.connect(_on_settings_closed)
+		add_child(inst)
+		_panel.hide()
+
+func _on_settings_closed() -> void:
+	_panel.show()
+	_btn_settings.grab_focus()
 
 func _on_return_pressed() -> void:
 	_confirm_dialog.popup_centered()
