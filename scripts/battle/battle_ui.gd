@@ -99,6 +99,9 @@ func setup_players(players: Array) -> void:
 		row.show()
 		row.get_node("NameLabel").text = players[i].base_data.display_name
 		player_stats_nodes.append(row)
+	
+	# M23: Initialize BP display
+	update_all_bp_ui(players)
 
 # ==============================================================
 # TARGET INDICATORS
@@ -203,6 +206,32 @@ func update_player_hp(index: int, current: int, max_hp: int) -> void:
 func update_player_mp(index: int, current: int, max_mp: int) -> void:
 	if index >= player_stats_nodes.size(): return
 	player_stats_nodes[index].get_node("MPLabel").text = "MP %d/%d" % [current, max_mp]
+
+# ==============================================================
+# BOOST DISPLAY (M23)
+# ==============================================================
+
+func update_all_bp_ui(players: Array) -> void:
+	for i in range(player_stats_nodes.size()):
+		if i < players.size():
+			update_player_bp(i, players[i].current_bp, players[i].selected_boost_level)
+
+func update_player_bp(index: int, current_bp: int, selected_boost: int) -> void:
+	if index >= player_stats_nodes.size(): return
+	var bp_label = player_stats_nodes[index].get_node("BPLabel")
+	bp_label.text = "BP %d" % current_bp
+	
+	# Highlight selected boost level
+	if selected_boost > 0:
+		bp_label.text = "BP %d [BOOST %d]" % [current_bp, selected_boost]
+		bp_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.2))
+	else:
+		bp_label.add_theme_color_override("font_color", Color(0.7, 0.85, 1.0))
+
+func update_boost_selection(boost_level: int) -> void:
+	# This is called when TAB is pressed to cycle boost selection
+	# Update is handled by update_all_bp_ui which is called from BattleController
+	pass
 
 # ==============================================================
 # GENERAL UI

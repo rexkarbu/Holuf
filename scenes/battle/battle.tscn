@@ -281,6 +281,13 @@ theme_override_colors/font_color = Color(0.4, 0.7, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "MP 40/40"
 
+[node name="BPLabel" type="Label" parent="UI/BottomHUD/PartyStatusPanel/MarginContainer/PartyList/BasePlayerRow"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.85, 1, 1)
+theme_override_font_sizes/font_size = 14
+text = "BP 0"
+
 [node name="EnemyStatusPanel" type="PanelContainer" parent="UI/BottomHUD"]
 layout_mode = 2
 size_flags_horizontal = 3

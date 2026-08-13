@@ -10,6 +10,12 @@ var current_mp: int
 
 var is_defending: bool = false
 
+# ==============================================================
+# BOOST POINTS (M23) — Battle-only resource
+# ==============================================================
+var current_bp: int = 0  # 0-3, resets each battle
+var selected_boost_level: int = 0  # 0-3, player's current selection
+
 func get_display_name() -> String:
 	return runtime_name if runtime_name != "" else base_data.display_name
 

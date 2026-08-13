@@ -275,6 +275,12 @@ func _process_turn_start() -> void:
 	current_combatant.is_defending = false
 	
 	if current_combatant in players:
+		# M23: Generate BP on natural turn start (Party only, not enemies)
+		if current_combatant.current_bp < BoostMultiplier.MAX_BP:
+			current_combatant.current_bp += 1
+		# Reset selected boost to 0 for new turn
+		current_combatant.selected_boost_level = 0
+		
 		ui.highlight_current_actor(current_combatant.get_display_name(), players)
 		_arena_update_party_highlights()
 		_set_state(State.PLAYER_COMMAND)
@@ -427,6 +433,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 	
+	# M23: Boost Selection Toggle (TAB) - only in PLAYER_COMMAND state
+	if event.is_action_pressed("battle_boost_toggle") and current_state == State.PLAYER_COMMAND:
+		if current_combatant in players:
+			_cycle_boost_selection()
+		get_viewport().set_input_as_handled()
+		return
+	
 	match current_state:
 		State.PLAYER_COMMAND:
 			if event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
@@ -528,6 +541,28 @@ func _unhandled_input(event: InputEvent) -> void:
 				GameManager.return_to_world()
 
 # ==============================================================
+# BOOST SELECTION (M23)
+# ==============================================================
+
+func _cycle_boost_selection() -> void:
+	"""Cycle selected_boost_level: 0 -> 1 -> 2 -> 3 -> 0 (limited by current_bp)"""
+	if current_combatant.current_bp == 0:
+		current_combatant.selected_boost_level = 0
+		return
+	
+	# Cycle: 0 -> 1 -> ... -> max_bp -> 0
+	current_combatant.selected_boost_level += 1
+	if current_combatant.selected_boost_level > current_combatant.current_bp:
+		current_combatant.selected_boost_level = 0
+	
+	# Update UI to show new selection
+	ui.update_all_bp_ui(players)
+	if current_combatant.selected_boost_level > 0:
+		ui.add_log("BOOST %d selected" % current_combatant.selected_boost_level)
+	else:
+		ui.add_log("BOOST cleared")
+
+# ==============================================================
 # PLAYER ACTIONS
 # ==============================================================
 
@@ -539,8 +574,10 @@ func _execute_player_command() -> void:
 		1: # SKILL
 			_set_state(State.PLAYER_SKILL_SELECT)
 		2: # ITEM
+			current_combatant.selected_boost_level = 0  # M23: Cannot boost items
 			_set_state(State.PLAYER_ITEM_SELECT)
 		3: # DEFEND
+			current_combatant.selected_boost_level = 0  # M23: Cannot boost defend
 			_set_state(State.PLAYER_ACTION)
 			ui.show_commands(false)
 			current_combatant.is_defending = true
@@ -556,8 +593,14 @@ func _process_player_attack(target: Combatant) -> void:
 	
 	await BattleSpeed.wait(0.3)
 	
-	var result = _calculate_damage(current_combatant, target, DamageType.Type.SWORD)
+	var boost = current_combatant.selected_boost_level
+	var result = _calculate_damage(current_combatant, target, DamageType.Type.SWORD, 1.0, false, boost)
 	target.take_damage(result.amount)
+	
+	# M23: Consume BP after successful action
+	current_combatant.current_bp -= boost
+	current_combatant.selected_boost_level = 0
+	
 	_update_all_hp_mp_ui()
 	
 	if result.is_weakness:
@@ -606,9 +649,15 @@ func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
 	await BattleSpeed.wait(0.3)
 	
 	var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-	var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic)
+	var boost = current_combatant.selected_boost_level
+	var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic, boost)
 	
 	target.take_damage(result.amount)
+	
+	# M23: Consume BP after successful action
+	current_combatant.current_bp -= boost
+	current_combatant.selected_boost_level = 0
+	
 	_update_all_hp_mp_ui()
 	
 	if result.is_weakness:
@@ -650,7 +699,15 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 	else:
 		base_heal = current_combatant.get_effective_magic_attack() if current_combatant.has_method("get_effective_magic_attack") else current_combatant.base_data.magic_attack
 	
-	var heal_amount = max(1, roundi(float(base_heal) * skill.power))
+	# M23: Apply Boost multiplier to healing
+	var boost = current_combatant.selected_boost_level
+	var boost_mult = BoostMultiplier.get_multiplier(boost)
+	var heal_amount = max(1, roundi(float(base_heal) * skill.power * boost_mult))
+	
+	# M23: Consume BP after successful action
+	current_combatant.current_bp -= boost
+	current_combatant.selected_boost_level = 0
+	
 	var old_hp = target.current_hp
 	var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
 	target.current_hp = min(target.current_hp + heal_amount, target_max_hp)
@@ -762,7 +819,7 @@ func _process_enemy_turn() -> void:
 	if action["type"] == "skill":
 		var skill: SkillData = action["skill"]
 		var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-		var result = _calculate_damage(enemy_actor, target, skill.damage_type, skill.power, use_magic)
+		var result = _calculate_damage(enemy_actor, target, skill.damage_type, skill.power, use_magic, 0)  # Enemies don't use boost
 		target.take_damage(result.amount)
 		_update_all_hp_mp_ui()
 		_arena_update_party_highlights()
@@ -774,7 +831,7 @@ func _process_enemy_turn() -> void:
 		])
 	else:
 		# Basic Attack
-		var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD)
+		var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD, 1.0, false, 0)  # Enemies don't use boost
 		target.take_damage(result.amount)
 		_update_all_hp_mp_ui()
 		_arena_update_party_highlights()
@@ -806,6 +863,9 @@ func _update_all_hp_mp_ui() -> void:
 		var e = enemies[i]
 		ui.update_enemy_hp(i, e.current_hp, e.base_data.max_hp)
 		ui.update_enemy_mp(i, e.current_mp, e.base_data.max_mp)
+	
+	# M23: Update BP display
+	ui.update_all_bp_ui(players)
 
 func _update_all_shield_ui() -> void:
 	for i in range(enemies.size()):
@@ -893,6 +953,9 @@ func _process_victory_rewards() -> void:
 # ==============================================================
 
 func _attempt_flee() -> void:
+	# M23: Cannot boost flee
+	current_combatant.selected_boost_level = 0
+	
 	# M22: Check if battle allows fleeing
 	if not can_flee_from_battle:
 		ui.add_log("Cannot flee from this battle!")
