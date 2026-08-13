@@ -4,6 +4,7 @@ extends CanvasLayer
 
 @onready var color_rect: ColorRect = $ColorRect
 
+var _is_transitioning: bool = false
 
 func _ready() -> void:
 	color_rect.color = Color(0, 0, 0, 0)
@@ -11,7 +12,14 @@ func _ready() -> void:
 	color_rect.hide()
 
 
+func _input(event: InputEvent) -> void:
+	if _is_transitioning:
+		get_viewport().set_input_as_handled()
+
 func transition_to_scene(path: String) -> void:
+	_is_transitioning = true
+	get_tree().root.gui_disable_input = true
+	
 	color_rect.show()
 	
 	# Fade to black
@@ -31,6 +39,9 @@ func transition_to_scene(path: String) -> void:
 	await tween.finished
 	
 	color_rect.hide()
+	
+	get_tree().root.gui_disable_input = false
+	_is_transitioning = false
 	
 	# Reset flag transition di GameManager jika ada
 	if GameManager.is_transitioning:
