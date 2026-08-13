@@ -111,6 +111,32 @@ func close_party_ui() -> void:
 		ui_instance = null
 		party_ui_toggled.emit(false)
 
+## Reset semua runtime/progression state ke kondisi New Game.
+## JANGAN memanggil ini untuk Load Game.
+## CharacterData statik (display_name, race, dll) tidak disentuh.
+func reset_to_new_game() -> void:
+	party_gold = 0
+	active_party = ["hero", "character_b", "character_c", "character_d"]
+	
+	for cid in roster.keys():
+		var combat_data_path = "res://data/battle/" + cid + ".tres"
+		var combat_data = load(combat_data_path) if ResourceLoader.exists(combat_data_path) else null
+		
+		var max_hp = 100
+		var max_mp = 0
+		if combat_data:
+			max_hp = combat_data.max_hp  # Level 1: no growth bonus
+			max_mp = combat_data.max_mp
+		
+		character_progress[cid] = {
+			"level": 1,
+			"current_exp": 0,
+			"current_hp": max_hp,
+			"current_mp": max_mp
+		}
+	
+	_update_reserve()
+
 # ==============================================================================
 # PROGRESSION SYSTEM (MILESTONE 20)
 # ==============================================================================

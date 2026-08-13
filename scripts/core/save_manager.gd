@@ -22,6 +22,16 @@ var _pending_data: Dictionary = {}
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 
+## Mulai New Game: reset semua runtime state ke default.
+## TIDAK menghapus save file yang ada.
+func start_new_game() -> void:
+	PartyManager.reset_to_new_game()
+	InventoryManager.reset_to_new_game()
+	# Clear any pending load flag so main.tscn uses default spawn
+	_has_pending_load = false
+	_pending_data = {}
+	TransitionManager.transition_to_scene("res://scenes/main/main.tscn")
+
 ## Simpan game state saat ini.
 ## Mengembalikan true jika berhasil.
 func save_game(player_node: Node) -> bool:

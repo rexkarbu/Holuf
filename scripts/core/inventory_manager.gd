@@ -31,6 +31,12 @@ func _initialize_starting_inventory() -> void:
 		inventory["healing_potion"] = 5
 		inventory["spirit_tonic"] = 3
 
+## Reset inventory ke kondisi New Game.
+## Dipanggil oleh SaveManager.start_new_game().
+func reset_to_new_game() -> void:
+	inventory.clear()
+	_initialize_starting_inventory()
+
 # ==============================================================
 # INVENTORY API
 # ==============================================================
