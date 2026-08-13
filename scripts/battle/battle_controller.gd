@@ -275,9 +275,12 @@ func _process_turn_start() -> void:
 	current_combatant.is_defending = false
 	
 	if current_combatant in players:
-		# M23: Generate +1 BP on NATURAL TURN START for THIS character only
-		if current_combatant.current_bp < BoostMultiplier.MAX_BP:
-			current_combatant.current_bp += 1
+		# M23: BP starts at 1 on first turn, then increases each subsequent turn
+		# Turn 1: BP = 1, Turn 2: BP = 2, Turn 3: BP = 3 (max)
+		if current_combatant.current_bp == 0:
+			current_combatant.current_bp = 1  # First turn: set to 1
+		elif current_combatant.current_bp < BoostMultiplier.MAX_BP:
+			current_combatant.current_bp += 1  # Subsequent turns: increment
 		# Reset selected boost to 0 for new turn
 		current_combatant.selected_boost_level = 0
 		
