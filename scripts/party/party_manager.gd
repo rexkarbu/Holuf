@@ -101,6 +101,7 @@ func open_party_ui() -> void:
 	var ui_scene = load("res://scripts/party/party_ui.gd")
 	if ui_scene:
 		var node = ui_scene.new()
+		node.process_mode = Node.PROCESS_MODE_ALWAYS # M27: Allow processing when game is paused
 		get_tree().root.add_child(node)
 		ui_instance = node
 		party_ui_toggled.emit(true)

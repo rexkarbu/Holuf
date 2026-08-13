@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://holuf_interaction_ui01" path="res://scenes/ui/interaction_ui.tscn" id="4_ui"]
 [ext_resource type="PackedScene" uid="uid://holuf_quest_tracker01" path="res://scenes/ui/quest_tracker.tscn" id="5_quest_tracker"]
 [ext_resource type="PackedScene" uid="uid://holuf_quest_notification01" path="res://scenes/ui/quest_notification.tscn" id="6_quest_notif"]
+[ext_resource type="PackedScene" uid="uid://holuf_pause_menu01" path="res://scenes/ui/pause_menu.tscn" id="7_pause_menu"]
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main")
 
@@ -19,3 +20,5 @@ position = Vector2(1000, 1000)
 [node name="QuestTrackerUI" parent="." instance=ExtResource("5_quest_tracker")]
 
 [node name="QuestNotificationUI" parent="." instance=ExtResource("6_quest_notif")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("7_pause_menu")]
