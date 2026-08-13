@@ -13,8 +13,9 @@ var is_defending: bool = false
 # ==============================================================
 # BOOST POINTS (M23) — Battle-only resource
 # ==============================================================
-var current_bp: int = 0  # 0-3, resets each battle
+var current_bp: int = 1  # Starts at 1 for all combatants
 var selected_boost_level: int = 0  # 0-3, player's current selection
+var natural_turns_started: int = 0 # Counter for natural scheduled turns
 
 func get_display_name() -> String:
 	return runtime_name if runtime_name != "" else base_data.display_name
