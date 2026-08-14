@@ -24,6 +24,7 @@ func _init() -> void:
 	
 	bg = ColorRect.new()
 	bg.color = Color(0.1, 0.1, 0.15, 0.95)
+	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	

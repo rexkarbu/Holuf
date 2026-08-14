@@ -21,6 +21,8 @@ func _ready() -> void:
 	
 	_build_ui()
 	hide() # Tersembunyi secara default
+	
+	PartyManager.party_ui_toggled.connect(_on_party_ui_toggled)
 
 # ==============================================================
 # BUILD UI
@@ -109,6 +111,9 @@ func _unhandled_input(event: InputEvent) -> void:
 			# tapi jangan menutup menu pause.
 			if _confirm_dialog.visible:
 				return
+				
+			if PartyManager.ui_instance != null:
+				return
 			
 			get_viewport().set_input_as_handled()
 			_close_pause()
@@ -143,6 +148,17 @@ func _open_pause() -> void:
 func _close_pause() -> void:
 	hide()
 	get_tree().paused = false
+
+func _on_party_ui_toggled(is_open: bool) -> void:
+	if is_open:
+		_panel.process_mode = Node.PROCESS_MODE_DISABLED
+		var focused = get_viewport().gui_get_focus_owner()
+		if focused and _panel.is_ancestor_of(focused):
+			focused.release_focus()
+	else:
+		_panel.process_mode = Node.PROCESS_MODE_INHERIT
+		if visible:
+			_btn_party.grab_focus()
 
 # ==============================================================
 # BUTTON HANDLERS
