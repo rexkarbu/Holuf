@@ -1,5 +1,6 @@
 Arc 5 — Final Island
 Tema: Freedom by Choice
+Nama Pulau : Aetherion
 
 Arc 4 berakhir setelah party mengetahui bahwa Elaris hanyalah percobaan pertama. Mereka mendapatkan Mirror Key, koordinat pulau utara, serta cara menembus spatial barrier yang selama ini mengisolasi tempat tersebut.
 
