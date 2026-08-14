@@ -155,8 +155,12 @@ func _on_party_pressed() -> void:
 	PartyManager.open_party_ui()
 
 func _on_inventory_pressed() -> void:
-	if InventoryManager.ui_instance == null:
-		InventoryManager.open_inventory(self)
+	if not has_node("InventoryUI"):
+		var inv_ui = load("res://scripts/ui/inventory_ui.gd")
+		var inst = inv_ui.new()
+		inst.name = "InventoryUI"
+		inst.tree_exited.connect(_on_inventory_closed)
+		add_child(inst)
 		_panel.hide()
 
 func _on_settings_pressed() -> void:
@@ -180,6 +184,10 @@ func _on_equipment_pressed() -> void:
 func _on_equipment_closed() -> void:
 	_panel.show()
 	_btn_equipment.grab_focus()
+
+func _on_inventory_closed() -> void:
+	_panel.show()
+	_btn_inventory.grab_focus()
 
 func _on_settings_closed() -> void:
 	_panel.show()
