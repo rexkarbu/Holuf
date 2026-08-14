@@ -266,6 +266,14 @@ func populate_skill_menu(skills: Array) -> void:
 	for child in skill_vbox.get_children():
 		child.free()
 
+	if skills.is_empty():
+		var label = Label.new()
+		label.text = "  No skills available."
+		label.add_theme_font_size_override("font_size", 18)
+		label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		skill_vbox.add_child(label)
+		return
+
 	for i in range(skills.size()):
 		var skill = skills[i] as SkillData
 		if skill == null: continue
