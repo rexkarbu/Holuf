@@ -6,7 +6,7 @@
 script = ExtResource("1_script")
 character_id = "neria"
 display_name = "Neria"
-age = 24
+age = 21
 race = 0
 weapon_type = 7
 element_affinity = 2
