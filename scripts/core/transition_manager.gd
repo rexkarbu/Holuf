@@ -12,7 +12,7 @@ func _ready() -> void:
 	color_rect.hide()
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	if _is_transitioning:
 		get_viewport().set_input_as_handled()
 
