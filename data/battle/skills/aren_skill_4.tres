@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/skill_effect_data.gd" id="1_eff"]
+[ext_resource type="Script" path="res://scripts/battle/skill_data.gd" id="2_script"]
+
+
+[resource]
+script = ExtResource("2_script")
+skill_id = "aren_skill_4"
+display_name = "Blazing Arc"
+mp_cost = 15
+damage_type = 2
+target_type = 2
+scaling_type = 0
+power = 1.0
+condition_type = 0
+conditional_power_multiplier = 1.0
+effects = Array[ExtResource("1_eff")]([])

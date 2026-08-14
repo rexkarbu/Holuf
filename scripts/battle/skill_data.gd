@@ -3,8 +3,9 @@ extends Resource
 
 ## SkillData — Data statis untuk sebuah kemampuan (skill).
 
-enum TargetType { ENEMY, ALLY, ALL_ENEMIES, ALL_ALLIES }
+enum TargetType { ENEMY, ALLY, ALL_ENEMIES, ALL_ALLIES, SELF }
 enum ScalingType { PHYSICAL, MAGIC }
+enum ConditionType { NONE, TARGET_BROKEN, TARGET_NOT_ACTED }
 
 @export var skill_id: String = ""
 @export var display_name: String = "Skill"
@@ -13,3 +14,10 @@ enum ScalingType { PHYSICAL, MAGIC }
 @export var target_type: TargetType = TargetType.ENEMY
 @export var scaling_type: ScalingType = ScalingType.PHYSICAL
 @export var power: float = 1.0
+
+@export_group("Condition & Bonus")
+@export var condition_type: ConditionType = ConditionType.NONE
+@export var conditional_power_multiplier: float = 1.0
+
+@export_group("Effects")
+@export var effects: Array[SkillEffectData] = []

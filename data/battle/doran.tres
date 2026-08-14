@@ -1,6 +1,13 @@
-[gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3]
+[gd_resource type="Resource" script_class="CombatantData" load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_script"]
+
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_1.tres" id="2_skill"]
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_2.tres" id="3_skill"]
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_3.tres" id="4_skill"]
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_4.tres" id="5_skill"]
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_5.tres" id="6_skill"]
+[ext_resource type="Resource" path="res://data/battle/skills/doran_skill_6.tres" id="7_skill"]
 
 [resource]
 script = ExtResource("1_script")
@@ -22,6 +29,6 @@ defense_growth = 1
 magic_attack_growth = 0
 magic_defense_growth = 0
 speed_growth = 0
-skills = Array[Resource]([])
+skills = Array[Resource]([ExtResource("2_skill"), ExtResource("3_skill"), ExtResource("4_skill"), ExtResource("5_skill"), ExtResource("6_skill"), ExtResource("7_skill")])
 weaknesses = Array[int]([])
 max_shield = 0
