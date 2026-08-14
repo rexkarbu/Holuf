@@ -2,7 +2,7 @@ Kaelis — Character Identity Draft
 Bagian	Identitas
 Nama	Kaelis
 Race	Human
-Asal	Negara di pulau utama, belum dinamai
+Asal	Valeria
 Weapon	Spear / Lance
 Element	Lightning
 Posisi story	Petarung/tracker yang menyelidiki jaringan pengiriman pihak antagonis
