@@ -50,7 +50,13 @@ Holuf is a top-down 2D RPG built with Godot 4. This project focuses on building 
 * **EXP & Leveling**: Data-driven level up system where leveling up naturally increases Max HP, Max MP, and core stats based on individual growth curves.
 * **Persistent HP & MP**: Current HP and MP are saved persistently across battles and world exploration.
 * **Reserve EXP Penalty**: Members in the Reserve Party do not receive EXP from battles.
-* **10-Character Support**: Foundation for a fully playable 10-character roster, with flexible scaling from 1 to 4 active party members simultaneously in Battle without relying on a hardcoded protagonist.
+* **10-Character Support**: Foundation for a fully playable 10-character roster, successfully migrated to Godot Resource (`.tres`) formats. Features flexible scaling from 1 to 4 active party members simultaneously in Battle without relying on a hardcoded protagonist.
+
+### Game Design & Lore (Pre-Production Locked)
+* **Comprehensive Game Design Document**: The project includes a fully locked design bible detailing the world map (Asterra), 7 distinct nations (Lorel, Alexandria, Mongreaux, etc.), and narrative arcs.
+* **Scope-Managed Narrative**: The storyline is strictly scoped for a ~10-hour experience with defined pacing limits per arc to prevent scope creep.
+* **Character Roster**: Fully fleshed out identities, skill kits, and backgrounds for all 10 playable characters.
+* **Combat Philosophy**: Well-defined numerical guardrails ensuring combat remains tactical (Break & Boost driven) without relying on infinite scaling, massive HP sponges, or mandatory grinding.
 
 ## Architecture Highlights
 * **Autoloads**: Utilizes `GameManager`, `QuestManager`, `DialogueManager`, `TransitionManager`, and `PartyManager` to maintain persistent states across scene changes.
