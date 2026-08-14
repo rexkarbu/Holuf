@@ -149,8 +149,7 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 		"characters": characters_data,
 		"active_party": active,
 		"inventory": inventory_data,
-		"owned_equipment": equipment_save["owned_equipment"],
-		"character_equipment": equipment_save["character_equipment"],
+		"character_equipment": equipment_save,
 		"world": {
 			"scene": "res://scenes/main/main.tscn",
 			"player_x": player_x,
@@ -194,7 +193,7 @@ func _validate_save_data(data: Dictionary) -> bool:
 ## Kembalikan true jika save adalah versi lama (< 2) yang tidak memiliki equipment.
 func _is_legacy_save(data: Dictionary) -> bool:
 	var ver = int(data.get("save_version", 1))
-	return ver < 2 or (not data.has("owned_equipment") and not data.has("character_equipment"))
+	return ver < 2 or not data.has("character_equipment")
 
 # ==============================================================
 # APPLY SAVE DATA
@@ -244,17 +243,13 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 		if qty > 0:
 			InventoryManager.inventory[item_id] = qty
 
-	# 5. Equipment (M30) — aman untuk Save v1 (backward compat)
+	# 5. Equipment (M30/M31) — aman untuk Save v1 (backward compat)
 	if _is_legacy_save(data):
-		# Save v1: tidak ada equipment data → mulai dengan owned prototypes, kosong semua slot
+		# Save v1: tidak ada equipment data → kosongkan semua slot
 		print("[SaveManager] Legacy save (v1) detected — initializing empty equipment state.")
 		EquipmentManager.reset_to_new_game()
 	else:
-		var equipment_data := {
-			"owned_equipment": data.get("owned_equipment", {}),
-			"character_equipment": data.get("character_equipment", {})
-		}
-		EquipmentManager.apply_save_data(equipment_data)
+		EquipmentManager.apply_save_data(data.get("character_equipment", {}))
 	
 	# 6. Player position
 	var world_data: Dictionary = data.get("world", {})

@@ -28,8 +28,14 @@ func _load_item_definitions() -> void:
 func _initialize_starting_inventory() -> void:
 	# Development starting inventory (only runs once)
 	if inventory.is_empty():
+		# Consumables
 		inventory["healing_potion"] = 5
 		inventory["spirit_tonic"] = 3
+		# M31: Prototype equipment for testing
+		inventory["training_sword"] = 1
+		inventory["leather_cap"] = 1
+		inventory["leather_armor"] = 1
+		inventory["copper_ring"] = 1
 
 ## Reset inventory ke kondisi New Game.
 ## Dipanggil oleh SaveManager.start_new_game().
@@ -51,11 +57,15 @@ func get_quantity(item_id: String) -> int:
 
 func can_add_item(item_id: String, amount: int) -> bool:
 	if amount <= 0: return false
-	if not item_registry.has(item_id): return false
 	
-	var item_data = item_registry[item_id] as ItemData
 	var current = get_quantity(item_id)
-	var stack_limit = item_data.stack_limit if item_data else MAX_STACK
+	# Use item_registry stack limit if available; otherwise allow up to MAX_STACK.
+	# This allows equipment items (not in item_registry) to be tracked in inventory.
+	var stack_limit = MAX_STACK
+	if item_registry.has(item_id):
+		var item_data_res = item_registry[item_id] as ItemData
+		if item_data_res:
+			stack_limit = item_data_res.stack_limit
 	
 	return (current + amount) <= stack_limit
 

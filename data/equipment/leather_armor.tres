@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_eqdata")
-equipment_id = "training_sword"
-display_name = "Training Sword"
-description = "A simple sword used for combat training. ATK +5."
-slot_type = 0
+equipment_id = "leather_armor"
+display_name = "Leather Armor"
+description = "Sturdy leather armor that guards against physical attacks. DEF +3."
+slot_type = 2
 weapon_type = 0
 bonus_max_hp = 0
 bonus_max_mp = 0
-bonus_atk = 5
-bonus_def = 0
+bonus_atk = 0
+bonus_def = 3
 bonus_mag_atk = 0
 bonus_mag_def = 0
 bonus_spd = 0

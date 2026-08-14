@@ -2,19 +2,21 @@ class_name EquipmentData
 extends Resource
 
 ## EquipmentData — Data statis untuk satu jenis equipment.
-## M30: Equipment System Foundation.
+## M31: Equipment System Core.
 ##
 ## Gunakan equipment_id sebagai Save key (bukan display_name).
 ## stat_bonuses key: "max_hp", "max_mp", "atk", "def", "mag_atk", "mag_def", "spd"
 
 # ==============================================================
 # SLOT TYPE
+# M31: 4 slot — Weapon, Head, Body, Accessory
 # ==============================================================
 
 enum SlotType {
-	WEAPON,
-	ARMOR,
-	ACCESSORY
+	WEAPON,     # 0
+	HEAD,       # 1
+	BODY,       # 2
+	ACCESSORY   # 3
 }
 
 # ==============================================================
@@ -28,8 +30,8 @@ enum SlotType {
 @export_group("Slot")
 @export var slot_type: SlotType = SlotType.WEAPON
 
-## Hanya relevan jika slot_type == WEAPON.
-## Weapon hanya bisa dipasang oleh karakter dengan weapon_type yang sama.
+## weapon_type — data-field untuk future-proofing (weapon restriction M32+).
+## M31: TIDAK dipakai untuk validasi. Semua karakter boleh pakai semua weapon.
 @export var weapon_type: CharacterIdentity.WeaponType = CharacterIdentity.WeaponType.SWORD
 
 @export_group("Stat Bonuses")
@@ -58,9 +60,8 @@ func get_stat_bonuses() -> Dictionary:
 		"spd":     bonus_spd,
 	}
 
-## Cek apakah equipment ini bisa dipakai oleh karakter berdasarkan weapon_type mereka.
-## Armor dan Accessory selalu valid. Weapon hanya valid jika weapon_type cocok.
-func is_compatible_with(char_data: CharacterData) -> bool:
-	if slot_type != SlotType.WEAPON:
-		return true  # Armor & Accessory universal
-	return weapon_type == char_data.weapon_type
+## Cek apakah equipment ini bisa dipakai di slot tertentu (berbasis slot_type saja).
+## M31: Tidak ada weapon restriction. Semua karakter boleh pakai semua weapon.
+## M32+: Weapon Type restriction akan ditambahkan di sini.
+func is_compatible_with(_char_data: CharacterData) -> bool:
+	return true  # M31: universal compatibility, slot validation dilakukan oleh EquipmentManager

@@ -1,12 +1,12 @@
 extends CanvasLayer
 
-## EquipmentUI — M30: Equipment System Foundation.
+## EquipmentUI — M31: Equipment System Core.
 ## UI untuk melihat dan mengganti equipment semua 10 karakter.
 ## Diakses dari Pause Menu. World tetap paused saat UI ini terbuka.
 ##
 ## Layout:
 ##   Kiri: daftar semua karakter (Active + Reserve)
-##   Tengah: slot Weapon/Armor/Accessory + daftar item compatible
+##   Tengah: slot Weapon/Head/Body/Accessory + daftar item compatible dari inventory
 ##   Kanan: effective stats karakter
 
 # ==============================================================
@@ -23,7 +23,8 @@ var _hint_label: Label
 
 # Tombol slot yang bisa difokus
 var _btn_weapon: Button
-var _btn_armor: Button
+var _btn_head: Button
+var _btn_body: Button
 var _btn_accessory: Button
 
 var _selected_char_id: String = ""
@@ -86,8 +87,11 @@ func _build_ui() -> void:
 	add_child(hbox)
 
 	# --- LEFT PANEL: Character list ---
-	var left = _make_panel(240, Color(0.1, 0.1, 0.15, 0.9))
-	hbox.add_child(left)
+	var left_container = VBoxContainer.new()
+	left_container.custom_minimum_size = Vector2(240, 0)
+	left_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var left = _make_panel(left_container, Color(0.1, 0.1, 0.15, 0.9))
+	hbox.add_child(left_container)
 
 	var left_title = _make_label("PARTY", 16, Color(0.7, 0.7, 0.9))
 	left_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -102,8 +106,11 @@ func _build_ui() -> void:
 	_populate_char_list()
 
 	# --- CENTER PANEL: Slots + item list ---
-	var center = _make_panel(500, Color(0.08, 0.08, 0.12, 0.9))
-	hbox.add_child(center)
+	var center_container = VBoxContainer.new()
+	center_container.custom_minimum_size = Vector2(500, 0)
+	center_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var center = _make_panel(center_container, Color(0.08, 0.08, 0.12, 0.9))
+	hbox.add_child(center_container)
 
 	var slot_title = _make_label("EQUIPMENT SLOTS", 16, Color(0.7, 0.7, 0.9))
 	slot_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -115,10 +122,12 @@ func _build_ui() -> void:
 	center.add_child(_slot_panel)
 
 	_btn_weapon    = _make_slot_button("Weapon",    EquipmentManager.SLOT_WEAPON)
-	_btn_armor     = _make_slot_button("Armor",     EquipmentManager.SLOT_ARMOR)
+	_btn_head      = _make_slot_button("Head",      EquipmentManager.SLOT_HEAD)
+	_btn_body      = _make_slot_button("Body",      EquipmentManager.SLOT_BODY)
 	_btn_accessory = _make_slot_button("Accessory", EquipmentManager.SLOT_ACCESSORY)
 	_slot_panel.add_child(_btn_weapon)
-	_slot_panel.add_child(_btn_armor)
+	_slot_panel.add_child(_btn_head)
+	_slot_panel.add_child(_btn_body)
 	_slot_panel.add_child(_btn_accessory)
 
 	_add_separator(center)
@@ -148,9 +157,11 @@ func _build_ui() -> void:
 	center.add_child(_desc_label)
 
 	# --- RIGHT PANEL: Stats ---
-	var right = _make_panel(280, Color(0.06, 0.1, 0.06, 0.9))
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	hbox.add_child(right)
+	var right_container = VBoxContainer.new()
+	right_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	right_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	var right = _make_panel(right_container, Color(0.06, 0.1, 0.06, 0.9))
+	hbox.add_child(right_container)
 
 	var stat_title = _make_label("EFFECTIVE STATS", 16, Color(0.7, 0.9, 0.7))
 	stat_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -221,7 +232,8 @@ func _refresh_slot_labels() -> void:
 		return
 	var slots = [
 		[_btn_weapon,    EquipmentManager.SLOT_WEAPON,    "Weapon"],
-		[_btn_armor,     EquipmentManager.SLOT_ARMOR,     "Armor"],
+		[_btn_head,      EquipmentManager.SLOT_HEAD,      "Head"],
+		[_btn_body,      EquipmentManager.SLOT_BODY,      "Body"],
 		[_btn_accessory, EquipmentManager.SLOT_ACCESSORY, "Accessory"]
 	]
 	for entry in slots:
@@ -246,13 +258,13 @@ func _refresh_item_list() -> void:
 
 	var items = EquipmentManager.get_equippable_for_slot(_selected_char_id, _selected_slot)
 	if items.is_empty():
-		var hint = _make_label("No compatible items available.", 14, Color(0.55, 0.55, 0.55))
+		var hint = _make_label("No compatible items in inventory.", 14, Color(0.55, 0.55, 0.55))
 		_item_list.add_child(hint)
 		return
 
 	for eq_data in items:
 		eq_data = eq_data as EquipmentData
-		var available = EquipmentManager.get_available_quantity(eq_data.equipment_id)
+		var available = InventoryManager.get_quantity(eq_data.equipment_id)
 		var currently_equipped = (EquipmentManager.get_equipped_id(_selected_char_id, _selected_slot) == eq_data.equipment_id)
 		
 		var btn = Button.new()
@@ -381,8 +393,8 @@ func _show_desc(equipment_id: String) -> void:
 # INPUT
 # ==============================================================
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+func _unhandled_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		queue_free()
 
@@ -390,16 +402,15 @@ func _unhandled_input(event: InputEvent) -> void:
 # UI HELPERS
 # ==============================================================
 
-func _make_panel(min_width: int, color: Color) -> VBoxContainer:
-	var vb = VBoxContainer.new()
-	vb.custom_minimum_size = Vector2(min_width, 0)
-	vb.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	vb.add_theme_constant_override("separation", 6)
+## Menerima parent_node dan menambahkan inner margin + VBoxContainer ke dalamnya.
+## Mengembalikan VBoxContainer terdalam tempat konten harus ditambahkan.
+func _make_panel(parent_node: Node, color: Color) -> VBoxContainer:
+	parent_node.add_theme_constant_override("separation", 6)
 
 	var bg = ColorRect.new()
 	bg.color = color
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
-	vb.add_child(bg)
+	parent_node.add_child(bg)
 
 	# Margin container
 	var margin = MarginContainer.new()
@@ -413,7 +424,8 @@ func _make_panel(min_width: int, color: Color) -> VBoxContainer:
 	inner.add_theme_constant_override("separation", 6)
 	inner.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	margin.add_child(inner)
-	vb.add_child(margin)
+	
+	parent_node.add_child(margin)
 
 	return inner
 
