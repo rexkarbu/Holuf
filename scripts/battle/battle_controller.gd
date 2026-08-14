@@ -244,10 +244,18 @@ func _set_state(new_state: State) -> void:
 func _process_round_start() -> void:
 	turn_queue.clear()
 	for p in players:
-		if not p.is_dead(): turn_queue.append(p)
+		if not p.is_dead(): 
+			p.has_acted_this_round = false
+			turn_queue.append(p)
 	for e in enemies:
-		if not e.is_dead(): turn_queue.append(e)
+		if not e.is_dead(): 
+			e.has_acted_this_round = false
+			turn_queue.append(e)
 	
+	_sort_turn_queue()
+	_set_state(State.TURN_START)
+
+func _sort_turn_queue() -> void:
 	turn_queue.sort_custom(func(a, b):
 		var a_spd = a.get_effective_speed() if a.has_method("get_effective_speed") else a.base_data.speed
 		var b_spd = b.get_effective_speed() if b.has_method("get_effective_speed") else b.base_data.speed
@@ -255,9 +263,7 @@ func _process_round_start() -> void:
 			return a in players
 		return a_spd > b_spd
 	)
-	
 	_update_turn_order_ui()
-	_set_state(State.TURN_START)
 
 func _process_turn_start() -> void:
 	if turn_queue.is_empty():
@@ -272,6 +278,18 @@ func _process_turn_start() -> void:
 		return
 	
 	current_combatant.is_defending = false
+	current_combatant.has_acted_this_round = true
+	
+	# M23: Decrement active effects duration
+	var effects_to_remove = []
+	for eff in current_combatant.active_effects:
+		eff.duration -= 1
+		if eff.duration <= 0:
+			effects_to_remove.append(eff)
+	for eff in effects_to_remove:
+		current_combatant.active_effects.erase(eff)
+	if effects_to_remove.size() > 0:
+		ui.add_log("%s's status returned to normal." % current_combatant.get_display_name())
 	
 	if current_combatant in players:
 		# M23 BUGFIX: BP only increases on natural turn 2 and onwards
@@ -351,7 +369,7 @@ func _next_valid_target(direction: int) -> void:
 # DAMAGE PIPELINE
 # ==============================================================
 
-func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false, boost_level: int = 0) -> Dictionary:
+func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int, skill_power: float = 1.0, use_magic_scaling: bool = false, boost_level: int = 0, condition: int = 0, cond_mult: float = 1.0) -> Dictionary:
 	var base: int
 	var def_stat = target.get_effective_defense()
 	
@@ -366,6 +384,12 @@ func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int,
 	base = max(0, base)
 	var amount: float = float(base) * skill_power
 	
+	# Conditional Bonus
+	if condition == 1 and target.is_broken: # TARGET_BROKEN
+		amount *= cond_mult
+	elif condition == 2 and not target.has_acted_this_round: # TARGET_NOT_ACTED
+		amount *= cond_mult
+	
 	# M23: Apply Boost multiplier
 	var boost_mult = BoostMultiplier.get_multiplier(boost_level)
 	amount *= boost_mult
@@ -374,6 +398,12 @@ func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int,
 	
 	if is_weakness:
 		amount *= 1.25
+		
+	# Defensive Stance check
+	for e in target.active_effects:
+		if e.effect_type == SkillEffectData.Type.DEFENSIVE_STANCE:
+			amount *= e.value # e.value is fraction, e.g. 0.5
+			break
 	
 	if target.is_broken:
 		var mult = target.base_data.get_break_multiplier()
@@ -604,7 +634,11 @@ func _process_player_attack(target: Combatant) -> void:
 	await BattleSpeed.wait(0.3)
 	
 	var boost = current_combatant.selected_boost_level
-	var result = _calculate_damage(current_combatant, target, DamageType.Type.SWORD, 1.0, false, boost)
+	var wpn_type = DamageType.Type.SWORD
+	if current_combatant.character_id != "" and PartyManager.roster.has(current_combatant.character_id):
+		wpn_type = PartyManager.roster[current_combatant.character_id].weapon_type
+		
+	var result = _calculate_damage(current_combatant, target, wpn_type, 1.0, false, boost)
 	target.take_damage(result.amount)
 	
 	# M23: Consume BP after successful action
@@ -614,7 +648,7 @@ func _process_player_attack(target: Combatant) -> void:
 	_update_all_hp_mp_ui()
 	
 	if result.is_weakness:
-		_handle_weakness_hit(DamageType.Type.SWORD, target)
+		_handle_weakness_hit(wpn_type, target)
 	
 	_process_shield_after_hit(target, result)
 	
@@ -623,14 +657,16 @@ func _process_player_attack(target: Combatant) -> void:
 	else:
 		ui.add_log("%s attacks %s for %d damage!" % [current_combatant.get_display_name(), target.get_display_name(), result.amount])
 	
-	await BattleSpeed.wait(0.8)
-	
 	if target.is_dead():
 		var idx = enemies.find(target)
 		if idx != -1:
 			ui.hide_enemy_ui(idx)
 			if idx < enemy_views.size():
 				(enemy_views[idx] as BattleCombatantView).set_defeated()
+				
+	await _process_counter_attacks(current_combatant, [target])
+	
+	await BattleSpeed.wait(0.8)
 	
 	if _check_victory():
 		_set_state(State.VICTORY)
@@ -642,66 +678,87 @@ func _execute_player_skill(skill: SkillData) -> void:
 		ui.add_log("Not enough MP.")
 		return
 	
-	if skill.target_type == SkillData.TargetType.ENEMY:
-		pending_action = func(tgt): _process_skill_attack(skill, tgt)
-		_set_state(State.PLAYER_TARGET_SELECT)
-	elif skill.target_type == SkillData.TargetType.ALLY:
-		pending_action = func(tgt): _process_skill_heal(skill, tgt)
-		selected_target_index = players.find(current_combatant)
-		_set_state(State.ALLY_TARGET_SELECT)
+	match skill.target_type:
+		SkillData.TargetType.ENEMY:
+			pending_action = func(tgt): _process_skill_attack(skill, [tgt])
+			_set_state(State.PLAYER_TARGET_SELECT)
+		SkillData.TargetType.ALLY:
+			pending_action = func(tgt): _process_skill_heal(skill, [tgt])
+			selected_target_index = players.find(current_combatant)
+			_set_state(State.ALLY_TARGET_SELECT)
+		SkillData.TargetType.ALL_ENEMIES:
+			var valid_targets: Array[Combatant] = []
+			for e in enemies:
+				if not e.is_dead(): valid_targets.append(e)
+			_process_skill_attack(skill, valid_targets)
+		SkillData.TargetType.ALL_ALLIES:
+			var valid_targets: Array[Combatant] = []
+			for p in players:
+				if not p.is_dead(): valid_targets.append(p)
+			_process_skill_heal(skill, valid_targets)
+		SkillData.TargetType.SELF:
+			_process_skill_heal(skill, [current_combatant])
 
-func _process_skill_attack(skill: SkillData, target: Combatant) -> void:
+func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
 	current_combatant.spend_mp(skill.mp_cost)
+	var boost = current_combatant.selected_boost_level
+	current_combatant.current_bp -= boost
+	current_combatant.selected_boost_level = 0
 	_update_all_hp_mp_ui()
 	_set_state(State.PLAYER_ACTION)
 	ui.clear_enemy_target_indicator(enemies)
 	
 	await BattleSpeed.wait(0.3)
 	
+	ui.add_log("%s uses %s!" % [current_combatant.get_display_name(), skill.display_name])
 	var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-	var boost = current_combatant.selected_boost_level
-	var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic, boost)
 	
-	target.take_damage(result.amount)
-	
-	# M23: Consume BP after successful action
-	current_combatant.current_bp -= boost
-	current_combatant.selected_boost_level = 0
-	
+	for target in targets:
+		if target.is_dead(): continue
+		var result = _calculate_damage(current_combatant, target, skill.damage_type, skill.power, use_magic, boost, skill.condition_type, skill.conditional_power_multiplier)
+		
+		target.take_damage(result.amount)
+		
+		if result.is_weakness:
+			_handle_weakness_hit(skill.damage_type, target)
+		
+		_process_shield_after_hit(target, result)
+		
+		if result.is_weakness:
+			ui.add_log("WEAK! %s takes %d damage!" % [target.get_display_name(), result.amount])
+		else:
+			ui.add_log("%s takes %d damage!" % [target.get_display_name(), result.amount])
+			
+		_apply_skill_effects(current_combatant, target, skill)
+		
+		if target.is_dead():
+			var idx = enemies.find(target)
+			if idx != -1:
+				ui.hide_enemy_ui(idx)
+				if idx < enemy_views.size():
+					(enemy_views[idx] as BattleCombatantView).set_defeated()
+					
 	_update_all_hp_mp_ui()
-	
-	if result.is_weakness:
-		_handle_weakness_hit(skill.damage_type, target)
-	
-	_process_shield_after_hit(target, result)
-	
-	if result.is_weakness:
-		ui.add_log("WEAK! %s uses %s for %d damage!" % [current_combatant.get_display_name(), skill.display_name, result.amount])
-	else:
-		ui.add_log("%s uses %s for %d damage!" % [current_combatant.get_display_name(), skill.display_name, result.amount])
-	
+	await _process_counter_attacks(current_combatant, targets)
 	await BattleSpeed.wait(0.8)
-	
-	if target.is_dead():
-		var idx = enemies.find(target)
-		if idx != -1:
-			ui.hide_enemy_ui(idx)
-			if idx < enemy_views.size():
-				(enemy_views[idx] as BattleCombatantView).set_defeated()
 	
 	if _check_victory():
 		_set_state(State.VICTORY)
 	else:
 		_set_state(State.TURN_START)
 
-func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
+func _process_skill_heal(skill: SkillData, targets: Array[Combatant]) -> void:
 	current_combatant.spend_mp(skill.mp_cost)
+	var boost = current_combatant.selected_boost_level
+	current_combatant.current_bp -= boost
+	current_combatant.selected_boost_level = 0
 	_update_all_hp_mp_ui()
 	_set_state(State.PLAYER_ACTION)
 	ui.show_skills(false)
 	ui.set_hint("")
 	
 	await BattleSpeed.wait(0.3)
+	ui.add_log("%s uses %s!" % [current_combatant.get_display_name(), skill.display_name])
 	
 	var base_heal: int
 	if skill.scaling_type == SkillData.ScalingType.PHYSICAL:
@@ -710,24 +767,69 @@ func _process_skill_heal(skill: SkillData, target: Combatant) -> void:
 		base_heal = current_combatant.get_effective_magic_attack() if current_combatant.has_method("get_effective_magic_attack") else current_combatant.base_data.magic_attack
 	
 	# M23: Apply Boost multiplier to healing
-	var boost = current_combatant.selected_boost_level
 	var boost_mult = BoostMultiplier.get_multiplier(boost)
 	var heal_amount = max(1, roundi(float(base_heal) * skill.power * boost_mult))
 	
-	# M23: Consume BP after successful action
-	current_combatant.current_bp -= boost
-	current_combatant.selected_boost_level = 0
-	
-	var old_hp = target.current_hp
-	var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
-	target.current_hp = min(target.current_hp + heal_amount, target_max_hp)
-	var actual_heal = target.current_hp - old_hp
+	for target in targets:
+		if target.is_dead(): continue
+		var old_hp = target.current_hp
+		var target_max_hp = target.get_effective_max_hp() if target.has_method("get_effective_max_hp") else target.base_data.max_hp
+		target.current_hp = min(target.current_hp + heal_amount, target_max_hp)
+		var actual_heal = target.current_hp - old_hp
+		
+		if actual_heal > 0:
+			ui.add_log("%s recovers %d HP!" % [target.get_display_name(), actual_heal])
+			
+		_apply_skill_effects(current_combatant, target, skill)
 	
 	_update_all_hp_mp_ui()
-	ui.add_log("%s casts %s on %s and restores %d HP!" % [current_combatant.get_display_name(), skill.display_name, target.get_display_name(), actual_heal])
-	
 	await BattleSpeed.wait(0.8)
 	_set_state(State.TURN_START)
+
+func _apply_skill_effects(attacker: Combatant, target: Combatant, skill: SkillData) -> void:
+	for eff in skill.effects:
+		if randf() > eff.chance: continue
+		
+		match eff.effect_type:
+			SkillEffectData.Type.CLEANSE:
+				var to_remove = []
+				for active in target.active_effects:
+					if active.effect_type in [SkillEffectData.Type.ATK_DOWN, SkillEffectData.Type.DEF_DOWN, SkillEffectData.Type.MAG_DOWN, SkillEffectData.Type.SPD_DOWN]:
+						to_remove.append(active)
+				for r in to_remove: target.active_effects.erase(r)
+				if to_remove.size() > 0: ui.add_log("%s's negative statuses were cleansed!" % target.get_display_name())
+			
+			SkillEffectData.Type.SELF_HEAL:
+				var max_hp = attacker.get_effective_max_hp() if attacker.has_method("get_effective_max_hp") else attacker.base_data.max_hp
+				var heal_amt = max(1, roundi(max_hp * eff.value))
+				var old_hp = attacker.current_hp
+				attacker.current_hp = min(attacker.current_hp + heal_amt, max_hp)
+				if attacker.current_hp > old_hp:
+					ui.add_log("%s recovers %d HP from self-heal!" % [attacker.get_display_name(), attacker.current_hp - old_hp])
+			
+			_:
+				if eff.effect_type != SkillEffectData.Type.NONE:
+					# Apply or refresh effect
+					var found = false
+					for active in target.active_effects:
+						if active.effect_type == eff.effect_type:
+							if (eff.value >= active.value and eff.effect_type in [SkillEffectData.Type.ATK_UP, SkillEffectData.Type.DEF_UP, SkillEffectData.Type.MAG_UP, SkillEffectData.Type.SPD_UP, SkillEffectData.Type.COUNTER_STANCE]) or \
+							   (eff.value <= active.value and eff.effect_type in [SkillEffectData.Type.ATK_DOWN, SkillEffectData.Type.DEF_DOWN, SkillEffectData.Type.MAG_DOWN, SkillEffectData.Type.SPD_DOWN, SkillEffectData.Type.DEFENSIVE_STANCE]):
+								active.value = eff.value
+								active.duration = eff.duration + 1
+								found = true
+							elif eff.value == active.value:
+								active.duration = max(active.duration, eff.duration + 1)
+								found = true
+							break
+					if not found:
+						var new_eff = eff.duplicate()
+						new_eff.duration += 1 # prevent immediate expiration if it's applied on target's turn
+						target.active_effects.append(new_eff)
+					
+					# Recompute speed queue if speed changed
+					if eff.effect_type in [SkillEffectData.Type.SPD_UP, SkillEffectData.Type.SPD_DOWN]:
+						_sort_turn_queue()
 
 func _execute_player_item(item: ItemData) -> void:
 	pending_item = item
@@ -851,6 +953,7 @@ func _process_enemy_turn() -> void:
 			result.amount
 		])
 	
+	await _process_counter_attacks(enemy_actor, [target])
 	await BattleSpeed.wait(0.8)
 	
 	if _check_defeat():
@@ -876,6 +979,51 @@ func _update_all_hp_mp_ui() -> void:
 	
 	# M23: Update BP display
 	ui.update_all_bp_ui(players)
+
+func _process_counter_attacks(attacker: Combatant, targets: Array[Combatant]) -> void:
+	if attacker.is_dead(): return
+	for tgt in targets:
+		if tgt.is_dead(): continue
+		if attacker.is_dead(): break
+		
+		# Find COUNTER_STANCE
+		var counter_eff = null
+		for eff in tgt.active_effects:
+			if eff.effect_type == SkillEffectData.Type.COUNTER_STANCE:
+				counter_eff = eff
+				break
+				
+		if counter_eff != null:
+			# Trigger counter!
+			tgt.active_effects.erase(counter_eff) # consume stance
+			ui.add_log("%s triggers Counter Attack!" % tgt.get_display_name())
+			await BattleSpeed.wait(0.5)
+			
+			# Perform basic attack equivalent counter
+			var wpn_type = DamageType.Type.SWORD
+			if tgt.character_id != "" and PartyManager.roster.has(tgt.character_id):
+				wpn_type = PartyManager.roster[tgt.character_id].weapon_type
+				
+			var result = _calculate_damage(tgt, attacker, wpn_type, counter_eff.value, false, 0)
+			attacker.take_damage(result.amount)
+			_update_all_hp_mp_ui()
+			
+			if result.is_weakness:
+				_handle_weakness_hit(wpn_type, attacker)
+			_process_shield_after_hit(attacker, result)
+			
+			if result.is_weakness:
+				ui.add_log("WEAK! %s counters %s for %d damage!" % [tgt.get_display_name(), attacker.get_display_name(), result.amount])
+			else:
+				ui.add_log("%s counters %s for %d damage!" % [tgt.get_display_name(), attacker.get_display_name(), result.amount])
+			
+			if attacker.is_dead():
+				var idx = enemies.find(attacker)
+				if idx != -1:
+					ui.hide_enemy_ui(idx)
+					if idx < enemy_views.size():
+						(enemy_views[idx] as BattleCombatantView).set_defeated()
+				break
 
 func _update_all_shield_ui() -> void:
 	for i in range(enemies.size()):
