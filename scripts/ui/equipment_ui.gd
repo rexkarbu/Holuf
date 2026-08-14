@@ -37,6 +37,7 @@ const ALL_CHARS: Array = [
 ]
 
 var _char_buttons: Dictionary = {}  # char_id → Button
+var _ordered_char_buttons: Array[Button] = [] # Ordered array for wrapping navigation
 var _item_buttons: Array = []       # list tombol item
 
 # ==============================================================
@@ -56,6 +57,8 @@ func _ready() -> void:
 	# Fokus ke tombol karakter pertama
 	if _char_buttons.has(ALL_CHARS[0]):
 		_char_buttons[ALL_CHARS[0]].grab_focus()
+		
+	_update_navigation_neighbors()
 
 # ==============================================================
 # BUILD UI
@@ -184,6 +187,7 @@ func _populate_char_list() -> void:
 	for child in _char_list.get_children():
 		child.queue_free()
 	_char_buttons.clear()
+	_ordered_char_buttons.clear()
 
 	# Active party label
 	var active_lbl = _make_label("— Active —", 13, Color(0.6, 0.8, 0.6))
@@ -191,7 +195,9 @@ func _populate_char_list() -> void:
 	_char_list.add_child(active_lbl)
 
 	for cid in PartyManager.active_party:
-		_char_list.add_child(_make_char_button(cid))
+		var btn = _make_char_button(cid)
+		_char_list.add_child(btn)
+		_ordered_char_buttons.append(btn)
 
 	# Reserve label
 	var reserve_lbl = _make_label("— Reserve —", 13, Color(0.7, 0.7, 0.7))
@@ -199,7 +205,9 @@ func _populate_char_list() -> void:
 	_char_list.add_child(reserve_lbl)
 
 	for cid in PartyManager.reserve_party:
-		_char_list.add_child(_make_char_button(cid))
+		var btn = _make_char_button(cid)
+		_char_list.add_child(btn)
+		_ordered_char_buttons.append(btn)
 
 func _make_char_button(char_id: String) -> Button:
 	var cdata = PartyManager.roster.get(char_id) as CharacterData
@@ -300,6 +308,8 @@ func _refresh_item_list() -> void:
 		
 		_item_list.add_child(btn)
 		_item_buttons.append(btn)
+		
+	_update_navigation_neighbors()
 
 func _refresh_stats() -> void:
 	if _selected_char_id == "":
@@ -370,6 +380,7 @@ func _select_character(char_id: String) -> void:
 	_refresh_slot_labels()
 	_refresh_item_list()
 	_refresh_stats()
+	_update_navigation_neighbors()
 
 func _select_slot(slot_key: String) -> void:
 	_selected_slot = slot_key
@@ -477,3 +488,40 @@ func _add_separator(parent: Node) -> void:
 	var sep = HSeparator.new()
 	sep.add_theme_color_override("color", Color(0.3, 0.3, 0.4, 0.6))
 	parent.add_child(sep)
+
+func _update_navigation_neighbors() -> void:
+	var count = _ordered_char_buttons.size()
+	if count > 0:
+		for i in range(count):
+			var btn = _ordered_char_buttons[i]
+			var prev_btn = _ordered_char_buttons[(i - 1 + count) % count]
+			var next_btn = _ordered_char_buttons[(i + 1) % count]
+			
+			btn.focus_neighbor_top = btn.get_path_to(prev_btn)
+			btn.focus_neighbor_bottom = btn.get_path_to(next_btn)
+			btn.focus_neighbor_right = btn.get_path_to(_btn_weapon)
+			btn.focus_neighbor_left = btn.get_path_to(btn)
+	
+	var slots = [_btn_weapon, _btn_head, _btn_body, _btn_accessory]
+	var slot_count = slots.size()
+	
+	var target_char_btn = _char_buttons.get(_selected_char_id, _btn_weapon)
+	
+	for i in range(slot_count):
+		var btn = slots[i]
+		var prev_btn = slots[(i - 1 + slot_count) % slot_count]
+		var next_btn = slots[(i + 1) % slot_count]
+		
+		btn.focus_neighbor_top = btn.get_path_to(prev_btn)
+		btn.focus_neighbor_bottom = btn.get_path_to(next_btn)
+		btn.focus_neighbor_right = btn.get_path_to(btn)
+		
+		if target_char_btn and target_char_btn is Button:
+			btn.focus_neighbor_left = btn.get_path_to(target_char_btn)
+		else:
+			btn.focus_neighbor_left = btn.get_path_to(btn)
+
+	for i in range(_item_buttons.size()):
+		var btn = _item_buttons[i]
+		btn.focus_neighbor_left = btn.get_path_to(btn)
+		btn.focus_neighbor_right = btn.get_path_to(btn)
