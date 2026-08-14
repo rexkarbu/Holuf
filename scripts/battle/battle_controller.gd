@@ -4,8 +4,7 @@ extends Node2D
 
 enum State { STARTING, ROUND_START, TURN_START, PLAYER_COMMAND, PLAYER_SKILL_SELECT, PLAYER_ITEM_SELECT, PLAYER_TARGET_SELECT, ALLY_TARGET_SELECT, PLAYER_ACTION, ENEMY_ACTION, TURN_END, VICTORY, DEFEAT, FLED }
 
-@export var hero_data: CombatantData
-@export var enemy_data: CombatantData # Fallback
+
 
 var players: Array[Combatant] = []
 var enemies: Array[Combatant] = []
