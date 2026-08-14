@@ -1,516 +1,783 @@
-LOREL — Worldbuilding Reference
-1. Identitas Dasar
+LOREL — Worldbuilding Canon
+1. Identitas Umum
 
-Lorel adalah sebuah negara yang terletak di bagian selatan Pulau Utama. Negara ini menjadi wilayah pertama di dunia luar yang benar-benar dijelajahi Aren setelah tragedi teleportasi Elaris dan merupakan lokasi utama Arc 1.
+Lorel adalah negara di bagian selatan Pulau Utama dan merupakan negara pertama yang dijelajahi Aren setelah teleportasi dari Elaris.
 
-Lorel terinspirasi dari nuansa Italia dan kawasan Mediterania, tetapi bukan salinan langsung Italia. Inspirasinya terutama terlihat dari iklim hangat, kota-kota batu, perbukitan, kehidupan sosial di ruang publik, perdagangan, pertanian, kerajinan, dan budaya kota yang relatif terbuka.
+Lorel menjadi lokasi utama Arc 1 serta tanah kelahiran Lyra.
+
+Negara ini terinspirasi dari nuansa Italia dan kawasan Mediterania, terutama melalui iklim hangat, kota-kota batu, perbukitan hijau, kehidupan sosial terbuka, perdagangan pesisir, pertanian, dan budaya artisan.
+
+Berbeda drastis dengan Elaris yang tertutup dan sangat dikontrol pemerintah, Lorel merupakan masyarakat yang relatif terbuka dengan tingkat mobilitas sosial tinggi.
 
 Aspek	Lorel
-Lokasi	Selatan Pulau Utama
-Inspirasi	Italia / Mediterania
+Nama negara	Lorel
 Capital	Bellaria
 Town awal Arc 1	Virella
+Lokasi	Selatan Pulau Utama
+Inspirasi	Italia / Mediterania
 Race utama	Human + Elf
-Karakter playable asal Lorel	Lyra
-Negara tetangga utama	Alexandria
-Pemerintahan	Federasi kota dengan pemerintah pusat
-Ekonomi	Pertanian, kerajinan, perdagangan laut
-Fungsi story	Lokasi utama Arc 1
-2. Geografi Lorel
+Karakter asal	Lyra
+Pemerintahan	Federasi kota
+Pemimpin	First Councillor
+Ekonomi	Pertanian, artisan, perdagangan laut
+Tetangga utama	Alexandria
+Hubungan dengan Alexandria	Dekat, dagang kuat, friendly rivalry
+Fungsi story	Arc 1
+Tema negara	Freedom with uncertainty
+2. Posisi Geografis
 
-Lorel berada di ujung selatan Pulau Utama dan memiliki garis pantai yang cukup panjang.
+Lorel terletak di bagian selatan Pulau Utama.
 
-Wilayahnya secara umum dapat dibagi menjadi tiga zona.
+Wilayahnya memiliki akses langsung ke laut selatan dan menjadi salah satu pintu masuk alami bagi kapal serta traveler yang datang dari arah selatan.
 
-Pesisir selatan merupakan wilayah yang lebih tenang dengan pantai, desa nelayan, tebing rendah, jalan kecil, serta beberapa settlement yang terhubung dengan jalur perdagangan pesisir.
+Secara kasar:
 
-Di salah satu pantai terpencil inilah Aren terbangun setelah teleportasi dari Elaris.
+                 UTARA
+                   ↑
 
-Pantai tersebut bukan pelabuhan besar ataupun tempat wisata. Area itu relatif sepi sehingga saat Aren sadar, dia benar-benar merasa sendirian dan tidak tahu berada di mana.
+              MONGREAUX
 
-Semakin masuk ke wilayah tengah Lorel, lanskap berubah menjadi perbukitan, lahan pertanian, kebun, jalan perdagangan, serta kota-kota kecil.
+             ALEXANDRIA
+                  │
+                LOREL
+                  │
+            PESISIR SELATAN
+                  │
+           Pantai Aren tiba
 
-Bagian utara Lorel lebih ramai karena menghubungkan Lorel dengan Alexandria dan wilayah lain di Pulau Utama.
+                   ↓
+                SELATAN
 
-Secara visual, Lorel dapat memiliki suasana seperti:
+Alexandria merupakan negara tetangga terpenting Lorel dan memiliki hubungan perdagangan darat yang sangat aktif dengannya.
 
-pantai hangat → kota batu → perbukitan hijau → kebun → jalan perdagangan → kota yang semakin ramai ke arah utara.
+3. Geografi Lorel
 
-3. Iklim
+Lorel bukan negara yang sangat besar.
 
-Lorel memiliki iklim yang relatif hangat dan nyaman.
+Wilayahnya dapat dibagi secara kasar menjadi tiga bagian.
 
-Wilayah pesisir mendapat banyak sinar matahari, sedangkan daerah perbukitannya lebih sejuk.
+Pesisir selatan memiliki pantai, desa nelayan, tebing rendah, pelabuhan kecil, gua laut, dan jalan-jalan pesisir.
 
-Kondisi ini membuat Lorel cocok untuk pertanian dan perkebunan.
+Di salah satu pantai terpencil di kawasan inilah Aren terbangun setelah teleportasi Elaris.
 
-Lorel bukan negara dengan musim dingin ekstrem ataupun wilayah gurun.
+Wilayah tengah terdiri dari perbukitan, kebun, ladang, settlement, perkebunan, serta kota-kota kecil yang terhubung melalui jalan perdagangan.
 
-Lingkungan ini juga membuat Lorel menjadi salah satu daerah yang nyaman bagi pendatang dan traveler.
+Wilayah utara Lorel lebih padat dan berkembang karena menjadi titik pertemuan jalur menuju Alexandria dan wilayah Pulau Utama lainnya.
 
-4. Penduduk dan Race
+Semakin jauh Aren bergerak dari pantai selatan:
+
+dunia terasa semakin ramai, terhubung, dan besar.
+
+4. Iklim
+
+Lorel memiliki iklim relatif hangat.
+
+Wilayah pesisir mendapatkan banyak matahari, sedangkan perbukitan bagian dalam lebih sejuk.
+
+Curah hujan cukup untuk mendukung pertanian dan perkebunan.
+
+Karena kondisi tersebut, Lorel menjadi salah satu wilayah pertanian penting di bagian selatan Pulau Utama.
+
+Visual lingkungannya bisa terasa seperti:
+
+laut biru → tebing dan pantai → kota batu → ladang → kebun → perbukitan hijau.
+
+5. Sejarah Singkat Lorel
+
+Lorel pada awalnya bukan satu negara bersatu.
+
+Berabad-abad sebelumnya, wilayah ini terdiri dari sejumlah kota dagang dan settlement yang berkembang secara mandiri.
+
+Setiap kota memiliki aturan, perdagangan, dan pemerintahannya sendiri.
+
+Persaingan dagang sering terjadi, tetapi meningkatnya ancaman bandit, konflik perdagangan, serta kebutuhan mempertahankan jalur laut akhirnya membuat kota-kota tersebut bekerja sama.
+
+Dari kerja sama tersebut lahirlah:
+
+Federasi Lorel.
+
+Mereka tetap mempertahankan identitas regional masing-masing, tetapi menyatukan:
+
+pertahanan,
+hubungan luar negeri,
+aturan perdagangan utama,
+dan sebagian hukum nasional.
+
+Karena sejarah tersebut, masyarakat Lorel memiliki tradisi kuat dalam:
+
+otonomi lokal dan negosiasi.
+
+6. Pemerintahan Lorel
+
+Lorel bukan monarki absolut.
+
+Negara ini berbentuk:
+
+Federasi Kota.
+
+Setiap kota dan wilayah besar mempunyai pemerintahan lokal sendiri.
+
+Perwakilan wilayah kemudian duduk dalam pemerintahan pusat di Bellaria.
+
+Pemimpin tertinggi menggunakan gelar:
+
+First Councillor
+
+First Councillor bukan raja.
+
+Dia memimpin pemerintahan pusat, diplomasi, dan koordinasi antarwilayah, tetapi tidak memiliki kekuasaan mutlak.
+
+Keputusan besar tetap membutuhkan dukungan council.
+
+Dengan demikian struktur Lorel sangat berbeda dengan Elaris.
+
+Elaris:
+
+keputusan berasal dari satu penguasa.
+
+Lorel:
+
+keputusan membutuhkan negosiasi antarwilayah.
+
+Sistem Lorel tentu tidak sempurna. Politiknya bisa lambat dan penuh kepentingan kota masing-masing.
+
+Tetapi masyarakat mempunyai lebih banyak ruang untuk memengaruhi kehidupan lokal mereka.
+
+7. Bellaria — Capital Lorel
+
+Ibu kota Lorel adalah:
+
+Bellaria
+
+Bellaria berada di bagian tengah-utara Lorel sehingga memiliki akses baik menuju daerah pertanian, pesisir, serta jalur menuju Alexandria.
+
+Bellaria adalah pusat:
+
+pemerintahan, perdagangan besar, diplomasi, artisan, dan aktivitas sosial Lorel.
+
+Kota ini terkenal dengan ruang publik, plaza, pasar besar, workshop, penginapan, dan merchant dari berbagai wilayah.
+
+Tetapi Bellaria tidak harus menjadi lokasi utama Arc 1.
+
+Untuk campaign sekitar 10 jam, Bellaria dapat disebut atau terlihat dalam worldbuilding tanpa harus dijelajahi secara penuh.
+
+Ini membantu membuat dunia terasa lebih besar daripada area yang benar-benar dikunjungi pemain.
+
+8. Virella — Town Awal Arc 1
+
+Town penting pertama dalam perjalanan Aren adalah:
+
+Virella
+
+Virella berada di bagian selatan Lorel, tidak terlalu jauh dari pantai tempat Aren terbangun.
+
+Virella lebih kecil dan sederhana dibanding Bellaria.
+
+Kota ini berfungsi sebagai pusat lokal bagi:
+
+nelayan,
+petani,
+merchant kecil,
+traveler,
+caravan,
+dan perdagangan pesisir.
+
+Virella menjadi pengalaman pertama Aren melihat kehidupan masyarakat dunia luar secara langsung.
+
+Di sinilah pemain mulai melihat orang:
+
+datang dan pergi tanpa izin khusus, berpindah pekerjaan, berdagang dengan orang asing, serta berbicara tentang negara lain dengan santai.
+
+Bagi warga Lorel semuanya biasa.
+
+Bagi Aren:
+
+hampir semuanya baru.
+
+9. Penduduk Lorel
 
 Lorel dihuni terutama oleh:
 
 Human dan Elf.
 
-Human merupakan kelompok yang sangat umum di kota, pelabuhan, dan pusat perdagangan.
+Human sedikit lebih umum secara keseluruhan, tetapi Elf sudah tinggal di Lorel selama banyak generasi.
 
-Elf juga sudah tinggal di Lorel selama banyak generasi dan merupakan bagian normal dari masyarakat.
+Tidak ada pemisahan masyarakat besar berdasarkan race.
 
-Karena itu Elf tidak dianggap sebagai masyarakat asing yang terpisah.
+Human dan Elf dapat tinggal:
 
-Lyra adalah contoh paling jelas.
+di kota yang sama,
+bekerja di profesi yang sama,
+berdagang bersama,
+dan berada di lembaga pemerintahan yang sama.
 
-Dia bukan:
+Karena itu Lyra bukan:
 
-“Elf yang kebetulan tinggal di negara manusia.”
+“Elf dari komunitas terpisah.”
 
-Lyra adalah:
+Dia adalah:
 
-warga Lorel yang kebetulan memiliki race Elf.
+orang Lorel yang race-nya Elf.
 
-Human dan Elf dapat tinggal di kota yang sama, bekerja bersama, berdagang, dan menggunakan fasilitas yang sama.
+Ini penting untuk worldbuilding Holuf:
 
-Ini juga penting untuk memperlihatkan kepada pemain bahwa:
+race ≠ nationality.
 
-race tidak sama dengan nationality.
+Sylven nantinya juga Elf, tetapi berasal dari Averon dan memiliki budaya yang berbeda.
 
-Nanti Sylven juga Elf, tetapi berasal dari Averon dan memiliki budaya serta kepribadian yang sangat berbeda dari Lyra.
+10. Kehidupan Sosial
 
-5. Karakter Masyarakat Lorel
+Masyarakat Lorel relatif sosial dan terbuka.
 
-Masyarakat Lorel relatif:
+Plaza, market, kedai, workshop, dan pelabuhan menjadi bagian besar kehidupan sehari-hari.
 
-terbuka, sosial, dan terbiasa dengan orang luar.
+Orang biasa cukup terbiasa melihat:
 
-Karena Lorel aktif dalam perdagangan, traveler dari negara lain bukan sesuatu yang aneh.
+traveler,
+merchant asing,
+pekerja musiman,
+seniman,
+caravan,
+dan penduduk negara lain.
 
-Di kota-kotanya terdapat banyak ruang publik seperti plaza, pasar, kedai, workshop, dan area perdagangan.
+Masyarakat juga memiliki tingkat mobilitas sosial yang jauh lebih tinggi dibanding Elaris.
 
-Orang dapat datang dari daerah lain untuk:
+Seseorang yang lahir dari keluarga petani tetap bisa menjadi merchant, artisan, guard, traveler, atau memilih pekerjaan lainnya selama memiliki kesempatan dan kemampuan.
 
-berdagang, bekerja, melakukan perjalanan, atau mencari kehidupan baru.
+Ini menjadi salah satu culture shock terbesar bagi Aren.
 
-Hal yang bagi penduduk Lorel dianggap biasa justru terasa sangat asing bagi Aren.
+11. Lorel Bukan Utopia
 
-Sebagai contoh, seseorang di Lorel dapat:
+Walaupun lebih terbuka daripada Elaris, Lorel bukan negara sempurna.
 
-meninggalkan pekerjaan lama dan mencari pekerjaan baru.
+Kebebasan yang lebih besar juga berarti masyarakat harus menghadapi ketidakpastian lebih besar.
 
-Bagi Aren yang tumbuh di Elaris, hal seperti itu hampir sulit dipercaya.
+Seseorang bisa:
 
-Di Elaris:
+berpindah pekerjaan,
 
-seseorang yang lahir sebagai petani hampir pasti akan tetap menjadi petani.
+tetapi juga:
 
-Di Lorel:
+kehilangan pekerjaan.
 
-seseorang memiliki jauh lebih banyak kemungkinan untuk mengubah arah hidupnya.
+Seseorang bisa membuka usaha,
 
-6. Pemerintahan Lorel
+tetapi juga:
 
-Lorel bukan kerajaan tradisional dengan satu raja absolut.
+gagal.
 
-Negara ini berkembang dari beberapa kota dagang yang pada masa lalu memiliki pemerintahan sendiri.
+Traveler bebas bergerak,
 
-Untuk kepentingan:
+tetapi juga:
 
-pertahanan, perdagangan, hukum, dan diplomasi,
+menjadi sasaran kriminal.
 
-kota-kota tersebut akhirnya membentuk sebuah negara bersama.
+Jadi Lorel memperlihatkan kepada Aren:
 
-Karena itu Lorel sekarang berbentuk:
+pilihan mempunyai risiko dan konsekuensi.
 
-Federasi Kota.
+Ini penting supaya pesan Holuf tidak menjadi:
 
-Ada pemerintahan pusat yang mengatur urusan nasional, tetapi kota dan wilayah di Lorel masih memiliki cukup banyak kewenangan lokal.
+“kebebasan selalu menghasilkan kehidupan sempurna.”
 
-Ini membuat Lorel cukup berbeda dari Elaris.
+12. Ekonomi Lorel
 
-Elaris memiliki kekuasaan yang sangat terpusat pada penguasanya.
+Ekonomi Lorel bertumpu pada tiga sektor besar:
 
-Lorel justru memiliki distribusi kekuasaan yang lebih luas.
+Agriculture + Artisan + Coastal Trade.
 
-Nama resmi jabatan pemimpin tertinggi Lorel belum kita lock, jadi itu bisa kita tentukan nanti saat detail sistem politik seluruh negara sudah dibuat.
+Pertanian berkembang karena iklimnya yang cocok.
 
-7. Capital — Bellaria
+Produk Lorel secara konsep meliputi:
 
-Ibu kota Lorel bernama:
+grain,
+buah,
+herbs,
+produk perkebunan,
+ikan,
+makanan olahan,
+textile,
+pottery,
+leatherwork,
+dan barang artisan.
 
-Bellaria
+Lorel tidak terkenal sebagai pusat industri berat.
 
-Bellaria berada di wilayah yang lebih strategis di bagian tengah-utara Lorel.
+Kekuatan produknya adalah:
 
-Bellaria merupakan pusat:
+craftsmanship dan kualitas barang.
 
-pemerintahan, perdagangan besar, diplomasi, dan aktivitas ekonomi Lorel.
+Workshop keluarga dan artisan kecil cukup umum.
 
-Namun Bellaria tidak perlu menjadi lokasi utama Arc 1.
+13. Perdagangan Laut
 
-Ini sengaja dilakukan supaya scope game tidak membengkak.
+Pesisir selatan membuat Lorel menjadi salah satu titik perdagangan laut penting di selatan Pulau Utama.
 
-Aren dapat mengetahui keberadaan Bellaria melalui NPC, perdagangan, atau pembicaraan, tanpa harus menjelajahi seluruh ibu kota dalam Arc 1.
+Kapal menghubungkan kota pesisir Lorel dengan berbagai pelabuhan lain.
 
-Dengan begitu dunia tetap terasa besar tanpa pemain harus memasuki semua lokasi penting yang disebutkan.
+Barang dari wilayah lain dapat memasuki Pulau Utama melalui Lorel sebelum dibawa melalui jalan darat.
 
-8. Virella — Town Awal Arc 1
+Hal ini juga membuat Lorel memiliki masyarakat yang relatif terbiasa dengan orang asing.
 
-Settlement penting pertama bagi Aren adalah:
+Namun jalur laut juga menciptakan:
 
-Virella
+penyelundupan dan perdagangan ilegal.
 
-Virella adalah sebuah town kecil di bagian selatan Lorel, relatif dekat dengan wilayah pesisir tempat Aren terbangun.
+14. Hubungan Ekonomi dengan Alexandria
 
-Virella menjadi tempat pertama Aren benar-benar berinteraksi dengan kehidupan di dunia luar.
-
-Fungsi Virella dalam story sangat penting karena di sinilah pemain mulai memahami perbedaan antara Elaris dan dunia luar.
-
-Di sekitar Virella, Aren dapat mulai menemukan:
-
-penduduk Lorel, merchant, traveler, aktivitas perdagangan, serta kabar mengenai orang-orang asing yang muncul secara misterius.
-
-Di wilayah inilah hubungan awal Aren dan Lyra berkembang.
-
-Virella juga menjadi salah satu titik awal investigasi mengenai korban teleportasi Elaris.
-
-9. Ekonomi Lorel
-
-Lorel bukan negara industri berat.
-
-Kekuatan ekonominya terutama berasal dari tiga bidang:
-
-Pertanian + Kerajinan + Perdagangan Laut.
-
-Wilayah perbukitan dan iklim hangat menghasilkan berbagai produk pertanian.
-
-Produk Lorel secara konsep dapat meliputi hasil seperti buah, grain, herbs, produk perkebunan, makanan olahan, ikan, textile, pottery, leatherwork, dan berbagai barang artisan.
-
-Lorel terkenal bukan karena menghasilkan barang industri dalam jumlah sangat besar, tetapi karena kualitas:
-
-craftsmanship dan barang artisan.
-
-Kota-kota pesisir Lorel juga aktif memperdagangkan barang melalui laut.
-
-Karena berada di selatan Pulau Utama, Lorel menjadi salah satu pintu perdagangan regional.
-
-10. Hubungan Ekonomi dengan Alexandria
-
-Lorel memiliki hubungan sangat erat dengan negara tetangganya:
+Hubungan ekonomi terpenting Lorel adalah dengan:
 
 Alexandria
 
-Kedua negara memiliki ekonomi yang saling melengkapi.
+Kedua negara saling melengkapi.
 
-Secara konsep:
+Lorel:
 
-Lorel lebih kuat dalam pertanian, makanan, kerajinan, dan perdagangan laut.
+agriculture, food, artisan goods, coastal trade.
 
-Sedangkan Alexandria nantinya lebih kuat dalam metalworking, engineering, tools, dan produksi barang yang lebih industrial.
+Alexandria:
 
-Karena itu terdapat jalur perdagangan penting:
+metalworking, tools, engineering, manufactured goods.
+
+Akibatnya jalur:
 
 Lorel ↔ Alexandria
 
-Caravan bergerak secara rutin di antara kedua negara.
+menjadi salah satu rute perdagangan penting di Pulau Utama bagian selatan.
 
-Hal ini juga menjelaskan kenapa Doran, yang berasal dari Alexandria, bisa berada di Lorel saat Arc 1.
+Caravan bergerak secara rutin melintasi perbatasan.
 
-Doran bekerja di jalur perdagangan sebagai pengawal/caravan guard atau pekerjaan sejenis.
+15. Hubungan Politik dengan Alexandria
 
-Jadi kehadirannya di Lorel bukan kebetulan yang dipaksakan oleh story.
+Lorel dan Alexandria bukan musuh.
 
-11. Hubungan Politik dengan Alexandria
+Hubungannya relatif stabil dan produktif.
 
-Lorel dan Alexandria bukan negara yang sedang berperang.
-
-Hubungan mereka relatif baik.
-
-Namun tetap ada:
+Namun ada:
 
 friendly rivalry.
 
-Mereka dapat berbeda pendapat mengenai hal-hal seperti perdagangan, tarif, jalur merchant, perbatasan, atau aturan barang.
+Perselisihan kecil dapat muncul mengenai tarif, aturan perdagangan, jalur caravan, perbatasan, standar barang, dan kepentingan merchant.
 
-Masyarakat kedua negara juga memiliki stereotype ringan satu sama lain.
+Secara budaya, masyarakat juga memiliki stereotype ringan.
 
-Orang Lorel mungkin menganggap Alexandrian:
+Orang Lorel mungkin mengatakan:
 
-terlalu serius dan kaku.
+Alexandrian terlalu serius.
 
-Sedangkan orang Alexandria mungkin menganggap Lorel:
+Sedangkan orang Alexandria mungkin menganggap:
 
-terlalu santai.
+orang Lorel terlalu santai.
 
-Hubungan Lyra dan Doran bisa secara kecil merefleksikan perbedaan budaya ini.
+Dinamika Lyra dan Doran dapat mencerminkan ini secara ringan.
 
-Tetapi tidak sampai menjadi konflik kebangsaan besar.
+16. Hubungan dengan Mongreaux
 
-12. Militer dan Keamanan Lorel
+Mongreaux merupakan negara pusat yang sangat besar sehingga Lorel juga melakukan perdagangan dengannya.
 
-Lorel bukan negara yang terkenal karena kekuatan militer besar.
+Namun hubungan Lorel–Mongreaux tidak sedekat Lorel–Alexandria.
 
-Keamanannya lebih terdesentralisasi melalui:
+Barang dari Lorel dapat bergerak:
 
-city guard, regional militia, scout, ranger, dan coastal patrol.
+Lorel → Alexandria → Mongreaux
 
-Karena wilayahnya terdiri dari banyak perbukitan, jalur kecil, dan settlement yang tersebar, kemampuan navigasi dan scouting cukup dihargai.
+atau melalui jalur dagang lain menuju pusat Pulau Utama.
 
-Hal ini juga membantu menjelaskan kenapa kemampuan Lyra terasa natural.
+Mongreaux menjadi salah satu pasar besar untuk barang artisan dan produk pertanian Lorel.
 
-Lyra terbiasa dengan:
+17. Hubungan dengan Dunia Luar
 
-jalan kecil, navigasi, mengenali wilayah, menggunakan dagger, dan membaca situasi.
+Karena pelabuhannya, Lorel merupakan salah satu negara yang relatif terbuka terhadap pengunjung dari luar Pulau Utama.
 
-Dia tidak harus menjadi tentara untuk memiliki kemampuan tersebut.
+Orang dari Kharuun atau wilayah lain secara teori bisa masuk melalui jalur laut.
 
-13. Kriminalitas Lorel
+Namun sebagian besar aktivitas harian Lorel masih berfokus pada perdagangan regional Pulau Utama.
 
-Keterbukaan Lorel memiliki sisi negatif.
+18. Militer dan Keamanan
 
-Perdagangan yang ramai juga membuka ruang bagi:
+Lorel bukan negara yang dikenal memiliki pasukan militer besar.
 
-penyelundupan, bandit, pemerasan, eksploitasi traveler, dan kelompok kriminal.
+Struktur pertahanannya lebih terdesentralisasi.
 
-Ini menjadi bagian penting dari Arc 1.
+Terdapat:
 
-Setelah teleportasi Elaris, banyak korban tiba di dunia luar dalam keadaan sangat rentan.
+city guard,
+regional militia,
+scout,
+ranger,
+coastal patrol.
 
-Mereka tidak memiliki:
+Karena geografisnya penuh perbukitan dan jalan perdagangan, unit ringan yang memahami medan lebih berguna dibanding tentara berat dalam banyak wilayah.
 
-uang, dokumen lokal, hubungan sosial, pengetahuan mengenai negara tempat mereka berada, atau pemahaman hukum setempat.
+19. Scout Culture
 
-Sebagian bahkan tidak mengetahui apa nama negara tempat mereka muncul.
+Kemampuan navigasi cukup dihargai di Lorel.
 
-Kelompok kriminal Lorel melihat kondisi ini sebagai kesempatan.
+Traveler, courier, merchant, dan caravan sering membutuhkan orang yang memahami:
 
-Mereka mulai:
+jalan,
+kondisi cuaca,
+jalur alternatif,
+aktivitas monster,
+serta keamanan daerah.
 
-mengeksploitasi, menculik, atau menahan sebagian korban Elaris.
+Hal ini mendukung background Lyra sebagai seseorang yang sangat mengenal wilayah.
 
-Namun penting:
+Dia bisa tumbuh sebagai:
 
-kelompok kriminal tersebut bukan perwakilan pemerintah Lorel dan tidak terkait dengan final boss.
+courier / local guide / scout
 
-Konflik Arc 1 memang sengaja bersifat lokal.
+tanpa perlu menjadi anggota militer formal.
 
-14. Dungeon Utama Arc 1
+20. Lyra sebagai Produk Lorel
 
-Dungeon utama Arc 1 paling cocok berupa:
+Lyra mencerminkan banyak karakteristik negaranya.
 
-gudang perdagangan tua yang terhubung ke jaringan terowongan penyelundupan di tebing pesisir.
+Dia:
 
-Strukturnya secara konsep:
+mandiri,
+cukup sosial,
+terbiasa bepergian,
+fleksibel,
+mengenal traveler,
+dan tidak merasa hidupnya harus mengikuti satu jalur tetap.
 
-warehouse → cellar → smuggling tunnel → cave dekat laut → criminal hideout.
-
-Korban Elaris yang diculik ditahan di sana sebelum dipindahkan atau dijual kepada kelompok lain.
-
-Pilihan dungeon ini sengaja dibuat berhubungan langsung dengan identitas Lorel sebagai negara perdagangan.
-
-Jadi dungeon tidak terasa seperti:
-
-“ada gua acak karena RPG membutuhkan dungeon.”
-
-Sebaliknya keberadaan dungeon berasal langsung dari kondisi ekonomi dan kriminal Lorel.
-
-15. Sikap Lorel terhadap Orang Asing
-
-Secara umum Lorel cukup terbuka terhadap orang luar.
-
-Traveler dari negara seperti Alexandria, Mongreaux, atau wilayah lain bukan sesuatu yang aneh.
-
-Karena itu kemunculan satu atau dua orang asing tidak langsung menciptakan kepanikan.
-
-Yang mulai membuat situasi aneh adalah ketika semakin banyak orang muncul dengan cerita yang sama:
-
-mereka berasal dari sebuah pulau bernama Elaris dan tiba-tiba berpindah tempat setelah melihat cahaya misterius.
-
-Awalnya sebagian masyarakat menganggap cerita tersebut mustahil.
-
-Tetapi semakin banyak korban ditemukan, semakin sulit untuk menganggap semuanya hanya kebetulan.
-
-16. Sikap terhadap Korban Elaris
-
-Masyarakat Lorel tidak bereaksi seragam terhadap korban Elaris.
-
-Ini penting agar Lorel terasa seperti masyarakat nyata.
-
-Ada orang yang:
-
-membantu mereka.
-
-Ada yang:
-
-tidak percaya cerita mereka.
-
-Ada yang:
-
-takut masalah akan mengikuti mereka.
-
-Ada merchant yang:
-
-menawarkan pekerjaan.
-
-Ada keluarga yang:
-
-memberikan tempat tinggal sementara.
-
-Dan ada kriminal yang:
-
-memanfaatkan mereka.
-
-Jadi Lorel bukan:
-
-“negara baik tempat semua NPC baik.”
-
-Lorel tetap memiliki masyarakat dengan berbagai sifat dan kepentingan.
-
-17. Penduduk Elaris yang Memilih Tinggal
-
-Salah satu fungsi narratif terpenting Lorel adalah memperkenalkan ide bahwa:
-
-tidak semua penduduk Elaris ingin kembali.
-
-Beberapa korban mungkin awalnya sangat ingin pulang.
-
-Tetapi setelah hidup di Lorel, mereka mulai mengalami sesuatu yang tidak pernah mereka miliki sebelumnya:
-
-pilihan.
-
-Contohnya seseorang yang sepanjang hidup di Elaris bekerja sebagai petani karena keluarganya petani bisa mendapat pekerjaan lain di Lorel.
-
-Untuk pertama kalinya dia dapat bertanya:
-
-“Apa aku benar-benar ingin kembali?”
-
-Ini penting karena membuat tujuan Aren semakin kompleks.
-
-Awalnya Aren mungkin berpikir:
-
-semua orang pasti ingin pulang ke Elaris.
-
-Arc 1 mulai menunjukkan:
-
-tidak sesederhana itu.
-
-18. Lyra sebagai Representasi Lorel
-
-Lyra merupakan karakter playable pertama dari dunia luar yang bergabung dengan Aren.
-
-Dia mencerminkan banyak aspek kehidupan Lorel.
-
-Lyra:
-
-mandiri, mudah bepergian, mengenal wilayahnya, terbiasa melihat traveler, tidak terlalu terikat satu pekerjaan, dan mampu membuat keputusan hidup sendiri.
-
-Hal yang menurut Lyra sangat normal justru bisa terasa luar biasa bagi Aren.
-
-Misalnya Aren bertanya apakah seseorang di Lorel bisa berhenti dari pekerjaannya dan mencari pekerjaan lain.
+Saat Aren bertanya apakah dia bisa berhenti dari suatu pekerjaan dan mencari hal lain:
 
 Lyra mungkin hanya menjawab:
 
-“Ya. Kenapa tidak?”
+“Tentu.”
 
-Bagi Lyra itu bukan pertanyaan penting.
+Yang bagi Lyra normal justru menunjukkan kepada Aren betapa berbeda Lorel dengan Elaris.
 
-Bagi Aren:
+21. Kriminalitas
 
-itu menunjukkan betapa berbeda dunia luar dari Elaris.
+Aktivitas perdagangan besar juga menciptakan peluang bagi:
 
-19. Fungsi Lorel dalam Main Story
+bandit, penyelundup, pemeras, penculik, dan kelompok kriminal.
 
-Lorel bukan sekadar lokasi Arc 1.
+Tidak semua kota memiliki tingkat kriminalitas yang sama.
 
-Negara ini memiliki fungsi tematik yang sangat penting.
+Namun pelabuhan, gudang, jalan perdagangan, dan wilayah pesisir bisa memiliki jaringan bawah tanah yang cukup aktif.
 
-Lorel adalah tempat pertama Aren menemukan bahwa:
+Pemerintah Lorel secara resmi melawan aktivitas tersebut, tetapi sistem federasi membuat penegakan hukum kadang berbeda antarwilayah.
 
-kehidupan tidak harus berjalan seperti Elaris.
+22. Korban Teleportasi Elaris
 
-Elaris mengajarkan Aren:
+Setelah tragedi Prologue, sejumlah penduduk Elaris tiba-tiba muncul di berbagai wilayah Lorel.
 
-hidup seseorang telah ditentukan sejak lahir.
+Awalnya laporan-laporan tersebut dianggap:
 
-Lorel memperlihatkan:
+rumor, cerita traveler, atau kejadian magic aneh.
 
-manusia dapat berpindah tempat, berganti pekerjaan, berdagang, menjadi traveler, dan berhubungan dengan orang dari negara maupun race berbeda.
+Namun jumlah laporan terus bertambah.
 
-Tetapi Holuf tidak mengatakan:
+Masalahnya, korban Elaris tidak mempunyai:
 
-“Kebebasan otomatis membuat masyarakat sempurna.”
+dokumen Lorel,
+uang lokal,
+jaringan sosial,
+pengetahuan hukum,
+atau pemahaman dunia luar.
 
-Karena Lorel tetap memiliki:
+Sebagian bahkan tidak mengetahui Lorel itu apa.
 
-kriminalitas, eksploitasi, konflik ekonomi, dan orang-orang buruk.
+Mereka menjadi kelompok yang sangat rentan.
 
-Pesan yang diterima Aren lebih kompleks:
+23. Reaksi Masyarakat terhadap Korban
 
-Dunia luar tidak sempurna. Tetapi orang di sini setidaknya mempunyai lebih banyak pilihan mengenai bagaimana mereka ingin hidup.
+Tidak semua orang Lorel bereaksi sama.
 
-Ini menjadi fondasi awal perkembangan tema Aren tentang kebebasan.
+Ada warga yang memberikan:
 
-20. Fungsi Lorel dalam Arc 1
+makanan atau tempat tinggal.
 
-Alur fungsi Lorel terhadap perjalanan Aren secara garis besar adalah:
+Ada merchant yang menawarkan:
 
-Aren terbangun di pantai selatan Lorel setelah teleportasi → bertemu Lyra → mulai memahami dunia luar → menemukan korban Elaris → memastikan teleportasi terjadi secara massal → mengetahui beberapa korban dieksploitasi kelompok kriminal → bekerja sama dengan Lyra dan Doran → menyerbu tempat persembunyian kriminal → menyelamatkan korban → mendapatkan informasi bahwa Aelia masih hidup dan bergerak menuju utara.
+pekerjaan.
 
-Dengan begitu Arc 1 mengubah tujuan Aren dari:
+Ada orang yang tidak percaya.
 
-“Aku tidak tahu apa yang terjadi.”
+Ada yang takut bahwa kemunculan mereka membawa masalah.
 
-menjadi:
+Dan ada kriminal yang melihat:
 
-“Aelia masih hidup. Aku harus mengejarnya.”
+kesempatan.
 
-Dan Lorel menjadi tempat awal perjalanan sebenarnya.
+Dengan begitu masyarakat Lorel tidak dibagi menjadi “baik” dan “jahat” secara sederhana.
 
-21. Posisi Lorel dalam Peta Dunia
+24. Kelompok Kriminal Arc 1
 
-Secara kasar:
+Kelompok kriminal lokal menyadari bahwa penduduk Elaris adalah target sempurna.
 
-                    UTARA
-                      ↑
+Mereka tidak memiliki keluarga lokal yang dapat segera mencari mereka.
 
-              [NEGARA-NEGARA LAIN]
+Tidak memiliki dokumen.
 
-                  MONGREAUX
-                      │
+Tidak memahami sistem hukum.
 
-              ALEXANDRIA
-                 ╲
-                  LOREL
-                    │
-              VIRELLA / PESISIR
-                    │
-               PANTAI AREN
+Karena itu sebagian korban:
 
-                      ↓
-                   SELATAN
+diculik, ditahan, dan dieksploitasi.
 
-Alexandria berada dekat Lorel dan memiliki hubungan perdagangan langsung.
+Kelompok ini tidak mempunyai hubungan dengan final boss.
 
-Mongreaux berada lebih jauh ke arah pusat Pulau Utama.
+Ini penting.
 
-Perjalanan main story kemudian perlahan bergerak:
+Arc 1 masih merupakan konflik lokal.
 
-Lorel → Alexandria → Mongreaux → Kamikoto → Aetherion.
+Tujuannya menunjukkan konsekuensi manusiawi dari teleportasi sebelum cerita berubah menjadi konspirasi besar.
 
-22. Agama dan Kepercayaan
+25. Dungeon Arc 1
 
-Kita belum mengunci agama khusus Lorel.
+Dungeon utama Arc 1 adalah:
 
-Untuk sekarang yang sudah kita sepakati hanyalah bahwa tidak perlu ada institusi agama yang mendominasi seluruh pemerintahan Lorel.
+gudang perdagangan tua yang tersambung dengan jaringan terowongan penyelundupan di tebing pesisir.
 
-Sistem agama dan kepercayaan dunia Holuf lebih baik dibuat nanti secara global daripada membuat agama berbeda secara acak untuk setiap negara.
+Strukturnya:
 
-Jadi bagian ini masih terbuka.
+Old Warehouse
+↓
+Cellar
+↓
+Smuggling Tunnel
+↓
+Coastal Cave
+↓
+Criminal Hideout
 
-23. Hal yang Sudah FIX untuk Lorel
+Korban Elaris ditahan di fasilitas tersebut sebelum dipindahkan.
 
-Untuk referensi nanti, bagian berikut dapat dianggap canon/locked:
+Dungeon ini berasal langsung dari identitas Lorel sebagai negara perdagangan.
 
+Bukan dungeon acak yang hanya ada karena game membutuhkan gua.
+
+26. Pertemuan Aren dan Lyra
+
+Aren memasuki Lorel dalam kondisi:
+
+sendirian, tidak memahami dunia, dan mencari Aelia.
+
+Lyra menjadi orang dunia luar pertama yang benar-benar membantu Aren memahami tempat tersebut.
+
+Awalnya dia tidak langsung percaya cerita Aren.
+
+Dari sudut pandangnya:
+
+seseorang muncul entah dari mana dan mengaku seluruh manusia sebuah pulau diteleportasi secara magic.
+
+Tetapi semakin banyak bukti muncul, Lyra mulai percaya.
+
+27. Pertemuan dengan Doran
+
+Karena hubungan dagang aktif Lorel–Alexandria, Doran sedang berada di Lorel karena pekerjaannya yang berkaitan dengan pengawalan caravan/jalur perdagangan.
+
+Dia tidak berada di sana secara kebetulan tanpa alasan.
+
+Investigasi Doran, Aren, dan Lyra akhirnya bertemu pada konflik kriminal yang sama.
+
+Doran awalnya skeptis terhadap cerita Elaris.
+
+Setelah melihat korban mengenali Aren dan memberikan cerita yang sama, dia menerima bahwa kejadian tersebut nyata.
+
+28. Revelation Arc 1
+
+Arc 1 belum mengungkap final boss ataupun konspirasi teleportasi.
+
+Yang Aren pelajari di Lorel adalah:
+
+dia bukan satu-satunya korban.
+
+Seluruh populasi Elaris memang tersebar.
+
+Dia juga mengetahui bahwa Aelia:
+
+masih hidup.
+
+Seorang saksi mengatakan melihat Aelia dalam kondisi takut dan sendirian sebelum akhirnya ditemukan/dibantu seorang mage dan bergerak lebih jauh ke utara.
+
+Ini menjadi hook menuju Arc 2.
+
+29. Penduduk Elaris yang Tidak Ingin Pulang
+
+Ini merupakan salah satu elemen paling penting Lorel.
+
+Tidak semua korban yang mulai hidup di Lorel mengatakan:
+
+“Aku ingin kembali.”
+
+Sebagian merasakan kebebasan baru.
+
+Misalnya seseorang yang sepanjang hidup menjadi petani di Elaris bisa menemukan pekerjaan sebagai artisan.
+
+Orang lain bisa memutuskan tinggal di kota.
+
+Seseorang bisa mendapatkan hubungan atau komunitas baru.
+
+Mereka mulai bertanya:
+
+“Kalau Elaris kembali seperti dulu, kenapa aku harus kembali?”
+
+Aren pada awalnya mungkin sulit memahami itu.
+
+Baginya Elaris masih berarti rumah.
+
+Arc 1 mulai mengajarkan:
+
+rumah bagi dirinya belum tentu mempunyai arti yang sama bagi semua orang.
+
+30. Lorel dan Perkembangan Aren
+
+Lorel merupakan ujian pertama pandangan Aren mengenai kebebasan.
+
+Sebelum teleportasi:
+
+Aren hanya berpikir bahwa dunia luar pasti lebih baik karena dia bebas pergi.
+
+Lorel menunjukkan dua sisi.
+
+Di satu sisi:
+
+masyarakat memiliki pilihan jauh lebih besar.
+
+Di sisi lain:
+
+kriminalitas, kegagalan, eksploitasi, dan ketidakpastian tetap ada.
+
+Aren mulai memahami:
+
+kebebasan bukan jaminan hidup akan mudah.
+
+Tetapi kesempatan untuk memilih tetap sangat berharga.
+
+31. Lorel dan Perkembangan Lyra
+
+Arc 1 juga memulai character arc Lyra.
+
+Awalnya dia hanya membantu Aren karena:
+
+rasa penasaran dan kemanusiaan.
+
+Kemudian masalah korban Elaris membuatnya terlibat lebih jauh.
+
+Setelah konflik selesai, sebenarnya Lyra bisa kembali menjalani kehidupannya.
+
+Tetapi dia memilih ikut Aren menuju utara.
+
+Itulah langkah pertama dari perkembangan Lyra:
+
+seseorang yang selalu terbiasa hidup sendiri mulai memilih berjalan bersama orang lain.
+
+32. Lorel Setelah Arc 1
+
+Setelah kelompok kriminal dikalahkan:
+
+korban berhasil diselamatkan,
+jaringan lokal dibongkar,
+informasi mengenai para teleport victims mulai lebih dipercaya,
+pihak lokal mulai menyadari skala masalah yang sebenarnya.
+
+Tetapi semua korban Elaris di Lorel belum otomatis diselesaikan.
+
+Sebagian masih:
+
+mencari keluarga, membutuhkan pekerjaan, atau mencoba menentukan masa depan.
+
+Ini memungkinkan NPC Lorel berubah jika pemain kembali nanti.
+
+33. Lorel Selama Arc Berikutnya
+
+Walaupun Aren meninggalkan Lorel, dampak Elaris tetap terasa.
+
+Pemerintah dapat mulai:
+
+mendata korban,
+bekerja sama dengan negara lain,
+mencari anggota keluarga yang terpisah,
+meningkatkan perlindungan terhadap pengungsi.
+
+Lorel menjadi salah satu contoh pertama bagaimana negara dunia luar mulai merespons tragedi tersebut secara manusiawi dan administratif.
+
+34. Lorel dalam Ending
+
+Setelah Final Arc, tidak semua penduduk Elaris kembali ke rumah.
+
+Sebagian secara resmi memilih tinggal di Lorel.
+
+Mereka membangun kehidupan baru.
+
+Lorel kemudian menjadi salah satu negara pertama yang memiliki komunitas permanen bekas warga Elaris.
+
+Ini juga menjadi simbol hasil akhir perjalanan:
+
+seseorang bisa mempunyai lebih dari satu tempat yang dianggap rumah.
+
+Hubungan Lorel–Elaris juga berpotensi menjadi salah satu hubungan internasional pertama Elaris setelah membuka negaranya.
+
+35. Hubungan Lorel dengan Elaris Setelah Ending
+
+Elaris baru membutuhkan:
+
+perdagangan,
+pengetahuan,
+pendidikan,
+dan hubungan diplomatik.
+
+Lorel sangat cocok menjadi salah satu partner awal.
+
+Keduanya memiliki sejarah emosional karena Lorel adalah tempat banyak warga Elaris pertama kali tiba.
+
+Lorel bisa membantu Elaris melalui:
+
+perdagangan pangan, artisan, transportasi laut, serta reintegrasi warga yang ingin pulang.
+
+Sebaliknya Elaris mulai membuka pelabuhan dan pasar yang sebelumnya tertutup.
+
+36. Lorel vs Elaris
+
+Kontras keduanya sangat penting.
+
+Elaris
+
+stabil tetapi sedikit pilihan.
+
+Lorel
+
+banyak pilihan tetapi lebih banyak ketidakpastian.
+
+Elaris memberi:
+
+keamanan melalui kontrol.
+
+Lorel memberi:
+
+kesempatan melalui kebebasan.
+
+Namun Lorel juga menunjukkan bahwa kebebasan membutuhkan:
+
+tanggung jawab, kemampuan mengambil risiko, dan sistem yang melindungi orang rentan.
+
+37. Identitas Tematik Lorel
+
+Kalau tema Elaris adalah:
+
+Life Without Choice
+
+maka Lorel paling cocok memiliki tema:
+
+Freedom With Uncertainty
+
+Lorel menunjukkan sisi awal dari apa yang selama ini Aren inginkan.
+
+Dia akhirnya berada di tempat di mana seseorang bisa menentukan arah hidup.
+
+Tetapi untuk pertama kalinya dia juga melihat bahwa:
+
+pilihan tidak datang bersama jaminan bahwa semuanya akan berjalan baik.
+
+Ini merupakan pelajaran awal yang diperlukan sebelum tema kebebasan berkembang lebih jauh di arc berikutnya.
+
+38. Hal yang Sudah FIX untuk Lorel
 LOREL
 
 Lokasi:
@@ -519,72 +786,98 @@ Selatan Pulau Utama
 Inspirasi:
 Italia / Mediterania
 
-Race:
-Human + Elf
+Capital:
+Bellaria
+
+Town awal:
+Virella
 
 Playable Character:
 Lyra
 
-Capital:
-Bellaria
-
-Town awal Arc 1:
-Virella
+Race utama:
+Human + Elf
 
 Pemerintahan:
-Federasi kota dengan pemerintah pusat
-dan otonomi regional
+Federasi Kota
+
+Pemimpin:
+First Councillor
+(nama individu belum ditentukan)
+
+Sejarah:
+Berawal dari kota-kota dagang independen
+yang kemudian membentuk federasi
 
 Geografi:
-Pantai hangat
+Pantai
+Tebing rendah
 Perbukitan
-Wilayah pertanian
+Lahan pertanian
+Kebun
 Kota perdagangan
 
 Ekonomi:
-Pertanian
-Kerajinan
-Perdagangan laut
+Agriculture
+Artisan
+Coastal Trade
 
 Negara tetangga utama:
 Alexandria
 
-Hubungan dengan Alexandria:
-Dekat
+Hubungan Alexandria:
 Perdagangan kuat
 Friendly rivalry
 Bukan musuh
 
+Hubungan Mongreaux:
+Perdagangan regional
+
 Militer:
-Tidak berorientasi militer besar
-City guard
-Regional militia
-Scout / ranger
-Coastal patrol
+City Guard
+Regional Militia
+Scout
+Ranger
+Coastal Patrol
 
 Masyarakat:
-Relatif terbuka terhadap traveler
-Human dan Elf hidup bersama
+Terbuka
+Human + Elf hidup bersama
+Mobilitas sosial relatif tinggi
+Traveler umum
 
 Masalah sosial:
 Kriminalitas
 Penyelundupan
-Eksploitasi orang rentan
+Eksploitasi traveler/orang rentan
 
 Arc 1:
-Kelompok kriminal lokal mengeksploitasi
-korban teleportasi Elaris
+Korban Elaris dieksploitasi kelompok kriminal lokal
 
-Dungeon Arc 1:
-Gudang tua
-→ cellar
-→ terowongan penyelundupan
-→ cave pesisir
-→ hideout
+Dungeon:
+Old Warehouse
+→ Cellar
+→ Smuggling Tunnel
+→ Coastal Cave
+→ Criminal Hideout
 
-Fungsi tematik:
-Tempat pertama Aren melihat kehidupan
-dengan lebih banyak pilihan dibanding Elaris.
-Ringkasan Lorel
+Revelation:
+Aren mengetahui penduduk Elaris tersebar
+Aelia dikonfirmasi masih hidup
 
-Lorel adalah negara di selatan Pulau Utama yang terinspirasi budaya Italia dan Mediterania. Negara ini memiliki pantai hangat, perbukitan, kawasan pertanian, dan kota-kota perdagangan yang dihuni terutama oleh Human dan Elf. Lorel berkembang dari sejumlah kota dagang dan kini berbentuk federasi dengan pemerintahan pusat serta otonomi regional yang cukup besar. Ekonominya bertumpu pada pertanian, kerajinan, dan perdagangan laut, dengan hubungan dagang yang sangat erat dengan negara tetangganya, Alexandria. Masyarakat Lorel relatif terbuka terhadap traveler dan memiliki mobilitas sosial yang jauh lebih tinggi dibandingkan Elaris, meskipun keterbukaan dan perdagangan tersebut juga menciptakan ruang bagi penyelundupan serta kelompok kriminal. Dalam Arc 1, Lorel menjadi tempat pertama Aren melihat dunia di mana seseorang memiliki lebih banyak pilihan atas kehidupannya, sekaligus menyadari bahwa kebebasan tidak otomatis membuat sebuah masyarakat sempurna.
+Ending:
+Sebagian warga Elaris memilih menetap di Lorel
+
+Tema:
+Freedom With Uncertainty
+Canon Ringkas Lorel
+
+Lorel adalah negara di selatan Pulau Utama dengan ibu kota Bellaria dan masyarakat yang terinspirasi budaya Italia serta kawasan Mediterania. Negara ini berkembang dari kumpulan kota dagang independen yang kemudian membentuk Federasi Lorel. Pemerintahannya dipimpin seorang First Councillor bersama perwakilan wilayah, sehingga kekuasaan lebih terdistribusi dibandingkan sistem otoriter Elaris. Human dan Elf hidup bersama sebagai bagian normal masyarakat Lorel.
+
+Ekonomi Lorel bertumpu pada pertanian, kerajinan artisan, dan perdagangan laut. Negara ini mempunyai hubungan perdagangan sangat erat dengan Alexandria serta hubungan ekonomi dengan wilayah lain seperti Mongreaux. Kehidupan masyarakat relatif terbuka dan memiliki mobilitas sosial tinggi, tetapi keterbukaan tersebut juga membawa masalah seperti penyelundupan, kriminalitas, dan eksploitasi orang rentan.
+
+Setelah tragedi Elaris, sejumlah korban teleportasi muncul di Lorel tanpa uang, dokumen, atau pemahaman dunia luar. Sebagian masyarakat membantu mereka, sementara kelompok kriminal lokal melihat mereka sebagai target mudah. Konflik tersebut menjadi inti Arc 1, ketika Aren bekerja sama dengan Lyra dan Doran untuk membongkar jaringan kriminal serta menyelamatkan korban Elaris.
+
+Lorel juga menjadi negara pertama yang mengubah pandangan Aren mengenai dunia luar. Di sini dia melihat masyarakat di mana seseorang bisa berganti pekerjaan, bepergian, dan memilih jalan hidupnya sendiri—sesuatu yang hampir tidak mungkin dilakukan di Elaris. Namun kriminalitas dan ketidakpastian Lorel menunjukkan bahwa kebebasan tidak membuat kehidupan otomatis sempurna. Lorel mengajarkan Aren bahwa pilihan membawa risiko, tetapi hak untuk memiliki pilihan tetap merupakan sesuatu yang berharga.
+
+Setelah Final Arc, sebagian warga Elaris memilih menetap secara permanen di Lorel, sementara hubungan baru antara Elaris dan Lorel mulai terbentuk setelah Elaris membuka negaranya kepada dunia. Karena itu Lorel secara tematik merepresentasikan Freedom With Uncertainty—tempat pertama Aren memahami bahwa hidup bebas bukan berarti hidup tanpa masalah, melainkan memiliki kesempatan menentukan sendiri jalan yang ingin dijalani.
