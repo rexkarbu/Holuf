@@ -40,6 +40,18 @@ Holuf is a top-down 2D RPG built with Godot 4. This project focuses on building 
 * **Persistent State**: The Party Manager operates as an Autoload, keeping the party composition persistent across all scene transitions.
 * **Dynamic Menu**: Dedicated Party UI accessible in the World for swapping active members seamlessly without duplicate characters.
 
+### Equipment System
+* **4-Slot Core**: Characters can equip items into Weapon, Head, Body, and Accessory slots.
+* **Persistent Ownership**: Seamless integration with the Inventory Manager. Equipping an item takes it from the inventory, and unequipping returns it.
+* **Non-destructive Stat Calculation**: Equipment stat bonuses (ATK, DEF, MAG, MDEF, SPD, Max HP, Max MP) are calculated dynamically on-demand, without permanently mutating the character's base combat stats.
+* **Weapon Restriction System**: A robust compatibility filter built into `CharacterData` (via `allowed_weapon_types`). Characters can only equip weapons that match their allowed proficiencies.
+
+### Character Progression & Combat Data
+* **EXP & Leveling**: Data-driven level up system where leveling up naturally increases Max HP, Max MP, and core stats based on individual growth curves.
+* **Persistent HP & MP**: Current HP and MP are saved persistently across battles and world exploration.
+* **Reserve EXP Penalty**: Members in the Reserve Party do not receive EXP from battles.
+* **10-Character Support**: Foundation for a fully playable 10-character roster, with flexible scaling from 1 to 4 active party members simultaneously in Battle without relying on a hardcoded protagonist.
+
 ## Architecture Highlights
 * **Autoloads**: Utilizes `GameManager`, `QuestManager`, `DialogueManager`, `TransitionManager`, and `PartyManager` to maintain persistent states across scene changes.
 * **Resource-based Data**: Characters, Skills, Dialogues, Quests, and Combatants all utilize Godot `.tres` resources for quick iteration in the Inspector.
