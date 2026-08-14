@@ -67,7 +67,7 @@ Kaelis takut ternyata dirinya tidak sehebat yang selama ini dia pikirkan.
 
 Background Kaelis
 
-Saya sarankan Kaelis berasal dari negara lain di pulau utama yang belum kita namai.
+Saya sarankan Kaelis berasal dari negara lain di Ardoria yang belum kita namai.
 
 Jangan paksa menentukan negaranya sekarang karena nanti kita memang akan membangun struktur 10 negara.
 
@@ -681,7 +681,7 @@ Sudah 8 karakter dengan identitas gameplay berbeda tanpa harus membuat delapan r
 
 Identitas final Kaelis yang saya rekomendasikan
 
-Kaelis adalah Human berusia sekitar 23 tahun dari sebuah negara di pulau utama yang belum ditentukan. Karismatik, percaya diri, kompetitif, energik, dan sangat berbakat menggunakan spear/lance, ia tumbuh terbiasa mendapat pengakuan karena kemampuannya. Tanpa disadari, Kaelis mulai mengukur harga dirinya melalui kemenangan dan sulit menerima kegagalan. Penyelidikannya terhadap jaringan pengiriman ilegal membawanya ke Kamikoto dan mempertemukannya dengan party Aren. Hidup bersama orang-orang yang unggul dalam bidang berbeda perlahan membuat Kaelis memahami bahwa ia tidak perlu menjadi yang terbaik untuk memiliki nilai. Pada akhirnya ia tetap menyukai kompetisi dan kemenangan, tetapi tidak lagi membutuhkan keduanya untuk membuktikan siapa dirinya.
+Kaelis adalah Human berusia sekitar 23 tahun dari sebuah negara di Ardoria yang belum ditentukan. Karismatik, percaya diri, kompetitif, energik, dan sangat berbakat menggunakan spear/lance, ia tumbuh terbiasa mendapat pengakuan karena kemampuannya. Tanpa disadari, Kaelis mulai mengukur harga dirinya melalui kemenangan dan sulit menerima kegagalan. Penyelidikannya terhadap jaringan pengiriman ilegal membawanya ke Kamikoto dan mempertemukannya dengan party Aren. Hidup bersama orang-orang yang unggul dalam bidang berbeda perlahan membuat Kaelis memahami bahwa ia tidak perlu menjadi yang terbaik untuk memiliki nilai. Pada akhirnya ia tetap menyukai kompetisi dan kemenangan, tetapi tidak lagi membutuhkan keduanya untuk membuktikan siapa dirinya.
 
 Gameplay:
 

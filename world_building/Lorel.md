@@ -1,7 +1,7 @@
 LOREL — Worldbuilding Canon
 1. Identitas Umum
 
-Lorel adalah negara di bagian selatan Pulau Utama dan merupakan negara pertama yang dijelajahi Aren setelah teleportasi dari Elaris.
+Lorel adalah negara di bagian selatan Ardoria dan merupakan negara pertama yang dijelajahi Aren setelah teleportasi dari Elaris.
 
 Lorel menjadi lokasi utama Arc 1 serta tanah kelahiran Lyra.
 
@@ -13,7 +13,7 @@ Aspek	Lorel
 Nama negara	Lorel
 Capital	Bellaria
 Town awal Arc 1	Virella
-Lokasi	Selatan Pulau Utama
+Lokasi	Selatan Ardoria
 Inspirasi	Italia / Mediterania
 Race utama	Human + Elf
 Karakter asal	Lyra
@@ -26,7 +26,7 @@ Fungsi story	Arc 1
 Tema negara	Freedom with uncertainty
 2. Posisi Geografis
 
-Lorel terletak di bagian selatan Pulau Utama.
+Lorel terletak di bagian selatan Ardoria.
 
 Wilayahnya memiliki akses langsung ke laut selatan dan menjadi salah satu pintu masuk alami bagi kapal serta traveler yang datang dari arah selatan.
 
@@ -62,7 +62,7 @@ Di salah satu pantai terpencil di kawasan inilah Aren terbangun setelah teleport
 
 Wilayah tengah terdiri dari perbukitan, kebun, ladang, settlement, perkebunan, serta kota-kota kecil yang terhubung melalui jalan perdagangan.
 
-Wilayah utara Lorel lebih padat dan berkembang karena menjadi titik pertemuan jalur menuju Alexandria dan wilayah Pulau Utama lainnya.
+Wilayah utara Lorel lebih padat dan berkembang karena menjadi titik pertemuan jalur menuju Alexandria dan wilayah Ardoria lainnya.
 
 Semakin jauh Aren bergerak dari pantai selatan:
 
@@ -76,7 +76,7 @@ Wilayah pesisir mendapatkan banyak matahari, sedangkan perbukitan bagian dalam l
 
 Curah hujan cukup untuk mendukung pertanian dan perkebunan.
 
-Karena kondisi tersebut, Lorel menjadi salah satu wilayah pertanian penting di bagian selatan Pulau Utama.
+Karena kondisi tersebut, Lorel menjadi salah satu wilayah pertanian penting di bagian selatan Ardoria.
 
 Visual lingkungannya bisa terasa seperti:
 
@@ -311,11 +311,11 @@ Workshop keluarga dan artisan kecil cukup umum.
 
 13. Perdagangan Laut
 
-Pesisir selatan membuat Lorel menjadi salah satu titik perdagangan laut penting di selatan Pulau Utama.
+Pesisir selatan membuat Lorel menjadi salah satu titik perdagangan laut penting di selatan Ardoria.
 
 Kapal menghubungkan kota pesisir Lorel dengan berbagai pelabuhan lain.
 
-Barang dari wilayah lain dapat memasuki Pulau Utama melalui Lorel sebelum dibawa melalui jalan darat.
+Barang dari wilayah lain dapat memasuki Ardoria melalui Lorel sebelum dibawa melalui jalan darat.
 
 Hal ini juga membuat Lorel memiliki masyarakat yang relatif terbiasa dengan orang asing.
 
@@ -343,7 +343,7 @@ Akibatnya jalur:
 
 Lorel ↔ Alexandria
 
-menjadi salah satu rute perdagangan penting di Pulau Utama bagian selatan.
+menjadi salah satu rute perdagangan penting di Ardoria bagian selatan.
 
 Caravan bergerak secara rutin melintasi perbatasan.
 
@@ -381,17 +381,17 @@ Barang dari Lorel dapat bergerak:
 
 Lorel → Alexandria → Mongreaux
 
-atau melalui jalur dagang lain menuju pusat Pulau Utama.
+atau melalui jalur dagang lain menuju pusat Ardoria.
 
 Mongreaux menjadi salah satu pasar besar untuk barang artisan dan produk pertanian Lorel.
 
 17. Hubungan dengan Dunia Luar
 
-Karena pelabuhannya, Lorel merupakan salah satu negara yang relatif terbuka terhadap pengunjung dari luar Pulau Utama.
+Karena pelabuhannya, Lorel merupakan salah satu negara yang relatif terbuka terhadap pengunjung dari luar Ardoria.
 
 Orang dari Kharuun atau wilayah lain secara teori bisa masuk melalui jalur laut.
 
-Namun sebagian besar aktivitas harian Lorel masih berfokus pada perdagangan regional Pulau Utama.
+Namun sebagian besar aktivitas harian Lorel masih berfokus pada perdagangan regional Ardoria.
 
 18. Militer dan Keamanan
 
@@ -781,7 +781,7 @@ Ini merupakan pelajaran awal yang diperlukan sebelum tema kebebasan berkembang l
 LOREL
 
 Lokasi:
-Selatan Pulau Utama
+Selatan Ardoria
 
 Inspirasi:
 Italia / Mediterania
@@ -872,7 +872,7 @@ Tema:
 Freedom With Uncertainty
 Canon Ringkas Lorel
 
-Lorel adalah negara di selatan Pulau Utama dengan ibu kota Bellaria dan masyarakat yang terinspirasi budaya Italia serta kawasan Mediterania. Negara ini berkembang dari kumpulan kota dagang independen yang kemudian membentuk Federasi Lorel. Pemerintahannya dipimpin seorang First Councillor bersama perwakilan wilayah, sehingga kekuasaan lebih terdistribusi dibandingkan sistem otoriter Elaris. Human dan Elf hidup bersama sebagai bagian normal masyarakat Lorel.
+Lorel adalah negara di selatan Ardoria dengan ibu kota Bellaria dan masyarakat yang terinspirasi budaya Italia serta kawasan Mediterania. Negara ini berkembang dari kumpulan kota dagang independen yang kemudian membentuk Federasi Lorel. Pemerintahannya dipimpin seorang First Councillor bersama perwakilan wilayah, sehingga kekuasaan lebih terdistribusi dibandingkan sistem otoriter Elaris. Human dan Elf hidup bersama sebagai bagian normal masyarakat Lorel.
 
 Ekonomi Lorel bertumpu pada pertanian, kerajinan artisan, dan perdagangan laut. Negara ini mempunyai hubungan perdagangan sangat erat dengan Alexandria serta hubungan ekonomi dengan wilayah lain seperti Mongreaux. Kehidupan masyarakat relatif terbuka dan memiliki mobilitas sosial tinggi, tetapi keterbukaan tersebut juga membawa masalah seperti penyelundupan, kriminalitas, dan eksploitasi orang rentan.
 

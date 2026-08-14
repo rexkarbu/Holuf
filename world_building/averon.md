@@ -1,7 +1,7 @@
 AVERON — Worldbuilding Canon
 1. Identitas Umum
 
-Averon adalah negara pegunungan di bagian barat-laut Pulau Utama, tepat di atas Valeria dan di sebelah barat Mongreaux.
+Averon adalah negara pegunungan di bagian barat-laut Ardoria, tepat di atas Valeria dan di sebelah barat Mongreaux.
 
 Negara ini terkenal dengan pegunungan tinggi, lembah hijau, danau, hutan, angin kuat, jalur pegunungan, serta masyarakat yang sangat menghargai pengetahuan medan dan kemandirian komunitas.
 
@@ -10,7 +10,7 @@ Averon merupakan tanah kelahiran Sylven.
 Aspek	Averon
 Nama	Averon
 Ibu kota	Braemont
-Lokasi	Barat-laut Pulau Utama
+Lokasi	Barat-laut Ardoria
 Inspirasi	Scotland + Switzerland
 Race utama	Human + Elf
 Karakter asal	Sylven
@@ -22,7 +22,7 @@ Main story	Tidak dikunjungi langsung
 Tema	Stewardship Through Understanding
 2. Posisi Geografis
 
-Averon terletak di kawasan barat-laut Pulau Utama.
+Averon terletak di kawasan barat-laut Ardoria.
 
                      UTARA
                        ↑
@@ -926,7 +926,7 @@ Tema-tema ini berhubungan dengan dunia dan karakter asal masing-masing tanpa mem
 AVERON
 
 Lokasi:
-Barat-laut Pulau Utama
+Barat-laut Ardoria
 Di atas Valeria
 Barat Mongreaux
 
@@ -1003,7 +1003,7 @@ Country Theme:
 Stewardship Through Understanding
 Canon Ringkas Averon
 
-Averon adalah negara pegunungan di bagian barat-laut Pulau Utama dengan ibu kota Braemont. Terinspirasi Scotland dan Switzerland, wilayahnya terdiri dari highland, gunung, lembah, danau, hutan, serta jalur pegunungan yang dipengaruhi cuaca dan angin kuat. Human dan Elf merupakan dua populasi utama yang telah hidup bersama dalam masyarakat Averon selama generasi.
+Averon adalah negara pegunungan di bagian barat-laut Ardoria dengan ibu kota Braemont. Terinspirasi Scotland dan Switzerland, wilayahnya terdiri dari highland, gunung, lembah, danau, hutan, serta jalur pegunungan yang dipengaruhi cuaca dan angin kuat. Human dan Elf merupakan dua populasi utama yang telah hidup bersama dalam masyarakat Averon selama generasi.
 
 Karena geografisnya membuat banyak komunitas berkembang secara terpisah, Averon tidak tumbuh sebagai kerajaan terpusat. Negara modern berbentuk Cantonal Confederation di mana setiap Canton memiliki otonomi lokal sementara Federal Council menangani diplomasi, pertahanan, perdagangan antarwilayah, dan kepentingan nasional. Budaya Averon sangat menghargai preparedness, environmental knowledge, dan kemampuan praktis karena kesalahan membaca medan atau cuaca dapat memiliki konsekuensi serius.
 

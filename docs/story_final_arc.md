@@ -1,7 +1,7 @@
 Arc 5 — Final Island
 Tema: Freedom by Choice
 Nama Pulau : Aetherion
-Status negara : statusnya adalah pulau terisolasi / wilayah independen yang tidak diakui sebagai negara. pulau ini tidak memiliki penduduk tetap, melainkan berisi fasilitas penelitian, reruntuhan teknologi spatial, laboratorium, monster yang telah terkena eksperimen, fasilitas Mirror Gate, dan pusat energi besar di bagian tertinggi pulau.
+Status negara : statusnya adalah pulau terisolasi / wilayah independen yang tidak diakui sebagai negara. Pulau ini tidak memiliki penduduk tetap, melainkan berisi fasilitas penelitian, reruntuhan teknologi spatial, laboratorium, monster yang telah terkena eksperimen, fasilitas Mirror Gate, dan pusat energi besar di bagian tertinggi pulau.
 
 Arc 4 berakhir setelah party mengetahui bahwa Elaris hanyalah percobaan pertama. Mereka mendapatkan Mirror Key, koordinat pulau utara, serta cara menembus spatial barrier yang selama ini mengisolasi tempat tersebut.
 

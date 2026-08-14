@@ -1,7 +1,7 @@
 MONGREAUX — Worldbuilding Canon
 1. Identitas Umum
 
-Mongreaux adalah negara terbesar dan paling berpengaruh di bagian tengah Pulau Utama. Karena letaknya yang strategis dan wilayahnya yang sangat luas, Mongreaux berfungsi sebagai pusat perdagangan, pendidikan, diplomasi, dan pergerakan manusia antarnegara.
+Mongreaux adalah negara terbesar dan paling berpengaruh di bagian tengah Ardoria. Karena letaknya yang strategis dan wilayahnya yang sangat luas, Mongreaux berfungsi sebagai pusat perdagangan, pendidikan, diplomasi, dan pergerakan manusia antarnegara.
 
 Mongreaux merupakan tanah kelahiran Neria dan menjadi lokasi utama Arc 3.
 
@@ -16,7 +16,7 @@ Unsur Prancis lebih kuat di kota-kota besar, terutama pada arsitektur, akademi, 
 Aspek	Mongreaux
 Nama	Mongreaux
 Ibu kota	Montreval
-Lokasi	Tengah Pulau Utama
+Lokasi	Tengah Ardoria
 Inspirasi	Mongolia + Prancis
 Race utama	Human, Elf, Beast campuran
 Karakter asal	Neria
@@ -27,7 +27,7 @@ Story	Arc 3
 Tema	Knowledge Through Connection
 2. Posisi Geografis
 
-Mongreaux menempati wilayah yang sangat luas di bagian tengah Pulau Utama.
+Mongreaux menempati wilayah yang sangat luas di bagian tengah Ardoria.
 
 Negara ini menjadi semacam titik penghubung antara selatan, barat, timur, dan utara.
 
@@ -54,7 +54,7 @@ Ini salah satu alasan negara tersebut menjadi sangat kaya dan beragam.
 
 3. Luas Wilayah
 
-Mongreaux adalah negara terbesar di Pulau Utama.
+Mongreaux adalah negara terbesar di Ardoria.
 
 Perjalanan dari satu ujung wilayah ke ujung lainnya dapat memakan waktu jauh lebih lama daripada melintasi Lorel.
 
@@ -130,7 +130,7 @@ Mongreaux awalnya terbentuk dari banyak wilayah, settlement, kelompok berkuda, k
 
 Pada masa lalu wilayah tersebut sering berdiri relatif independen.
 
-Perubahan besar terjadi ketika rute perdagangan antarbagian Pulau Utama mulai semakin penting.
+Perubahan besar terjadi ketika rute perdagangan antarbagian Ardoria mulai semakin penting.
 
 Kelompok-kelompok regional menyadari bahwa siapa pun yang mengontrol pusat pulau akan mempunyai pengaruh besar terhadap perdagangan seluruh wilayah.
 
@@ -176,7 +176,7 @@ Karena Mongreaux sangat besar.
 
 Negara sebesar ini sulit dikelola tanpa memberikan sebagian kekuasaan kepada daerah.
 
-Ini juga membantu memperlihatkan variasi politik dunia Holuf.
+Ini juga membantu memperlihatkan variasi politik Asterra.
 
 Elaris:
 
@@ -262,7 +262,7 @@ alchemy,
 mathematics,
 dan berbagai bidang akademis.
 
-Mongreaux dikenal sebagai salah satu pusat pengetahuan terbesar di Pulau Utama.
+Mongreaux dikenal sebagai salah satu pusat pengetahuan terbesar di Ardoria.
 
 12. Posisi Akademi dalam Dunia
 
@@ -310,7 +310,7 @@ Inilah yang akhirnya membawa dia bertemu Aren.
 
 14. Penduduk dan Race
 
-Mongreaux merupakan salah satu negara paling multirasial di Pulau Utama.
+Mongreaux merupakan salah satu negara paling multirasial di Ardoria.
 
 Populasinya terdiri dari:
 
@@ -469,7 +469,7 @@ Ketika Neria menemukan petunjuk Kamikoto, akademi memang memiliki pengetahuan da
 
 Karena Kharuun berada di pulau barat, tidak ada perbatasan darat.
 
-Namun Mongreaux merupakan salah satu tujuan utama merchant dan traveler Kharuun yang datang ke Pulau Utama.
+Namun Mongreaux merupakan salah satu tujuan utama merchant dan traveler Kharuun yang datang ke Ardoria.
 
 Ini membuat keberadaan Torga di Mongreaux sangat masuk akal.
 
@@ -858,7 +858,7 @@ menjadi:
 
 “Kalau mereka bisa melakukan ini pada Elaris, mereka bisa melakukannya di tempat lain.”
 
-Sebagai traveler dari luar Pulau Utama, Torga memahami bahwa ancamannya tidak harus berhenti pada satu wilayah.
+Sebagai traveler dari luar Ardoria, Torga memahami bahwa ancamannya tidak harus berhenti pada satu wilayah.
 
 47. Ending Arc 3
 
@@ -1045,10 +1045,10 @@ Tidak ada satu negara yang bisa memecahkan misteri sendiri.
 MONGREAUX
 
 Lokasi:
-Tengah Pulau Utama
+Tengah Ardoria
 
 Ukuran:
-Negara terbesar di Pulau Utama
+Negara terbesar di Ardoria
 
 Inspirasi:
 Mongolia + Prancis
@@ -1131,9 +1131,9 @@ Tema:
 Knowledge Through Connection
 Canon Ringkas Mongreaux
 
-Mongreaux adalah negara terbesar di tengah Pulau Utama dengan ibu kota Montreval. Negara ini terinspirasi perpaduan Mongolia dan Prancis: wilayah luarnya terdiri dari dataran luas, komunitas berkuda, pertanian, serta jalur perjalanan jarak jauh, sementara kota pusatnya berkembang menjadi metropolitan besar yang dikenal melalui pendidikan, perdagangan, diplomasi, dan kehidupan multikultural. Mongreaux menggunakan sistem monarki parlementer dengan administrasi regional untuk mengelola wilayahnya yang sangat luas.
+Mongreaux adalah negara terbesar di tengah Ardoria dengan ibu kota Montreval. Negara ini terinspirasi perpaduan Mongolia dan Prancis: wilayah luarnya terdiri dari dataran luas, komunitas berkuda, pertanian, serta jalur perjalanan jarak jauh, sementara kota pusatnya berkembang menjadi metropolitan besar yang dikenal melalui pendidikan, perdagangan, diplomasi, dan kehidupan multikultural. Mongreaux menggunakan sistem monarki parlementer dengan administrasi regional untuk mengelola wilayahnya yang sangat luas.
 
-Sebagai pusat geografis Pulau Utama, Mongreaux berkembang karena menghubungkan banyak negara. Human, Elf, dan Beast hidup serta bekerja di kota-kotanya, sementara merchant, student, traveler, dan researcher dari berbagai wilayah sering datang ke Montreval. Salah satu institusi paling penting adalah Akademi Mongreaux, pusat penelitian magic dan ilmu pengetahuan tempat Neria belajar.
+Sebagai pusat geografis Ardoria, Mongreaux berkembang karena menghubungkan banyak negara. Human, Elf, dan Beast hidup serta bekerja di kota-kotanya, sementara merchant, student, traveler, dan researcher dari berbagai wilayah sering datang ke Montreval. Salah satu institusi paling penting adalah Akademi Mongreaux, pusat penelitian magic dan ilmu pengetahuan tempat Neria belajar.
 
 Dalam Arc 3, Aren datang ke Mongreaux bersama Aelia, Lyra, dan Doran dengan tujuan menemukan Lloyd dan Glaisa. Keduanya ditemukan hidup di Montreval pada awal arc. Glaisa memilih tetap tinggal di kota, sementara Lloyd kemudian ikut perjalanan sebagai story companion. Investigasi terhadap teleportasi membawa party ke Akademi Mongreaux, tempat mereka bertemu Neria dan mendapatkan revelation besar bahwa teleportasi Elaris tidak terjadi secara alami: seluruh peristiwa tersebut dilakukan dengan sengaja dan manusia Elaris memang dipilih sebagai target.
 

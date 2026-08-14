@@ -1,6 +1,6 @@
 1. Identitas Umum
 
-Ravaryn adalah negara di bagian timur–tenggara Pulau Utama, berada di bawah Kamikoto dan di sebelah timur Mongreaux.
+Ravaryn adalah negara di bagian timur–tenggara Ardoria, berada di bawah Kamikoto dan di sebelah timur Mongreaux.
 
 Negara ini dikenal dengan pegunungan berbatu, lembah sempit, kota-kota benteng tua, jalur perdagangan lintas gunung, pelabuhan timur, tradisi swordsmanship, dan masyarakat yang sangat kuat dalam menjaga ingatan sejarah.
 
@@ -15,7 +15,7 @@ Namun Ravaryn bukan salinan negara dunia nyata. Inspirasinya terutama digunakan 
 Aspek	Ravaryn
 Nama	Ravaryn
 Ibu kota	Vardessa
-Lokasi	Timur–tenggara Pulau Utama
+Lokasi	Timur–tenggara Ardoria
 Inspirasi	Balkan + Caucasus
 Race utama	Human + Beast
 Karakter asal	Orin
@@ -27,7 +27,7 @@ Main story	Tidak dikunjungi langsung
 Tema	Memory Without Chains
 2. Posisi Geografis
 
-Ravaryn berada di bagian timur Pulau Utama.
+Ravaryn berada di bagian timur Ardoria.
 
 Secara kasar:
 
@@ -78,7 +78,7 @@ Bagian timur Ravaryn mempunyai akses ke laut.
 
 Di sana terdapat beberapa kota pelabuhan penting.
 
-Pelabuhan Ravaryn menghubungkan perdagangan Pulau Utama dengan rute laut timur.
+Pelabuhan Ravaryn menghubungkan perdagangan Ardoria dengan rute laut timur.
 
 Barang yang tiba melalui laut dapat bergerak:
 
@@ -88,7 +88,7 @@ Ravaryn
 ↓
 Kamikoto / Mongreaux
 ↓
-wilayah Pulau Utama lainnya
+wilayah Ardoria lainnya
 
 Jalur inilah yang nantinya sangat relevan terhadap jaringan logistik antagonis.
 
@@ -1183,7 +1183,7 @@ Masing-masing masih mendukung tema utama Holuf tetapi dari arah berbeda.
 RAVARYN
 
 Lokasi:
-Timur / tenggara Pulau Utama
+Timur / tenggara Ardoria
 Di bawah Kamikoto
 Timur Mongreaux
 
@@ -1273,7 +1273,7 @@ Country Theme:
 Memory Without Chains
 Canon Ringkas Ravaryn
 
-Ravaryn adalah negara pegunungan di bagian timur–tenggara Pulau Utama dengan ibu kota Vardessa. Terinspirasi Balkan dan Caucasus, wilayahnya terdiri dari pegunungan berbatu, lembah, plateau, fortified towns, serta pelabuhan di pantai timur. Human dan Beast merupakan dua populasi besar yang telah hidup bersama di wilayah tersebut selama generasi.
+Ravaryn adalah negara pegunungan di bagian timur–tenggara Ardoria dengan ibu kota Vardessa. Terinspirasi Balkan dan Caucasus, wilayahnya terdiri dari pegunungan berbatu, lembah, plateau, fortified towns, serta pelabuhan di pantai timur. Human dan Beast merupakan dua populasi besar yang telah hidup bersama di wilayah tersebut selama generasi.
 
 Ravaryn berasal dari berbagai principality dan kota benteng yang dulunya relatif independen. Ancaman eksternal dan kebutuhan menjaga jalur perdagangan akhirnya mendorong mereka membentuk negara bersama. Sistem modernnya menggunakan High Principality dengan seorang High Prince atau High Princess yang berbagi kekuasaan bersama Council of Banners, lembaga yang mewakili wilayah-wilayah historis Ravaryn.
 

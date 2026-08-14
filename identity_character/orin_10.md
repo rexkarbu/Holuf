@@ -11,7 +11,7 @@ Archetype gameplay	Self-sufficient bruiser / sustained attacker
 Tema karakter	Your past does not excuse you, but it does not have to define you
 Negara asal — Ravaryn
 
-Saya rekomendasikan Ravaryn sebagai negara di timur atau tenggara Pulau Utama, di bawah Kamikoto.
+Saya rekomendasikan Ravaryn sebagai negara di timur atau tenggara Ardoria, di bawah Kamikoto.
 
 Inspirasi budayanya bisa mengambil unsur:
 
@@ -22,7 +22,7 @@ Bukan salinan literal, tetapi negara pegunungan yang sekaligus punya jalur perda
 RAVARYN
 
 Lokasi:
-→ timur / tenggara Pulau Utama
+→ timur / tenggara Ardoria
 → di selatan Kamikoto
 
 Geografi:

@@ -2,7 +2,7 @@ Torga — Character Identity Draft
 Bagian	Identitas
 Nama	Torga
 Race	Beast
-Asal	Negara di luar pulau utama : Kharuun — negara asal Torga, berada di sebuah pulau besar di sebelah barat Pulau Utama.
+Asal	Negara di luar Ardoria : Kharuun — negara asal Torga, berada di sebuah pulau besar di sebelah barat Ardoria.
 Weapon	Axe
 Element	Earth
 Posisi story	Traveler dari luar pulau / orang luar yang ikut menyelidiki tragedi Elaris
@@ -74,15 +74,15 @@ Dia hanya tidak suka membuat sesuatu lebih rumit daripada yang menurutnya perlu.
 
 Background Torga
 
-Torga berasal dari negara di luar pulau utama.
+Torga berasal dari negara di luar Ardoria.
 
-Ini penting karena dia memperluas skala dunia Holuf.
+Ini penting karena dia memperluas skala Asterra.
 
-Sampai Torga bergabung, Aren mulai memahami bahwa pulau utama saja sudah sangat besar.
+Sampai Torga bergabung, Aren mulai memahami bahwa Ardoria saja sudah sangat besar.
 
 Kemudian Torga dengan santainya bisa mengatakan sesuatu yang menunjukkan:
 
-pulau utama ini hanyalah satu bagian dari dunia.
+Ardoria ini hanyalah satu bagian dari dunia.
 
 Saya rekomendasikan tanah asal Torga memiliki budaya yang lebih dekat dengan:
 
@@ -183,7 +183,7 @@ Kemudian rasa penasaran berubah menjadi:
 
 kepedulian terhadap ancaman tersebut.
 
-Apalagi Torga berasal dari luar pulau utama.
+Apalagi Torga berasal dari luar Ardoria.
 
 Dia bisa menjadi salah satu karakter pertama yang berkata:
 
@@ -339,7 +339,7 @@ Kalau ada seseorang yang terlalu terobsesi pada ras:
 
 dia mungkin justru bingung kenapa hal itu dianggap begitu penting.
 
-Ini tidak berarti dunia Holuf tidak boleh punya konflik rasial.
+Ini tidak berarti Asterra tidak boleh punya konflik rasial.
 
 Hanya saja Torga sendiri tidak terlalu peduli.
 
@@ -397,7 +397,7 @@ Dia bergabung sementara.
 ARC 4
 
 Dia melihat bahwa ancaman ini
-dapat menjangkau jauh melewati pulau utama.
+dapat menjangkau jauh melewati Ardoria.
 
 ↓
 
@@ -604,7 +604,7 @@ Ini sudah terasa seperti roster RPG yang cukup lengkap bahkan sebelum empat kara
 
 Identitas final Torga yang saya rekomendasikan
 
-Torga adalah Beast traveler berusia sekitar 27 tahun yang berasal dari sebuah negara di luar pulau utama. Tenang, santai, terus terang, berani, dan memiliki rasa ingin tahu besar terhadap dunia, ia terbiasa berpindah dari satu tempat ke tempat lain hanya karena ingin melihat sesuatu yang belum pernah ia lihat. Torga kebetulan berada di Mongreaux ketika tragedi Elaris mulai diselidiki dan awalnya ikut hanya karena ingin memahami bagaimana fenomena sebesar itu bisa terjadi. Setelah mengetahui bahwa teleportasi tersebut dilakukan dengan sengaja dan dapat mengancam tempat lain, rasa penasarannya berkembang menjadi komitmen. Perjalanannya mengajarkan bahwa kebebasan bukan hanya kemampuan untuk pergi kapan pun ia mau, tetapi juga kemampuan untuk memilih sesuatu yang layak dipertahankan.
+Torga adalah Beast traveler berusia sekitar 27 tahun yang berasal dari sebuah negara di luar Ardoria. Tenang, santai, terus terang, berani, dan memiliki rasa ingin tahu besar terhadap dunia, ia terbiasa berpindah dari satu tempat ke tempat lain hanya karena ingin melihat sesuatu yang belum pernah ia lihat. Torga kebetulan berada di Mongreaux ketika tragedi Elaris mulai diselidiki dan awalnya ikut hanya karena ingin memahami bagaimana fenomena sebesar itu bisa terjadi. Setelah mengetahui bahwa teleportasi tersebut dilakukan dengan sengaja dan dapat mengancam tempat lain, rasa penasarannya berkembang menjadi komitmen. Perjalanannya mengajarkan bahwa kebebasan bukan hanya kemampuan untuk pergi kapan pun ia mau, tetapi juga kemampuan untuk memilih sesuatu yang layak dipertahankan.
 
 Gameplay:
 

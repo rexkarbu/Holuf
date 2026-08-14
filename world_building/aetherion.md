@@ -1,7 +1,7 @@
 AETHERION — Territory Bible
 1. Identitas Umum
 
-Aetherion adalah sebuah pulau terpencil yang terletak jauh di utara dunia Holuf.
+Aetherion adalah sebuah pulau terpencil yang terletak jauh di utara Asterra.
 
 Aetherion bukan negara dan tidak diakui sebagai negara modern oleh sembilan negara lainnya. Pulau ini tidak memiliki populasi sipil permanen, kota normal, pemerintahan sipil, ataupun masyarakat nasional seperti Elaris, Lorel, atau Mongreaux.
 
@@ -46,7 +46,7 @@ KHARUUN                                      ELARIS
 
 Aetherion sangat jauh dari jalur perjalanan normal.
 
-Kebanyakan orang di dunia Holuf mengetahui nama atau keberadaan pulau tersebut hanya secara samar, jika sama sekali.
+Kebanyakan orang di Asterra mengetahui nama atau keberadaan pulau tersebut hanya secara samar, jika sama sekali.
 
 3. Kenapa Aetherion Bukan Negara?
 
@@ -712,7 +712,7 @@ Nama Grand Transposition masih working name, belum harus final.
 
 Tujuan sistem:
 
-memindahkan populasi dalam skala besar di Pulau Utama.
+memindahkan populasi dalam skala besar di Ardoria.
 
 The Architect ingin menghancurkan hubungan tradisional antara:
 
@@ -1432,11 +1432,11 @@ Freedom Without Consent
 Is Not Freedom
 Canon Ringkas Aetherion
 
-Aetherion adalah pulau terpencil jauh di utara dunia Holuf dan bukan salah satu dari sembilan negara. Pulau tersebut tidak memiliki populasi sipil permanen, pemerintahan normal, ataupun masyarakat nasional. Sebaliknya, Aetherion terdiri dari reruntuhan spatial kuno, laboratorium, fasilitas penelitian, instalasi Mirror Gate yang telah dimodifikasi, monster yang terpengaruh eksperimen, serta sebuah Spatial Core besar di wilayah tertinggi pulau.
+Aetherion adalah pulau terpencil jauh di utara Asterra dan bukan salah satu dari sembilan negara. Pulau tersebut tidak memiliki populasi sipil permanen, pemerintahan normal, ataupun masyarakat nasional. Sebaliknya, Aetherion terdiri dari reruntuhan spatial kuno, laboratorium, fasilitas penelitian, instalasi Mirror Gate yang telah dimodifikasi, monster yang terpengaruh eksperimen, serta sebuah Spatial Core besar di wilayah tertinggi pulau.
 
 Kondisi spatial alami Aetherion membuat wilayah tersebut sangat cocok sebagai pusat penelitian teleportasi. Pihak The Architect memanfaatkan fenomena tersebut dan menggabungkannya dengan teknologi Mirror Gate yang dicuri dari Kamikoto. Untuk melindungi operasi, pulau dikelilingi Spatial Barrier yang membuat kapal biasa hampir tidak mungkin mencapai Aetherion. Setelah Arc 4, party memperoleh Mirror Key yang memungkinkan mereka membuka satu jalur stabil menuju pulau.
 
-Di Aetherion, Aren menemukan bukti final bahwa pemindahan manusia Elaris merupakan eksperimen teleportasi massal yang disengaja. Records juga membuktikan bahwa King Vaelor menyediakan data penduduk, akses wilayah, dan perlindungan politik bagi persiapan eksperimen. Elaris dipakai sebagai uji coba pertama yang sukses sebelum The Architect menjalankan Grand Transposition, rencana untuk memindahkan populasi Pulau Utama secara paksa dalam upaya menghancurkan batas negara dan struktur sosial lama.
+Di Aetherion, Aren menemukan bukti final bahwa pemindahan manusia Elaris merupakan eksperimen teleportasi massal yang disengaja. Records juga membuktikan bahwa King Vaelor menyediakan data penduduk, akses wilayah, dan perlindungan politik bagi persiapan eksperimen. Elaris dipakai sebagai uji coba pertama yang sukses sebelum The Architect menjalankan Grand Transposition, rencana untuk memindahkan populasi Ardoria secara paksa dalam upaya menghancurkan batas negara dan struktur sosial lama.
 
 The Architect percaya tempat lahir terlalu banyak menentukan kehidupan manusia dan ingin menciptakan dunia baru yang menurutnya lebih bebas. Namun solusi tersebut mengandung kontradiksi utama: dia ingin memberikan kebebasan dengan mengambil hak semua orang untuk memilih. Hal ini menjadi konflik ideologis final Aren, yang sepanjang perjalanannya belajar bahwa kebebasan tidak berarti memaksakan satu bentuk kehidupan kepada semua orang, tetapi memberikan manusia kesempatan menentukan jalan mereka sendiri.
 

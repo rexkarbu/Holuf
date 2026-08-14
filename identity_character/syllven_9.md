@@ -10,7 +10,7 @@ Archetype gameplay	Ranged utility attacker / tactical support
 Tema karakter	Understanding the world means nothing if you never act
 Negara asal — Averon
 
-Saya rekomendasikan Averon sebagai negara baru di bagian utara-barat Pulau Utama.
+Saya rekomendasikan Averon sebagai negara baru di bagian utara-barat Ardoria.
 
 Inspirasi dunia nyata:
 
@@ -21,7 +21,7 @@ Bukan meniru literal, tetapi mengambil nuansa dataran tinggi, pegunungan, lembah
 AVERON
 
 Lokasi:
-→ barat-laut / utara Pulau Utama
+→ barat-laut / utara Ardoria
 
 Inspirasi:
 → Skotlandia
@@ -604,7 +604,7 @@ Jadi kita sekarang punya Averon sebagai negara ke-8 yang sudah bernama jika Aeth
 
 Identitas final Sylven yang saya rekomendasikan
 
-Sylven adalah Elf berusia sekitar 26 tahun dari Averon, negara pegunungan di barat-laut Pulau Utama. Ia bekerja sebagai pathfinder dan surveyor yang terbiasa mengamati perubahan lingkungan serta aliran magic. Tenang, sabar, observatif, dan sangat berhati-hati, Sylven sering menunggu sampai merasa benar-benar memahami situasi sebelum mengambil keputusan. Ketika penyelidikannya terhadap perubahan aliran magic membawanya ke Kamikoto dan mengungkap hubungan dengan tragedi Elaris, ia mulai menyadari bahwa terlalu lama menjadi pengamat juga dapat memiliki konsekuensi. Perjalanannya bersama Aren mengajarkannya bahwa tidak semua keputusan dapat dibuat dengan informasi sempurna dan bahwa memahami sebuah masalah berarti sedikit jika seseorang tidak bersedia bertindak ketika diperlukan.
+Sylven adalah Elf berusia sekitar 26 tahun dari Averon, negara pegunungan di barat-laut Ardoria. Ia bekerja sebagai pathfinder dan surveyor yang terbiasa mengamati perubahan lingkungan serta aliran magic. Tenang, sabar, observatif, dan sangat berhati-hati, Sylven sering menunggu sampai merasa benar-benar memahami situasi sebelum mengambil keputusan. Ketika penyelidikannya terhadap perubahan aliran magic membawanya ke Kamikoto dan mengungkap hubungan dengan tragedi Elaris, ia mulai menyadari bahwa terlalu lama menjadi pengamat juga dapat memiliki konsekuensi. Perjalanannya bersama Aren mengajarkannya bahwa tidak semua keputusan dapat dibuat dengan informasi sempurna dan bahwa memahami sebuah masalah berarti sedikit jika seseorang tidak bersedia bertindak ketika diperlukan.
 
 Gameplay:
 

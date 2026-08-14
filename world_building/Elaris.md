@@ -1,7 +1,7 @@
 ELARIS — Worldbuilding Canon
 1. Identitas Umum
 
-Elaris adalah negara pulau kecil yang terletak di sebelah timur Pulau Utama. Elaris merupakan tanah kelahiran Aren dan Aelia serta menjadi lokasi pembuka cerita Holuf.
+Elaris adalah negara pulau kecil yang terletak di sebelah timur Ardoria. Elaris merupakan tanah kelahiran Aren dan Aelia serta menjadi lokasi pembuka cerita Holuf.
 
 Ibu kotanya adalah Caelora, sedangkan penguasanya adalah King Vaelor.
 
@@ -9,7 +9,7 @@ Aspek	Elaris
 Nama negara	Elaris
 Ibu kota	Caelora
 Penguasa	King Vaelor
-Lokasi	Pulau kecil di timur Pulau Utama
+Lokasi	Pulau kecil di timur Ardoria
 Karakter asal	Aren, Aelia
 Pemerintahan	Monarki sangat terpusat / otoriter
 Kondisi ekonomi	Stagnan dan terus memburuk
@@ -19,13 +19,13 @@ Fungsi story	Prologue + asal konflik utama
 Tema utama	Life without choice
 2. Posisi Geografis
 
-Elaris berada di sebuah pulau terpisah di timur Pulau Utama.
+Elaris berada di sebuah pulau terpisah di timur Ardoria.
 
-Pulau ini jauh lebih kecil dibanding wilayah seperti Mongreaux atau keseluruhan Pulau Utama.
+Pulau ini jauh lebih kecil dibanding wilayah seperti Mongreaux atau keseluruhan Ardoria.
 
 Secara kasar posisi dunia:
 
-KHARUUN                PULAU UTAMA                     ELARIS
+KHARUUN                Ardoria                     ELARIS
 [Pulau Barat]     [9 negara utama tersebar]        [Pulau Timur]
 
 
@@ -523,7 +523,7 @@ Dari sinilah character arc Aren dimulai.
 
 27. Penduduk Elaris di Dunia Luar
 
-Para korban tersebar di berbagai wilayah Pulau Utama.
+Para korban tersebar di berbagai wilayah Ardoria.
 
 Reaksi mereka berbeda-beda.
 
@@ -765,12 +765,12 @@ Karena itu Elaris merupakan fondasi tema seluruh Holuf.
 
 Canon Ringkas Elaris
 
-Elaris adalah negara pulau kecil di timur Pulau Utama dengan ibu kota Caelora dan dipimpin King Vaelor. Negara ini mempertahankan isolasi ketat dari dunia luar, memiliki mobilitas sosial rendah, ekonomi stagnan, serta masyarakat yang secara praktis sering menjalani pekerjaan dan kehidupan yang telah ditentukan oleh lingkungan kelahirannya. King Vaelor mempertahankan sistem tersebut karena percaya stabilitas lebih penting daripada kebebasan dan karena keterbukaan akan melemahkan kontrolnya.
+Elaris adalah negara pulau kecil di timur Ardoria dengan ibu kota Caelora dan dipimpin King Vaelor. Negara ini mempertahankan isolasi ketat dari dunia luar, memiliki mobilitas sosial rendah, ekonomi stagnan, serta masyarakat yang secara praktis sering menjalani pekerjaan dan kehidupan yang telah ditentukan oleh lingkungan kelahirannya. King Vaelor mempertahankan sistem tersebut karena percaya stabilitas lebih penting daripada kebebasan dan karena keterbukaan akan melemahkan kontrolnya.
 
 Aren dan Aelia sama-sama tumbuh dengan mimpi meninggalkan Elaris. Aren ingin menjadi petualang, sementara Aelia ingin belajar magic di akademi luar negeri. Keduanya tidak mampu mengejar mimpi tersebut sebelum tragedi terjadi.
 
 Secara diam-diam Vaelor kemudian memberikan akses wilayah dan data penduduk Elaris kepada pihak yang beroperasi dari Aetherion sebagai bagian dari eksperimen teleportasi massal. Elaris dipilih karena isolasinya, posisinya pada Spatial Convergence Point, dan karena pemerintah memberikan data yang memungkinkan sistem memilih manusia Elaris sebagai target.
 
-Pada malam Prologue, cahaya dari arah Aetherion memicu teleportasi yang memindahkan populasi manusia Elaris ke berbagai wilayah Pulau Utama. Hewan, bangunan, tanaman, dan benda tetap berada di Elaris. Aren terbangun sendirian di pantai Lorel dan memulai perjalanan untuk menemukan Aelia, Lloyd, Glaisa, dan penduduk lainnya.
+Pada malam Prologue, cahaya dari arah Aetherion memicu teleportasi yang memindahkan populasi manusia Elaris ke berbagai wilayah Ardoria. Hewan, bangunan, tanaman, dan benda tetap berada di Elaris. Aren terbangun sendirian di pantai Lorel dan memulai perjalanan untuk menemukan Aelia, Lloyd, Glaisa, dan penduduk lainnya.
 
 Seiring perjalanan terungkap bahwa tragedi Elaris adalah eksperimen yang disengaja dan hanya merupakan uji coba bagi rencana lebih besar. Setelah Final Arc, kekuasaan lama Elaris runtuh dan masyarakat akhirnya diberikan pilihan untuk kembali membangun pulau atau tetap menjalani kehidupan baru di dunia luar. Aren sendiri tidak mengambil kekuasaan, melainkan akhirnya menjadi petualang sebagaimana yang sejak awal ia inginkan—kali ini atas pilihannya sendiri.

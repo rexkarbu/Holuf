@@ -1,7 +1,7 @@
 KHARUUN — Worldbuilding Canon
 1. Identitas Umum
 
-Kharuun adalah negara pulau besar di sebelah barat Pulau Utama.
+Kharuun adalah negara pulau besar di sebelah barat Ardoria.
 
 Wilayahnya terkenal dengan padang rumput luas, dataran tinggi, pegunungan, danau pedalaman, angin terbuka, budaya perjalanan, peternakan, serta komunitas Beast dalam jumlah besar.
 
@@ -14,7 +14,7 @@ budaya steppe Mongolia dan masyarakat pastoral nomaden, tetapi dikembangkan seba
 Aspek	Kharuun
 Nama	Kharuun
 Ibu kota	Arkhana
-Lokasi	Pulau terpisah di barat Pulau Utama
+Lokasi	Pulau terpisah di barat Ardoria
 Inspirasi	Mongolia / Steppe
 Race utama	Human + Beast
 Karakter asal	Torga
@@ -27,21 +27,21 @@ Main story	Tidak dikunjungi langsung
 Tema	Freedom With Roots
 2. Posisi Geografis
 
-Kharuun merupakan pulau terpisah dari Pulau Utama.
+Kharuun merupakan pulau terpisah dari Ardoria.
 
 Secara kasar:
 
                     AETHERION
                        ↑
 
-KHARUUN          PULAU UTAMA                ELARIS
+KHARUUN          Ardoria                ELARIS
 [Pulau Barat]                              [Pulau Timur]
 
-Kharuun tidak mempunyai jembatan darat dengan Pulau Utama.
+Kharuun tidak mempunyai jembatan darat dengan Ardoria.
 
 Perjalanan internasional dilakukan melalui laut.
 
-Negara Pulau Utama yang mempunyai hubungan paling kuat dengan Kharuun adalah:
+Negara Ardoria yang mempunyai hubungan paling kuat dengan Kharuun adalah:
 
 Valeria, karena pantai barat Valeria merupakan jalur perdagangan paling natural menuju Kharuun.
 
@@ -49,7 +49,7 @@ Valeria, karena pantai barat Valeria merupakan jalur perdagangan paling natural 
 
 Kharuun cukup besar untuk mempunyai beberapa wilayah geografis dan budaya regional.
 
-Namun tidak sebesar keseluruhan Pulau Utama.
+Namun tidak sebesar keseluruhan Ardoria.
 
 Sebagian besar wilayah pedalamannya terdiri dari:
 
@@ -71,7 +71,7 @@ Daerah tengah memiliki grassland terbesar.
 
 Bagian barat dan utara lebih tinggi dan berbatu.
 
-Sebagian wilayah timur mempunyai jalur menuju pelabuhan yang menghubungkan Kharuun dengan Pulau Utama.
+Sebagian wilayah timur mempunyai jalur menuju pelabuhan yang menghubungkan Kharuun dengan Ardoria.
 
 5. Horizon Terbuka
 
@@ -148,7 +148,7 @@ Sebagian menetap di sekitar danau atau jalur perdagangan.
 
 Mereka sering berpindah dan bertemu satu sama lain.
 
-Akibatnya batas wilayah tradisional jauh lebih fleksibel dibanding negara-negara Pulau Utama.
+Akibatnya batas wilayah tradisional jauh lebih fleksibel dibanding negara-negara Ardoria.
 
 9. Konflik Lama
 
@@ -548,7 +548,7 @@ Western Valeria
 ↓
 Mongreaux
 ↓
-Pulau Utama
+Ardoria
 
 Kharuun mengekspor:
 
@@ -563,7 +563,7 @@ Valeria mengirim:
 agricultural goods tertentu,
 crafted goods,
 maritime products,
-dan barang dari Pulau Utama.
+dan barang dari Ardoria.
 33. Hubungan dengan Mongreaux
 
 Mongreaux juga merupakan destination penting.
@@ -947,9 +947,9 @@ api yang terus menyala.
 
 54. Kharuun dan Teleportasi Elaris
 
-Kharuun berada di luar Pulau Utama.
+Kharuun berada di luar Ardoria.
 
-Karena target teleportasi Elaris diarahkan ke Pulau Utama, warga Elaris tidak tersebar ke Kharuun.
+Karena target teleportasi Elaris diarahkan ke Ardoria, warga Elaris tidak tersebar ke Kharuun.
 
 Ini membuat Kharuun mengalami tragedi tersebut terutama melalui:
 
@@ -971,7 +971,7 @@ Kharuun kemudian memperkuat komunikasi dengan Valeria dan Mongreaux.
 
 56. Reaksi terhadap Grand Transposition
 
-Jika The Architect berhasil, Kharuun mungkin tidak menjadi target tahap pertama yang sama dengan Pulau Utama.
+Jika The Architect berhasil, Kharuun mungkin tidak menjadi target tahap pertama yang sama dengan Ardoria.
 
 Tetapi sistem sebesar itu pada akhirnya tetap mengancam seluruh regional order.
 
@@ -1143,7 +1143,7 @@ Dan ini bagus karena semuanya masih menyentuh tema besar Freedom by Choice, teta
 KHARUUN
 
 Lokasi:
-Pulau terpisah di barat Pulau Utama
+Pulau terpisah di barat Ardoria
 
 Inspirasi:
 Mongolia / Steppe
@@ -1236,11 +1236,11 @@ Country Theme:
 Freedom With Roots
 Canon Ringkas Kharuun
 
-Kharuun adalah negara pulau di sebelah barat Pulau Utama dengan ibu kota Arkhana. Wilayahnya terinspirasi budaya steppe dan terdiri dari padang rumput luas, highland, pegunungan, sungai, danau, serta settlement yang tersebar. Human dan Beast merupakan dua populasi utama, dengan komunitas Beast dalam jumlah sangat besar. Tidak seluruh masyarakat bersifat nomaden; sebagian tinggal permanen di kota dan desa, sementara sebagian lainnya menjalani kehidupan semi-nomadic mengikuti musim, ternak, atau jalur perdagangan.
+Kharuun adalah negara pulau di sebelah barat Ardoria dengan ibu kota Arkhana. Wilayahnya terinspirasi budaya steppe dan terdiri dari padang rumput luas, highland, pegunungan, sungai, danau, serta settlement yang tersebar. Human dan Beast merupakan dua populasi utama, dengan komunitas Beast dalam jumlah sangat besar. Tidak seluruh masyarakat bersifat nomaden; sebagian tinggal permanen di kota dan desa, sementara sebagian lainnya menjalani kehidupan semi-nomadic mengikuti musim, ternak, atau jalur perdagangan.
 
 Kharuun menggunakan sistem Steppe Confederation. Berbagai komunitas dan wilayah mengirim wakil ke Great Assembly, sedangkan seorang High Speaker dipilih untuk memimpin koordinasi nasional dan diplomasi. Pemerintah pusat relatif terbatas karena masyarakat Kharuun mempunyai tradisi panjang mengatur kehidupan lokal mereka sendiri. Arkhana berkembang bukan sebagai pusat kekuasaan seorang monarch, melainkan sebagai meeting ground tempat berbagai komunitas berkumpul untuk berdagang, bernegosiasi, dan membuat keputusan bersama.
 
-Ekonomi Kharuun bertumpu pada livestock, horse breeding, wool, leather, mineral, local craft, dan perdagangan. Hubungan internasional terpenting adalah dengan Valeria di pantai barat Pulau Utama, sementara Mongreaux menjadi tujuan utama merchant dan traveler Kharuun yang bergerak lebih jauh ke pusat. Hal ini menjelaskan secara natural mengapa Torga berada di Mongreaux pada Arc 3.
+Ekonomi Kharuun bertumpu pada livestock, horse breeding, wool, leather, mineral, local craft, dan perdagangan. Hubungan internasional terpenting adalah dengan Valeria di pantai barat Ardoria, sementara Mongreaux menjadi tujuan utama merchant dan traveler Kharuun yang bergerak lebih jauh ke pusat. Hal ini menjelaskan secara natural mengapa Torga berada di Mongreaux pada Arc 3.
 
 Torga adalah Beast dari Kharuun yang menggunakan Axe dan affinity Earth. Dia tumbuh dalam budaya yang melihat perjalanan sebagai sesuatu yang normal dan meninggalkan rumah untuk melihat dunia bukan tindakan pemberontakan. Torga menjadi traveler karena rasa ingin tahu, bukan karena tragedy, exile, atau prophecy. Ketika dia bertemu Aren di Mongreaux, keterlibatannya dalam kasus Elaris awalnya berasal dari curiosity, tetapi perlahan berubah menjadi commitment setelah dia memahami bahwa manusia sengaja kehilangan hak menentukan hidupnya sendiri.
 

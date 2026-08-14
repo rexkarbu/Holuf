@@ -1,7 +1,7 @@
 ALEXANDRIA — Worldbuilding Canon
 1. Identitas Umum
 
-Alexandria adalah negara di bagian selatan Pulau Utama, berbatasan langsung dengan Lorel dan menjadi salah satu negara paling maju dalam bidang metalworking, engineering, manufaktur, serta applied magic di kawasan selatan.
+Alexandria adalah negara di bagian selatan Ardoria, berbatasan langsung dengan Lorel dan menjadi salah satu negara paling maju dalam bidang metalworking, engineering, manufaktur, serta applied magic di kawasan selatan.
 
 Alexandria merupakan tanah kelahiran Doran dan menjadi lokasi utama Arc 2.
 
@@ -10,7 +10,7 @@ Negara ini terinspirasi dari Jerman dan kawasan Eropa Tengah, terutama dari buda
 Aspek	Alexandria
 Nama	Alexandria
 Ibu kota	Valkenheim
-Lokasi	Selatan Pulau Utama
+Lokasi	Selatan Ardoria
 Inspirasi	Jerman / Eropa Tengah
 Race utama	Human, dengan minoritas Elf
 Karakter asal	Doran
@@ -21,7 +21,7 @@ Story	Lokasi utama Arc 2
 Tema negara	Progress Through Discipline
 2. Posisi Geografis
 
-Alexandria terletak di utara/barat-laut Lorel, masih di bagian selatan Pulau Utama.
+Alexandria terletak di utara/barat-laut Lorel, masih di bagian selatan Ardoria.
 
 Karena posisinya, Alexandria menjadi penghubung antara wilayah selatan dengan negara-negara yang lebih jauh ke pusat seperti Mongreaux.
 
@@ -130,7 +130,7 @@ Ibu kota Alexandria adalah:
 
 Valkenheim
 
-Valkenheim merupakan salah satu kota besar di wilayah selatan Pulau Utama.
+Valkenheim merupakan salah satu kota besar di wilayah selatan Ardoria.
 
 Kota ini menjadi pusat:
 
@@ -299,7 +299,7 @@ Ini membantu membuat Alexandria cocok sebagai lokasi Arc 2 yang berhubungan deng
 
 14. Ekonomi Alexandria
 
-Alexandria merupakan salah satu pusat produksi penting di Pulau Utama bagian selatan.
+Alexandria merupakan salah satu pusat produksi penting di Ardoria bagian selatan.
 
 Ekonominya bertumpu pada:
 
@@ -932,7 +932,7 @@ ALEXANDRIA
 ALEXANDRIA
 
 Lokasi:
-Selatan Pulau Utama
+Selatan Ardoria
 Di utara/barat-laut Lorel
 
 Inspirasi:
@@ -1034,7 +1034,7 @@ Tema:
 Progress Through Discipline
 Canon Ringkas Alexandria
 
-Alexandria adalah negara di bagian selatan Pulau Utama yang berbatasan erat dengan Lorel dan memiliki ibu kota Valkenheim. Negara ini terinspirasi budaya Jerman dan Eropa Tengah serta dikenal melalui metalworking, engineering, manufaktur, applied magic, dan budaya craftsmanship yang kuat. Alexandria menggunakan sistem monarki konstitusional di mana keluarga kerajaan tetap menjadi bagian negara, tetapi kekuasaannya dibatasi oleh hukum, Chancellor, Assembly, serta berbagai perwakilan regional dan profesional.
+Alexandria adalah negara di bagian selatan Ardoria yang berbatasan erat dengan Lorel dan memiliki ibu kota Valkenheim. Negara ini terinspirasi budaya Jerman dan Eropa Tengah serta dikenal melalui metalworking, engineering, manufaktur, applied magic, dan budaya craftsmanship yang kuat. Alexandria menggunakan sistem monarki konstitusional di mana keluarga kerajaan tetap menjadi bagian negara, tetapi kekuasaannya dibatasi oleh hukum, Chancellor, Assembly, serta berbagai perwakilan regional dan profesional.
 
 Masyarakat Alexandria menghargai disiplin, kemampuan, dan pekerjaan yang dilakukan dengan benar. Kebebasan individual tetap tersedia, tetapi profesi serta institusi mempunyai standar kuat. Hal ini menjadikan Alexandria kontras dengan Elaris: keduanya sama-sama mempunyai struktur sosial yang kuat, tetapi Alexandria menggunakan struktur untuk mendukung fungsi masyarakat sementara Elaris menggunakan struktur untuk mempertahankan kontrol.
 

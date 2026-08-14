@@ -1,6 +1,6 @@
 Arc 3 — Mongreaux
 
-Arc 3 berlangsung di Mongreaux, negara pusat yang sangat besar di pulau utama. Mongreaux terinspirasi gabungan Mongolia + Prancis: wilayah luarnya luas dan terbuka, sementara kota pusatnya besar, maju, ramai, dan memiliki akademi penting.
+Arc 3 berlangsung di Mongreaux, negara pusat yang sangat besar di Ardoria. Mongreaux terinspirasi gabungan Mongolia + Prancis: wilayah luarnya luas dan terbuka, sementara kota pusatnya besar, maju, ramai, dan memiliki akademi penting.
 
 Tujuan utama Aren saat masuk Arc 3 adalah:
 

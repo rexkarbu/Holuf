@@ -1,7 +1,7 @@
 VALERIA — Worldbuilding Canon
 1. Identitas Umum
 
-Valeria adalah negara di bagian barat-tengah Pulau Utama, dikenal karena budaya kompetisi, tradisi berkuda, festival besar, perdagangan, pelabuhan barat, serta masyarakat yang sangat menghargai keberanian dan pencapaian.
+Valeria adalah negara di bagian barat-tengah Ardoria, dikenal karena budaya kompetisi, tradisi berkuda, festival besar, perdagangan, pelabuhan barat, serta masyarakat yang sangat menghargai keberanian dan pencapaian.
 
 Valeria merupakan tanah kelahiran Kaelis.
 
@@ -14,7 +14,7 @@ Namun seperti negara Holuf lainnya, Valeria bukan salinan langsung. Inspirasinya
 Aspek	Valeria
 Nama	Valeria
 Ibu kota	Solvedra
-Lokasi	Barat-tengah Pulau Utama
+Lokasi	Barat-tengah Ardoria
 Inspirasi	Spanyol + Portugal
 Race utama	Human, minoritas Elf dan Beast
 Karakter asal	Kaelis
@@ -26,7 +26,7 @@ Main story	Tidak dikunjungi langsung
 Tema	Excellence Without Obsession
 2. Posisi Geografis
 
-Valeria berada di bagian barat-tengah Pulau Utama.
+Valeria berada di bagian barat-tengah Ardoria.
 
 Secara kasar:
 
@@ -48,11 +48,11 @@ Di sebelah utara terdapat Averon.
 
 Bagian barat Valeria memiliki akses langsung ke laut.
 
-Karena itu Valeria mempunyai salah satu jaringan pelabuhan terpenting di sisi barat Pulau Utama.
+Karena itu Valeria mempunyai salah satu jaringan pelabuhan terpenting di sisi barat Ardoria.
 
 3. Hubungan dengan Kharuun
 
-Posisi pantai barat membuat Valeria menjadi salah satu negara Pulau Utama yang paling mudah berhubungan dengan Kharuun, pulau terpisah di sebelah barat.
+Posisi pantai barat membuat Valeria menjadi salah satu negara Ardoria yang paling mudah berhubungan dengan Kharuun, pulau terpisah di sebelah barat.
 
 Tidak semua perdagangan Kharuun harus melewati Valeria, tetapi Valeria menjadi salah satu pintu utama.
 
@@ -66,7 +66,7 @@ Valeria
    ↓
 Mongreaux
    ↓
-Negara Pulau Utama lainnya
+Negara Ardoria lainnya
 
 Karena itu masyarakat Valeria relatif terbiasa melihat traveler Beast dari Kharuun.
 
@@ -533,7 +533,7 @@ Averon memperoleh barang laut dan pertanian Valeria.
 
 Hubungan Valeria–Kharuun cukup penting.
 
-Valeria merupakan salah satu jalur utama warga Kharuun menuju Pulau Utama.
+Valeria merupakan salah satu jalur utama warga Kharuun menuju Ardoria.
 
 Kharuun dapat mengekspor:
 
@@ -1012,7 +1012,7 @@ Ini cukup bagus karena semuanya masih bersentuhan dengan tema besar tetapi tidak
 VALERIA
 
 Lokasi:
-Barat-tengah Pulau Utama
+Barat-tengah Ardoria
 
 Inspirasi:
 Spanyol + Portugal
@@ -1090,11 +1090,11 @@ Tema:
 Excellence Without Obsession
 Canon Ringkas Valeria
 
-Valeria adalah negara di bagian barat-tengah Pulau Utama dengan ibu kota Solvedra dan budaya yang terinspirasi Spanyol serta Portugal. Negara ini memiliki pesisir barat yang panjang, wilayah pertanian, perbukitan, pusat perdagangan, serta tradisi berkuda dan kompetisi martial yang kuat. Pemerintahannya berbentuk monarki konstitusional regional, dengan Monarch sebagai simbol persatuan dan Cortes Valerian sebagai majelis yang mewakili berbagai provinsi dan kepentingan negara.
+Valeria adalah negara di bagian barat-tengah Ardoria dengan ibu kota Solvedra dan budaya yang terinspirasi Spanyol serta Portugal. Negara ini memiliki pesisir barat yang panjang, wilayah pertanian, perbukitan, pusat perdagangan, serta tradisi berkuda dan kompetisi martial yang kuat. Pemerintahannya berbentuk monarki konstitusional regional, dengan Monarch sebagai simbol persatuan dan Cortes Valerian sebagai majelis yang mewakili berbagai provinsi dan kepentingan negara.
 
 Masyarakat Valeria terkenal ekspresif, kompetitif, dan sangat menghargai kemampuan serta pencapaian. Festival, horse racing, martial tournament, dan berbagai kompetisi menjadi bagian normal kehidupan publik. Budaya tersebut mendorong keberanian dan excellence serta memungkinkan orang berbakat meningkatkan statusnya, tetapi juga menciptakan tekanan bagi sebagian masyarakat yang mulai menganggap kemenangan sebagai ukuran nilai seseorang.
 
-Ekonomi Valeria bertumpu pada perdagangan laut, pertanian, horse breeding, artisan, dan commerce. Posisi pantai barat menjadikannya salah satu jalur penting perdagangan dengan Kharuun, sementara hubungan darat dengan Mongreaux memberikan akses menuju pusat Pulau Utama. Jaringan perdagangan luas tersebut secara diam-diam pernah dimanfaatkan oleh pihak antagonis untuk memindahkan komponen teknologi menuju Kamikoto, meskipun pemerintah Valeria sendiri tidak terlibat dalam operasi tersebut.
+Ekonomi Valeria bertumpu pada perdagangan laut, pertanian, horse breeding, artisan, dan commerce. Posisi pantai barat menjadikannya salah satu jalur penting perdagangan dengan Kharuun, sementara hubungan darat dengan Mongreaux memberikan akses menuju pusat Ardoria. Jaringan perdagangan luas tersebut secara diam-diam pernah dimanfaatkan oleh pihak antagonis untuk memindahkan komponen teknologi menuju Kamikoto, meskipun pemerintah Valeria sendiri tidak terlibat dalam operasi tersebut.
 
 Kaelis adalah Human dari Valeria yang menggunakan Spear/Lance dan memiliki affinity Lightning. Dia tumbuh dalam budaya kompetitif dan menjadi pribadi karismatik, energik, percaya diri, serta sangat menyukai tantangan. Sebagai independent tracker dan contract investigator, Kaelis mengejar sebuah jaringan pengiriman ilegal dari Valeria hingga akhirnya mencapai Kamikoto. Di sana investigation-nya bertemu dengan penyelidikan Aren mengenai Mirror Gate dan Aetherion.
 

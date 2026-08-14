@@ -1,7 +1,7 @@
 KAMIKOTO — Worldbuilding Canon
 1. Identitas Umum
 
-Kamikoto adalah negara di bagian timur-laut Pulau Utama, dikenal karena tradisi panjang, craftsmanship presisi, budaya disiplin, serta peninggalan teknologi spatial kuno yang jauh lebih maju daripada pengetahuan masyarakat modern.
+Kamikoto adalah negara di bagian timur-laut Ardoria, dikenal karena tradisi panjang, craftsmanship presisi, budaya disiplin, serta peninggalan teknologi spatial kuno yang jauh lebih maju daripada pengetahuan masyarakat modern.
 
 Kamikoto merupakan tanah kelahiran Katsura dan lokasi utama Arc 4.
 
@@ -10,7 +10,7 @@ Negara ini terinspirasi dari Jepang, tetapi bukan salinan literal. Inspirasinya 
 Aspek	Kamikoto
 Nama	Kamikoto
 Ibu kota	Tsukishiro
-Lokasi	Timur-laut Pulau Utama
+Lokasi	Timur-laut Ardoria
 Inspirasi	Jepang
 Race utama	Human, minoritas Elf dan Beast
 Karakter asal	Katsura
@@ -21,7 +21,7 @@ Story	Arc 4
 Tema	Tradition Must Be Understood, Not Blindly Obeyed
 2. Posisi Geografis
 
-Kamikoto berada di wilayah timur-laut Pulau Utama.
+Kamikoto berada di wilayah timur-laut Ardoria.
 
 Secara kasar:
 
@@ -91,7 +91,7 @@ fasilitas kuno
 wilayah spatial distortion
 5. Sejarah Singkat Kamikoto
 
-Kamikoto merupakan salah satu negara dengan sejarah tertulis tertua di Pulau Utama.
+Kamikoto merupakan salah satu negara dengan sejarah tertulis tertua di Ardoria.
 
 Pada masa lampau, masyarakat Kamikoto memiliki pengetahuan magic dan engineering yang sangat maju, terutama mengenai:
 
@@ -1202,7 +1202,7 @@ Semua mendukung tema utama Holuf tanpa mengatakan hal yang sama.
 KAMIKOTO
 
 Lokasi:
-Timur-laut Pulau Utama
+Timur-laut Ardoria
 
 Inspirasi:
 Jepang
@@ -1294,7 +1294,7 @@ Tradition Must Be Understood,
 Not Blindly Obeyed
 Canon Ringkas Kamikoto
 
-Kamikoto adalah negara di timur-laut Pulau Utama dengan ibu kota Tsukishiro dan budaya yang terinspirasi Jepang. Negara ini memiliki tradisi craftsmanship, disiplin, swordsmanship, serta tanggung jawab keluarga dan institusi yang sangat kuat. Pemerintahannya menggunakan monarki terbatas bersama Council of Houses, sehingga sovereign tetap menjadi simbol penting tetapi tidak memegang kekuasaan absolut.
+Kamikoto adalah negara di timur-laut Ardoria dengan ibu kota Tsukishiro dan budaya yang terinspirasi Jepang. Negara ini memiliki tradisi craftsmanship, disiplin, swordsmanship, serta tanggung jawab keluarga dan institusi yang sangat kuat. Pemerintahannya menggunakan monarki terbatas bersama Council of Houses, sehingga sovereign tetap menjadi simbol penting tetapi tidak memegang kekuasaan absolut.
 
 Pada masa lalu, peradaban Kamikoto mengembangkan Mirror Gate Network, teknologi spatial yang mampu menghubungkan dua lokasi berjauhan. Setelah sejumlah insiden berbahaya menunjukkan bahwa teknologi tersebut terlalu sulit dikendalikan, sebagian besar fasilitas Mirror Gate ditutup dan disegel. Beberapa keluarga penjaga kemudian mewarisi tanggung jawab mengawasi fasilitas tersebut. Katsura berasal dari salah satu garis penjaga ini dan dibesarkan sejak kecil untuk melanjutkan tugas keluarganya.
 
