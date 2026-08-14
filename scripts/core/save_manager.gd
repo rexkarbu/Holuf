@@ -246,8 +246,14 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 	# 5. Equipment (M30/M31) — aman untuk Save v1 (backward compat)
 	if _is_legacy_save(data):
 		# Save v1: tidak ada equipment data → kosongkan semua slot
-		print("[SaveManager] Legacy save (v1) detected — initializing empty equipment state.")
+		print("[SaveManager] Legacy save (v1) detected — initializing empty equipment state and giving prototype items.")
 		EquipmentManager.reset_to_new_game()
+		
+		# M31: Berikan prototype equipment jika ini save lama
+		InventoryManager.inventory["training_sword"] = 1
+		InventoryManager.inventory["leather_cap"] = 1
+		InventoryManager.inventory["leather_armor"] = 1
+		InventoryManager.inventory["copper_ring"] = 1
 	else:
 		EquipmentManager.apply_save_data(data.get("character_equipment", {}))
 	
