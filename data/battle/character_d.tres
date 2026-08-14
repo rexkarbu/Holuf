@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CombatantData" load_steps=2 format=3]
 
 [ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_script"]
-[ext_resource type="Resource" uid="uid://skill_fireslash01" path="res://data/battle/skills/fire_slash.tres" id="2_fire"]
+[ext_resource type="Resource" uid="uid://skill_heal01" path="res://data/battle/skills/heal.tres" id="2_heal"]
 
 [resource]
 script = ExtResource("1_script")
@@ -23,6 +23,6 @@ defense_growth = 1
 magic_attack_growth = 1
 magic_defense_growth = 1
 speed_growth = 1
-skills = [ExtResource("2_fire")]
+skills = [ExtResource("2_heal")]
 weaknesses = []
 max_shield = 0
