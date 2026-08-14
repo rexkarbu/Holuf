@@ -143,11 +143,11 @@ func _get_fallback_combatant_data(char_id: String) -> CombatantData:
 		
 	var data = CombatantData.new()
 	data.tier = CombatantData.EnemyTier.NORMAL
-	if char_id == "character_b":
+	if char_id == "aelia":
 		data.max_hp = 95; data.attack = 18; data.defense = 5; data.magic_attack = 5; data.magic_defense = 5; data.speed = 27
-	elif char_id == "character_c":
+	elif char_id == "lyra":
 		data.max_hp = 105; data.attack = 17; data.defense = 7; data.magic_attack = 5; data.magic_defense = 6; data.speed = 24
-	elif char_id == "character_d":
+	elif char_id == "doran":
 		data.max_hp = 90; data.attack = 19; data.defense = 4; data.magic_attack = 5; data.magic_defense = 4; data.speed = 21
 	else:
 		data.max_hp = 90; data.attack = 15; data.defense = 5; data.magic_attack = 5; data.magic_defense = 5; data.speed = 20

@@ -4,24 +4,24 @@
 
 [resource]
 script = ExtResource("1_script")
-display_name = "Torga"
+display_name = "Sylven"
 tier = 0
-max_hp = 100
-max_mp = 40
-attack = 20
-defense = 5
-magic_attack = 15
-magic_defense = 5
-speed = 30
+max_hp = 90
+max_mp = 45
+attack = 16
+defense = 10
+magic_attack = 18
+magic_defense = 15
+speed = 21
 exp_reward = 0
 gold_reward = 0
 hp_growth = 5
-mp_growth = 0
+mp_growth = 2
 attack_growth = 1
 defense_growth = 1
 magic_attack_growth = 1
 magic_defense_growth = 1
 speed_growth = 1
-skills = []
-weaknesses = []
+skills = Array[Resource]([])
+weaknesses = Array[int]([])
 max_shield = 0

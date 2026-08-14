@@ -61,8 +61,8 @@ func _load_equipment_registry() -> void:
 
 func _initialize_character_equipment() -> void:
 	var char_ids = [
-		"hero", "character_b", "character_c", "character_d", "character_e",
-		"character_f", "character_g", "character_h", "character_i", "character_j"
+		"aren", "aelia", "lyra", "doran", "neria",
+		"torga", "katsura", "kaelis", "sylven", "orin"
 	]
 	for cid in char_ids:
 		if not character_equipment.has(cid):

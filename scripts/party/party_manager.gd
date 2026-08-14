@@ -25,8 +25,8 @@ var character_progress: Dictionary = {}
 func _ready() -> void:
 	# Load roster (Prototype: 10 characters)
 	var paths = [
-		"hero", "character_b", "character_c", "character_d", "character_e",
-		"character_f", "character_g", "character_h", "character_i", "character_j"
+		"aren", "aelia", "lyra", "doran", "neria",
+		"torga", "katsura", "kaelis", "sylven", "orin"
 	]
 	
 	for cid in paths:
@@ -51,8 +51,7 @@ func _ready() -> void:
 				"current_mp": initial_max_mp   # Persistent MP
 			}
 	
-	# Inisialisasi Active Party (default: Aren, Aelia, Lyra, Neria)
-	active_party = ["hero", "character_b", "character_c", "character_d"]
+	active_party = ["aren", "aelia", "lyra", "doran"]
 	_update_reserve()
 
 func _update_reserve() -> void:
@@ -117,7 +116,7 @@ func close_party_ui() -> void:
 ## CharacterData statik (display_name, race, dll) tidak disentuh.
 func reset_to_new_game() -> void:
 	party_gold = 0
-	active_party = ["hero", "character_b", "character_c", "character_d"]
+	active_party = ["aren", "aelia", "lyra", "doran"]
 	EquipmentManager.reset_to_new_game()
 	
 	for cid in roster.keys():

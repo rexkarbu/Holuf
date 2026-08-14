@@ -4,8 +4,10 @@
 
 [resource]
 script = ExtResource("1_script")
-character_id = "character_i"
-display_name = "Katsura"
-race = 0
-weapon_type = 8
+character_id = "lyra"
+display_name = "Lyra"
+age = 120
+race = 1
+weapon_type = 2
 element_affinity = 3
+allowed_weapon_types = Array[int]([])

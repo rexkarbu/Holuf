@@ -9,6 +9,7 @@ extends Resource
 @export var display_name: String = ""
 
 @export_group("Identity")
+@export var age: int = 20
 @export var race: CharacterIdentity.Race = CharacterIdentity.Race.HUMAN
 @export var weapon_type: CharacterIdentity.WeaponType = CharacterIdentity.WeaponType.SWORD
 @export var element_affinity: CharacterIdentity.ElementAffinity = CharacterIdentity.ElementAffinity.RAW

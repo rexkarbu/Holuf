@@ -7,11 +7,9 @@ class_name CharacterIdentity
 # RACE — 5 playable race di dunia Holuf
 # ==============================================================
 enum Race {
-	HUMAN,       # Aren, Aelia
-	ELF,         # Lyra, Neria
-	BEAST,       # Torga, Kaelis — dasar untuk Beast Summon di masa depan
-	DWARF,       # Doran, Orin
-	ONI          # Katsura, Sylven
+	HUMAN,       # Aren, Aelia, Doran, Neria, Katsura, Kaelis
+	ELF,         # Lyra, Sylven
+	BEAST        # Torga, Orin
 }
 
 # ==============================================================
@@ -19,28 +17,28 @@ enum Race {
 # ==============================================================
 enum WeaponType {
 	SWORD,       # Aren
-	BOW,         # Aelia
+	BOW,         # Aelia, Sylven
 	DAGGER,      # Lyra
-	SPEAR,       # Neria (Spear / Lance)
+	SPEAR,       # Neria, Kaelis
 	AXE,         # Torga
-	LONGSWORD,   # Kaelis
+	LONGSWORD,   # Orin
 	CLAYMORE,    # Doran
-	STAFF,       # Orin
+	STAFF,       # Neria
 	KATANA,      # Katsura
-	MAGICBOOK    # Sylven — mengikuti elemental affinity penggunanya
+	MAGICBOOK    # Aelia
 }
 
 # ==============================================================
 # ELEMENT AFFINITY — 6 elemen + Raw/Neutral
 # ==============================================================
 enum ElementAffinity {
-	RAW,         # Aren, Katsura — tidak memiliki elemen spesifik
-	FIRE,        # Doran
+	RAW,         # Aren
+	FIRE,        # Doran, Orin, Aren (secondary)
 	WATER,       # Neria
-	ICE,         # Lyra, Sylven
+	ICE,         # Lyra, Katsura
 	LIGHTNING,   # Kaelis
-	WIND,        # Aelia
-	EARTH        # Torga, Orin
+	WIND,        # Aelia, Sylven
+	EARTH        # Torga
 }
 
 # ==============================================================
@@ -52,8 +50,6 @@ static func race_name(race: Race) -> String:
 		Race.HUMAN: return "Human"
 		Race.ELF: return "Elf"
 		Race.BEAST: return "Beast"
-		Race.DWARF: return "Dwarf"
-		Race.ONI: return "Oni"
 	return "Unknown"
 
 static func weapon_name(weapon: WeaponType) -> String:

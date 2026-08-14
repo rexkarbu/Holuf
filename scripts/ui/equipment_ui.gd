@@ -32,8 +32,8 @@ var _selected_slot: String = ""
 
 # Semua karakter dalam urutan
 const ALL_CHARS: Array = [
-	"hero", "character_b", "character_c", "character_d", "character_e",
-	"character_f", "character_g", "character_h", "character_i", "character_j"
+	"aren", "aelia", "lyra", "doran", "neria",
+	"torga", "katsura", "kaelis", "sylven", "orin"
 ]
 
 var _char_buttons: Dictionary = {}  # char_id → Button
