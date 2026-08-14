@@ -282,12 +282,15 @@ func _process_turn_start() -> void:
 	
 	# M23: Decrement active effects duration
 	var effects_to_remove = []
-	for eff in current_combatant.active_effects:
-		eff.duration -= 1
-		if eff.duration <= 0:
-			effects_to_remove.append(eff)
-	for eff in effects_to_remove:
-		current_combatant.active_effects.erase(eff)
+	for dict in current_combatant.active_effects:
+		if dict.has("is_new") and dict["is_new"]:
+			dict["is_new"] = false
+		else:
+			dict["duration"] -= 1
+			if dict["duration"] <= 0:
+				effects_to_remove.append(dict)
+	for dict in effects_to_remove:
+		current_combatant.active_effects.erase(dict)
 	if effects_to_remove.size() > 0:
 		ui.add_log("%s's status returned to normal." % current_combatant.get_display_name())
 	
@@ -400,7 +403,8 @@ func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int,
 		amount *= 1.25
 		
 	# Defensive Stance check
-	for e in target.active_effects:
+	for dict in target.active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.DEFENSIVE_STANCE:
 			amount *= e.value # e.value is fraction, e.g. 0.5
 			break
@@ -700,11 +704,20 @@ func _execute_player_skill(skill: SkillData) -> void:
 			_process_skill_heal(skill, [current_combatant])
 
 func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
+	var valid_targets = []
+	for tgt in targets:
+		if not tgt.is_dead(): valid_targets.append(tgt)
+	if valid_targets.size() == 0:
+		ui.add_log("Action failed: No valid targets.")
+		_set_state(State.TURN_START)
+		return
+		
 	current_combatant.spend_mp(skill.mp_cost)
 	var boost = current_combatant.selected_boost_level
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0
 	_update_all_hp_mp_ui()
+	
 	_set_state(State.PLAYER_ACTION)
 	ui.clear_enemy_target_indicator(enemies)
 	
@@ -748,11 +761,20 @@ func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
 		_set_state(State.TURN_START)
 
 func _process_skill_heal(skill: SkillData, targets: Array[Combatant]) -> void:
+	var valid_targets = []
+	for tgt in targets:
+		if not tgt.is_dead(): valid_targets.append(tgt)
+	if valid_targets.size() == 0:
+		ui.add_log("Action failed: No valid targets.")
+		_set_state(State.TURN_START)
+		return
+		
 	current_combatant.spend_mp(skill.mp_cost)
 	var boost = current_combatant.selected_boost_level
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0
 	_update_all_hp_mp_ui()
+	
 	_set_state(State.PLAYER_ACTION)
 	ui.show_skills(false)
 	ui.set_hint("")
@@ -793,9 +815,10 @@ func _apply_skill_effects(attacker: Combatant, target: Combatant, skill: SkillDa
 		match eff.effect_type:
 			SkillEffectData.Type.CLEANSE:
 				var to_remove = []
-				for active in target.active_effects:
+				for dict in target.active_effects:
+					var active: SkillEffectData = dict["effect"]
 					if active.effect_type in [SkillEffectData.Type.ATK_DOWN, SkillEffectData.Type.DEF_DOWN, SkillEffectData.Type.MAG_DOWN, SkillEffectData.Type.SPD_DOWN]:
-						to_remove.append(active)
+						to_remove.append(dict)
 				for r in to_remove: target.active_effects.erase(r)
 				if to_remove.size() > 0: ui.add_log("%s's negative statuses were cleansed!" % target.get_display_name())
 			
@@ -811,21 +834,27 @@ func _apply_skill_effects(attacker: Combatant, target: Combatant, skill: SkillDa
 				if eff.effect_type != SkillEffectData.Type.NONE:
 					# Apply or refresh effect
 					var found = false
-					for active in target.active_effects:
+					for dict in target.active_effects:
+						var active: SkillEffectData = dict["effect"]
 						if active.effect_type == eff.effect_type:
 							if (eff.value >= active.value and eff.effect_type in [SkillEffectData.Type.ATK_UP, SkillEffectData.Type.DEF_UP, SkillEffectData.Type.MAG_UP, SkillEffectData.Type.SPD_UP, SkillEffectData.Type.COUNTER_STANCE]) or \
 							   (eff.value <= active.value and eff.effect_type in [SkillEffectData.Type.ATK_DOWN, SkillEffectData.Type.DEF_DOWN, SkillEffectData.Type.MAG_DOWN, SkillEffectData.Type.SPD_DOWN, SkillEffectData.Type.DEFENSIVE_STANCE]):
 								active.value = eff.value
-								active.duration = eff.duration + 1
+								dict["duration"] = eff.duration
+								dict["is_new"] = true
 								found = true
 							elif eff.value == active.value:
-								active.duration = max(active.duration, eff.duration + 1)
+								dict["duration"] = max(dict["duration"], eff.duration)
+								dict["is_new"] = true
 								found = true
 							break
 					if not found:
 						var new_eff = eff.duplicate()
-						new_eff.duration += 1 # prevent immediate expiration if it's applied on target's turn
-						target.active_effects.append(new_eff)
+						target.active_effects.append({
+							"effect": new_eff,
+							"duration": eff.duration,
+							"is_new": true
+						})
 					
 					# Recompute speed queue if speed changed
 					if eff.effect_type in [SkillEffectData.Type.SPD_UP, SkillEffectData.Type.SPD_DOWN]:
@@ -987,15 +1016,17 @@ func _process_counter_attacks(attacker: Combatant, targets: Array[Combatant]) ->
 		if attacker.is_dead(): break
 		
 		# Find COUNTER_STANCE
-		var counter_eff = null
-		for eff in tgt.active_effects:
-			if eff.effect_type == SkillEffectData.Type.COUNTER_STANCE:
-				counter_eff = eff
+		var counter_dict = null
+		for dict in tgt.active_effects:
+			var e: SkillEffectData = dict["effect"]
+			if e.effect_type == SkillEffectData.Type.COUNTER_STANCE:
+				counter_dict = dict
 				break
 				
-		if counter_eff != null:
+		if counter_dict != null:
+			var counter_eff: SkillEffectData = counter_dict["effect"]
 			# Trigger counter!
-			tgt.active_effects.erase(counter_eff) # consume stance
+			tgt.active_effects.erase(counter_dict) # consume stance
 			ui.add_log("%s triggers Counter Attack!" % tgt.get_display_name())
 			await BattleSpeed.wait(0.5)
 			

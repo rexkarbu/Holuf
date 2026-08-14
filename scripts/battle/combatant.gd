@@ -25,7 +25,8 @@ func get_display_name() -> String:
 var discovered_weaknesses: Array = []
 
 ## Runtime — active skill effects (Buffs/Debuffs/Stances)
-var active_effects: Array[SkillEffectData] = []
+## Array of Dictionary: { "effect": SkillEffectData, "duration": int, "is_new": bool }
+var active_effects: Array = []
 
 ## Runtime — Shield & Break state. Tidak disimpan ke Resource.
 var current_shield: int = 0
@@ -139,7 +140,8 @@ func get_effective_attack() -> int:
 	base += EquipmentManager.get_stat_bonus(character_id, "atk")
 	
 	var mod = 1.0
-	for e in active_effects:
+	for dict in active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.ATK_UP and e.value > mod: mod = e.value
 		if e.effect_type == SkillEffectData.Type.ATK_DOWN and e.value < mod: mod = e.value
 	return max(1, roundi(base * mod))
@@ -150,7 +152,8 @@ func get_effective_magic_attack() -> int:
 	base += EquipmentManager.get_stat_bonus(character_id, "mag_atk")
 	
 	var mod = 1.0
-	for e in active_effects:
+	for dict in active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.MAG_UP and e.value > mod: mod = e.value
 		if e.effect_type == SkillEffectData.Type.MAG_DOWN and e.value < mod: mod = e.value
 	return max(1, roundi(base * mod))
@@ -161,7 +164,8 @@ func get_effective_defense() -> int:
 	def += EquipmentManager.get_stat_bonus(character_id, "def")
 	
 	var mod = 1.0
-	for e in active_effects:
+	for dict in active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.DEF_UP and e.value > mod: mod = e.value
 		if e.effect_type == SkillEffectData.Type.DEF_DOWN and e.value < mod: mod = e.value
 	def = max(1, roundi(def * mod))
@@ -181,7 +185,8 @@ func get_effective_magic_defense() -> int:
 	base += EquipmentManager.get_stat_bonus(character_id, "mag_def")
 	
 	var mod = 1.0
-	for e in active_effects:
+	for dict in active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.MAG_UP and e.value > mod: mod = e.value
 		if e.effect_type == SkillEffectData.Type.MAG_DOWN and e.value < mod: mod = e.value
 	return max(1, roundi(base * mod))
@@ -192,7 +197,8 @@ func get_effective_speed() -> int:
 	spd += EquipmentManager.get_stat_bonus(character_id, "spd")
 	
 	var mod = 1.0
-	for e in active_effects:
+	for dict in active_effects:
+		var e: SkillEffectData = dict["effect"]
 		if e.effect_type == SkillEffectData.Type.SPD_UP and e.value > mod: mod = e.value
 		if e.effect_type == SkillEffectData.Type.SPD_DOWN and e.value < mod: mod = e.value
 	spd = max(1, roundi(spd * mod))
