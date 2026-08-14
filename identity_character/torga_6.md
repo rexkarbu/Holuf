@@ -2,7 +2,7 @@ Torga — Character Identity Draft
 Bagian	Identitas
 Nama	Torga
 Race	Beast
-Asal	Negara di luar pulau utama (belum dinamai)
+Asal	Negara di luar pulau utama : Kharuun — negara asal Torga, berada di sebuah pulau besar di sebelah barat Pulau Utama.
 Weapon	Axe
 Element	Earth
 Posisi story	Traveler dari luar pulau / orang luar yang ikut menyelidiki tragedi Elaris
