@@ -140,14 +140,7 @@ func _build_ui() -> void:
 	_item_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	center.add_child(_item_list)
 
-	# Unequip button
-	var btn_unequip = Button.new()
-	btn_unequip.text = "[ UNEQUIP ]"
-	btn_unequip.add_theme_font_size_override("font_size", 16)
-	btn_unequip.add_theme_color_override("font_color", Color(1.0, 0.5, 0.5))
-	btn_unequip.custom_minimum_size = Vector2(0, 40)
-	btn_unequip.pressed.connect(_on_unequip_pressed)
-	center.add_child(btn_unequip)
+	# (Unequip button dipindah ke dalam item_list secara dinamis)
 
 	# Description
 	_add_separator(center)
@@ -255,9 +248,26 @@ func _refresh_item_list() -> void:
 		var hint = _make_label("← Select a slot to see available items", 14, Color(0.5, 0.5, 0.5))
 		_item_list.add_child(hint)
 		return
+		
+	var current_eq_id = EquipmentManager.get_equipped_id(_selected_char_id, _selected_slot)
+	
+	# Add dynamic Unequip button if slot is not empty
+	if current_eq_id != "":
+		var unq_btn = Button.new()
+		unq_btn.text = "  > [Unequip]"
+		unq_btn.add_theme_font_size_override("font_size", 15)
+		unq_btn.add_theme_color_override("font_color", Color(1.0, 0.6, 0.6))
+		unq_btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		unq_btn.custom_minimum_size = Vector2(0, 36)
+		unq_btn.pressed.connect(func(): _on_unequip_pressed())
+		unq_btn.mouse_entered.connect(func(): _desc_label.text = "Remove the current equipment and return it to inventory.")
+		unq_btn.focus_entered.connect(func(): _desc_label.text = "Remove the current equipment and return it to inventory.")
+		
+		_item_list.add_child(unq_btn)
+		_item_buttons.append(unq_btn)
 
 	var items = EquipmentManager.get_equippable_for_slot(_selected_char_id, _selected_slot)
-	if items.is_empty():
+	if items.is_empty() and current_eq_id == "":
 		var hint = _make_label("No compatible items in inventory.", 14, Color(0.55, 0.55, 0.55))
 		_item_list.add_child(hint)
 		return
@@ -374,6 +384,7 @@ func _on_item_selected(equipment_id: String) -> void:
 	_refresh_slot_labels()
 	_refresh_item_list()
 	_refresh_stats()
+	_focus_selected_slot()
 
 func _on_unequip_pressed() -> void:
 	if _selected_char_id == "" or _selected_slot == "":
@@ -383,6 +394,14 @@ func _on_unequip_pressed() -> void:
 	_refresh_slot_labels()
 	_refresh_item_list()
 	_refresh_stats()
+	_focus_selected_slot()
+
+func _focus_selected_slot() -> void:
+	match _selected_slot:
+		EquipmentManager.SLOT_WEAPON:    _btn_weapon.grab_focus()
+		EquipmentManager.SLOT_HEAD:      _btn_head.grab_focus()
+		EquipmentManager.SLOT_BODY:      _btn_body.grab_focus()
+		EquipmentManager.SLOT_ACCESSORY: _btn_accessory.grab_focus()
 
 func _show_desc(equipment_id: String) -> void:
 	var eq = EquipmentManager.get_equipment_data(equipment_id)
@@ -396,6 +415,20 @@ func _show_desc(equipment_id: String) -> void:
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		
+		# Cascading Back navigation
+		var current_focus = get_viewport().gui_get_focus_owner()
+		if current_focus != null:
+			if _item_buttons.has(current_focus):
+				_focus_selected_slot()
+				return
+			elif current_focus == _btn_weapon or current_focus == _btn_head or current_focus == _btn_body or current_focus == _btn_accessory:
+				if _char_buttons.has(_selected_char_id):
+					_char_buttons[_selected_char_id].grab_focus()
+				elif not _char_buttons.is_empty():
+					_char_buttons.values()[0].grab_focus()
+				return
+				
 		queue_free()
 
 # ==============================================================
