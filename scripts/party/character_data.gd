@@ -12,3 +12,8 @@ extends Resource
 @export var race: CharacterIdentity.Race = CharacterIdentity.Race.HUMAN
 @export var weapon_type: CharacterIdentity.WeaponType = CharacterIdentity.WeaponType.SWORD
 @export var element_affinity: CharacterIdentity.ElementAffinity = CharacterIdentity.ElementAffinity.RAW
+
+@export_group("Equipment & Compatibility")
+## Array dari tipe senjata yang boleh digunakan karakter ini.
+## Jika kosong, karakter ini unrestricted (bisa menggunakan semua senjata).
+@export var allowed_weapon_types: Array[CharacterIdentity.WeaponType] = []

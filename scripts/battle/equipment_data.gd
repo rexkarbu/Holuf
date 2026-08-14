@@ -61,7 +61,12 @@ func get_stat_bonuses() -> Dictionary:
 	}
 
 ## Cek apakah equipment ini bisa dipakai di slot tertentu (berbasis slot_type saja).
-## M31: Tidak ada weapon restriction. Semua karakter boleh pakai semua weapon.
-## M32+: Weapon Type restriction akan ditambahkan di sini.
-func is_compatible_with(_char_data: CharacterData) -> bool:
-	return true  # M31: universal compatibility, slot validation dilakukan oleh EquipmentManager
+## M32: Weapon Type restriction.
+func is_compatible_with(char_data: CharacterData) -> bool:
+	if slot_type != SlotType.WEAPON:
+		return true # Non-weapon is universal
+		
+	if char_data.allowed_weapon_types.is_empty():
+		return true # Unrestricted fallback
+		
+	return char_data.allowed_weapon_types.has(weapon_type)

@@ -33,6 +33,7 @@ func _initialize_starting_inventory() -> void:
 		inventory["spirit_tonic"] = 3
 		# M31: Prototype equipment for testing
 		inventory["training_sword"] = 1
+		inventory["training_bow"] = 1
 		inventory["leather_cap"] = 1
 		inventory["leather_armor"] = 1
 		inventory["copper_ring"] = 1

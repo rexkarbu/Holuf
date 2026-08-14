@@ -283,7 +283,11 @@ func _refresh_item_list() -> void:
 		btn.custom_minimum_size = Vector2(0, 36)
 		
 		var suffix = " [equipped]" if currently_equipped else " (x%d)" % available
-		btn.text = "  %s%s" % [eq_data.display_name, suffix]
+		var type_suffix = ""
+		if eq_data.slot_type == EquipmentData.SlotType.WEAPON:
+			type_suffix = " [%s]" % CharacterIdentity.weapon_name(eq_data.weapon_type)
+			
+		btn.text = "  %s%s%s" % [eq_data.display_name, type_suffix, suffix]
 		
 		if currently_equipped:
 			btn.add_theme_color_override("font_color", Color(0.9, 0.85, 0.4))

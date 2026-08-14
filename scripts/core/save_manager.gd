@@ -251,6 +251,7 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 		
 		# M31: Berikan prototype equipment jika ini save lama
 		InventoryManager.inventory["training_sword"] = 1
+		InventoryManager.inventory["training_bow"] = 1
 		InventoryManager.inventory["leather_cap"] = 1
 		InventoryManager.inventory["leather_armor"] = 1
 		InventoryManager.inventory["copper_ring"] = 1

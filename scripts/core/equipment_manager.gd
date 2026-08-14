@@ -47,7 +47,7 @@ func _ready() -> void:
 	_initialize_character_equipment()
 
 func _load_equipment_registry() -> void:
-	var ids = ["training_sword", "leather_cap", "leather_armor", "copper_ring"]
+	var ids = ["training_sword", "training_bow", "leather_cap", "leather_armor", "copper_ring"]
 	for eid in ids:
 		var path = EQUIPMENT_DATA_PATH + eid + ".tres"
 		if ResourceLoader.exists(path):
@@ -117,10 +117,17 @@ func get_equipped(char_id: String, slot: String) -> EquipmentData:
 
 ## Cek apakah equipment bisa di-equip oleh karakter ke slot yang sesuai.
 ## Syarat: item ada di registry, slot_type cocok, ada di inventory (qty > 0).
-## M31: Tidak ada weapon restriction. Slot harus cocok.
+## M32: Weapon Type restriction divalidasi.
 func can_equip(char_id: String, equipment_id: String) -> bool:
 	var eq_data = get_equipment_data(equipment_id)
 	if eq_data == null:
+		return false
+		
+	var char_data = _get_char_data(char_id)
+	if char_data == null:
+		return false
+		
+	if not eq_data.is_compatible_with(char_data):
 		return false
 
 	var slot = _slot_key(eq_data.slot_type)
@@ -241,11 +248,17 @@ func get_equippable_for_slot(char_id: String, slot: String) -> Array:
 	var result: Array = []
 	var target_slot_type = _slot_type_from_key(slot)
 	var current_eid = get_equipped_id(char_id, slot)
+	var char_data = _get_char_data(char_id)
 
 	for eid in equipment_registry:
 		var eq = equipment_registry[eid] as EquipmentData
 		if eq.slot_type != target_slot_type:
 			continue
+			
+		# Filter M32: hanya tampilkan yang kompatibel dengan karakter
+		if char_data != null and not eq.is_compatible_with(char_data):
+			continue
+			
 		# Tampilkan jika: item ini sedang equipped di slot ini, ATAU ada di inventory
 		if eid == current_eid or InventoryManager.get_quantity(eid) > 0:
 			result.append(eq)

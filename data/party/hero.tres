@@ -9,3 +9,4 @@ display_name = "Aren"
 race = 0
 weapon_type = 0
 element_affinity = 0
+allowed_weapon_types = Array[int]([0])
