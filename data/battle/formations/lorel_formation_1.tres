@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyFormation" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/enemy_formation.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/battle/thug.tres" id="2_enemy"]
+
+[resource]
+script = ExtResource("1_script")
+formation_id = "lorel_1"
+enemies = Array[Resource]([ExtResource("2_enemy")])
+weight = 30
+can_flee = true

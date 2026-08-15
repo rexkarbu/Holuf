@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" path="res://data/battle/skills/enemy_shiv.tres" id="2_skill"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Smuggler"
+tier = 0
+max_hp = 65
+max_mp = 15
+attack = 32
+defense = 6
+magic_attack = 5
+magic_defense = 10
+speed = 18
+skills = [ExtResource("2_skill")]
+weaknesses = [10, 6]
+max_shield = 2
+exp_reward = 28
+gold_reward = 18
