@@ -603,7 +603,7 @@ dan political protection.
 
 Mungkin terdapat catatan bahwa:
 
-Vaelor dan beberapa individu tertentu direncanakan mendapat pengecualian.
+Vaelor dievakuasi lebih dulu melalui *special spatial route* menuju Aetherion. (*Vaelor is the confirmed extracted individual; no additional evacuees are currently established as canon*).
 
 Kalau kita pakai detail ini, artinya betrayal-nya menjadi jauh lebih personal.
 
@@ -988,13 +988,14 @@ Grand Transposition hampir selesai.
 
 Di sini mereka akhirnya bertemu:
 
-The Architect
+50.5. Konfrontasi Vaelor
+Vaelor berada di Aetherion pada Final Arc. Party menghadapi Vaelor di sini sebelum *final confrontation* dengan Lucien. Konfrontasi ini BUKAN *boss fight*. Setelah *ending*, Vaelor ditahan dan menghadapi *international tribunal* (*exact sentence deferred*).
+
+51. The Architect
 
 secara langsung.
 
-Nama The Architect masih placeholder.
-
-Kita belum perlu mengunci nama asli atau final title sekarang.
+The Architect adalah *official title*, dengan identitas asli yang sudah dikunci secara final: **Lucien Varell** (mantan *spatial researcher* dari Akademi Mongreaux).
 
 51. Final Boss Phase 1
 Phase 1 — The Architect
@@ -1017,9 +1018,9 @@ Tetapi tetap readable dan fair.
 
 52. Final Boss Phase 2
 
-Setelah Phase 1, The Architect menolak menghentikan sistem.
+Setelah Phase 1 kalah, The Architect secara sadar menolak menghentikan *Grand Transposition*.
 
-Dia menyatu atau menghubungkan dirinya langsung dengan:
+Dia secara sukarela (*voluntarily*) menghubungkan dirinya langsung dengan:
 
 Spatial Core
 
@@ -1029,9 +1030,7 @@ The Architect + Spatial Core.
 
 Secara visual dan gameplay:
 
-individu yang ingin mengatur seluruh dunia akhirnya kehilangan batas antara dirinya dan mesin yang dia gunakan untuk mengatur manusia.
-
-Ini simbolis dan cocok.
+individu yang menolak melihat seluruh pekerjaannya sia-sia, secara sukarela menyatukan diri dengan mesin pengaturnya. *Spatial Core* TIDAK mengendalikannya; *agency* dan kesadaran Lucien tetap utuh.
 
 53. Final Boss dan Combat Systems
 
@@ -1401,7 +1400,7 @@ Grand Transposition
 
 Final Boss:
 The Architect
-(placeholder name, belum final)
+(Lucien Varell)
 
 Boss Phase 1:
 The Architect

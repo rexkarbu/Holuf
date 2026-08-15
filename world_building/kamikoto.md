@@ -782,7 +782,9 @@ dan dukungan mempertahankan kekuasaan.
 
 Vaelor mengetahui eksperimen terhadap rakyat akan dilakukan.
 
-Tetapi tidak mengetahui seluruh Grand Transposition.
+Tetapi tidak mengetahui seluruh *Grand Transposition*.
+
+Arc 4 juga menyingkap (melalui *cinematic extraction/revelation* menjelang akhir Arc) bahwa Vaelor telah dievakuasi sebelum tragedi tersebut menggunakan rute spasial khusus dengan destinasi Aetherion. Ini adalah alasan mengapa ia tidak ikut lenyap dalam *mass teleport*. Fakta ini BUKAN ditampilkan di Prologue (*Vaelor is the confirmed extracted individual; no additional evacuees are currently established as canon*).
 
 40. Lloyd di Kamikoto
 
@@ -931,7 +933,9 @@ Ini membuat pertarungan sangat personal bagi Aren.
 
 High Executor tidak perlu menjelaskan motif final boss sepenuhnya.
 
-Motif The Architect tetap disimpan untuk Aetherion.
+Di sinilah identitas The Architect secara resmi di-reveal kepada pemain: The Architect adalah **Lucien Varell**, seorang *former spatial researcher/theorist* yang dahulu berafiliasi dengan Akademi Mongreaux.
+
+Namun, motif ideologis penuh (*Grand Transposition*) tetap disimpan untuk Final Arc di Aetherion.
 
 47. Peran Aelia Saat Krisis
 
@@ -1022,8 +1026,10 @@ Vaelor membantu ✅
 Teknologi Kamikoto disalahgunakan ✅
 Elaris hanyalah uji coba ✅
 Operasi utama berada di Aetherion ✅
+Identitas The Architect (Lucien Varell) terungkap ✅
+Evakuasi Vaelor terungkap ✅
 
-Tujuan akhir The Architect ❓
+Ideologi utuh Grand Transposition masih ❓
 
 Pertanyaan terakhir dibawa ke Final Arc.
 

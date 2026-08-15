@@ -403,7 +403,15 @@ Ini jauh lebih kuat daripada final boss yang sekadar:
 
 Status: 🟢 PASS.
 
-Nama The Architect tetap placeholder.
+The Architect adalah *official/final title*. Identitas aslinya telah dikunci sebagai **Lucien Varell** (Human, 46 tahun, asal Mongreaux, mantan *spatial researcher/theorist* berafiliasi dengan Academy Mongreaux).
+
+*Reveal timing* juga telah ditetapkan (Final Pass):
+- Prologue → Lucien tidak muncul
+- Arc 1 → Tidak disebut
+- Arc 2 → Bukti sisa spasial buatan
+- Arc 3 → *Title* "The Architect" diperkenalkan
+- Arc 4 → *Identity* Lucien Varell diungkap
+- Final Arc → Konfrontasi ideologis secara langsung
 
 16. Kenapa Elaris Dijadikan Test?
 
@@ -488,39 +496,13 @@ Saya rekomendasikan detail ini kita LOCK.
 
 Ini yang menurut saya belum boleh kita abaikan.
 
-Pada malam teleportasi:
+Nasib King Vaelor kini sudah **LOCKED** secara canon:
 
-King Vaelor berada di mana dan apa yang terjadi kepadanya?
+Vaelor mengetahui rakyatnya akan menjadi *test subjects*, namun tidak mengetahui rencana *Grand Transposition* secara penuh. Sesaat sebelum *mass teleportation* terjadi, ia diam-diam dievakuasi (diekstraksi) melalui rute spasial khusus menuju Aetherion. Karenanya, ia terhindar dari *mass displacement* reguler (*Vaelor is the confirmed extracted individual; no additional evacuees are currently established as canon*). 
 
-Kita sudah tahu dia membantu eksperimen.
+Fakta evakuasi ini baru akan diungkap (*revelation*) di Arc 4.
 
-Tetapi belum menetapkan nasibnya.
-
-Ada beberapa kemungkinan, tetapi untuk cerita kita saya paling menyarankan:
-
-Vaelor ikut diteleportasi.
-
-Kenapa?
-
-Karena The Architect tidak benar-benar menghormati kesepakatan Vaelor.
-
-Vaelor mengira:
-
-eksperimen dapat dikontrol dan dia tetap berkuasa setelah semuanya selesai.
-
-Tetapi pihak Architect melihatnya hanya sebagai alat.
-
-Jadi Vaelor sendiri akhirnya kehilangan kontrol.
-
-Ini punya ironi yang kuat:
-
-orang yang mengambil pilihan rakyatnya akhirnya kehilangan pilihan atas dirinya sendiri.
-
-Namun kita masih harus menentukan:
-
-dia teleport ke mana, dan apakah Aren pernah bertemu dengannya sebelum ending?
-
-Ini menurut saya menjadi satu story decision besar yang masih belum locked.
+Di Final Arc, Aren dan Lloyd mengonfrontasi Vaelor langsung di Aetherion. Vaelor BUKAN menjadi *boss fight*. Vaelor selamat (*survives*), kemudian ditahan (*detained*), dicopot sebagai King dan tidak pernah kembali memerintah Elaris. Ia harus menghadapi *international tribunal*, dengan vonis hukuman pasti (*exact sentence/punishment*) yang ditetapkan *deferred*.
 
 20. Kenapa Architect Tidak Langsung Melakukan Grand Transposition?
 

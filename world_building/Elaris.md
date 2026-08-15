@@ -639,21 +639,9 @@ Sedangkan Aren akhirnya sampai pada:
 
 33. Nasib King Vaelor
 
-Kita sudah menentukan Vaelor bersalah terhadap pengkhianatan Elaris, tetapi cara nasib akhirnya secara spesifik belum perlu dikunci sekarang.
+Nasib akhir Vaelor telah dikunci secara canon. Ia dievakuasi (diekstraksi) ke Aetherion sesaat sebelum *mass teleportation* terjadi. Ia selamat (*survives*) dari insiden tersebut, namun kemudian dikonfrontasi oleh Aren dan Lloyd di Final Arc (konfrontasi ini bukan *boss fight*). Vaelor kemudian ditahan (*detained*), dicopot sebagai King dan tidak pernah kembali memerintah Elaris. Ia dihadapkan pada *international tribunal*, dengan vonis hukuman pasti (*exact punishment*) yang statusnya *deferred*.
 
-Yang pasti:
-
-kekuasaannya tidak bisa bertahan setelah bukti pengkhianatan terungkap.
-
-Dia tidak harus menjadi final boss.
-
-Bahkan menurut saya lebih baik dia tidak menjadi boss utama.
-
-Vaelor mewakili kegagalan sistem politik Elaris.
-
-The Architect mewakili ancaman utama dunia.
-
-Dua konflik tersebut sebaiknya tetap berbeda.
+Vaelor mewakili kegagalan sistem politik Elaris, sementara The Architect mewakili ancaman utama dunia. Dua konflik tersebut tetap dibedakan secara tegas.
 
 34. Elaris Setelah Final Arc
 
@@ -769,7 +757,7 @@ Elaris adalah negara pulau kecil di timur Ardoria dengan ibu kota Caelora dan di
 
 Aren dan Aelia sama-sama tumbuh dengan mimpi meninggalkan Elaris. Aren ingin menjadi petualang, sementara Aelia ingin belajar magic di akademi luar negeri. Keduanya tidak mampu mengejar mimpi tersebut sebelum tragedi terjadi.
 
-Secara diam-diam Vaelor kemudian memberikan akses wilayah dan data penduduk Elaris kepada pihak yang beroperasi dari Aetherion sebagai bagian dari eksperimen teleportasi massal. Elaris dipilih karena isolasinya, posisinya pada Spatial Convergence Point, dan karena pemerintah memberikan data yang memungkinkan sistem memilih manusia Elaris sebagai target.
+Secara diam-diam Vaelor kemudian memberikan akses wilayah dan data penduduk Elaris kepada pihak yang beroperasi dari Aetherion sebagai bagian dari eksperimen teleportasi massal. Elaris dipilih karena isolasinya, posisinya pada Spatial Convergence Point, dan karena pemerintah memberikan data yang memungkinkan sistem memilih manusia Elaris sebagai target. Sesaat sebelum eksperimen dieksekusi, Vaelor diam-diam dievakuasi ke Aetherion, mengamankan keselamatannya sendiri namun mengunci kejatuhannya nanti di Final Arc.
 
 Pada malam Prologue, cahaya dari arah Aetherion memicu teleportasi yang memindahkan populasi manusia Elaris ke berbagai wilayah Ardoria. Hewan, bangunan, tanaman, dan benda tetap berada di Elaris. Aren terbangun sendirian di pantai Lorel dan memulai perjalanan untuk menemukan Aelia, Lloyd, Glaisa, dan penduduk lainnya.
 

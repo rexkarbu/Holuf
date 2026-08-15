@@ -266,6 +266,8 @@ Mongreaux dikenal sebagai salah satu pusat pengetahuan terbesar di Ardoria.
 
 12. Posisi Akademi dalam Dunia
 
+*(Catatan World/History Canon: **Lucien Varell** adalah mantan *spatial researcher/theorist* yang dahulu pernah berafiliasi dengan Akademi Mongreaux. Namun, informasi ini dijaga sebagai *guardrail world canon*: *full identity reveal* The Architect kepada pemain tetap terjadi di Arc 4. Jangan membuat pihak Akademi membongkar identitas Lucien atau menyadari rencana utuh *Grand Transposition* di Arc 3).*
+
 Kalau Alexandria unggul dalam:
 
 applied knowledge,
@@ -748,7 +750,9 @@ Party pergi menyelidiki.
 
 Dungeon berupa:
 
-ancient spatial relay / underground research ruin.
+*old/external spatial relay node*.
+
+Fasilitas ini BUKAN tempat asal-usul (*origin*) dari teknologi *Mirror Gate*. Asal dari *Mirror Gate* tetaplah ancient Kamikoto. Fasilitas di Mongreaux hanyalah salah satu *node relay* kuno peninggalan masa lalu yang kebetulan berada di wilayah Mongreaux.
 
 Lokasinya tidak perlu tepat di bawah Montreval; bisa sedikit di luar metropolitan supaya traversal lebih bervariasi.
 
@@ -775,6 +779,9 @@ Bukan high commander.
 Lebih seperti:
 
 Agent / Executor.
+
+Agent/Executor tersebut juga menyebutkan bahwa mereka bekerja di bawah perintah seseorang yang menggunakan *title*: **The Architect**. 
+Ini adalah momen pertama *title* antagonis diperkenalkan dalam cerita. Namun, identitas asli The Architect (Lucien Varell) BELUM di-reveal kepada player di Arc 3 ini.
 
 Dia bekerja mengaktifkan atau mengamankan salah satu node jaringan spatial.
 
