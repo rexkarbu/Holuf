@@ -56,7 +56,7 @@ Use:
 - `world_building/ravaryn.md`
 - `world_building/kharuun.md`
 - `world_building/aetherion.md`
-- `world_building/king_vaelor.md`
+- `identity_character/king_vaelor.md`
 
 ## Combat Source
 Use:
@@ -615,7 +615,7 @@ Send:
 - `design_lock.md`
 - `story/story_arc_4.md`
 - `story/the_architect_finalpass.md`
-- `world_building/king_vaelor.md`
+- `identity_character/king_vaelor.md`
 
 If scene references Kamikoto lore:
 - `world_building/kamikoto.md`
