@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyFormation" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/enemy_formation.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/battle/magical_anomaly.tres" id="2_enemy1"]
+
+[resource]
+script = ExtResource("1_script")
+formation_id = "alexandria_anomalies"
+enemies = Array[Resource]([ExtResource("2_enemy1"), ExtResource("2_enemy1")])
+weight = 20
+can_flee = true

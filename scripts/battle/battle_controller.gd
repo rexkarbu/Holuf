@@ -682,7 +682,7 @@ func _process_player_attack(target: Combatant) -> void:
 	var boost = current_combatant.selected_boost_level
 	var wpn_type = DamageType.Type.SWORD
 	if current_combatant.character_id != "" and PartyManager.roster.has(current_combatant.character_id):
-		wpn_type = PartyManager.roster[current_combatant.character_id].weapon_type
+		wpn_type = _convert_weapon_to_damage_type(PartyManager.roster[current_combatant.character_id].weapon_type)
 		
 	var result = _calculate_damage(current_combatant, target, wpn_type, 1.0, false, boost)
 	target.take_damage(result.amount)
@@ -1106,7 +1106,7 @@ func _process_counter_attacks(attacker: Combatant, targets: Array[Combatant]) ->
 			# Perform basic attack equivalent counter
 			var wpn_type = DamageType.Type.SWORD
 			if tgt.character_id != "" and PartyManager.roster.has(tgt.character_id):
-				wpn_type = PartyManager.roster[tgt.character_id].weapon_type
+				wpn_type = _convert_weapon_to_damage_type(PartyManager.roster[tgt.character_id].weapon_type)
 				
 			var result = _calculate_damage(tgt, attacker, wpn_type, counter_eff.value, false, 0)
 			attacker.take_damage(result.amount)
@@ -1261,3 +1261,21 @@ func _process_flee_return() -> void:
 	# Wait for player confirmation then return to world
 	await BattleSpeed.wait(0.5)
 	GameManager.return_to_world()
+
+# ==============================================================
+# WEAPON TO DAMAGE TYPE CONVERSION
+# ==============================================================
+
+func _convert_weapon_to_damage_type(wpn: CharacterIdentity.WeaponType) -> int:
+	match wpn:
+		CharacterIdentity.WeaponType.SWORD: return DamageType.Type.SWORD
+		CharacterIdentity.WeaponType.BOW: return DamageType.Type.BOW
+		CharacterIdentity.WeaponType.DAGGER: return DamageType.Type.DAGGER
+		CharacterIdentity.WeaponType.SPEAR: return DamageType.Type.SPEAR
+		CharacterIdentity.WeaponType.AXE: return DamageType.Type.AXE
+		CharacterIdentity.WeaponType.LONGSWORD: return DamageType.Type.LONGSWORD
+		CharacterIdentity.WeaponType.CLAYMORE: return DamageType.Type.CLAYMORE
+		CharacterIdentity.WeaponType.STAFF: return DamageType.Type.STAFF
+		CharacterIdentity.WeaponType.KATANA: return DamageType.Type.KATANA
+		CharacterIdentity.WeaponType.MAGICBOOK: return DamageType.Type.MAGICBOOK
+		_: return DamageType.Type.NONE
