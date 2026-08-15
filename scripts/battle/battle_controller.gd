@@ -838,7 +838,9 @@ func _process_skill_heal(skill: SkillData, targets: Array[Combatant]) -> void:
 	
 	# M23: Apply Boost multiplier to healing
 	var boost_mult = BoostMultiplier.get_multiplier(boost)
-	var heal_amount = max(1, roundi(float(base_heal) * skill.power * boost_mult))
+	var heal_amount = 0
+	if skill.power > 0.0:
+		heal_amount = max(1, roundi(float(base_heal) * skill.power * boost_mult))
 	
 	for target in targets:
 		if target.is_dead(): continue
