@@ -1014,16 +1014,35 @@ func _process_enemy_turn() -> void:
 	if action["type"] == "skill":
 		var skill: SkillData = action["skill"]
 		var use_magic = skill.scaling_type == SkillData.ScalingType.MAGIC
-		var result = _calculate_damage(enemy_actor, target, skill.damage_type, skill.power, use_magic, 0)  # Enemies don't use boost
-		target.take_damage(result.amount)
-		_update_all_hp_mp_ui()
-		_arena_update_party_highlights()
-		ui.add_log("%s uses %s on %s for %d damage!" % [
-			enemy_actor.get_display_name(),
-			skill.display_name,
-			target.get_display_name(),
-			result.amount
-		])
+		
+		var targets_to_hit: Array[Combatant] = []
+		if skill.target_type == SkillData.TargetType.ALL_ENEMIES:
+			for p in players:
+				if not p.is_dead():
+					targets_to_hit.append(p)
+		else:
+			targets_to_hit.append(target)
+			
+		if targets_to_hit.size() > 1:
+			ui.add_log("%s uses %s!" % [enemy_actor.get_display_name(), skill.display_name])
+			for t in targets_to_hit:
+				var result = _calculate_damage(enemy_actor, t, skill.damage_type, skill.power, use_magic, 0)
+				t.take_damage(result.amount)
+				ui.add_log("...hits %s for %d damage!" % [t.get_display_name(), result.amount])
+			_update_all_hp_mp_ui()
+			_arena_update_party_highlights()
+		else:
+			var single_target = targets_to_hit[0]
+			var result = _calculate_damage(enemy_actor, single_target, skill.damage_type, skill.power, use_magic, 0)  # Enemies don't use boost
+			single_target.take_damage(result.amount)
+			_update_all_hp_mp_ui()
+			_arena_update_party_highlights()
+			ui.add_log("%s uses %s on %s for %d damage!" % [
+				enemy_actor.get_display_name(),
+				skill.display_name,
+				single_target.get_display_name(),
+				result.amount
+			])
 	else:
 		# Basic Attack
 		var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD, 1.0, false, 0)  # Enemies don't use boost
