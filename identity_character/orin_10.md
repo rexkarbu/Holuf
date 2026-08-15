@@ -556,11 +556,5 @@ Cocok dengan sifatnya yang terbiasa bekerja sendiri.
 
 Beast mechanic
 
-Seperti Torga:
-
-Orin nanti eligible untuk Beast Skill / Beast Summon.
-
-Tetapi jangan desain sekarang.
-
-Yang penting, Beast mechanic Torga dan Orin nantinya juga bisa dibuat berbeda mengikuti identitas masing-masing.
+Kemampuan BEAST Orin sudah diimplementasikan ke dalam *combat data* (V1 Baseline). Dia memiliki satu aksi spesial (sekarang menggunakan *Working Name*: Inferno's Embrace) yang memberikan `SELF_HEAL`, berbeda dengan mekanisme *stance* milik Torga, sejalan dengan identitas kemandiriannya.
 

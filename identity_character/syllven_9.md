@@ -516,7 +516,7 @@ mobility
 air pressure
 ranged control
 
-Misalnya nanti arrow skill-nya bisa diperkuat Wind.
+Kombinasi Arrow dan Wind ini telah diimplementasikan (V1 Baseline).
 
 Gimmick dasar Sylven
 
@@ -526,7 +526,7 @@ Target Analysis / Tactical Setup
 
 Tetapi sekali lagi tanpa resource baru.
 
-Arah skill final nanti bisa seperti:
+Implementasi skill fungsional ke-6 (V1 Baseline) difokuskan pada:
 
 memberikan debuff target
 mengungkap informasi tertentu

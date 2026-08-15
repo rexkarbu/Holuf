@@ -154,9 +154,7 @@ powerful tactical resource.
 
 Bukan free ultimate setiap battle.
 
-Exact MP cost belum kita tentukan sekarang.
-
-Itu masuk balance pass nanti.
+Exact MP cost pada V1 Baseline ditetapkan sebesar 18 MP. Angka ini dapat dituning pada Numerical Balance V1.
 
 7. Boost Interaction
 
@@ -287,9 +285,7 @@ Strong Earth physical action
 +
 temporary defensive/counter benefit
 
-Exact effect belum perlu ditentukan.
-
-Contohnya nanti bisa mengarah ke:
+V1 Implementation Baseline: Torga menggunakan *Titan's Wrath* (Working Name). Menghasilkan Earth / PHYSICAL damage (1.70 power) dan memberikan `DEFENSIVE_STANCE` 0.75 ke caster dengan durasi 2 natural turns. Membutuhkan 18 MP.
 
 damage + temporary damage reduction
 
@@ -327,7 +323,7 @@ Strong Fire physical action
 +
 temporary sustained-offense benefit
 
-Misalnya nanti bisa berupa:
+V1 Implementation Baseline: Orin menggunakan *Inferno's Embrace* (Working Name). Menghasilkan Fire / PHYSICAL damage (1.70 power) dan memberikan `SELF_HEAL` 15% Max HP ke caster. Membutuhkan 18 MP.
 
 ATK enhancement beberapa turn
 
@@ -498,7 +494,7 @@ Defend
 Flee
 Boost
 
-Urutan final UI nanti bisa kita sesuaikan.
+Urutan UI saat ini (V1 Implemented Order): ATTACK → SKILL → BEAST → ITEM → DEFEND → FLEE.
 
 Tapi BEAST hanya muncul pada Beast characters.
 
@@ -568,9 +564,7 @@ Jangan menambah scope hanya karena lore memungkinkan.
 
 26. Nama Manifestation
 
-Saya belum menyarankan kita lock nama summon sekarang.
-
-Lebih baik nanti ketika kita membuat full skill kit, kita tentukan:
+Nama manifestation *Titan's Wrath* dan *Inferno's Embrace* saat ini berstatus WORKING NAME dan bukan final canon. Detail keseimbangan (balance) masih merupakan V1.
 
 nama manifestation Torga,
 nama manifestation Orin,

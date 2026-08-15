@@ -8,7 +8,7 @@ Tidak ada skill yang mengurangi Break secara gratis tanpa weakness.
 Boost tidak menambah hit count.
 Buff/debuff tidak bertambah durasinya karena Boost.
 Skill ofensif menggunakan MP.
-Exact MP dan angka damage belum final.
+Exact MP dan angka damage telah ditetapkan dalam V1 Baseline dan masih dapat dituning pada Numerical Balance V1.
 Tidak ada character-specific gauge tambahan.
 1. Aren — Reliable / Flexible Sword DPS
 
@@ -167,7 +167,7 @@ Fungsi final direction:
 
 Strong Earth physical damage + temporary defensive/counter benefit.
 
-Nama manifestation dan exact effect masih nanti.
+Nama manifestation dan exact effect telah diimplementasikan dalam V1 Baseline.
 
 Penting
 
@@ -507,9 +507,9 @@ Ini sudah cukup besar.
 
 Tidak perlu mengejar 100–150 skill untuk RPG 10 jam.
 
-19. Yang BELUM Kita Lock di Pass Ini
+19. Yang Belum Final (V1 Baseline Active)
 
-Belum menentukan:
+Telah diimplementasikan dalam V1 Baseline, namun masih dapat dituning:
 
 MP cost.
 damage multiplier.
@@ -519,15 +519,12 @@ buff duration.
 counter percentage/damage.
 exact unlock level.
 exact upgrade structure Aeralis/Aeralia/Aqualis/Aqualia.
-Beast exact effects.
-final animation.
-VFX/SFX.
 
-Semua itu masuk Numerical Balance / Implementation Pass.
+Semua angka tersebut akan disempurnakan pada Numerical Balance Pass.
 
 20. Satu Hal yang Perlu Diperhatikan
 
-Nama-nama skill martial di atas saya anggap recommended working names, belum harus canon seperti nama karakter atau spell family.
+Nama-nama skill martial dan Beast manifestation di atas diimplementasikan sebagai *Working Names* pada V1 Baseline, dan bukan final canon seperti nama karakter atau spell family.
 
 Yang penting untuk di-lock sekarang adalah:
 

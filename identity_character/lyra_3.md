@@ -441,7 +441,7 @@ mengganggu tempo target tertentu.
 
 Gimmick dasar Lyra
 
-Saya sarankan gimmick Lyra nantinya:
+Gimmick Lyra telah diimplementasikan sebagai:
 
 Fast Debuff / Target Disruption
 
@@ -455,7 +455,7 @@ Ice damage
 precision physical attack
 bonus tertentu terhadap enemy yang sedang terkena debuff
 
-Kita belum menentukan skill final sekarang.
+Seluruh 6-skill kit fungsional Lyra telah diimplementasikan. Detail keseimbangan (balance) masih merupakan V1.
 
 Yang penting identitasnya jelas:
 

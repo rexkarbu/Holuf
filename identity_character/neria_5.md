@@ -600,7 +600,7 @@ Sustain & Recovery Specialist
 
 Tanpa menambahkan resource baru.
 
-Skill kit nanti bisa berorientasi pada:
+Skill kit yang telah diimplementasikan berorientasi pada:
 
 single-target heal kuat
 party healing
@@ -609,7 +609,7 @@ defensive support
 Water offensive spell
 recovery / stabilization
 
-Kita belum menentukan skill finalnya.
+Seluruh 6-skill kit fungsional Neria telah diimplementasikan dalam V1 Baseline.
 
 Saya justru ingin menghindari gimmick seperti:
 

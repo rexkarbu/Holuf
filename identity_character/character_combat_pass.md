@@ -62,7 +62,7 @@ support ringan.
 
 Aelia bukan healer utama.
 
-Contoh arah skill nantinya:
+Contoh arah skill yang telah diimplementasikan (V1):
 
 damage + SPD Up/Down
 mempercepat ally
@@ -170,7 +170,7 @@ Fokus:
 
 HP recovery,
 group healing,
-status recovery nanti jika status system ada,
+status recovery (Cleanse telah diimplementasikan),
 defensive/sustain support,
 Water magic sebagai damage sekunder.
 
@@ -222,7 +222,7 @@ Combat identity
 
 “Semakin musuh mencoba menjatuhkannya, semakin sulit dia digeser.”
 
-Karena Torga Beast, dia juga nanti mendapat Beast Skill/Summon, tetapi itu kita desain terpisah.
+Karena Torga Beast, dia juga telah mendapatkan Beast Skill/Summon (diimplementasikan sebagai BEAST system).
 
 🟢 PASS
 
@@ -287,7 +287,7 @@ Gimmick utamanya sangat cocok:
 
 bonus ketika bertindak sebelum target.
 
-Misalnya beberapa skill nanti memperoleh:
+Misalnya beberapa skill memperoleh:
 
 damage tambahan,
 crit-like bonus kalau kita punya sistem crit,
@@ -394,7 +394,7 @@ Combat identity
 
 “Terus memberikan tekanan sampai musuh runtuh.”
 
-Sebagai Beast, Orin nantinya juga mendapat Beast Skill/Summon.
+Sebagai Beast, Orin juga telah mendapatkan Beast Skill/Summon (diimplementasikan sebagai BEAST system).
 
 🟢 PASS
 
@@ -643,7 +643,7 @@ Ada beberapa jebakan yang menurut saya harus kita hindari:
 
 Jangan kasih setiap karakter gauge unik.
 
-BP sudah merupakan resource universal. MP juga ada. Beast nantinya mungkin memiliki mekanisme khusus. Tidak perlu 10 resource lagi.
+BP sudah merupakan resource universal. MP juga ada. Beast System telah diimplementasikan tanpa resource baru tambahan. Tidak perlu 10 resource lagi.
 
 Jangan membuat Doran hanya bagus saat Broken.
 
@@ -669,29 +669,17 @@ Jangan membuat Katsura counter semua serangan secara gratis.
 
 Counter harus merupakan keputusan atau setup.
 
-19. Beast Question
-
-Ada satu bagian yang memang masih belum boleh kita tandai final:
+19. Beast System (LOCKED)
 
 🐺 Beast Skill / Summon
 
-Karena:
+Sistem BEAST telah selesai diimplementasikan (V1 Baseline).
+Torga dan Orin memiliki command BEAST.
 
-Torga dan Orin adalah Beast.
+- 1 use per character per battle.
+- Menggunakan 18 MP.
+- Boostable (Boost hanya meningkatkan primary damage).
+- Torga (Earth/Physical) menggunakan `DEFENSIVE_STANCE` (0.75x, 2 natural turns) ke caster.
+- Orin (Fire/Physical) menggunakan `SELF_HEAL` (15% Max HP) ke caster.
 
-Keduanya nantinya memiliki command khusus yang Human dan Elf tidak punya.
-
-Kita belum menentukan:
-
-Beast Skill sebenarnya apa,
-apakah benar summon,
-apa yang dipanggil,
-resource-nya,
-apakah menggunakan MP/BP,
-bagaimana Torga dan Orin berbeda,
-apakah Beast mempunyai companion permanen,
-atau bentuk lain.
-
-Jadi:
-
-combat identity dasar mereka sudah aman, tetapi Beast system belum.
+Sistem dan integrasinya sudah lengkap di codebase.

@@ -559,14 +559,7 @@ semakin lama Torga berada di frontline, semakin besar value yang dia hasilkan.
 
 Beast Skill
 
-Karena Torga Beast, nantinya dia akan menggunakan sistem Beast Skill / Beast Summon yang sudah direncanakan.
-
-Tetapi jangan desain sekarang.
-
-Yang kita lock baru:
-
-Torga adalah Beast
-→ eligible untuk Beast mechanic di masa depan
+Kemampuan BEAST Torga sudah diimplementasikan ke dalam *combat data* (V1 Baseline). Dia memiliki satu aksi spesial (sekarang menggunakan *Working Name*: Titan's Wrath) yang dapat digunakan 1x per battle.
 
 Jangan sampai Beast mechanic justru menentukan seluruh kepribadian Torga.
 

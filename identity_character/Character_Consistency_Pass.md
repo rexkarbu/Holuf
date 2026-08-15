@@ -273,7 +273,7 @@ Aelia ragu:
 Sylven ragu:
 → karena merasa informasi belum cukup.
 
-Itu penting ketika nanti menulis dialog.
+Itu penting sebagai panduan penulisan dialog.
 
 Combat:
 
@@ -417,7 +417,7 @@ Sustained Offense
 
 Saya tidak menyarankan menambah role baru lagi.
 
-Nanti skill kit dibuat berdasarkan sepuluh identitas ini.
+Skill kit fungsional ke-10 karakter telah dibuat (V1 Baseline) berdasarkan sepuluh identitas ini.
 
 Satu masalah nyata yang saya temukan
 
@@ -435,7 +435,7 @@ Akibatnya Katsura masih punya cukup waktu berkembang, tetapi Kaelis, Sylven, dan
 
 Ini masih bisa diperbaiki tanpa mengubah recruitment.
 
-Solusinya nanti:
+Solusinya adalah:
 
 character arc tiga karakter terakhir dibuat lebih kecil dan fokus.
 
@@ -455,7 +455,7 @@ choice / freedom / responsibility.
 
 Itu sebenarnya bagus karena menjadi tema game.
 
-Tetapi ketika menulis dialog nanti, jangan membuat semua karakter bicara tentang “pilihan” secara eksplisit.
+Tetapi ketika menulis dialog, jangan membuat semua karakter bicara tentang "pilihan" secara eksplisit.
 
 Biarkan tema muncul dari tindakan mereka.
 

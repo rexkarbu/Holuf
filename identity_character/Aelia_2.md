@@ -415,7 +415,7 @@ Combat identity:
 
 Wind magic + battlefield manipulation.
 
-Misalnya nanti skill kit-nya bisa mengarah ke:
+Skill kit-nya telah diimplementasikan (V1 Baseline) dan mengarah ke:
 
 Wind damage,
 AoE,
@@ -423,7 +423,7 @@ SPD manipulation,
 turn-order manipulation,
 lightweight buffs/debuffs.
 
-Tetapi kita belum menentukan skill final.
+Seluruh 6-skill kit dasar Aelia telah diimplementasikan. Detail keseimbangan (balance) merupakan angka V1.
 
 Karena Holuf punya Speed Queue, Wind sangat cocok untuk character yang bermain dengan tempo.
 
@@ -443,7 +443,7 @@ Kalau kita harus menentukan gimmick tanpa membuat resource baru, saya sarankan:
 
 Aelia unggul dalam memanipulasi tempo battle.
 
-Artinya skill Wind miliknya nanti bisa lebih sering berkaitan dengan:
+Skill Wind miliknya telah diimplementasikan untuk berkaitan dengan:
 
 SPD ↑ ally
 SPD ↓ enemy
