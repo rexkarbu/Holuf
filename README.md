@@ -28,12 +28,11 @@ Holuf is a top-down 2D RPG built with Godot 4. This project focuses on building 
 * **Shield & Break System**: Enemies have Shield Points. Hitting a weakness reduces the shield. Breaking the shield stuns the enemy (skips their turn) and applies a Break Damage Scaling depending on their tier.
 * **Random Break Bonus**: Triggering a Break randomly applies a bonus effect (Armor Shatter, Disorient, or Deep Stagger).
 
-### Skill System
+### Skill System & BEAST
 * **Modular Skills**: Skills are built as custom Resources (`SkillData`) making it easy to create new abilities without touching the core code.
-* **Scaling & Targets**: Supports Physical/Magic scaling and Self/Enemy targeting.
-* **Implemented Skills**:
-  * **Fire Slash**: A physical-scaling fire attack.
-  * **Heal**: A magic-scaling recovery skill.
+* **60 Unique Skill Kits**: Fully populated foundation featuring exactly 6 meaningful normal skills per character across the 10 playable roster members.
+* **Skill Runtime Logic**: Complete runtime effect handler, supporting various effects including raw damage, elemental spells, healing, and tactical stances.
+* **BEAST System**: A powerful, limited tactical action tied to the racial identity of specific characters (e.g., Torga & Orin). BEAST integrates seamlessly into the standard combat pipeline (MP, Break, Boost) without relying on convoluted separate subsystems.
 
 ### Party System (Core)
 * **Active & Reserve Roster**: Full robust Party Manager supporting up to 4 Active Members and multiple Reserve Characters.
@@ -52,11 +51,12 @@ Holuf is a top-down 2D RPG built with Godot 4. This project focuses on building 
 * **Reserve EXP Penalty**: Members in the Reserve Party do not receive EXP from battles.
 * **10-Character Support**: Foundation for a fully playable 10-character roster, successfully migrated to Godot Resource (`.tres`) formats. Features flexible scaling from 1 to 4 active party members simultaneously in Battle without relying on a hardcoded protagonist.
 
-### Game Design & Lore (Pre-Production Locked)
-* **Comprehensive Game Design Document**: The project includes a fully locked design bible detailing the world map (Asterra), 7 distinct nations (Lorel, Alexandria, Mongreaux, etc.), and narrative arcs.
+### Game Design & Lore (Synchronized & Locked)
+* **Comprehensive Game Design Document**: The project includes a fully locked design bible detailing the world map (Asterra), 9 total nations, and precise narrative arcs.
 * **Scope-Managed Narrative**: The storyline is strictly scoped for a ~10-hour experience with defined pacing limits per arc to prevent scope creep.
-* **Character Roster**: Fully fleshed out identities, skill kits, and backgrounds for all 10 playable characters.
+* **Character Roster**: Fully fleshed out identities, skill kits, and backgrounds for all 10 playable characters. All character references and origins are completely synchronized.
 * **Combat Philosophy**: Well-defined numerical guardrails ensuring combat remains tactical (Break & Boost driven) without relying on infinite scaling, massive HP sponges, or mandatory grinding.
+* **Current Phase**: The core foundation is complete. We are currently focused on **No. 4 — Numerical Balance V1**, ensuring that the 60 skill kits and BEAST manifestations are correctly tuned to our design baseline.
 
 ## Architecture Highlights
 * **Autoloads**: Utilizes `GameManager`, `QuestManager`, `DialogueManager`, `TransitionManager`, and `PartyManager` to maintain persistent states across scene changes.
