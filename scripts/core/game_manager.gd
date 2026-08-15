@@ -21,6 +21,10 @@ func start_battle(encounter_id: String, player_pos: Vector2, is_repeatable: bool
 		consumed_encounters.append(encounter_id)
 	player_return_position = player_pos
 	
+	if encounter_id == "placeholder_battle_1":
+		pending_formation = load("res://data/battle/formations/prologue_tutorial.tres")
+		
+
 	# Mulai transisi ke battle scene
 	TransitionManager.transition_to_scene("res://scenes/battle/battle.tscn")
 
