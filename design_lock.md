@@ -375,14 +375,37 @@ Orin:
 
 **Beast Manifestation** = WORKING term.
 
-Deferred:
-- final manifestation names
-- exact MP cost
-- exact coefficient
-- exact utility values
-- final VFX/animation
+V1 IMPLEMENTED BASELINE:
+(Bukan final immutable balance)
 
-BEAST implementation must be handled as a **separate implementation task**, not bundled into roster migration.
+Torga
+- EARTH
+- PHYSICAL scaling
+- power 1.70
+- MP 18
+- DEFENSIVE_STANCE
+- effect recipient = CASTER
+- incoming damage multiplier 0.75
+- duration 2 natural turns
+
+Orin
+- FIRE
+- PHYSICAL scaling
+- power 1.70
+- MP 18
+- SELF_HEAL
+- caster heal = 15% Max HP
+
+Shared:
+- once per character per battle
+- Boostable
+- Boost scales primary damage only
+- normal Break/weakness/affinity pipeline
+
+Deferred:
+- final manifestation names (Current display names Titan's Wrath / Inferno's Embrace = WORKING NAME / NOT FINAL CANON)
+- final VFX/animation
+- final tuned numerical values after playtesting
 
 ---
 
@@ -628,21 +651,21 @@ Do not reveal Arc 5 information earlier than the story source allows.
 
 # 21. Recommended Implementation Order
 
-After this design lock exists, implement one task at a time:
+Urutan production saat ini:
 
-1. **Roster/resource migration**
-2. Manual test
-3. Fix regression
-4. Commit/push stable checkpoint
-5. **Skill data / skill implementation**
-6. Manual test
-7. Commit/push
-8. **BEAST implementation**
-9. Manual test
-10. Commit/push
-11. Story/cutscene implementation per arc when relevant
+- Roster/resource migration ✅
+- Skill Data Foundation ✅
+- 60 Skill Kits ✅
+- Skill Runtime Logic ✅
+- BEAST ✅
+- Numerical Balance V1 ← CURRENT NEXT
+- Enemy/Boss Implementation
+- Story/Cutscene per Arc
+- Final Playtest/Tuning
+- M35 readiness checkpoint
 
-Do not batch all of these into one large task.
+Tetap pertahankan workflow:
+> **1 task → implement → manual test → fix → commit/push → next task**
 
 ---
 
@@ -694,26 +717,25 @@ If renaming:
 
 # 25. Current Implementation Boundary
 
-Current active implementation:
-**Roster/resource migration and validation**
+Status Sinkronisasi Saat Ini:
+- No. 1 — Roster/resource migration ✅ COMPLETE
+- No. 2A — Skill Data Foundation ✅ COMPLETE
+- No. 2B — Populate 60 Skill Kits ✅ COMPLETE
+- No. 2C — Skill Runtime Logic ✅ COMPLETE
+- No. 3 — BEAST System ✅ COMPLETE
+- Character Documentation Sync ✅ COMPLETE
+- Story Documentation Sync ✅ COMPLETE
+- Worldbuilding Documentation Sync ✅ COMPLETE
 
-Allowed:
-- rename placeholder character resources to final character names
-- remove obsolete DWARF/ONI references after checking dependencies
-- populate all 10 final character identities
-- use approved V1 CombatantData values
-- update references safely
-- verify all 10 resources load
-- regression-test existing party/equipment/skill ownership behavior
+Current approved next phase:
+**No. 4 — Numerical Balance V1**
 
-Not in current task:
-- BEAST implementation
-- broad BattleController redesign
-- complete skill implementation
-- final balance tuning
-- story/world redesign
+Setelah itu:
+- No. 5 — Enemy/Boss Implementation
+- No. 6 — Story/Cutscene Implementation
+- No. 7 — Final Playtest & Tuning
 
-Finish current task first.
+Jangan memulai task-task tersebut dalam tahap sinkronisasi ini.
 
 ---
 
@@ -741,8 +763,8 @@ Design foundations:
 
 **PRE-M35 DESIGN FOUNDATION: READY**
 
-M35 should open only after the current roster/resource migration is:
-1. completed,
-2. manually tested,
-3. regression-safe,
-4. committed/pushed.
+M35 belum dibuka. Pre-M35 pipeline yang masih harus dilewati:
+- Numerical Balance V1
+- Enemy/Boss Implementation
+- Story/Cutscene Implementation
+- Final Playtest/Tuning

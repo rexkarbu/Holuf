@@ -197,7 +197,11 @@ Orin recruitment
 ↓
 Central Facility
 ↓
-Vaelor revelation
+Mirror Gate investigation
+↓
+Lucien Varell / The Architect identity reveal
+↓
+Vaelor collaboration + extraction reveal
 ↓
 Elaris = successful test
 ↓

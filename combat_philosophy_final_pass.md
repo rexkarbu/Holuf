@@ -168,7 +168,7 @@ boss telegraph serangan,
 character critical HP,
 menunggu healer,
 mempertahankan BP,
-atau pada karakter seperti Torga/Katsura yang nanti punya synergy.
+atau pada karakter seperti Torga/Katsura (Torga defensive stance/counter synergy sudah mempunyai runtime foundation; Katsura counter-oriented skill foundation sudah live).
 
 Jangan kasih BP tambahan karena Defend.
 
@@ -221,15 +221,11 @@ Untuk game ±10 jam saya sarankan jumlah skill per karakter jangan terlalu besar
 
 Target awal yang sehat:
 
-sekitar 6–8 meaningful skills per character, belum termasuk Attack/Defend/Item/Beast command.
+sekitar 6–8 *meaningful skills* per character, belum termasuk Attack/Defend/Item/Beast command. 
 
-Lebih baik:
+*(Catatan Sinkronisasi: Philosophical scope remains roughly 6–8. Current production V1 uses exactly 6 normal skills per playable character. Torga dan Orin secara tambahan memiliki BEAST. Tidak perlu menambah skill hanya untuk mencapai 7–8; hindari menganggap absennya skill ke-7/8 sebagai backlog).*
 
-7 skill yang semuanya punya fungsi
-
-daripada:
-
-18 skill dan setengahnya menjadi versi lebih kuat dari skill lama.
+Lebih baik 6–8 skill yang semuanya punya fungsi yang distingtif daripada 18 skill dan setengahnya menjadi versi lebih kuat dari skill lama.
 
 Spell family elemental memang bisa mempunyai tier, tetapi tidak semua karakter harus mendapatkan seluruh tier.
 
@@ -305,7 +301,7 @@ BEAST sekarang masuk tepat ke filosofi ini:
 
 powerful limited tactical action.
 
-Bukan subsystem terpisah.
+Bukan subsystem terpisah. *(Catatan Sinkronisasi: V1 runtime implemented for Torga and Orin).*
 
 Torga dan Orin mendapat identity racial tambahan tetapi masih mengikuti:
 

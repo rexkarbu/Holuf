@@ -109,7 +109,7 @@ belum termasuk Weakness dan Broken.
 
 Itu sudah sangat kuat.
 
-5. Existing Fire Slash
+5. Historical/Reference Baseline: Placeholder Fire Slash
 
 Placeholder sekarang:
 
@@ -121,13 +121,13 @@ Jadi secara balance philosophy:
 
 1.4× = upper standard attack.
 
-Tidak perlu diubah drastis sekarang.
+Tidak perlu diubah drastis sekarang. Nama/fungsi final nanti menyesuaikan skill kit Aren.
 
-Nama/fungsi final nanti menyesuaikan skill kit Aren.
+*(Catatan Sinkronisasi: Saat ini 10 characters × 6 normal skills sudah production-populated di dalam game. Nilai-nilai di dalam file .tres tersebut harus diaudit terhadap bands di dokumen ini pada fase No. 4 — Numerical Balance V1. Jangan menganggap current .tres values otomatis balance-final).*
 
 6. Healing Scale
 
-Existing Heal sekitar:
+Historical/Reference Baseline: Placeholder Heal sekitar:
 
 1.2× MAG
 
@@ -171,6 +171,10 @@ High-tier spell	15–22
 Single Heal	8–10
 Party Heal	14–18
 BEAST	sekitar 16–20
+
+*(Implemented V1 BEAST Baseline — subject to Numerical Balance playtest/tuning):*
+- **Torga**: 1.70× power / 18 MP / stance ×0.75 / 2 natural turns
+- **Orin**: 1.70× power / 18 MP / self-heal 15% Max HP
 
 Spirit Tonic tetap:
 
