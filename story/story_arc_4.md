@@ -197,15 +197,9 @@ izin memasang perangkat/anchor
 
 Dia diberi tahu bahwa mereka sedang mengembangkan teknologi pemindahan manusia dan Elaris akan digunakan sebagai uji coba.
 
-Menurut saya penguasa harus tahu bahwa rakyatnya akan dijadikan subjek eksperimen, sehingga dia tidak bisa dibebaskan dari tanggung jawab.
+Vaelor menyadari bahwa rakyatnya akan dijadikan subjek eksperimen (*human experiment*). Namun, ia tidak mengetahui tujuan akhir *Grand Transposition* secara penuh. Yang dia pedulikan hanyalah keselamatan dan kekuasaannya sendiri. Sebagai ganti kerja samanya, sesaat sebelum *mass teleportation* terjadi, Vaelor diam-diam dievakuasi melalui rute spasial khusus menuju fasilitas utara (Aetherion). Inilah alasan dia tidak ikut lenyap bersama penduduk Elaris lainnya.
 
-Tetapi dia tidak mengetahui seluruh rencana final boss.
-
-Dia percaya eksperimen akan terkendali dan rakyat nantinya akan dikembalikan.
-
-Yang dia pedulikan hanya:
-
-selama kekuasaannya tetap aman dan dia mendapatkan keuntungan.
+*(Catatan: Fakta evakuasi ini diungkap melalui cinematic flashback sebagai late-game Arc 4 revelation, BUKAN ditampilkan di Prologue).*
 
 Jadi dia pada dasarnya menjual keselamatan rakyatnya.
 
@@ -265,7 +259,7 @@ Human
 Spear/Lance
 Lightning
 
-Kaelis berasal dari wilayah/negara lain yang belum perlu kita beri nama sekarang.
+Kaelis berasal dari Valeria.
 
 Dia sedang mengejar jaringan yang sama karena beberapa pengiriman komponen mencurigakan melewati wilayah tempat dia bekerja.
 
@@ -330,7 +324,7 @@ Elf
 Bow
 Wind
 
-Sylven berasal dari negara lain dan sedang mengikuti perubahan aliran magic di alam.
+Sylven berasal dari Averon dan sedang mengikuti perubahan aliran magic di alam.
 
 Sebagai Elf dan tracker, dia menyadari bahwa “angin magic” beberapa wilayah sekarang bergerak tidak wajar:
 
@@ -403,7 +397,7 @@ Beast
 Longsword
 Fire
 
-Orin sebelumnya bekerja sebagai hired guard/mercenary.
+Orin (berasal dari Ravaryn) sebelumnya bekerja sebagai hired guard/mercenary.
 
 Tanpa mengetahui isi sebenarnya, dia pernah membantu mengawal beberapa pengiriman milik pihak antagonis.
 
@@ -436,19 +430,11 @@ Dengan ini 10 playable character sudah lengkap sebelum Final Arc.
 
 Di bagian terdalam fasilitas, party bertemu seorang High Executor dari pihak antagonis.
 
-Ini bukan agent biasa seperti Arc 3.
+Di momen ini, identitas sesungguhnya dari pemimpin mereka akhirnya terungkap. Baik melalui komunikasi proyeksi (*recorded message/projection*) maupun dari kesaksian Executor: **The Architect adalah Lucien Varell**. Ia adalah seorang manusia, mantan peneliti/teoretikus spasial yang sebelumnya berafiliasi dengan Akademi Mongreaux. Ini adalah *identity reveal*, bukan pengungkapan seluruh ideologi atau rencana akhir.
 
-Dia adalah orang yang mengetahui operasi Elaris secara langsung.
+High Executor juga menjadi musuh utama Arc 4. Dia menjelaskan secukupnya—bukan exposition seluruh final plan. Aren akhirnya memperoleh konfirmasi langsung bahwa:
 
-Dia bahkan mengetahui kesepakatan dengan penguasa Elaris.
-
-High Executor menjadi musuh utama Arc 4.
-
-Dia menjelaskan secukupnya—bukan exposition seluruh final plan.
-
-Aren akhirnya memperoleh konfirmasi langsung bahwa:
-
-penguasa Elaris memang menyerahkan rakyatnya sebagai bagian dari eksperimen.
+penguasa Elaris (Vaelor) memang menyerahkan rakyatnya sebagai bagian dari eksperimen.
 
 High Executor juga memandang bencana Elaris hanya sebagai:
 

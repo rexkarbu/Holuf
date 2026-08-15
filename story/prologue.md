@@ -101,3 +101,5 @@ Di sinilah Prologue berakhir.
 
 Target durasi Prologue sekitar 30–40 menit.
 
+*(Guardrail Final Pass: Prologue dituturkan murni dari perspektif Aren/Aelia. Lucien tidak muncul, tidak ada wajah/suara/title antagonist, dan tidak ada villain cutaway. Evakuasi penguasa Elaris (Vaelor) BUKAN ditampilkan di Prologue, melainkan disimpan sebagai late-game revelation di Arc 4).*
+

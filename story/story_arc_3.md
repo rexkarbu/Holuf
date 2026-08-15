@@ -113,7 +113,7 @@ Beast
 Axe
 Earth
 
-Torga berasal dari luar pulau besar.
+Torga berasal dari Kharuun, sebuah negara di luar daratan utama.
 
 Dia berada di Mongreaux bukan karena takdir atau misi rahasia. Dia memang kebetulan sedang berada di negara tersebut ketika fenomena teleportasi menjadi masalah besar.
 
@@ -148,7 +148,7 @@ Ini hanya menjadi foreshadowing.
 
 Konflik utama Arc 3
 
-Akademi menemukan salah satu konsentrasi energi terbesar berada di sebuah fasilitas atau reruntuhan kuno di Mongreaux.
+Akademi menemukan salah satu konsentrasi energi terbesar berada di sebuah fasilitas relay spasial kuno (*old spatial relay / external relay node*) di Mongreaux. Fasilitas ini bukan tempat asal usul utama teknologi Mirror Gate (yang berakar di ancient Kamikoto), melainkan bagian dari jaringan eksternal yang baru-baru ini dimanfaatkan.
 
 Sejak bencana Elaris, fasilitas tersebut kembali aktif.
 
@@ -192,7 +192,9 @@ Agent
 Enforcer
 Executor
 
-yang menjalankan bagian tertentu dari rencana.
+yang menjalankan bagian tertentu dari rencana di bawah perintah pemimpin mereka yang menggunakan gelar: **The Architect**.
+
+*(Catatan: Ini adalah momen pertama gelar The Architect diperkenalkan. Identitas aslinya belum diungkap di Arc ini).*
 
 Aren menuntut jawaban mengenai Elaris.
 

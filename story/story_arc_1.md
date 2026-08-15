@@ -95,7 +95,7 @@ Doran
 
 Mereka menemukan markas kelompok yang memanfaatkan korban teleportasi.
 
-Lokasinya bisa berupa tambang lama, gudang perdagangan, atau reruntuhan. Bentuk final dungeon belum kita kunci.
+Lokasinya menggunakan struktur *dungeon* yang sudah ditetapkan: *warehouse → cellar → tunnels → cave → hideout*.
 
 Ini menjadi dungeon proper pertama Holuf.
 

@@ -104,9 +104,7 @@ teknologi
 dukungan
 dan kekuasaannya tetap dipertahankan
 
-Bahkan sistem teleportasi mengecualikan penguasa dan beberapa orang pilihannya.
-
-Jadi ketika seluruh manusia Elaris menghilang, dia sebenarnya sudah mengetahui bahwa eksperimen akan terjadi.
+Sesaat sebelum eksperimen *mass teleportation* dijalankan, Vaelor diam-diam dievakuasi melalui rute spasial khusus menuju fasilitas utara (Aetherion). Ia tidak membawa pengikut lain. Jadi ketika seluruh manusia Elaris menghilang, dia sudah berada di tempat aman dan membiarkan eksperimen terjadi.
 
 Namun dia tidak mengetahui rencana akhir The Architect.
 
@@ -331,6 +329,12 @@ kejadian Elaris akan terjadi dalam skala jauh lebih besar.
 
 Party terus bergerak ke atas menuju pusat fasilitas.
 
+9.5. Konfrontasi Vaelor
+
+Sebelum mencapai Spatial Core, party bersama Lloyd berhadapan langsung dengan Vaelor yang berlindung di fasilitas Aetherion. 
+Vaelor BUKAN menjadi boss fight, tidak bergabung dengan party, tidak mendapat *instant redemption*, dan Aren tidak membunuh atau memaafkannya.
+Lloyd hadir dalam konfrontasi ini untuk menegaskan perbedaan krusial: Lloyd mengikuti perintah tanpa mengetahui kebenaran penuh; sementara Vaelor mengetahui rakyat menjadi *test subjects* dan tetap memilih bekerja sama. Momen ini menutup ilusi terakhir Lloyd terhadap penguasa.
+
 10. Pengorbanan Lloyd
 
 Di salah satu bagian Final Dungeon, aktivasi spatial core menyebabkan struktur fasilitas mulai runtuh.
@@ -406,9 +410,8 @@ Namun dia menolak menerima kegagalan.
 
 12. Final Boss Phase 2
 
-The Architect menghubungkan dirinya langsung dengan Spatial Core.
-
-Dia kehilangan kontrol dan menjadi bentuk final yang dipenuhi energi dari jaringan Mirror Gate.
+Meskipun kalah di Phase 1, The Architect (Lucien) sebenarnya masih memiliki kesempatan untuk menghentikan Grand Transposition. Namun, ia secara sadar menolak berhenti. Ia secara sukarela menghubungkan dirinya langsung dengan Spatial Core. 
+Alasannya bukan karena ia ingin menjadi dewa atau dikendalikan oleh kekuatan Core, melainkan karena berhenti berarti menerima bahwa seluruh eksperimen, korban, dan pekerjaan hidupnya sia-sia. Spatial Core TIDAK mengendalikannya; meskipun wujud Phase 2-nya terintegrasi secara visual dengan Core, *agency* dan kesadaran Lucien tetap utuh sepenuhnya.
 
 Sekarang ancamannya bukan lagi hanya dirinya.
 
@@ -495,9 +498,11 @@ Baru dari situ pemain benar-benar merasakan konsekuensi kemenangan tersebut.
 
 15. Nasib Elaris
 
-Setelah bukti pengkhianatan penguasa Elaris tersebar, sistem lama runtuh.
+Setelah fasilitas Aetherion diamankan, Vaelor ditahan. Ia dicopot sebagai King, selamat (tidak dibunuh), dan tidak pernah kembali memerintah Elaris. Ia akan menghadapi *international tribunal* (*exact sentence/punishment* tetap *deferred*).
 
-Tetapi saya tidak ingin Aren menjadi raja Elaris.
+Setelah bukti pengkhianatan Vaelor tersebar luas, sistem lama Elaris runtuh sepenuhnya.
+
+Tetapi saya tidak ingin Aren menjadi penguasa Elaris.
 
 Itu bertentangan dengan karakternya.
 
