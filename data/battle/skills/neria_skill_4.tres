@@ -8,11 +8,11 @@
 script = ExtResource("2_script")
 skill_id = "neria_skill_4"
 display_name = "Mending Tide"
-mp_cost = 20
+mp_cost = 18
 damage_type = 17
 target_type = 3
 scaling_type = 1
-power = 1.0
+power = 0.8
 condition_type = 0
 conditional_power_multiplier = 1.0
 effects = Array[ExtResource("1_eff")]([])

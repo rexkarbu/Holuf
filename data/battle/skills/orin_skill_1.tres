@@ -8,7 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "orin_skill_1"
 display_name = "Veteran Slash"
-mp_cost = 6
+mp_cost = 7
 damage_type = 9
 target_type = 0
 scaling_type = 0

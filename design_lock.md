@@ -658,8 +658,8 @@ Urutan production saat ini:
 - 60 Skill Kits ✅
 - Skill Runtime Logic ✅
 - BEAST ✅
-- Numerical Balance V1 ← CURRENT NEXT
-- Enemy/Boss Implementation
+- Numerical Balance V1 ✅ COMPLETE
+- Enemy/Boss Implementation ← CURRENT NEXT
 - Story/Cutscene per Arc
 - Final Playtest/Tuning
 - M35 readiness checkpoint
@@ -723,15 +723,15 @@ Status Sinkronisasi Saat Ini:
 - No. 2B — Populate 60 Skill Kits ✅ COMPLETE
 - No. 2C — Skill Runtime Logic ✅ COMPLETE
 - No. 3 — BEAST System ✅ COMPLETE
+- No. 4 — Numerical Balance V1 ✅ COMPLETE
 - Character Documentation Sync ✅ COMPLETE
 - Story Documentation Sync ✅ COMPLETE
 - Worldbuilding Documentation Sync ✅ COMPLETE
 
 Current approved next phase:
-**No. 4 — Numerical Balance V1**
+**No. 5 — Enemy/Boss Implementation**
 
 Setelah itu:
-- No. 5 — Enemy/Boss Implementation
 - No. 6 — Story/Cutscene Implementation
 - No. 7 — Final Playtest & Tuning
 
@@ -764,7 +764,6 @@ Design foundations:
 **PRE-M35 DESIGN FOUNDATION: READY**
 
 M35 belum dibuka. Pre-M35 pipeline yang masih harus dilewati:
-- Numerical Balance V1
 - Enemy/Boss Implementation
 - Story/Cutscene Implementation
 - Final Playtest/Tuning

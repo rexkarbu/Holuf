@@ -7,7 +7,7 @@
 script = ExtResource("1_eff")
 effect_type = 7
 value = 1.2
-duration = 3
+duration = 2
 chance = 1.0
 
 
@@ -15,7 +15,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "aelia_skill_5"
 display_name = "Tailwind"
-mp_cost = 12
+mp_cost = 10
 damage_type = 17
 target_type = 3
 scaling_type = 1

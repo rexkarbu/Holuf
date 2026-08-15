@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_eff1"]
 script = ExtResource("1_eff")
 effect_type = 4
-value = 0.8
+value = 0.85
 duration = 2
 chance = 1.0
 

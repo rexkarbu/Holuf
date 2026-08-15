@@ -8,11 +8,11 @@
 script = ExtResource("2_script")
 skill_id = "aelia_skill_4"
 display_name = "Aeralia"
-mp_cost = 25
+mp_cost = 18
 damage_type = 15
 target_type = 2
 scaling_type = 1
-power = 1.4
+power = 1.15
 condition_type = 0
 conditional_power_multiplier = 1.0
 effects = Array[ExtResource("1_eff")]([])
