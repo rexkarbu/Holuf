@@ -8,6 +8,7 @@
 [ext_resource type="Resource" path="res://data/battle/skills/torga_skill_4.tres" id="5_skill"]
 [ext_resource type="Resource" path="res://data/battle/skills/torga_skill_5.tres" id="6_skill"]
 [ext_resource type="Resource" path="res://data/battle/skills/torga_skill_6.tres" id="7_skill"]
+[ext_resource type="Resource" path="res://data/battle/beast/torga_beast.tres" id="8_beast"]
 
 [resource]
 script = ExtResource("1_script")
@@ -30,5 +31,6 @@ magic_attack_growth = 0
 magic_defense_growth = 1
 speed_growth = 0
 skills = Array[Resource]([ExtResource("2_skill"), ExtResource("3_skill"), ExtResource("4_skill"), ExtResource("5_skill"), ExtResource("6_skill"), ExtResource("7_skill")])
+beast_skill = ExtResource("8_beast")
 weaknesses = Array[int]([])
 max_shield = 0

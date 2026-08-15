@@ -14,6 +14,7 @@ var turn_queue: Array[Combatant] = []
 var current_combatant: Combatant
 
 var command_index: int = 0
+var available_commands: Array[String] = []
 const COMMAND_COUNT: int = 5 # M22: ATTACK, SKILL, ITEM, DEFEND, FLEE
 
 # M22: Flee system constants
@@ -57,6 +58,7 @@ func _ready() -> void:
 		var data = _get_fallback_combatant_data(char_id)
 		var combatant = Combatant.new(data, char_id)
 		combatant.character_id = char_id
+		combatant.beast_used_this_battle = false # Explicit reset per character at battle start
 		players.append(combatant)
 	
 	ui.setup_players(players)
@@ -81,6 +83,7 @@ func _ready() -> void:
 		var current_index: Dictionary = {}
 		for edata in GameManager.pending_formation.enemies:
 			var enemy = Combatant.new(edata)
+			enemy.beast_used_this_battle = false
 			var n = edata.display_name
 			if counts[n] > 1:
 				if not current_index.has(n):
@@ -95,8 +98,14 @@ func _ready() -> void:
 		# Fallback to existing manual test setup
 		var forest_beast_data = load("res://data/battle/forest_beast.tres")
 		var wolf_data = load("res://data/battle/wolf.tres")
-		if forest_beast_data: enemies.append(Combatant.new(forest_beast_data))
-		if wolf_data: enemies.append(Combatant.new(wolf_data))
+		if forest_beast_data: 
+			var e = Combatant.new(forest_beast_data)
+			e.beast_used_this_battle = false
+			enemies.append(e)
+		if wolf_data: 
+			var e = Combatant.new(wolf_data)
+			e.beast_used_this_battle = false
+			enemies.append(e)
 
 	
 	ui.setup_enemies(enemies)
@@ -307,6 +316,29 @@ func _process_turn_start() -> void:
 		# M23 BUGFIX: Refresh BP display immediately at turn start
 		ui.update_all_bp_ui(players)
 		
+		# Build available commands dynamically
+		available_commands.clear()
+		available_commands.append("ATTACK")
+		available_commands.append("SKILL")
+		if current_combatant.base_data.beast_skill != null:
+			available_commands.append("BEAST")
+		available_commands.append("ITEM")
+		available_commands.append("DEFEND")
+		available_commands.append("FLEE")
+		
+		var disabled_indices = []
+		var beast_idx = available_commands.find("BEAST")
+		if beast_idx != -1:
+			var beast_skill = current_combatant.base_data.beast_skill
+			if current_combatant.beast_used_this_battle or not current_combatant.can_spend_mp(beast_skill.mp_cost):
+				disabled_indices.append(beast_idx)
+		
+		ui.setup_commands(available_commands, disabled_indices)
+		
+		# Validate command index
+		if command_index >= available_commands.size():
+			command_index = 0
+		
 		ui.highlight_current_actor(current_combatant.get_display_name(), players)
 		_arena_update_party_highlights()
 		_set_state(State.PLAYER_COMMAND)
@@ -487,11 +519,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	match current_state:
 		State.PLAYER_COMMAND:
 			if event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
-				command_index = (command_index + 1) % COMMAND_COUNT
+				command_index = (command_index + 1) % available_commands.size()
 				ui.set_command_selection(command_index)
 				get_viewport().set_input_as_handled()
 			elif event.is_action_pressed("ui_up") or (event is InputEventKey and event.keycode == KEY_W and event.pressed and not event.echo):
-				command_index = (command_index - 1 + COMMAND_COUNT) % COMMAND_COUNT
+				command_index = (command_index - 1 + available_commands.size()) % available_commands.size()
 				ui.set_command_selection(command_index)
 				get_viewport().set_input_as_handled()
 			elif event.is_action_pressed("ui_accept"):
@@ -611,16 +643,26 @@ func _cycle_boost_selection() -> void:
 # ==============================================================
 
 func _execute_player_command() -> void:
-	match command_index:
-		0: # ATTACK
+	var cmd = available_commands[command_index]
+	match cmd:
+		"ATTACK":
 			pending_action = _process_player_attack
 			_set_state(State.PLAYER_TARGET_SELECT)
-		1: # SKILL
+		"SKILL":
 			_set_state(State.PLAYER_SKILL_SELECT)
-		2: # ITEM
+		"BEAST":
+			var beast_skill = current_combatant.base_data.beast_skill
+			if current_combatant.beast_used_this_battle:
+				ui.add_log("BEAST has already been used this battle!")
+				return
+			if not current_combatant.can_spend_mp(beast_skill.mp_cost):
+				ui.add_log("Not enough MP for BEAST.")
+				return
+			_execute_player_skill(beast_skill)
+		"ITEM":
 			current_combatant.selected_boost_level = 0  # M23: Cannot boost items
 			_set_state(State.PLAYER_ITEM_SELECT)
-		3: # DEFEND
+		"DEFEND":
 			current_combatant.selected_boost_level = 0  # M23: Cannot boost defend
 			_set_state(State.PLAYER_ACTION)
 			ui.show_commands(false)
@@ -628,7 +670,7 @@ func _execute_player_command() -> void:
 			ui.add_log("%s braces for the next attack." % current_combatant.get_display_name())
 			await BattleSpeed.wait(0.8)
 			_set_state(State.TURN_START)
-		4: # FLEE (M22)
+		"FLEE":
 			_attempt_flee()
 
 func _process_player_attack(target: Combatant) -> void:
@@ -712,6 +754,9 @@ func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
 		_set_state(State.TURN_START)
 		return
 		
+	if current_combatant.base_data.beast_skill != null and skill == current_combatant.base_data.beast_skill:
+		current_combatant.beast_used_this_battle = true
+		
 	current_combatant.spend_mp(skill.mp_cost)
 	var boost = current_combatant.selected_boost_level
 	current_combatant.current_bp -= boost
@@ -768,6 +813,9 @@ func _process_skill_heal(skill: SkillData, targets: Array[Combatant]) -> void:
 		ui.add_log("Action failed: No valid targets.")
 		_set_state(State.TURN_START)
 		return
+		
+	if current_combatant.base_data.beast_skill != null and skill == current_combatant.base_data.beast_skill:
+		current_combatant.beast_used_this_battle = true
 		
 	current_combatant.spend_mp(skill.mp_cost)
 	var boost = current_combatant.selected_boost_level
@@ -832,9 +880,13 @@ func _apply_skill_effects(attacker: Combatant, target: Combatant, skill: SkillDa
 			
 			_:
 				if eff.effect_type != SkillEffectData.Type.NONE:
+					var recipient = target
+					if eff.effect_target == SkillEffectData.EffectTarget.CASTER:
+						recipient = attacker
+						
 					# Apply or refresh effect
 					var found = false
-					for dict in target.active_effects:
+					for dict in recipient.active_effects:
 						var active: SkillEffectData = dict["effect"]
 						if active.effect_type == eff.effect_type:
 							if (eff.value >= active.value and eff.effect_type in [SkillEffectData.Type.ATK_UP, SkillEffectData.Type.DEF_UP, SkillEffectData.Type.MAG_UP, SkillEffectData.Type.SPD_UP, SkillEffectData.Type.COUNTER_STANCE]) or \
@@ -850,7 +902,7 @@ func _apply_skill_effects(attacker: Combatant, target: Combatant, skill: SkillDa
 							break
 					if not found:
 						var new_eff = eff.duplicate()
-						target.active_effects.append({
+						recipient.active_effects.append({
 							"effect": new_eff,
 							"duration": eff.duration,
 							"is_new": true

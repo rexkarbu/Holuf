@@ -28,6 +28,9 @@ var discovered_weaknesses: Array = []
 ## Array of Dictionary: { "effect": SkillEffectData, "duration": int, "is_new": bool }
 var active_effects: Array = []
 
+## Runtime — Beast System
+var beast_used_this_battle: bool = false
+
 ## Runtime — Shield & Break state. Tidak disimpan ke Resource.
 var current_shield: int = 0
 var is_broken: bool = false

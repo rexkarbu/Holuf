@@ -30,6 +30,7 @@ enum EnemyTier { NORMAL, MINI_BOSS, BOSS }
 
 @export_group("Skills & Weaknesses")
 @export var skills: Array = []
+@export var beast_skill: SkillData
 
 ## Array of DamageType.Type integers representing this combatant's weaknesses.
 @export var weaknesses: Array = []

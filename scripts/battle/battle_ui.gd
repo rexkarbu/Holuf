@@ -36,6 +36,7 @@ var player_stats_nodes: Array[Control] = []
 @onready var base_enemy_block: PanelContainer = $BottomHUD/EnemyStatusPanel/MarginContainer/EnemyList/BaseEnemyBlock
 
 var enemy_stats_nodes: Array[Control] = []
+var current_commands: Array = []
 
 func _ready() -> void:
 	command_panel.hide()
@@ -249,15 +250,46 @@ func add_log(text: String) -> void:
 func show_commands(visible_state: bool) -> void:
 	command_panel.visible = visible_state
 
+func setup_commands(commands_list: Array, disabled_indices: Array) -> void:
+	current_commands = commands_list.duplicate()
+	# Clear existing immediately from tree so child count is accurate
+	for child in command_vbox.get_children():
+		command_vbox.remove_child(child)
+		child.queue_free()
+	
+	# Create new labels
+	for i in range(commands_list.size()):
+		var label = Label.new()
+		# M23 PATCH: Do not rely on node.name for gameplay text
+		label.text = "  " + commands_list[i]
+		label.add_theme_font_size_override("font_size", 20)
+		if i in disabled_indices:
+			label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5)) # Disabled color
+			label.set_meta("disabled", true)
+		else:
+			label.add_theme_color_override("font_color", Color(1, 1, 1))
+			label.set_meta("disabled", false)
+			
+		label.mouse_filter = Control.MOUSE_FILTER_STOP
+		label.mouse_entered.connect(_on_command_hovered.bind(i))
+		label.gui_input.connect(_on_command_gui_input.bind(i))
+		
+		command_vbox.add_child(label)
+
 func set_command_selection(index: int) -> void:
 	for i in range(command_vbox.get_child_count()):
 		var label = command_vbox.get_child(i) as Label
+		var is_disabled = label.get_meta("disabled", false)
+		var cmd_text = current_commands[i] if i < current_commands.size() else "UNKNOWN"
+		
 		if i == index:
-			label.text = "> " + label.name.to_upper()
-			label.add_theme_color_override("font_color", Color(1, 1, 0.4))
+			label.text = "> " + cmd_text
+			if not is_disabled:
+				label.add_theme_color_override("font_color", Color(1, 1, 0.4))
 		else:
-			label.text = "  " + label.name.to_upper()
-			label.add_theme_color_override("font_color", Color(1, 1, 1))
+			label.text = "  " + cmd_text
+			if not is_disabled:
+				label.add_theme_color_override("font_color", Color(1, 1, 1))
 
 func show_skills(visible_state: bool) -> void:
 	skill_panel.visible = visible_state
