@@ -422,7 +422,7 @@ func _calculate_damage(attacker: Combatant, target: Combatant, damage_type: int,
 	# Conditional Bonus
 	if condition == 1 and target.is_broken: # TARGET_BROKEN
 		amount *= cond_mult
-	elif condition == 2 and not target.has_acted_this_round: # TARGET_NOT_ACTED
+	elif condition == 2 and (turn_queue.has(target) or target == current_combatant): # TARGET_NOT_ACTED
 		amount *= cond_mult
 	
 	# M23: Apply Boost multiplier
