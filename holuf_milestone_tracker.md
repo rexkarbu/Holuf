@@ -105,14 +105,14 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M45** | ✅ CLOSED  | Combat Resource Economy Audit | REBUILT from locked/current history |
 | **M46** | ✅ CLOSED  | Combat Resource Economy Implementation | REBUILT from locked/current history |
 | **M47** | ✅ CLOSED  | Alexandria Boss — Ancient Magical Guardian | REBUILT from locked/current history |
-| **M48** | ⏳ PENDING | Mongreaux Regular Enemy Content | REBUILT from locked/current history |
-| **M49** | ⏳ PENDING | Mongreaux Organization / Boss Content | REBUILT from locked/current history |
-| **M50** | ⏳ PENDING | Kamikoto Regular / Altered Enemy Content | REBUILT from locked/current history |
-| **M51** | ⏳ PENDING | Kamikoto Boss — High Executor | REBUILT from locked/current history |
-| **M52** | ⏳ PENDING | Aetherion Altered Enemy Content | REBUILT from locked/current history |
-| **M53** | ⏳ PENDING | Final Boss Phase 1 — Lucien / The Architect | REBUILT from locked/current history |
-| **M54** | ⏳ PENDING | Final Boss Phase 2 — Architect + Spatial Core | REBUILT from locked/current history |
-| **M55** | ⏳ PENDING | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
+| **M48** | ✅ CLOSED | Mongreaux Regular Enemy Content | REBUILT from locked/current history |
+| **M49** | ✅ CLOSED | Mongreaux Organization / Boss Content | REBUILT from locked/current history |
+| **M50** | ✅ CLOSED | Kamikoto Regular / Altered Enemy Content | REBUILT from locked/current history |
+| **M51** | ✅ CLOSED | Kamikoto Boss — High Executor | REBUILT from locked/current history |
+| **M52** | ✅ CLOSED | Aetherion Altered Enemy Content | REBUILT from locked/current history |
+| **M53** | ✅ CLOSED | Final Boss Phase 1 — Lucien / The Architect | REBUILT from locked/current history |
+| **M54** | ✅ CLOSED | Final Boss Phase 2 — Architect + Spatial Core | REBUILT from locked/current history |
+| **M55** | 🔵 CURRENT | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
 | **M56** | ⏳ PENDING | Level-Based Skill Unlock — Data Foundation | REBUILT from locked/current history |
 | **M57** | ⏳ PENDING | Level-Based Skill Unlock — 60 Skill Level Table | REBUILT from locked/current history |
 | **M58** | ⏳ PENDING | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
