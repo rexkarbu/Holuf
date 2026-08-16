@@ -103,8 +103,8 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
 | **M45** | ✅ CLOSED  | Combat Resource Economy Audit | REBUILT from locked/current history |
-| **M46** | ⏳ PENDING | Combat Resource Economy Implementation | REBUILT from locked/current history |
-| **M47** | ⏳ PENDING | Alexandria Boss — Ancient Magical Guardian | REBUILT from locked/current history |
+| **M46** | ✅ CLOSED  | Combat Resource Economy Implementation | REBUILT from locked/current history |
+| **M47** | 🔄 CURRENT | Alexandria Boss — Ancient Magical Guardian | REBUILT from locked/current history |
 | **M48** | ⏳ PENDING | Mongreaux Regular Enemy Content | REBUILT from locked/current history |
 | **M49** | ⏳ PENDING | Mongreaux Organization / Boss Content | REBUILT from locked/current history |
 | **M50** | ⏳ PENDING | Kamikoto Regular / Altered Enemy Content | REBUILT from locked/current history |
