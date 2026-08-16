@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" path="res://data/battle/skills/high_executor_spatial_lance.tres" id="2_skill_1"]
+[ext_resource type="Resource" path="res://data/battle/skills/high_executor_relay_storm.tres" id="3_skill_2"]
+[ext_resource type="Resource" path="res://data/battle/skills/high_executor_severing_arc.tres" id="4_skill_3"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "High Executor"
+tier = 2
+max_hp = 1050
+max_mp = 0
+attack = 76
+defense = 34
+magic_attack = 92
+magic_defense = 40
+speed = 35
+skills = [ExtResource("2_skill_1"), ExtResource("3_skill_2"), ExtResource("4_skill_3")]
+weaknesses = [12, 4, 15]
+max_shield = 8
+exp_reward = 600
+gold_reward = 750
