@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EncounterTable" load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/encounter_table.gd" id="1_script"]
+[ext_resource type="Resource" path="res://data/battle/formations/mongreaux_formation_1.tres" id="2_form1"]
+[ext_resource type="Resource" path="res://data/battle/formations/mongreaux_formation_2.tres" id="3_form2"]
+[ext_resource type="Resource" path="res://data/battle/formations/mongreaux_formation_3.tres" id="4_form3"]
+
+[resource]
+script = ExtResource("1_script")
+table_id = "mongreaux_regular"
+formations = Array[Resource]([ExtResource("2_form1"), ExtResource("3_form2"), ExtResource("4_form3")])
