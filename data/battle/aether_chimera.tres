@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" path="res://data/battle/skills/aether_chimera_rending_maul.tres" id="2_skill_1"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Aether Chimera"
+tier = 0
+max_hp = 420
+max_mp = 0
+attack = 92
+defense = 36
+magic_attack = 40
+magic_defense = 28
+speed = 27
+skills = [ExtResource("2_skill_1")]
+weaknesses = [0, 3, 4]
+max_shield = 4
+exp_reward = 145
+gold_reward = 72

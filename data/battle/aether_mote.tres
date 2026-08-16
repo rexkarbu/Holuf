@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" path="res://data/battle/skills/aether_mote_aether_spark.tres" id="2_skill_1"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Aether Mote"
+tier = 0
+max_hp = 285
+max_mp = 0
+attack = 52
+defense = 23
+magic_attack = 82
+magic_defense = 37
+speed = 39
+skills = [ExtResource("2_skill_1")]
+weaknesses = [7, 2, 14]
+max_shield = 2
+exp_reward = 128
+gold_reward = 60

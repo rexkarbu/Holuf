@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CombatantData" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/combatant_data.gd" id="1_data"]
+[ext_resource type="Resource" path="res://data/battle/skills/spatial_aberration_phase_bolt.tres" id="2_skill_1"]
+
+[resource]
+script = ExtResource("1_data")
+display_name = "Spatial Aberration"
+tier = 0
+max_hp = 350
+max_mp = 0
+attack = 48
+defense = 25
+magic_attack = 102
+magic_defense = 44
+speed = 41
+skills = [ExtResource("2_skill_1")]
+weaknesses = [10, 15, 16]
+max_shield = 3
+exp_reward = 155
+gold_reward = 80

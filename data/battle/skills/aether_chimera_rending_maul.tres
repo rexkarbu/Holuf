@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="SkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/battle/skill_data.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+skill_id = "aether_chimera_rending_maul"
+display_name = "Rending Maul"
+cost_type = 0
+mp_cost = 0
+hp_cost_percent = 0.0
+damage_type = 17
+target_type = 0
+scaling_type = 0
+power = 1.45
+condition_type = 0
+conditional_power_multiplier = 1.0
+effects = Array[Resource]([])
