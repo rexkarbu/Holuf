@@ -715,7 +715,7 @@ func _process_player_attack(target: Combatant) -> void:
 	await BattleSpeed.wait(0.8)
 	
 	if _check_victory():
-		_set_state(State.VICTORY)
+		_handle_enemy_side_defeated()
 	else:
 		_set_state(State.TURN_START)
 
@@ -801,7 +801,7 @@ func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
 	await BattleSpeed.wait(0.8)
 	
 	if _check_victory():
-		_set_state(State.VICTORY)
+		_handle_enemy_side_defeated()
 	else:
 		_set_state(State.TURN_START)
 
@@ -1060,6 +1060,8 @@ func _process_enemy_turn() -> void:
 	
 	if _check_defeat():
 		_set_state(State.DEFEAT)
+	elif _check_victory():
+		_handle_enemy_side_defeated()
 	else:
 		_set_state(State.TURN_START)
 
@@ -1178,6 +1180,88 @@ func _arena_update_enemy_target(target_idx: int) -> void:
 		var view = enemy_views[i] as BattleCombatantView
 		if view == null: continue
 		view.set_targeted(i == target_idx)
+
+# ==============================================================
+# PHASE TRANSITION (M54)
+# ==============================================================
+
+func _handle_enemy_side_defeated() -> void:
+	# Check if this is Phase 1 Lucien and transition to Phase 2
+	if GameManager.pending_formation != null and GameManager.pending_formation.formation_id == "aetherion_lucien_phase1":
+		_transition_to_phase2()
+		return
+	
+	_set_state(State.VICTORY)
+
+func _transition_to_phase2() -> void:
+	ui.add_log("Phase 2 begins!")
+	await BattleSpeed.wait(1.5)
+	
+	# Remove old enemy arena views
+	for view in enemy_views:
+		if view != null and is_instance_valid(view):
+			view.queue_free()
+	enemy_views.clear()
+	
+	# Clear old enemies and turn queue references to them
+	var old_enemies = enemies.duplicate()
+	enemies.clear()
+	for oe in old_enemies:
+		if turn_queue.has(oe):
+			turn_queue.erase(oe)
+	
+	# Load Phase 2 formation
+	var phase2_formation = load("res://data/battle/formations/aetherion_lucien_phase2_formation.tres")
+	GameManager.pending_formation = phase2_formation
+	can_flee_from_battle = false
+	
+	# Instantiate Phase 2 enemies
+	var counts: Dictionary = {}
+	for edata in phase2_formation.enemies:
+		var n = edata.display_name
+		if counts.has(n):
+			counts[n] += 1
+		else:
+			counts[n] = 1
+	
+	var current_index: Dictionary = {}
+	for edata in phase2_formation.enemies:
+		var enemy = Combatant.new(edata)
+		enemy.beast_used_this_battle = false
+		var n = edata.display_name
+		if counts[n] > 1:
+			if not current_index.has(n):
+				current_index[n] = 0
+			var letters = ["A", "B", "C", "D", "E"]
+			var idx = current_index[n]
+			var letter = letters[idx] if idx < letters.size() else str(idx + 1)
+			enemy.runtime_name = n + " " + letter
+			current_index[n] += 1
+		enemies.append(enemy)
+	
+	# Rebuild enemy UI
+	ui.setup_enemies(enemies)
+	
+	# Spawn new enemy arena views
+	for i in range(enemies.size()):
+		var view = BattleCombatantView.new()
+		$Combatants.add_child(view)
+		view.position = ENEMY_SLOTS[min(i, ENEMY_SLOTS.size() - 1)]
+		view.setup_enemy(enemies[i], i)
+		enemy_views.append(view)
+	
+	# Update all UI
+	_update_all_hp_mp_ui()
+	_update_all_shield_ui()
+	
+	# Reset target selection
+	selected_target_index = 0
+	
+	# Reset rewards flag for Phase 2
+	rewards_processed = false
+	
+	# Start Phase 2 as a new round
+	_set_state(State.ROUND_START)
 
 # ==============================================================
 # VICTORY REWARDS (MILESTONE 20)
