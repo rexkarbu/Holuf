@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EnemyFormation" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/enemy_formation.gd" id="1_script"]
-[ext_resource type="Resource" uid="uid://wolf_data_01" path="res://data/battle/wolf.tres" id="2_wolf"]
+[ext_resource type="Resource" path="res://data/battle/tide_mote.tres" id="2_enemy"]
 
 [resource]
 script = ExtResource("1_script")
-formation_id = "forest_wolf"
-enemies = Array[Resource]([ExtResource("2_wolf")])
-weight = 40
+formation_id = "lorel_mote_1"
+enemies = Array[Resource]([ExtResource("2_enemy"), ExtResource("2_enemy")])
+weight = 10
 can_flee = true

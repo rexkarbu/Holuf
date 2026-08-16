@@ -8,5 +8,5 @@
 script = ExtResource("1_script")
 formation_id = "lorel_2"
 enemies = Array[Resource]([ExtResource("2_enemy"), ExtResource("3_enemy")])
-weight = 40
+weight = 30
 can_flee = true

@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="EnemyFormation" load_steps=3 format=3]
 
 [ext_resource type="Script" path="res://scripts/world/enemy_formation.gd" id="1_script"]
-[ext_resource type="Resource" uid="uid://combatant_beast01" path="res://data/battle/forest_beast.tres" id="3_beast"]
+[ext_resource type="Resource" path="res://data/battle/steppe_mote.tres" id="2_enemy"]
 
 [resource]
 script = ExtResource("1_script")
-formation_id = "forest_beast"
-enemies = Array[Resource]([ExtResource("3_beast")])
-weight = 30
+formation_id = "mongreaux_mote_1"
+enemies = Array[Resource]([ExtResource("2_enemy"), ExtResource("2_enemy")])
+weight = 10
 can_flee = true

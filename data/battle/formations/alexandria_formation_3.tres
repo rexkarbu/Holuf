@@ -7,5 +7,5 @@
 script = ExtResource("1_script")
 formation_id = "alexandria_anomalies"
 enemies = Array[Resource]([ExtResource("2_enemy1"), ExtResource("2_enemy1")])
-weight = 20
+weight = 15
 can_flee = true

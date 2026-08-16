@@ -22,7 +22,7 @@ func start_battle(encounter_id: String, player_pos: Vector2, is_repeatable: bool
 	player_return_position = player_pos
 	
 	if encounter_id == "placeholder_battle_1":
-		pending_formation = load("res://data/battle/formations/prologue_tutorial.tres")
+		pending_formation = load("res://data/battle/formations/alexandria_mote_formation_2.tres")
 		
 
 	# Mulai transisi ke battle scene

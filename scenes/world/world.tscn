@@ -4,9 +4,7 @@
 [ext_resource type="PackedScene" path="res://scenes/npc/elder.tscn" id="2_elder"]
 [ext_resource type="Script" uid="uid://kcjdemeeph7e" path="res://scripts/world/old_ruins_trigger.gd" id="3_ruins_trigger"]
 [ext_resource type="Script" uid="uid://demd76vqc6vcu" path="res://scripts/world/encounter_trigger.gd" id="4_encounter_trigger"]
-[ext_resource type="Script" uid="uid://c8ykd7xiijnul" path="res://scripts/world/encounter_zone.gd" id="5_encounter_zone"]
 [ext_resource type="Script" uid="uid://dyji8h3i2ujmi" path="res://scripts/world/safe_zone.gd" id="6_safe_zone"]
-[ext_resource type="Resource" path="res://data/battle/tables/forest_table.tres" id="7_forest_table"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ForestBlock"]
 size = Vector2(400, 400)
@@ -37,9 +35,6 @@ size = Vector2(20, 2000)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_RuinsTrigger"]
 size = Vector2(160, 160)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ForestZone"]
-size = Vector2(2000, 2000)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_SafeZone"]
 size = Vector2(600, 600)
@@ -273,16 +268,6 @@ script = ExtResource("3_ruins_trigger")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OldRuins/OldRuinsTrigger" unique_id=1457966672]
 shape = SubResource("RectangleShape2D_RuinsTrigger")
 debug_color = Color(0.8, 0.6, 0.1, 0.2)
-
-[node name="ForestEncounterZone" type="Area2D" parent="." unique_id=489201084]
-position = Vector2(1000, 1000)
-collision_layer = 0
-script = ExtResource("5_encounter_zone")
-encounter_table = ExtResource("7_forest_table")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ForestEncounterZone" unique_id=1647262212]
-shape = SubResource("RectangleShape2D_ForestZone")
-debug_color = Color(0.1, 0.9, 0.1, 0.1)
 
 [node name="StartSafeZone" type="Area2D" parent="." unique_id=2138129075]
 position = Vector2(1000, 1000)
