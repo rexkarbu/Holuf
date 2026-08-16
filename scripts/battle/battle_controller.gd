@@ -720,8 +720,8 @@ func _process_player_attack(target: Combatant) -> void:
 		_set_state(State.TURN_START)
 
 func _execute_player_skill(skill: SkillData) -> void:
-	if not current_combatant.can_spend_mp(skill.mp_cost):
-		ui.add_log("Not enough MP.")
+	if not current_combatant.can_afford_skill(skill):
+		ui.add_log("Not enough resources.")
 		return
 	
 	match skill.target_type:
@@ -757,7 +757,7 @@ func _process_skill_attack(skill: SkillData, targets: Array[Combatant]) -> void:
 	if current_combatant.base_data.beast_skill != null and skill == current_combatant.base_data.beast_skill:
 		current_combatant.beast_used_this_battle = true
 		
-	current_combatant.spend_mp(skill.mp_cost)
+	current_combatant.spend_skill_cost(skill)
 	var boost = current_combatant.selected_boost_level
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0
@@ -817,7 +817,7 @@ func _process_skill_heal(skill: SkillData, targets: Array[Combatant]) -> void:
 	if current_combatant.base_data.beast_skill != null and skill == current_combatant.base_data.beast_skill:
 		current_combatant.beast_used_this_battle = true
 		
-	current_combatant.spend_mp(skill.mp_cost)
+	current_combatant.spend_skill_cost(skill)
 	var boost = current_combatant.selected_boost_level
 	current_combatant.current_bp -= boost
 	current_combatant.selected_boost_level = 0

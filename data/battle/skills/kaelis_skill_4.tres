@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "kaelis_skill_4"
 display_name = "Storm Sweep"
+cost_type = 0
 mp_cost = 14
+hp_cost_percent = 0.0
 damage_type = 4
 target_type = 2
 scaling_type = 0

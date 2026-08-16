@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "orin_skill_3"
 display_name = "Relentless Cut"
+cost_type = 1
 mp_cost = 12
+hp_cost_percent = 9.0
 damage_type = 9
 target_type = 0
 scaling_type = 0

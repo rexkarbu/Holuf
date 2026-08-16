@@ -310,7 +310,7 @@ func populate_skill_menu(skills: Array) -> void:
 		var skill = skills[i] as SkillData
 		if skill == null: continue
 		var label = Label.new()
-		label.text = "  %s (%d MP)" % [skill.display_name, skill.mp_cost]
+		label.text = "  %s%s" % [skill.display_name, _get_skill_cost_string(skill)]
 		label.add_theme_font_size_override("font_size", 18)
 		label.mouse_filter = Control.MOUSE_FILTER_STOP
 		label.mouse_entered.connect(_on_skill_hovered.bind(i))
@@ -325,14 +325,21 @@ func set_skill_selection(index: int, skills: Array) -> void:
 		var skill = skills[i] as SkillData
 		if skill == null: continue
 		if i == index:
-			label.text = "> %s (%d MP)" % [skill.display_name, skill.mp_cost]
+			label.text = "> %s%s" % [skill.display_name, _get_skill_cost_string(skill)]
 			label.add_theme_color_override("font_color", Color(1, 0.8, 0.2))
 		else:
-			label.text = "  %s (%d MP)" % [skill.display_name, skill.mp_cost]
+			label.text = "  %s%s" % [skill.display_name, _get_skill_cost_string(skill)]
 			label.add_theme_color_override("font_color", Color(1, 1, 1))
 
 func set_hint(text: String) -> void:
 	hint_label.text = text
+
+func _get_skill_cost_string(skill: SkillData) -> String:
+	if skill.cost_type == SkillData.CostType.HP_PERCENT:
+		return " (%d%% HP)" % roundi(skill.hp_cost_percent)
+	elif skill.cost_type == SkillData.CostType.MP:
+		return " (%d MP)" % skill.mp_cost
+	return ""
 
 # ==============================================================
 # BATTLE SPEED INDICATOR (M22)

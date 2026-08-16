@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "doran_skill_3"
 display_name = "Wide Cleave"
+cost_type = 1
 mp_cost = 12
+hp_cost_percent = 10.0
 damage_type = 10
 target_type = 2
 scaling_type = 0

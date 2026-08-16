@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "aren_skill_3"
 display_name = "Sweeping Blade"
+cost_type = 1
 mp_cost = 10
+hp_cost_percent = 8.0
 damage_type = 0
 target_type = 2
 scaling_type = 0

@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "lyra_skill_1"
 display_name = "Quick Fang"
+cost_type = 1
 mp_cost = 4
+hp_cost_percent = 4.0
 damage_type = 6
 target_type = 0
 scaling_type = 0

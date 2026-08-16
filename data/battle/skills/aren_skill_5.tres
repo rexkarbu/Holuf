@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "aren_skill_5"
 display_name = "Resolute Strike"
+cost_type = 1
 mp_cost = 12
+hp_cost_percent = 10.0
 damage_type = 0
 target_type = 0
 scaling_type = 0

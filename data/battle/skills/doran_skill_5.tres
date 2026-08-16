@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "doran_skill_5"
 display_name = "Overpower"
+cost_type = 1
 mp_cost = 15
+hp_cost_percent = 12.0
 damage_type = 10
 target_type = 0
 scaling_type = 0

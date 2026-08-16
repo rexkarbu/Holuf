@@ -99,6 +99,29 @@ func restore_mp(amount: int) -> void:
 		current_mp = effective_max_mp
 
 
+# ==============================================================
+# SKILL COST SYSTEM
+# ==============================================================
+
+func get_skill_hp_cost(skill: SkillData) -> int:
+	var hp_percent = skill.hp_cost_percent / 100.0
+	return ceili(float(get_effective_max_hp()) * hp_percent)
+
+func can_afford_skill(skill: SkillData) -> bool:
+	if skill.cost_type == SkillData.CostType.MP:
+		return can_spend_mp(skill.mp_cost)
+	elif skill.cost_type == SkillData.CostType.HP_PERCENT:
+		return current_hp > get_skill_hp_cost(skill)
+	return true
+
+func spend_skill_cost(skill: SkillData) -> void:
+	if skill.cost_type == SkillData.CostType.MP:
+		spend_mp(skill.mp_cost)
+	elif skill.cost_type == SkillData.CostType.HP_PERCENT:
+		var cost = get_skill_hp_cost(skill)
+		current_hp -= cost
+
+
 ## Proses weakness hit ke Shield.
 ## Mengembalikan true jika Break baru saja dipicu (shield baru mencapai 0).
 ## JANGAN panggil jika is_broken == true atau max_shield == 0.

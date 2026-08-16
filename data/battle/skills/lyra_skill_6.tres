@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "lyra_skill_6"
 display_name = "Whiteout"
+cost_type = 0
 mp_cost = 14
+hp_cost_percent = 0.0
 damage_type = 3
 target_type = 2
 scaling_type = 0

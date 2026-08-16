@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "sylven_skill_1"
 display_name = "Pinpoint Shot"
+cost_type = 1
 mp_cost = 7
+hp_cost_percent = 5.0
 damage_type = 1
 target_type = 0
 scaling_type = 0

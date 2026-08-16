@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "aelia_skill_1"
 display_name = "Aeris"
+cost_type = 0
 mp_cost = 6
+hp_cost_percent = 0.0
 damage_type = 15
 target_type = 0
 scaling_type = 1

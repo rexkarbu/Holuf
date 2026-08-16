@@ -8,7 +8,9 @@
 script = ExtResource("2_script")
 skill_id = "torga_skill_6"
 display_name = "Quake Swing"
+cost_type = 1
 mp_cost = 15
+hp_cost_percent = 10.0
 damage_type = 16
 target_type = 2
 scaling_type = 0
