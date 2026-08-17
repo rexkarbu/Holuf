@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "katsura_skill_2"
 display_name = "Frost Draw"
+required_level = 1
 cost_type = 0
 mp_cost = 8
 hp_cost_percent = 0.0

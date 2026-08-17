@@ -15,6 +15,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "katsura_skill_4"
 display_name = "Winter Reprisal"
+required_level = 6
 cost_type = 0
 mp_cost = 12
 hp_cost_percent = 0.0

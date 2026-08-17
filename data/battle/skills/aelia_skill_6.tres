@@ -6,6 +6,7 @@
 script = ExtResource("1_script")
 skill_id = "aelia_skill_6"
 display_name = "Soothing Breeze"
+required_level = 1
 cost_type = 0
 mp_cost = 8
 hp_cost_percent = 0.0

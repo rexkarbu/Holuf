@@ -15,6 +15,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "aelia_skill_5"
 display_name = "Tailwind"
+required_level = 15
 cost_type = 0
 mp_cost = 10
 hp_cost_percent = 0.0

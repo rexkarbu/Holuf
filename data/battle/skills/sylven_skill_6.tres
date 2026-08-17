@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "sylven_skill_6"
 display_name = "Rain of Arrows"
+required_level = 15
 cost_type = 1
 mp_cost = 15
 hp_cost_percent = 11.0

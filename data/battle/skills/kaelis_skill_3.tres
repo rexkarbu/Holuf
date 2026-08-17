@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "kaelis_skill_3"
 display_name = "Flashstep Thrust"
+required_level = 3
 cost_type = 1
 mp_cost = 6
 hp_cost_percent = 4.0

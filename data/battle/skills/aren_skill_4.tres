@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "aren_skill_4"
 display_name = "Blazing Arc"
+required_level = 6
 cost_type = 0
 mp_cost = 15
 hp_cost_percent = 0.0

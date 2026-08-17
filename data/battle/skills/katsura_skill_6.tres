@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "katsura_skill_6"
 display_name = "Moonlit Sever"
+required_level = 15
 cost_type = 1
 mp_cost = 20
 hp_cost_percent = 13.0

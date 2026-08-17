@@ -15,6 +15,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "sylven_skill_5"
 display_name = "Covering Fire"
+required_level = 10
 cost_type = 1
 mp_cost = 12
 hp_cost_percent = 8.0

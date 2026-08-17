@@ -22,6 +22,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "neria_skill_6"
 display_name = "Flowing Ward"
+required_level = 15
 cost_type = 0
 mp_cost = 10
 hp_cost_percent = 0.0

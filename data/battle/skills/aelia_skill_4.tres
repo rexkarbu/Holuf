@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "aelia_skill_4"
 display_name = "Aeralia"
+required_level = 10
 cost_type = 0
 mp_cost = 18
 hp_cost_percent = 0.0

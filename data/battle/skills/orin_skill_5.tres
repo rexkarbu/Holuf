@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "orin_skill_5"
 display_name = "Scorching Sweep"
+required_level = 10
 cost_type = 0
 mp_cost = 15
 hp_cost_percent = 0.0

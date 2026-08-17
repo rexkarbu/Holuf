@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "katsura_skill_5"
 display_name = "Measured Cut"
+required_level = 10
 cost_type = 1
 mp_cost = 9
 hp_cost_percent = 5.0

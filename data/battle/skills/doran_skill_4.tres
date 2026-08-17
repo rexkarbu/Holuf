@@ -8,6 +8,7 @@
 script = ExtResource("2_script")
 skill_id = "doran_skill_4"
 display_name = "Execution Swing"
+required_level = 6
 cost_type = 1
 mp_cost = 9
 hp_cost_percent = 7.0

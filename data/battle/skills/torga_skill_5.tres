@@ -15,6 +15,7 @@ chance = 1.0
 script = ExtResource("2_script")
 skill_id = "torga_skill_5"
 display_name = "Steady Ground"
+required_level = 10
 cost_type = 0
 mp_cost = 10
 hp_cost_percent = 0.0
