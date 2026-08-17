@@ -10,6 +10,7 @@ enum CostType { MP, HP_PERCENT, NONE }
 
 @export var skill_id: String = ""
 @export var display_name: String = "Skill"
+@export var required_level: int = 1
 @export var cost_type: CostType = CostType.MP
 @export var mp_cost: int = 0
 @export var hp_cost_percent: float = 0.0

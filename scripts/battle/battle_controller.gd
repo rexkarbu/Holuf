@@ -188,9 +188,10 @@ func _set_state(new_state: State) -> void:
 		State.PLAYER_SKILL_SELECT:
 			skill_index = 0
 			ui.show_commands(false)
-			ui.populate_skill_menu(current_combatant.base_data.skills)
-			if current_combatant.base_data.skills.size() > 0:
-				ui.set_skill_selection(skill_index, current_combatant.base_data.skills)
+			var unlocked_skills = _get_unlocked_skills(current_combatant)
+			ui.populate_skill_menu(unlocked_skills)
+			if unlocked_skills.size() > 0:
+				ui.set_skill_selection(skill_index, unlocked_skills)
 			ui.show_skills(true)
 			ui.clear_enemy_target_indicator(enemies)
 			ui.set_hint("Press ESC to cancel")
@@ -530,7 +531,7 @@ func _unhandled_input(event: InputEvent) -> void:
 				get_viewport().set_input_as_handled()
 				_execute_player_command()
 		State.PLAYER_SKILL_SELECT:
-			var skills = current_combatant.base_data.skills
+			var skills = _get_unlocked_skills(current_combatant)
 			if event.is_action_pressed("ui_cancel"):
 				get_viewport().set_input_as_handled()
 				_set_state(State.PLAYER_COMMAND)
@@ -719,7 +720,20 @@ func _process_player_attack(target: Combatant) -> void:
 	else:
 		_set_state(State.TURN_START)
 
+func _get_unlocked_skills(combatant: Combatant) -> Array[SkillData]:
+	var unlocked: Array[SkillData] = []
+	for skill in combatant.base_data.skills:
+		if skill != null and skill is SkillData:
+			if skill.required_level <= combatant.get_level():
+				unlocked.append(skill)
+	return unlocked
+
 func _execute_player_skill(skill: SkillData) -> void:
+	if skill.required_level > current_combatant.get_level():
+		ui.add_log("%s is not unlocked yet." % skill.display_name)
+		_set_state(State.PLAYER_SKILL_SELECT)
+		return
+		
 	if not current_combatant.can_afford_skill(skill):
 		ui.add_log("Not enough resources.")
 		return
@@ -1153,15 +1167,15 @@ func _on_ui_command_clicked(index: int) -> void:
 
 func _on_ui_skill_hovered(index: int) -> void:
 	if current_state == State.PLAYER_SKILL_SELECT:
-		var skills = current_combatant.base_data.skills
-		if skills.size() > 0:
+		var skills = _get_unlocked_skills(current_combatant)
+		if skills.size() > 0 and index >= 0 and index < skills.size():
 			skill_index = index
 			ui.set_skill_selection(skill_index, skills)
 
 func _on_ui_skill_clicked(index: int) -> void:
 	if current_state == State.PLAYER_SKILL_SELECT:
-		var skills = current_combatant.base_data.skills
-		if skills.size() > 0:
+		var skills = _get_unlocked_skills(current_combatant)
+		if skills.size() > 0 and index >= 0 and index < skills.size():
 			skill_index = index
 			ui.set_skill_selection(skill_index, skills)
 			_execute_player_skill(skills[skill_index])
