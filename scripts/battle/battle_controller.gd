@@ -1010,6 +1010,7 @@ func _process_enemy_turn() -> void:
 	
 	# --- Basic Enemy AI: action selection (70% Basic / 30% Skill) ---
 	var action = EnemyAI.choose_action(enemy_actor, enemy_ai_mode)
+	var actual_targets_hit: Array[Combatant] = []
 	
 	if action["type"] == "skill":
 		var skill: SkillData = action["skill"]
@@ -1022,6 +1023,8 @@ func _process_enemy_turn() -> void:
 					targets_to_hit.append(p)
 		else:
 			targets_to_hit.append(target)
+			
+		actual_targets_hit = targets_to_hit
 			
 		if targets_to_hit.size() > 1:
 			ui.add_log("%s uses %s!" % [enemy_actor.get_display_name(), skill.display_name])
@@ -1047,6 +1050,7 @@ func _process_enemy_turn() -> void:
 		# Basic Attack
 		var result = _calculate_damage(enemy_actor, target, DamageType.Type.SWORD, 1.0, false, 0)  # Enemies don't use boost
 		target.take_damage(result.amount)
+		actual_targets_hit = [target]
 		_update_all_hp_mp_ui()
 		_arena_update_party_highlights()
 		ui.add_log("%s attacks %s for %d damage!" % [
@@ -1055,7 +1059,7 @@ func _process_enemy_turn() -> void:
 			result.amount
 		])
 	
-	await _process_counter_attacks(enemy_actor, [target])
+	await _process_counter_attacks(enemy_actor, actual_targets_hit)
 	await BattleSpeed.wait(0.8)
 	
 	if _check_defeat():
