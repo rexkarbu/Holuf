@@ -103,8 +103,8 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
 | **M45** | ✅ CLOSED  | Combat Resource Economy Audit | REBUILT from locked/current history |
-| **M46** | ✅ CLOSED  | Combat Resource Economy Implementation | REBUILT from locked/current history |
-| **M47** | ✅ CLOSED  | Alexandria Boss — Ancient Magical Guardian | REBUILT from locked/current history |
+| **M46** | ✅ CLOSED | Combat Resource Economy Implementation | REBUILT from locked/current history |
+| **M47** | ✅ CLOSED | Alexandria Boss — Ancient Magical Guardian | REBUILT from locked/current history |
 | **M48** | ✅ CLOSED | Mongreaux Regular Enemy Content | REBUILT from locked/current history |
 | **M49** | ✅ CLOSED | Mongreaux Organization / Boss Content | REBUILT from locked/current history |
 | **M50** | ✅ CLOSED | Kamikoto Regular / Altered Enemy Content | REBUILT from locked/current history |
@@ -112,12 +112,22 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M52** | ✅ CLOSED | Aetherion Altered Enemy Content | REBUILT from locked/current history |
 | **M53** | ✅ CLOSED | Final Boss Phase 1 — Lucien / The Architect | REBUILT from locked/current history |
 | **M54** | ✅ CLOSED | Final Boss Phase 2 — Architect + Spatial Core | REBUILT from locked/current history |
-| **M55** | 🔵 CURRENT | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
-| **M56** | ⏳ PENDING | Level-Based Skill Unlock — Data Foundation | REBUILT from locked/current history |
-| **M57** | ⏳ PENDING | Level-Based Skill Unlock — 60 Skill Level Table | REBUILT from locked/current history |
+| **M55** | ✅ CLOSED | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
+| **M56** | ✅ CLOSED | Level-Based Skill Unlock — Data Foundation | REBUILT from locked/current history |
+| **M57** | ✅ CLOSED | Level-Based Skill Unlock — 60 Skill Level Table | REBUILT from locked/current history |
 | **M58** | ⏳ PENDING | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
 | **M59** | ⏳ PENDING | Join-Level Rule + Reserve + Save/Load Compatibility | REBUILT from locked/current history |
 | **M60** | ⏳ PENDING | Skill Progression Full Regression | REBUILT from locked/current history |
+| **M60.5** | ⏳ PENDING | Save Safety + Autosave / Backup Foundation | USER-ADDED release-critical gate |
+
+### M60.5 Save Safety Direction
+
+- Keep manual Save/Load as a primary player-facing feature; do not replace it with autosave-only behavior.
+- Add safe/atomic save-writing behavior where practical so interrupted writes are less likely to destroy the only usable save.
+- Add a minimal backup/recovery path for the most recent valid save.
+- Add autosave/checkpoint hooks only at safe boundaries such as major story progression, region/map transitions, or explicitly approved checkpoints; never autosave mid-battle.
+- Preserve party, inventory, progression, world position/state, and future skill-unlock compatibility.
+- This is a reliability milestone, not a new progression/gameplay system.
 
 ## FINAL WORLD + CHARACTER PRODUCTION FOUNDATION
 
@@ -138,6 +148,15 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M73** | ⏳ PENDING | Climbable Ledges V1 — One-Ledge Prototype | REBUILT future roadmap |
 | **M74** | ⏳ PENDING | Drop-Down Ledge + Anti-Stuck / Escape Refinement | REBUILT future roadmap |
 | **M75** | ⏳ PENDING | World Foundation Regression Gate | REBUILT future roadmap |
+| **M75.5** | ⏳ PENDING | Combat Tutorial / Help Guide Integration Gate | USER-ADDED release-critical gate |
+
+### M75.5 Tutorial / Help Direction
+
+- Verify the prologue teaches the systems the player actually needs before regional production scales up.
+- Cover Attack, Skill, Weakness, BREAK/Broken, Boost, Defend, Item, Flee, Counter, and BEAST only when those mechanics become relevant.
+- Prefer short contextual teaching plus an optional reusable Help/Combat Guide over repeated mandatory tutorials.
+- Do not add a large lore codex or encyclopedia as part of this milestone.
+- Validate that a fresh player can understand core combat without outside documentation.
 
 ## ELARIS VERTICAL SLICE — FIRST PLACE ONLY
 
@@ -301,48 +320,76 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M201** | ⏳ PENDING | Save / Load Final UI | REBUILT future roadmap |
 | **M202** | ⏳ PENDING | Options / Settings Menu | REBUILT future roadmap |
 | **M203** | ⏳ PENDING | Keyboard / Controller / Accessibility Pass | REBUILT future roadmap |
+| **M203.5** | ⏳ PENDING | Battle Log + Combat Readability UX Pass | USER-ADDED release-critical gate |
 | **M204** | ⏳ PENDING | Battle VFX Pass | REBUILT future roadmap |
 | **M205** | ⏳ PENDING | World VFX Pass | REBUILT future roadmap |
 | **M206** | ⏳ PENDING | Battle SFX Pass | REBUILT future roadmap |
 | **M207** | ⏳ PENDING | World Ambience + SFX Pass | REBUILT future roadmap |
 | **M208** | ⏳ PENDING | Music Integration Pass | REBUILT future roadmap |
-| **M209** | ⏳ PENDING | Dialogue / Cutscene Presentation Polish | REBUILT future roadmap |
-| **M210** | ⏳ PENDING | Text / Naming / Localization Consistency Pass | REBUILT future roadmap |
+| **M209** | ⏳ PENDING | 8-Bit Character/NPC Dialogue Voice System | USER-ADDED future roadmap |
+| **M210** | ⏳ PENDING | Dialogue Voice Profiles + Custom Asset Integration | USER-ADDED future roadmap |
+| **M211** | ⏳ PENDING | Dialogue / Cutscene Presentation Polish | REBUILT future roadmap |
+| **M212** | ⏳ PENDING | Text / Naming / Localization Consistency Pass | REBUILT future roadmap |
+
+### M203.5 Combat Readability Direction
+
+- Fix cases where battle feedback is technically correct but too easy to miss, including important action/target/counter/weakness/BREAK information being overwritten too quickly.
+- Ensure the player can understand what happened without needing debug output.
+- Keep the final HUD readable at battle speeds used by players.
+- This is a presentation/UX pass; do not redesign the combat rules here.
+
+### M209–M210 Voice Direction
+
+- Dialogue uses short retro 8-bit/bleep-style character voices rather than full spoken voice acting.
+- Inspiration target: expressive per-character dialogue bleeps in the spirit of games such as Undertale / Deltarune, while using original Holuf-made audio assets.
+- User will create the actual character/NPC voice samples.
+- M209 scope: reusable playback system tied to dialogue text, per-character/NPC voice assignment, sensible character cadence, punctuation pauses, pitch/variation controls, and safe fallback when no voice is assigned.
+- M210 scope: integrate the user's custom voice samples, define per-character/NPC voice profiles, tune volume/pitch/cadence, and verify dialogue/cutscene compatibility.
+- Voice playback should be configurable/mutable through audio/options settings rather than hard-coded into individual dialogue lines.
 
 ## FINAL QA / RELEASE CANDIDATE
 
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
-| **M211** | ⏳ PENDING | Full Save / Load Regression | REBUILT future roadmap |
-| **M212** | ⏳ PENDING | Full Combat Regression | REBUILT future roadmap |
-| **M213** | ⏳ PENDING | Progression + Resource Economy Balance Pass | REBUILT future roadmap |
-| **M214** | ⏳ PENDING | Regular Encounter + Boss Balance Pass | REBUILT future roadmap |
-| **M215** | ⏳ PENDING | World Traversal / Collision / Ledge Regression | REBUILT future roadmap |
-| **M216** | ⏳ PENDING | Story Progression + Cutscene Regression | REBUILT future roadmap |
-| **M217** | ⏳ PENDING | Performance + Loading + Memory Pass | REBUILT future roadmap |
-| **M218** | ⏳ PENDING | Export / Build Smoke Test | REBUILT future roadmap |
-| **M219** | ⏳ PENDING | Full Main-Story ~10h Playtest + Final Tuning | REBUILT future roadmap |
-| **M220** | ⏳ PENDING | Release Candidate / Master Completion Gate | REBUILT future roadmap |
+| **M213** | ⏳ PENDING | Full Save / Load Regression | REBUILT future roadmap |
+| **M214** | ⏳ PENDING | Full Combat Regression | REBUILT future roadmap |
+| **M215** | ⏳ PENDING | Progression + Resource Economy Balance Pass | REBUILT future roadmap |
+| **M216** | ⏳ PENDING | Regular Encounter + Boss Balance Pass | REBUILT future roadmap |
+| **M217** | ⏳ PENDING | World Traversal / Collision / Ledge Regression | REBUILT future roadmap |
+| **M218** | ⏳ PENDING | Story Progression + Cutscene Regression | REBUILT future roadmap |
+| **M219** | ⏳ PENDING | Performance + Loading + Memory Pass | REBUILT future roadmap |
+| **M219.5** | ⏳ PENDING | Asset License / Attribution / AI Provenance Audit | USER-ADDED release-critical gate |
+| **M220** | ⏳ PENDING | Export / Build Smoke Test | REBUILT future roadmap |
+| **M221** | ⏳ PENDING | Full Main-Story ~10h Playtest + Final Tuning | REBUILT future roadmap |
+| **M221.5** | ⏳ PENDING | Fresh-Player Blind Playtest + Onboarding Fix Gate | USER-ADDED release-critical gate |
+| **M222** | ⏳ PENDING | Release Candidate / Master Completion Gate | REBUILT future roadmap |
+
+### M219.5 License / Provenance Direction
+
+- Audit every third-party or AI-assisted asset intended for the shipping build: music, SFX, fonts, plugins, images, reference-derived assets, and other licensed material.
+- Record source/provider, plan/license used, commercial-use permission, attribution requirement, and any restrictions.
+- For AI-generated music, retain the generation/account/license evidence appropriate to the provider used at creation time.
+- Replace or remove anything whose commercial-use status cannot be established confidently before export/release.
+
+### M221.5 Blind Playtest Direction
+
+- Have at least one tester who has not followed development play from the beginning without developer coaching.
+- Record confusion around controls, tutorials, objectives, navigation, save behavior, menus, battle feedback, difficulty spikes, and progression.
+- Fix release-blocking onboarding/clarity issues only; do not use this milestone to add new major systems.
 
 ---
 
-## CURRENT DETAIL — M45
+## CURRENT DETAIL — M55
 
-**M45 — Combat Resource Economy Audit** is the active task. No implementation should be committed until the audit is reviewed.
+**M55 — Enemy / Boss Global Regression Closure** is the active milestone.
 
-Locked direction:
-- Basic Attack remains free.
-- Selected physical/weapon offensive skills use HP_PERCENT.
-- Magic/heal/support remain MP.
-- HP cost = ceil(effective Max HP × percentage).
-- HP-cost skills cannot self-KO.
-- MP pools/growth will be made more sustainable.
-- BEAST remains MP.
-- Spirit Tonic is reviewed after the new pools/costs are proposed.
-
-M45 exit gate: **audit report → design review → approval → M46 implementation**.
-
----
+Current focus:
+- Global regular-enemy and boss runtime regression.
+- Permanent enemy AoE Counter targeting fix in `scripts/battle/battle_controller.gd`.
+- Preserve M54 Lucien Phase 1 → The Architect + Spatial Core Phase 2 transition behavior.
+- Temporary testing routers / FAST encounter scaffolding must be removed before the final M55 commit.
+- `scripts/party/party_manager.gd` Lv50 test override remains local and must not be staged/committed unless the user explicitly changes that instruction.
+- Final M55 production commit should contain only intended permanent M55 production changes.
 
 ## DO-NOT-FORGET BACKLOG
 
@@ -362,4 +409,7 @@ For each milestone: **implement → manual test → fix → commit/push → mark
 
 ## CHANGELOG
 
+- **2026-08-17:** Added release-critical gates without renumbering the main roadmap: **M60.5 Save Safety + Autosave/Backup**, **M75.5 Combat Tutorial/Help Gate**, **M203.5 Battle Log/Combat Readability UX**, **M219.5 Asset License/Attribution/AI Provenance Audit**, and **M221.5 Fresh-Player Blind Playtest**. Updated current tracker focus to **M55**.
+
+- **2026-08-16:** Added **M209 8-Bit Character/NPC Dialogue Voice System** and **M210 Dialogue Voice Profiles + Custom Asset Integration**; shifted the former M209–M220 forward by two; roadmap now ends at **M222**.
 - **2026-08-16:** Recovered/rebuilt M1–M220; corrected current position from the temporary P-series tracker to **M45**; added **Climbable Ledges V1 at M73**; preserved one-region-at-a-time production.
