@@ -9,6 +9,14 @@ extends Node
 ##   N = Load Game (hanya saat di world)
 
 const SAVE_PATH := "user://save_01.json"
+const SAVE_TEMP_PATH := "user://save_01.tmp"
+const SAVE_BACKUP_PATH := "user://save_01_backup.json"
+const SAVE_RECOVERY_TEMP_PATH := "user://save_01_recovery.tmp"
+
+const SAVE_AUTOSAVE_PATH := "user://save_01_autosave.json"
+const SAVE_AUTOSAVE_BACKUP_PATH := "user://save_01_autosave_backup.json"
+const SAVE_AUTOSAVE_TEMP_PATH := "user://save_01_autosave.tmp"
+
 const SAVE_VERSION := 2
 
 ## Flag untuk pending load (diapply setelah scene world dimuat ulang)
@@ -16,11 +24,21 @@ var _has_pending_load: bool = false
 var _pending_data: Dictionary = {}
 
 # ==============================================================
+# M60.5 STEP 2A RUNTIME DIAGNOSTIC TEMP
+# ==============================================================
+func _ready() -> void:
+	print("[M60.5 DIAG] SaveManager Step2A diagnostic loaded")
+	print("[M60.5 DIAG] user_dir=", ProjectSettings.globalize_path("user://"))
+	print("[M60.5 DIAG] primary=", ProjectSettings.globalize_path(SAVE_PATH))
+	print("[M60.5 DIAG] temp=", ProjectSettings.globalize_path(SAVE_TEMP_PATH))
+	print("[M60.5 DIAG] backup=", ProjectSettings.globalize_path(SAVE_BACKUP_PATH))
+
+# ==============================================================
 # PUBLIC API
 # ==============================================================
 
 func has_save() -> bool:
-	return FileAccess.file_exists(SAVE_PATH)
+	return FileAccess.file_exists(SAVE_PATH) or FileAccess.file_exists(SAVE_BACKUP_PATH)
 
 ## Mulai New Game: reset semua runtime state ke default.
 ## TIDAK menghapus save file yang ada.
@@ -39,19 +57,106 @@ func save_game(player_node: Node) -> bool:
 	if _is_in_battle():
 		push_warning("[SaveManager] Cannot save during battle.")
 		return false
+	if player_node == null or not is_instance_valid(player_node):
+		push_error("[SaveManager] save_game failed: invalid player node.")
+		return false
+
+	print("[M60.5 DIAG] save_game ENTER")
+	print("[M60.5 DIAG] player_position=", player_node.global_position)
+	print("[M60.5 DIAG] primary_exists_before=", FileAccess.file_exists(SAVE_PATH))
+	print("[M60.5 DIAG] backup_exists_before=", FileAccess.file_exists(SAVE_BACKUP_PATH))
 
 	var data := _collect_save_data(player_node)
+	
+	var success := _write_transactional_save(data, SAVE_PATH, SAVE_BACKUP_PATH, SAVE_TEMP_PATH, "[M60.5 DIAG]")
+	if success:
+		print("[M60.5 DIAG] save_game RETURN TRUE")
+		print("[SaveManager] Game saved successfully.")
+	return success
+
+func request_checkpoint_autosave(reason: String = "") -> bool:
+	print("[M60.5 CHECKPOINT] request reason=%s" % reason)
+
+	if GameManager.is_transitioning:
+		push_warning("[M60.5 CHECKPOINT] rejected: transition active.")
+		return false
+
+	var player_node := get_tree().get_first_node_in_group("player")
+	if player_node == null:
+		push_warning("[M60.5 CHECKPOINT] rejected: no active world player.")
+		return false
+
+	print("[M60.5 CHECKPOINT] forwarding to autosave")
+	var result := request_autosave(player_node)
+	print("[M60.5 CHECKPOINT] result=", result)
+	return result
+
+func request_autosave(player_node: Node) -> bool:
+	if _is_in_battle():
+		push_warning("[M60.5 AUTOSAVE] rejected: battle active.")
+		return false
+	if player_node == null or not is_instance_valid(player_node):
+		push_error("[M60.5 AUTOSAVE] rejected: invalid player node.")
+		return false
+
+	print("[M60.5 AUTOSAVE] request received")
+	print("[M60.5 AUTOSAVE] player_position=", player_node.global_position)
+	print("[M60.5 AUTOSAVE] primary_exists_before=", FileAccess.file_exists(SAVE_AUTOSAVE_PATH))
+	print("[M60.5 AUTOSAVE] backup_exists_before=", FileAccess.file_exists(SAVE_AUTOSAVE_BACKUP_PATH))
+
+	var data := _collect_save_data(player_node)
+	
+	var success := _write_transactional_save(data, SAVE_AUTOSAVE_PATH, SAVE_AUTOSAVE_BACKUP_PATH, SAVE_AUTOSAVE_TEMP_PATH, "[M60.5 AUTOSAVE]")
+	if success:
+		print("[M60.5 AUTOSAVE] RETURN TRUE")
+		print("[M60.5 AUTOSAVE] completed successfully")
+	return success
+
+func _write_transactional_save(data: Dictionary, primary_path: String, backup_path: String, temp_path: String, log_prefix: String) -> bool:
 	var json_string := JSON.stringify(data, "\t")
 
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	var file := FileAccess.open(temp_path, FileAccess.WRITE)
 	if file == null:
-		push_error("[SaveManager] Failed to open save file for writing: %s" % SAVE_PATH)
+		push_error("[SaveManager] Failed to open temp save file for writing: %s" % temp_path)
 		return false
 
 	file.store_string(json_string)
 	file.close()
+	
+	var temp_data := _read_valid_save_file(temp_path)
+	if temp_data.is_empty():
+		push_error("[SaveManager] Temp save validation failed. Aborting save.")
+		DirAccess.remove_absolute(temp_path)
+		return false
+		
+	print("%s temp validated" % log_prefix)
+		
+	if FileAccess.file_exists(primary_path):
+		var primary_data := _read_valid_save_file(primary_path)
+		if not primary_data.is_empty():
+			print("%s existing primary validated" % log_prefix)
+			var copy_err := DirAccess.copy_absolute(primary_path, backup_path)
+			if copy_err != OK:
+				push_error("[SaveManager] Backup rotation failed. Error: %s" % copy_err)
+				DirAccess.remove_absolute(temp_path)
+				return false
+			print("%s backup rotation succeeded" % log_prefix)
+		else:
+			print("%s existing primary invalid; backup rotation skipped" % log_prefix)
+			push_warning("[SaveManager] Existing primary save is malformed. Preserving old backup.")
+			
+	var prom_err := DirAccess.rename_absolute(temp_path, primary_path)
+	if prom_err != OK:
+		push_error("[SaveManager] Temp promotion failed. Error: %s" % prom_err)
+		return false
+	print("%s temp promotion succeeded" % log_prefix)
+		
+	var final_data := _read_valid_save_file(primary_path)
+	if final_data.is_empty():
+		push_error("[SaveManager] Final primary verification failed.")
+		return false
 
-	print("[SaveManager] Game saved successfully.")
+	print("%s final primary validated" % log_prefix)
 	return true
 
 ## Load game state dari file.
@@ -63,14 +168,81 @@ func load_game() -> bool:
 		push_warning("[SaveManager] Cannot load during battle.")
 		return false
 
-	if not has_save():
-		print("[SaveManager] No save data found.")
+	print("[M60.5 DIAG] load_game ENTER")
+	print("[M60.5 DIAG] primary_exists=", FileAccess.file_exists(SAVE_PATH))
+	print("[M60.5 DIAG] backup_exists=", FileAccess.file_exists(SAVE_BACKUP_PATH))
+
+	var candidate_data: Dictionary = {}
+	
+	if FileAccess.file_exists(SAVE_PATH):
+		candidate_data = _read_valid_save_file(SAVE_PATH)
+		if not candidate_data.is_empty():
+			print("[M60.5 DIAG] load candidate=PRIMARY")
+		else:
+			print("[M60.5 RECOVERY] primary invalid")
+	else:
+		print("[M60.5 RECOVERY] primary missing")
+		
+	if candidate_data.is_empty() and FileAccess.file_exists(SAVE_BACKUP_PATH):
+		print("[M60.5 RECOVERY] trying backup")
+		push_warning("[SaveManager] Primary save is invalid. Attempting backup recovery.")
+		candidate_data = _attempt_backup_recovery()
+		
+	if candidate_data.is_empty():
+		push_warning("[SaveManager] Backup recovery failed: backup is missing or invalid.")
+		print("[SaveManager] No valid save data found.")
 		return false
 
-	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
+	# Simpan sebagai pending — akan diapply setelah scene world siap
+	_pending_data = candidate_data
+	_has_pending_load = true
+
+	# Reload world scene
+	TransitionManager.transition_to_scene("res://scenes/main/main.tscn")
+	return true
+
+func _attempt_backup_recovery() -> Dictionary:
+	var backup_data := _read_valid_save_file(SAVE_BACKUP_PATH)
+	if backup_data.is_empty():
+		return {}
+	
+	print("[M60.5 RECOVERY] backup validated")
+	
+	var copy_err := DirAccess.copy_absolute(SAVE_BACKUP_PATH, SAVE_RECOVERY_TEMP_PATH)
+	if copy_err != OK:
+		push_error("[SaveManager] Failed to create recovery temp.")
+		return {}
+		
+	print("[M60.5 RECOVERY] recovery temp created")
+	
+	var temp_data := _read_valid_save_file(SAVE_RECOVERY_TEMP_PATH)
+	if temp_data.is_empty():
+		push_error("[SaveManager] Recovery temp validation failed.")
+		return {}
+		
+	print("[M60.5 RECOVERY] recovery temp validated")
+	
+	var prom_err := DirAccess.rename_absolute(SAVE_RECOVERY_TEMP_PATH, SAVE_PATH)
+	if prom_err != OK:
+		push_error("[SaveManager] Failed to promote recovered save to primary.")
+		return {}
+		
+	print("[M60.5 RECOVERY] primary restoration succeeded")
+	
+	var final_data := _read_valid_save_file(SAVE_PATH)
+	if final_data.is_empty():
+		push_error("[SaveManager] Restored primary validation failed.")
+		return {}
+		
+	print("[M60.5 RECOVERY] restored primary validated")
+	print("[M60.5 RECOVERY] recovery complete")
+	
+	return final_data
+
+func _read_valid_save_file(path: String) -> Dictionary:
+	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
-		push_error("[SaveManager] Failed to open save file for reading.")
-		return false
+		return {}
 
 	var json_string := file.get_as_text()
 	file.close()
@@ -78,25 +250,16 @@ func load_game() -> bool:
 	var json := JSON.new()
 	var parse_result := json.parse(json_string)
 	if parse_result != OK:
-		push_error("[SaveManager] JSON parse error in save file: %s" % json.get_error_message())
-		return false
+		return {}
 
 	var data = json.get_data()
 	if not data is Dictionary:
-		push_error("[SaveManager] Save file root is not a Dictionary.")
-		return false
+		return {}
 
 	if not _validate_save_data(data):
-		push_error("[SaveManager] Save file validation failed. Aborting load.")
-		return false
+		return {}
 
-	# Simpan sebagai pending — akan diapply setelah scene world siap
-	_pending_data = data
-	_has_pending_load = true
-
-	# Reload world scene
-	TransitionManager.transition_to_scene("res://scenes/main/main.tscn")
-	return true
+	return data
 
 ## Dipanggil dari main.gd setelah scene world siap.
 ## Apply semua saved state ke Autoloads.
