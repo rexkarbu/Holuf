@@ -2,7 +2,7 @@ extends CanvasLayer
 
 ## PartyUI — UI Manajemen Party sederhana berbasis teks.
 ## Dibuka dari World scene menggunakan tombol T.
-## R = Remove Active Member | Enter = Select/Add/Swap | Esc/T = Close/Cancel
+## R = Remove Active Member | Enter = Select/Add/Swap | X/T = Close/Cancel
 
 var bg: ColorRect
 var active_vbox: VBoxContainer
@@ -38,7 +38,7 @@ func _init() -> void:
 	add_child(title)
 	
 	var hint = Label.new()
-	hint.text = "[W/S] Navigate   [A/D] Switch Column   [Enter] Select/Add   [R] Remove   [T/Esc] Close"
+	hint.text = "[W/S] Navigate   [A/D] Switch Column   [Enter] Select/Add   [R] Remove   [T/X] Close"
 	hint.add_theme_font_size_override("font_size", 16)
 	hint.position = Vector2(0, 650)
 	hint.size = Vector2(1280, 50)

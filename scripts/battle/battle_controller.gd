@@ -194,7 +194,7 @@ func _set_state(new_state: State) -> void:
 				ui.set_skill_selection(skill_index, unlocked_skills)
 			ui.show_skills(true)
 			ui.clear_enemy_target_indicator(enemies)
-			ui.set_hint("Press ESC to cancel")
+			ui.set_hint("Press X to cancel")
 		State.PLAYER_ITEM_SELECT:
 			item_index = 0
 			ui.show_commands(false)
@@ -204,7 +204,7 @@ func _set_state(new_state: State) -> void:
 				ui.set_item_selection(item_index, items)
 			ui.show_items(true)
 			ui.clear_enemy_target_indicator(enemies)
-			ui.set_hint("Press ESC to cancel")
+			ui.set_hint("Press X to cancel")
 		State.PLAYER_TARGET_SELECT:
 			ui.show_commands(false)
 			ui.show_skills(false)
@@ -212,14 +212,14 @@ func _set_state(new_state: State) -> void:
 			_ensure_valid_target_selection()
 			ui.set_enemy_target_indicator(selected_target_index, enemies)
 			_arena_update_enemy_target(selected_target_index)
-			ui.set_hint("Select Target / ESC to cancel")
+			ui.set_hint("Select Target / X to cancel")
 		State.ALLY_TARGET_SELECT:
 			ui.show_commands(false)
 			ui.show_skills(false)
 			ui.show_items(false)
 			_ensure_valid_ally_target_selection()
 			ui.set_ally_target_indicator(selected_target_index, players)
-			ui.set_hint("Select Ally / ESC to cancel")
+			ui.set_hint("Select Ally / X to cancel")
 		State.ENEMY_ACTION:
 			ui.set_turn_title("ENEMY TURN")
 			ui.show_commands(false)

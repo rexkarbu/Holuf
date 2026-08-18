@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 ## InventoryUI — UI sederhana untuk menampilkan isi inventory.
-## M27: Dipanggil dari Pause Menu. ESC menutup UI ini.
+## M27: Dipanggil dari Pause Menu. X menutup UI ini.
 ## process_mode = Node.PROCESS_MODE_ALWAYS agar merespon input saat dipause.
 
 var _bg: ColorRect
@@ -26,7 +26,7 @@ func _init() -> void:
 	add_child(title)
 	
 	var hint = Label.new()
-	hint.text = "[Esc] Close"
+	hint.text = "[X] Close"
 	hint.add_theme_font_size_override("font_size", 16)
 	hint.position = Vector2(0, 650)
 	hint.size = Vector2(1280, 50)

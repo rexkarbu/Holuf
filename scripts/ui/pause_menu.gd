@@ -101,14 +101,14 @@ func _build_confirmation() -> void:
 # ==============================================================
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("pause_menu"):
 		if visible:
-			# Jika Settings terbuka, abaikan input ini agar ditangani oleh SettingsUI
-			if has_node("SettingsUI") or has_node("EquipmentUI"):
+			# Jika child UI terbuka, abaikan input ESC agar tidak menutup pause menu
+			if has_node("SettingsUI") or has_node("EquipmentUI") or has_node("InventoryUI"):
 				return
 			
 			# Jika Confirmation terbuka, ui_cancel akan menutup dialog itu otomatis,
-			# tapi jangan menutup menu pause.
+			# tapi ESC jangan menutup menu pause.
 			if _confirm_dialog.visible:
 				return
 				

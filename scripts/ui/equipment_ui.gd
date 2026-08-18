@@ -170,7 +170,7 @@ func _build_ui() -> void:
 
 	# Hint bar
 	_hint_label = Label.new()
-	_hint_label.text = "[Esc/Back] Close     [Enter/Click] Select"
+	_hint_label.text = "[X/Back] Close     [Enter/Click] Select"
 	_hint_label.add_theme_font_size_override("font_size", 14)
 	_hint_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.55))
 	_hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER

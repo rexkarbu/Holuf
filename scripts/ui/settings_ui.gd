@@ -60,7 +60,7 @@ func _build_ui() -> void:
 	add_child(title)
 	
 	var hint = Label.new()
-	hint.text = "[Esc/Back] Close and Save   [Enter/Click] Interact"
+	hint.text = "[X/Back] Close and Save   [Enter/Click] Interact"
 	hint.add_theme_font_size_override("font_size", 16)
 	hint.position = Vector2(0, 680)
 	hint.size = Vector2(1280, 30)
