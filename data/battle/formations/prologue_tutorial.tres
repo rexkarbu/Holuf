@@ -8,4 +8,4 @@ script = ExtResource("1_script")
 formation_id = "prologue_tutorial"
 enemies = Array[Resource]([ExtResource("2_enemy"), ExtResource("2_enemy")])
 weight = 10
-can_flee = true
+can_flee = false
