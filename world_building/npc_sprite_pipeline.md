@@ -25,19 +25,20 @@ Not every background NPC needs a full 4-directional walk cycle. To keep the 10-h
 - **MOVING / STORY NPC:** `Idle` + `Walk` in 4-Directions (Down, Up, Right, Left).
 
 ## 4. Race Silhouette Rules (Race != Nationality)
-Do not create regional stereotypes (e.g., "all Lorel NPCs are Humans"). Race is biological; clothing is regional.
-- **Human:** Standard 32x48 neutral baseline.
-- **Elf:** Taller/leaner tendencies, pointed ears (may use 1-2px overflow).
-- **Beast:** Highly variable (ears, tails, horns). Broad-shouldered Beasts may tightly fill the 32x48 boundary or spill into the 48x64 overflow. Canonical variation must be respected without inventing unconfirmed anatomy.
+Do not create regional stereotypes (e.g., "all Lorel NPCs are Humans"). Race identity != Universal body template. Production flexibility != Canonical anatomy.
+
+- **Human:** Use the standard humanoid production baseline defined by M62 (32x48 px). Do not imply every Human has identical proportions.
+- **Elf:** Elf remains a distinct canonical race. However, specific anatomy (universal taller stature, universal leaner body, specific ear length/shape) is **DEFERRED TO CHARACTER / NPC FINAL VISUAL DESIGN** because canon is underspecified. The pipeline only guarantees that future Elf designs CAN be supported within the 32x48 body frame (and ~48x64 overflow) without hard-locking unconfirmed anatomy now.
+- **Beast:** Beast remains a distinct canonical race. However, do NOT state that all Beasts universally possess ears, tails, horns, muzzles, or specific body widths unless canon explicitly establishes them for that individual. **Race != Culture != Individual.** Detailed Beast anatomy is **DEFERRED TO CHARACTER / NPC FINAL VISUAL DESIGN**. The pipeline CAN SUPPORT broader bodies, head shapes, or racial features within the M62 scale if a canonical design requires it, but support for these forms does NOT mean every member of the race possesses them.
 
 ## 5. Regional Clothing Language
-Clothing materials identify the country instantly:
-- **Elaris:** Homespun cloth, practical, muted greens/greys, coastal fishing/farming wear.
-- **Lorel:** Light fabrics, silks, merchant wear, sun hats, bright terracotta/blues, Mediterranean influence.
-- **Alexandria:** Heavy coats, leather aprons, goggles, forged accents, formal military/academic wear.
-- **Mongreaux:** Nomadic riding leathers, layered furs, mixed with ornate scholarly robes in Montreval.
-- **Kamikoto:** Kimono-inspired robes, martial dogi, hakama, bamboo hats, disciplined neatness.
-- **Aetherion:** Heavy cold-weather research gear, thick insulated coats. **Crucial:** Aetherion is NOT a normal country. There are no civilian villagers or farmers here, only researchers, military, and anomalies.
+The following are **REGIONAL ART-DIRECTION / PRODUCTION LANGUAGE** guidelines derived from worldbuilding, NOT biological racial properties. These represent a *preferred tendency* or *production reference*, rather than mandating that every NPC must wear identical stereotypes:
+- **Elaris:** May use homespun cloth, practical muted greens/greys, or coastal fishing/farming silhouettes.
+- **Lorel:** May use light fabrics, silks, merchant-oriented silhouettes, sun hats, or bright terracotta/blues.
+- **Alexandria:** May use heavy coats, leather aprons, goggles, forged accents, or formal military/academic silhouettes.
+- **Mongreaux:** May use nomadic riding leathers, layered furs, or ornate scholarly robes in Montreval.
+- **Kamikoto:** May use region-appropriate traditional silhouettes (e.g., kimono-inspired robes, martial dogi, hakama).
+- **Aetherion:** May use heavy cold-weather research gear or thick insulated coats. **Crucial:** Aetherion is NOT a country. Aetherion must NOT receive generic civilian farmers/villagers unless canonical story content later explicitly requires them.
 
 ## 6. NPC Role Taxonomy
 Common required archetypes:
@@ -68,6 +69,7 @@ Common required archetypes:
 ## 10. Godot Import Rules
 - **Filter:** `Nearest` (Pixel-perfect).
 - **Mipmaps:** Disabled.
+- **Compress To:** `Lossless` (Preferred production default for clean pixel art to avoid compression artifacts).
 - **Node Choice:** 
   - Use `Sprite2D` for 1-Directional STATIC NPCs (cheaper performance).
   - Use `AnimatedSprite2D` + `SpriteFrames` for 4-Directional / MOVING NPCs (maintains M63 consistency).
