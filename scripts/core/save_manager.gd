@@ -123,7 +123,9 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 			"level": prog.level,
 			"current_exp": prog.current_exp,
 			"current_hp": prog.current_hp,
-			"current_mp": prog.current_mp
+			"current_mp": prog.current_mp,
+			"has_joined": prog.get("has_joined", false),
+			"is_available": prog.get("is_available", false)
 		}
 
 	var active: Array = []
@@ -213,6 +215,8 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 
 		prog.level = clamp(int(saved.get("level", 1)), 1, PartyManager.MAX_LEVEL)
 		prog.current_exp = max(0, int(saved.get("current_exp", 0)))
+		prog.has_joined = bool(saved.get("has_joined", true))
+		prog.is_available = bool(saved.get("is_available", true))
 
 		# Load HP/MP — get effective max from CombatantData + level
 		var effective_max_hp := _get_effective_max_hp(cid, prog.level)
@@ -227,11 +231,17 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 		PartyManager.active_party.clear()
 		for cid in saved_active:
 			if PartyManager.roster.has(cid):
-				PartyManager.active_party.append(cid)
-		# Safety: ensure at least 1 active member
+				var prog = PartyManager.character_progress.get(cid)
+				if prog and prog.get("has_joined", false) and prog.get("is_available", false):
+					PartyManager.active_party.append(cid)
+		# Safety: ensure at least 1 active member if possible
 		if PartyManager.active_party.is_empty():
-			push_warning("[SaveManager] active_party was empty after load, restoring first roster member.")
-			PartyManager.active_party.append(PartyManager.roster.keys()[0])
+			push_warning("[SaveManager] active_party was empty after load, attempting to restore a valid fallback member.")
+			for cid in PartyManager.roster.keys():
+				var prog = PartyManager.character_progress.get(cid)
+				if prog and prog.get("has_joined", false) and prog.get("is_available", false):
+					PartyManager.active_party.append(cid)
+					break
 		PartyManager._update_reserve()
 
 	# 4. Inventory
