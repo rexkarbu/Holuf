@@ -149,6 +149,11 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M74** | ⏳ PENDING | Drop-Down Ledge + Anti-Stuck / Escape Refinement | REBUILT future roadmap |
 | **M75** | ⏳ PENDING | World Foundation Regression Gate | REBUILT future roadmap |
 | **M75.5** | ⏳ PENDING | Combat Tutorial / Help Guide Integration Gate | USER-ADDED release-critical gate |
+| **M75.75** | ⏳ PENDING | Equipment Progression + Regional Gear Master Table | USER-ADDED future roadmap |
+
+### M75.75 Equipment Progression Direction
+
+- Di sini kita desain seluruh senjata 10 karakter: nama, stat, tier, harga, siapa yang bisa pakai, shop/chest/quest/boss reward, sampai final weapon.
 
 ### M75.5 Tutorial / Help Direction
 
@@ -172,6 +177,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M83** | ⏳ PENDING | Elaris Climbable Ledge Placement Test | REBUILT future roadmap |
 | **M84** | ⏳ PENDING | Elaris Optional / Secret Path Test | REBUILT future roadmap |
 | **M85** | ⏳ PENDING | Elaris NPC Interaction Placement | REBUILT future roadmap |
+| **M85.5** | ⏳ PENDING | Elaris Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M86** | ⏳ PENDING | Elaris Tutorial Encounter Placement | REBUILT future roadmap |
 | **M87** | ⏳ PENDING | Elaris Story Trigger Scaffolding | REBUILT future roadmap |
 | **M88** | ⏳ PENDING | Prologue Opening / Daily-Life Cutscene | REBUILT future roadmap |
@@ -182,6 +188,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M93** | ⏳ PENDING | Elaris Save/Load Position Validation | REBUILT future roadmap |
 | **M94** | ⏳ PENDING | Elaris Exploration Regression | REBUILT future roadmap |
 | **M95** | ⏳ PENDING | Elaris Vertical Slice Closure | REBUILT future roadmap |
+
+### M85.5 Elaris Equipment Direction
+
+- Aren + Aelia mendapatkan starter/early gear. Ini sebelum rangkaian cerita utama Elaris berkembang.
 
 ## LOREL PRODUCTION
 
@@ -199,6 +209,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M105** | ⏳ PENDING | Lorel Collision + Traversal Pass | REBUILT future roadmap |
 | **M106** | ⏳ PENDING | Lorel Thug / Smuggler Encounter Placement | REBUILT future roadmap |
 | **M107** | ⏳ PENDING | Virella Interaction / Quest Placement | REBUILT future roadmap |
+| **M107.5** | ⏳ PENDING | Lorel Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M108** | ⏳ PENDING | Lyra Recruitment Sequence | REBUILT future roadmap |
 | **M109** | ⏳ PENDING | Doran Recruitment Sequence | REBUILT future roadmap |
 | **M110** | ⏳ PENDING | Displaced Elaris Resident Story Beats | REBUILT future roadmap |
@@ -207,6 +218,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M113** | ⏳ PENDING | Aelia Survival Clue Sequence | REBUILT future roadmap |
 | **M114** | ⏳ PENDING | Lorel Save/Load + Regression | REBUILT future roadmap |
 | **M115** | ⏳ PENDING | Lorel Arc Closure | REBUILT future roadmap |
+
+### M107.5 Lorel Equipment Direction
+
+- Aren + Aelia mendapat upgrade Lorel. Lyra (M108) dan Doran (M109) masuk dengan weapon tier Lorel yang layak. Tracker memang menempatkan recruitment Lyra di M108 dan Doran M109.
 
 ## ALEXANDRIA PRODUCTION
 
@@ -220,6 +235,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M121** | ⏳ PENDING | Alexandria Mentor / NPC Visual Batch | REBUILT future roadmap |
 | **M122** | ⏳ PENDING | Alexandria Collision + Vertical Traversal | REBUILT future roadmap |
 | **M123** | ⏳ PENDING | Alexandria Regular Enemy Placement | REBUILT future roadmap |
+| **M123.5** | ⏳ PENDING | Alexandria Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M124** | ⏳ PENDING | Alexandria Arrival + Doran Context Sequence | REBUILT future roadmap |
 | **M125** | ⏳ PENDING | Search for Aelia Sequence | REBUILT future roadmap |
 | **M126** | ⏳ PENDING | Aelia Reunion Sequence | REBUILT future roadmap |
@@ -232,6 +248,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M133** | ⏳ PENDING | Alexandria Save/Load Validation | REBUILT future roadmap |
 | **M134** | ⏳ PENDING | Alexandria Exploration + Story Regression | REBUILT future roadmap |
 | **M135** | ⏳ PENDING | Alexandria Arc Closure | REBUILT future roadmap |
+
+### M123.5 Alexandria Equipment Direction
+
+- Aren, Lyra, Doran, dan Aelia setelah reunion mendapatkan pilihan equipment Alexandria. Aelia reunion berada di M126 dan join flow M131.
 
 ## MONGREAUX PRODUCTION
 
@@ -247,6 +267,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M143** | ⏳ PENDING | Mongreaux NPC Visual Batch | REBUILT future roadmap |
 | **M144** | ⏳ PENDING | Mongreaux Collision + Traversal | REBUILT future roadmap |
 | **M145** | ⏳ PENDING | Mongreaux Encounter Placement | REBUILT future roadmap |
+| **M145.5** | ⏳ PENDING | Mongreaux Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M146** | ⏳ PENDING | Family Reunion Sequence | REBUILT future roadmap |
 | **M147** | ⏳ PENDING | Academy + Neria Story Sequence | REBUILT future roadmap |
 | **M148** | ⏳ PENDING | Torga Introduction / Recruitment Sequence | REBUILT future roadmap |
@@ -257,6 +278,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M153** | ⏳ PENDING | Mongreaux Save/Load Validation | REBUILT future roadmap |
 | **M154** | ⏳ PENDING | Mongreaux Exploration + Story Regression | REBUILT future roadmap |
 | **M155** | ⏳ PENDING | Mongreaux Arc Closure | REBUILT future roadmap |
+
+### M145.5 Mongreaux Equipment Direction
+
+- Semua karakter lama mendapat upgrade baru. Neria (M147) dan Torga (M148) memperoleh weapon awal mereka pada tier Mongreaux.
 
 ## KAMIKOTO PRODUCTION
 
@@ -273,6 +298,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M164** | ⏳ PENDING | Kamikoto NPC Visual Batch | REBUILT future roadmap |
 | **M165** | ⏳ PENDING | Kamikoto Collision + Traversal | REBUILT future roadmap |
 | **M166** | ⏳ PENDING | Kamikoto Regular / Altered Enemy Placement | REBUILT future roadmap |
+| **M166.5** | ⏳ PENDING | Kamikoto Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M167** | ⏳ PENDING | Katsura Recruitment Sequence | REBUILT future roadmap |
 | **M168** | ⏳ PENDING | Kaelis Recruitment Sequence | REBUILT future roadmap |
 | **M169** | ⏳ PENDING | Sylven Recruitment Sequence | REBUILT future roadmap |
@@ -282,6 +308,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M173** | ⏳ PENDING | High Executor Placement + Story Staging | REBUILT future roadmap |
 | **M174** | ⏳ PENDING | Kamikoto Save/Load + Regression | REBUILT future roadmap |
 | **M175** | ⏳ PENDING | Kamikoto Arc Closure + Aetherion Transition | REBUILT future roadmap |
+
+### M166.5 Kamikoto Equipment Direction
+
+- Aren/Aelia/Lyra/Doran/Neria/Torga mendapat upgrade Kamikoto. Lalu karakter baru masuk dengan tier Kamikoto: Katsura M167, Kaelis M168, Sylven M169, Orin M170.
 
 ## AETHERION + ENDING PRODUCTION
 
@@ -296,6 +326,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M182** | ⏳ PENDING | King Vaelor Final Visual | REBUILT future roadmap |
 | **M183** | ⏳ PENDING | Lloyd Final Story Presentation Pass | REBUILT future roadmap |
 | **M184** | ⏳ PENDING | Aetherion Altered Enemy Placement | REBUILT future roadmap |
+| **M184.5** | ⏳ PENDING | Aetherion / Final Equipment Tier | USER-ADDED future roadmap |
 | **M185** | ⏳ PENDING | Aetherion Collision + Exploration Pass | REBUILT future roadmap |
 | **M186** | ⏳ PENDING | Vaelor Late Evacuation Revelation Sequence | REBUILT future roadmap |
 | **M187** | ⏳ PENDING | Lloyd Confrontation + Protective Choice Sequence | REBUILT future roadmap |
@@ -307,6 +338,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M193** | ⏳ PENDING | Lloyd Aftermath / Glaisa Resolution Scene | REBUILT future roadmap |
 | **M194** | ⏳ PENDING | Playable Character Ending Beats | REBUILT future roadmap |
 | **M195** | ⏳ PENDING | Ending / Epilogue + Credits Flow | REBUILT future roadmap |
+
+### M184.5 Aetherion Equipment Direction
+
+- Karena seluruh 10 karakter sudah direkrut, di sini semuanya mendapat late-game/final-tier weapon. Aetherion production sendiri berjalan M176–M195.
 
 ## GLOBAL PRESENTATION / POLISH
 
