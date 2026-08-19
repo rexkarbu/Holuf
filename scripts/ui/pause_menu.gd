@@ -10,6 +10,7 @@ var _btn_party: Button
 var _btn_inventory: Button
 var _btn_equipment: Button
 var _btn_quest: Button
+var _btn_combat_guide: Button
 var _btn_settings: Button
 var _btn_return: Button
 
@@ -61,11 +62,13 @@ func _build_ui() -> void:
 	_btn_inventory  = _make_button("INVENTORY", vbox)
 	_btn_equipment  = _make_button("EQUIPMENT", vbox)
 	_btn_quest      = _make_button("QUEST", vbox)
+	_btn_combat_guide = _make_button("COMBAT GUIDE", vbox)
 	_btn_settings   = _make_button("SETTINGS", vbox)
 	_btn_return     = _make_button("RETURN TO MAIN MENU", vbox)
 	
 	# M30: Equipment sekarang aktif
 	# M27: Quest masih placeholder
+	_btn_combat_guide.pressed.connect(_on_combat_guide_pressed)
 	_btn_quest.disabled = true
 	_btn_quest.text += " (Coming Later)"
 	
@@ -104,7 +107,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause_menu"):
 		if visible:
 			# Jika child UI terbuka, abaikan input ESC agar tidak menutup pause menu
-			if has_node("SettingsUI") or has_node("EquipmentUI") or has_node("InventoryUI"):
+			if has_node("SettingsUI") or has_node("EquipmentUI") or has_node("InventoryUI") or has_node("CombatHelpGuide"):
 				return
 			
 			# Jika Confirmation terbuka, ui_cancel akan menutup dialog itu otomatis,
@@ -215,3 +218,19 @@ func _on_return_pressed() -> void:
 func _on_return_confirmed() -> void:
 	_close_pause()
 	TransitionManager.transition_to_scene("res://scenes/main/main_menu.tscn")
+
+func _on_combat_guide_pressed() -> void:
+	if not has_node("CombatHelpGuide"):
+		var guide_scene = load("res://scenes/ui/combat_help_guide.tscn")
+		var inst = guide_scene.instantiate()
+		inst.name = "CombatHelpGuide"
+		inst.closed.connect(_on_combat_guide_closed)
+		add_child(inst)
+		_panel.hide()
+		inst.open_full_guide()
+
+func _on_combat_guide_closed() -> void:
+	_panel.show()
+	_btn_combat_guide.grab_focus()
+	has_node("CombatHelpGuide").queue_free()
+

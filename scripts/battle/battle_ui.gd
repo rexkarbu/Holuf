@@ -332,7 +332,14 @@ func set_skill_selection(index: int, skills: Array) -> void:
 			label.add_theme_color_override("font_color", Color(1, 1, 1))
 
 func set_hint(text: String) -> void:
-	hint_label.text = text
+	if text != "":
+		if "Cancel" in text:
+			hint_label.text = text + " | H: Help"
+		else:
+			hint_label.text = text + " / H: Help"
+	else:
+		hint_label.text = "H: Help"
+
 
 func _get_skill_cost_string(skill: SkillData) -> String:
 	if skill.cost_type == SkillData.CostType.HP_PERCENT:

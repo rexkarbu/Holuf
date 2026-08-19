@@ -1,4 +1,6 @@
 extends Node2D
+const CombatHelpContent = preload("res://scripts/ui/combat_help_content.gd")
+
 
 ## BattleController — mengelola state machine dan logika pertempuran Turn-Based.
 
@@ -171,7 +173,20 @@ func _get_fallback_combatant_data(char_id: String) -> CombatantData:
 
 func _set_state(new_state: State) -> void:
 	current_state = new_state
+
+	# M75.5 Combat Help Guide
+	if event.is_action_pressed("combat_help"):
+		if current_state in [State.PLAYER_COMMAND, State.PLAYER_SKILL_SELECT, State.PLAYER_ITEM_SELECT, State.PLAYER_TARGET_SELECT, State.ALLY_TARGET_SELECT]:
+			get_viewport().set_input_as_handled()
+			_open_combat_help()
+			return
+
 	match current_state:
+
+	# Gate standard inputs if help is open
+	if ui.has_node("CombatHelpGuide"):
+		return
+
 		State.ROUND_START:
 			_process_round_start()
 		State.TURN_START:
@@ -504,19 +519,31 @@ func _handle_weakness_hit(damage_type: int, target: Combatant) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# M22: Battle Speed Toggle (works in any state except menus)
-	if event.is_action_pressed("battle_speed_toggle"):
+	if event.is_action_pressed("battle_speed_toggle") and not ui.has_node("CombatHelpGuide"):
 		BattleSpeed.toggle_speed()
 		ui.update_speed_indicator()  # Update UI indicator
 		get_viewport().set_input_as_handled()
 		return
 	
 	# M23: Boost Selection Toggle (TAB) - only in PLAYER_COMMAND state
-	if event.is_action_pressed("battle_boost_toggle") and current_state == State.PLAYER_COMMAND:
+	if event.is_action_pressed("battle_boost_toggle") and current_state == State.PLAYER_COMMAND and not ui.has_node("CombatHelpGuide"):
 		if current_combatant in players:
 			_cycle_boost_selection()
 		get_viewport().set_input_as_handled()
 		return
 	
+
+	# M75.5 Combat Help Guide
+	if event.is_action_pressed("combat_help"):
+		if current_state in [State.PLAYER_COMMAND, State.PLAYER_SKILL_SELECT, State.PLAYER_ITEM_SELECT, State.PLAYER_TARGET_SELECT, State.ALLY_TARGET_SELECT]:
+			get_viewport().set_input_as_handled()
+			_open_combat_help()
+			return
+
+	# Gate standard inputs if help is open
+	if ui.has_node("CombatHelpGuide"):
+		return
+
 	match current_state:
 		State.PLAYER_COMMAND:
 			if event.is_action_pressed("ui_down") or (event is InputEventKey and event.keycode == KEY_S and event.pressed and not event.echo):
@@ -1381,3 +1408,42 @@ func _convert_weapon_to_damage_type(wpn: CharacterIdentity.WeaponType) -> int:
 		CharacterIdentity.WeaponType.KATANA: return DamageType.Type.KATANA
 		CharacterIdentity.WeaponType.MAGICBOOK: return DamageType.Type.MAGICBOOK
 		_: return DamageType.Type.NONE
+
+
+# ==============================================================
+# COMBAT HELP GUIDE (M75.5)
+# ==============================================================
+
+func _open_combat_help() -> void:
+	var guide
+	if ui.has_node("CombatHelpGuide"):
+		guide = ui.get_node("CombatHelpGuide")
+	else:
+		var guide_scene = load("res://scenes/ui/combat_help_guide.tscn")
+		guide = guide_scene.instantiate()
+		guide.name = "CombatHelpGuide"
+		ui.add_child(guide)
+		guide.closed.connect(_on_combat_help_closed)
+	
+	guide.open_full_guide()
+
+func _on_combat_help_closed() -> void:
+	if ui.has_node("CombatHelpGuide"):
+		ui.get_node("CombatHelpGuide").queue_free()
+
+func show_context_tutorial(topic_id: StringName) -> void:
+	var guide
+	if ui.has_node("CombatHelpGuide"):
+		guide = ui.get_node("CombatHelpGuide")
+	else:
+		var guide_scene = load("res://scenes/ui/combat_help_guide.tscn")
+		guide = guide_scene.instantiate()
+		guide.name = "CombatHelpGuide"
+		ui.add_child(guide)
+		guide.closed.connect(_on_combat_help_closed)
+	
+	if CombatHelpContent.get_topic(topic_id)["title"] != "Unknown Topic":
+		guide.open_topic(topic_id, true)
+	else:
+		push_warning("Requested unknown combat help topic: " + str(topic_id))
+		_on_combat_help_closed()
