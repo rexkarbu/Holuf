@@ -17,6 +17,13 @@ var is_locked: bool = false
 var is_traversing_ledge: bool = false
 var facing: StringName = &"down"
 
+# M74: Ledge Tween Ownership & Safety
+var _ledge_tween: Tween = null
+var _ledge_origin_position: Vector2 = Vector2.ZERO
+var _ledge_start_position: Vector2 = Vector2.ZERO
+
+@onready var _collision_shape: CollisionShape2D = $CollisionShape2D
+
 # M25: Debug save/load feedback
 var _save_feedback_label: Label = null
 var _feedback_timer: Timer = null
@@ -143,22 +150,93 @@ func _on_party_ui_toggled(is_open: bool) -> void:
 		interactable_undetected.emit()
 
 # ==============================================================
-# M73 — TRAVERSAL API
+# M74 ?" ANTI-STUCK / ESCAPE REFINEMENT API
+# ==============================================================
+
+## M74: Mengecek apakah target posisi root aman dengan mensimulasikan shape fisik player aktual.
+func is_root_position_clear(target_root_position: Vector2) -> bool:
+	if not is_inside_tree() or _collision_shape == null or _collision_shape.shape == null:
+		push_warning("[Player] is_root_position_clear gagal: CollisionShape2D tidak valid.")
+		return false
+		
+	var space_state = get_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	query.shape = _collision_shape.shape
+	
+	# M74 Constraint: Use actual global_transform translated by the difference
+	var diff = target_root_position - global_position
+	query.transform = _collision_shape.global_transform.translated(diff)
+	
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	
+	var results = space_state.intersect_shape(query, 1)
+	return results.is_empty()
+
+## M74: Mencari pendaratan yang aman di sepanjang travel_direction.
+func resolve_ledge_landing(authored_target: Vector2, travel_direction: Vector2, search_step: float = 8.0, search_distance: float = 32.0) -> Variant:
+	if is_root_position_clear(authored_target):
+		return authored_target
+		
+	var current_dist = search_step
+	while current_dist <= search_distance:
+		var candidate = authored_target + travel_direction * current_dist
+		if is_root_position_clear(candidate):
+			return candidate
+		current_dist += search_step
+		
+	return null
+
+# ==============================================================
+# M73/M74 ?" TRAVERSAL API
 # ==============================================================
 
 func begin_ledge_traversal(start_pos: Vector2, end_pos: Vector2, duration: float) -> void:
+	if is_traversing_ledge or _ledge_tween != null:
+		return
+		
 	is_traversing_ledge = true
 	velocity = Vector2.ZERO
+	_ledge_origin_position = global_position
+	_ledge_start_position = start_pos
 	
-	var tween = create_tween()
+	_ledge_tween = create_tween()
 	# phase 1: align to start (short duration)
-	tween.tween_property(self, "global_position", start_pos, 0.15)
+	_ledge_tween.tween_property(self, "global_position", start_pos, 0.15)
 	# phase 2: traverse to end
-	tween.tween_property(self, "global_position", end_pos, duration)
+	_ledge_tween.tween_property(self, "global_position", end_pos, duration)
 	
-	tween.finished.connect(func():
-		is_traversing_ledge = false
-	)
+	_ledge_tween.finished.connect(_on_ledge_traversal_finished)
+
+func _on_ledge_traversal_finished() -> void:
+	if not is_root_position_clear(global_position):
+		push_error("[Player] Posisi akhir tebing tiba-tiba terblokir. Melakukan recovery.")
+		if is_root_position_clear(_ledge_origin_position):
+			global_position = _ledge_origin_position
+		elif is_root_position_clear(_ledge_start_position):
+			global_position = _ledge_start_position
+		else:
+			push_error("[Player] Recovery gagal! Origin terblokir.")
+			
+	is_traversing_ledge = false
+	_ledge_tween = null
+
+func cancel_ledge_traversal(recover: bool = true) -> void:
+	if _ledge_tween:
+		_ledge_tween.kill()
+		_ledge_tween = null
+	
+	velocity = Vector2.ZERO
+	
+	if recover:
+		if is_root_position_clear(_ledge_origin_position):
+			global_position = _ledge_origin_position
+		elif is_root_position_clear(_ledge_start_position):
+			global_position = _ledge_start_position
+			
+	is_traversing_ledge = false
 
 # ==============================================================
 # M70 — CAMERA API

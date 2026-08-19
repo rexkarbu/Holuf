@@ -17,6 +17,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if not body.is_in_group("player"):
 		return
 		
+	# M74: Mencegah trigger saat player sedang melakukan traversal (climb/drop)
+	if body.get("is_traversing_ledge") == true:
+		return
+		
 	# Jangan memicu battle jika sedang dialog
 	if DialogueManager.current_node != null:
 		return
