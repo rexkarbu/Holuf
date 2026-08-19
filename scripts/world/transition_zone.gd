@@ -68,10 +68,10 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _find_spawn_in_preview(node: Node, id: String) -> bool:
 	## Cari SpawnMarker secara rekursif dalam preview sementara.
-	if node.get_script() != null:
-		# Cek melalui properti exported spawn_id
-		if node.get("spawn_id") != null and node.get("spawn_id") == id:
-			return true
+	## Kontrak identik dengan main.gd._find_spawn_marker():
+	## hanya node bertipe SpawnMarker dengan spawn_id yang cocok yang diterima.
+	if node is SpawnMarker and node.spawn_id == id:
+		return true
 	for child in node.get_children():
 		if _find_spawn_in_preview(child, id):
 			return true
