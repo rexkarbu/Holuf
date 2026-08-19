@@ -1,0 +1,31 @@
+﻿[gd_scene load_steps=4 format=3 uid="uid://climbable123"]
+
+[ext_resource type="Script" path="res://scripts/world/climbable_ledge.gd" id="1_script"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_interaction"]
+size = Vector2(32, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_barrier"]
+size = Vector2(32, 16)
+
+[node name="ClimbableLedge" type="Area2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_script")
+
+[node name="InteractionShape" type="CollisionShape2D" parent="."]`nposition = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_interaction")
+
+[node name="Barrier" type="StaticBody2D" parent="."]
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Barrier"]
+shape = SubResource("RectangleShape2D_barrier")
+
+[node name="ClimbStart" type="Marker2D" parent="."]
+position = Vector2(0, 24)
+
+[node name="ClimbEnd" type="Marker2D" parent="."]
+position = Vector2(0, -24)
+

@@ -14,6 +14,7 @@ signal interactable_undetected()
 
 var current_interactable: Interactable = null
 var is_locked: bool = false
+var is_traversing_ledge: bool = false
 var facing: StringName = &"down"
 
 # M25: Debug save/load feedback
@@ -35,6 +36,10 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if is_traversing_ledge:
+		velocity = Vector2.ZERO
+		return
+		
 	if is_locked:
 		velocity = Vector2.ZERO
 		move_and_slide()
@@ -61,6 +66,9 @@ func _physics_process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if is_traversing_ledge:
+		return
+		
 	# M25: Debug Save (B)
 	if event.is_action_pressed("debug_save_game"):
 		get_viewport().set_input_as_handled()
@@ -133,6 +141,24 @@ func _on_party_ui_toggled(is_open: bool) -> void:
 	if is_open:
 		current_interactable = null
 		interactable_undetected.emit()
+
+# ==============================================================
+# M73 — TRAVERSAL API
+# ==============================================================
+
+func begin_ledge_traversal(start_pos: Vector2, end_pos: Vector2, duration: float) -> void:
+	is_traversing_ledge = true
+	velocity = Vector2.ZERO
+	
+	var tween = create_tween()
+	# phase 1: align to start (short duration)
+	tween.tween_property(self, "global_position", start_pos, 0.15)
+	# phase 2: traverse to end
+	tween.tween_property(self, "global_position", end_pos, duration)
+	
+	tween.finished.connect(func():
+		is_traversing_ledge = false
+	)
 
 # ==============================================================
 # M70 — CAMERA API
