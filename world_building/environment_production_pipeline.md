@@ -135,11 +135,23 @@ Do NOT arbitrarily lock final exact RGB/HEX palette values without production ev
 - No accidental padding that breaks atlas alignment.
 
 ## 17. Godot 4.7.1 Import Standard
-For pixel-art textures, preserve the established direction using ACTUAL Godot 4.7.1 terminology:
 
-- **Filter:** `Nearest`
-- **Mipmaps:** `Disabled`
-- **Compress > Mode:** `Lossless` (preferred production default to avoid compression artifacts).
+### A. TEXTURE FILTERING STANDARD
+HOLUF pixel-art textures must render with: `Nearest`
+
+For 2D, configure `Nearest` through:
+- CanvasItem texture filtering where asset/node-specific control is required, OR
+- the appropriate project-wide default when production integration owns it.
+
+**PIXEL ART MUST USE NEAREST FILTERING.**
+(Note: `Nearest` is a texture rendering/filtering property, NOT a normal image-import option).
+
+### B. IMAGE IMPORT STANDARD
+For raster pixel-art assets, configure the import settings as follows:
+- **Compress > Mode:** `Lossless`
+- **Mipmaps > Generate:** `Disabled`
+
+`Lossless` remains the preferred default for clean HOLUF pixel art to avoid compression artifacts.
 
 ## 18. Godot TileSet / Terrain Workflow
 - **Recommendation:** Godot 4's modern workflow favors `TileMapLayer` over the deprecated monolithic `TileMap` node. Production maps should utilize individual `TileMapLayer` nodes for ground, paths, and structural layers, pointing to a shared `TileSet` resource.
