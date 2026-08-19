@@ -55,11 +55,12 @@ A transition represents a **meaningful LOCATION CHANGE** — not a district boun
 - `is_enabled: bool` — false untuk story-lock (M71 will set this externally)
 
 **Preflight sebelum transisi (urutan):**
-1. `destination_scene_path` tidak kosong
-2. `ResourceLoader.exists(destination_scene_path)`
-3. Load sebagai `PackedScene` berhasil
-4. Instantiasi preview sementara, cari `SpawnMarker` dengan `spawn_id == target_spawn_id`, hapus preview
-5. Jika semua lulus → set GameManager state → mulai transisi
+1. `target_spawn_id` tidak kosong (WAJIB untuk TransitionZone generik)
+2. `destination_scene_path` tidak kosong
+3. `ResourceLoader.exists(destination_scene_path)`
+4. Load sebagai `PackedScene` berhasil
+5. Instantiasi preview sementara, cari `SpawnMarker` dengan `spawn_id == target_spawn_id`, hapus preview
+6. Jika semua lulus → set GameManager state → mulai transisi
 
 **Jika preflight gagal:** `push_error`, return. Tidak ada fade. Tidak ada scene change. State GameManager tidak berubah. Player tetap di lokasi saat ini.
 
@@ -83,11 +84,11 @@ var target_world_scene: String = ""
 var target_spawn_id: String = ""
 ```
 
-**`current_world_scene`** = lokasi dunia yang sedang aktif. Diperbarui setelah setiap arrival berhasil. Disimpan ke save file v3.
+**`current_world_scene`** = lokasi dunia yang sedang aktif. Di-commit HANYA setelah swap berhasil DAN SpawnMarker resolved. Disimpan ke save file v3.
 
 **`target_world_scene`** = permintaan transisi sementara. Dikonsumsi dan dikosongkan di `main.gd._ready()`.
 
-**`target_spawn_id`** = ID SpawnMarker tujuan. Dikonsumsi dan dikosongkan di `main.gd._ready()`.
+**`target_spawn_id`** = ID SpawnMarker tujuan (WAJIB non-empty untuk TransitionZone generik). Dikonsumsi dan dikosongkan di `main.gd._ready()`.
 
 ---
 
@@ -100,13 +101,15 @@ Diimplementasikan di `scripts/core/main.gd`:
    SaveManager._has_pending_load == true
    → Baca location_scene dari save data
    → Swap world ke scene tersebut
-   → apply_pending_load() menangani koordinat X/Y
+   → JIKA SWAP GAGAL: cancel_pending_load(), JANGAN apply koordinat
+   → JIKA SWAP BERHASIL: apply_pending_load() menangani koordinat X/Y
 
 2. M67 TARGET SPAWN
    GameManager.target_world_scene != ""
    → Swap world ke target scene
-   → Update current_world_scene
    → Temukan SpawnMarker dengan target_spawn_id
+   → Apply player.global_position
+   → HANYA SETELAH arrival: commit current_world_scene
    → Kosongkan target_world_scene dan target_spawn_id
 
 3. BATTLE RETURN
@@ -122,7 +125,7 @@ Diimplementasikan di `scripts/core/main.gd`:
 
 ---
 
-## 9. Save Schema (Version 3)
+## 6. Save Schema (Version 3)
 
 ```json
 {
@@ -141,6 +144,16 @@ Diimplementasikan di `scripts/core/main.gd`:
 **`world.location_scene`** = active world location scene yang aktif saat save  
 **`world.player_x / player_y`** = koordinat pemain di lokasi tersebut
 
+### Save v3 Validation
+
+Untuk `save_version >= 3`, `_validate_save_data()` mewajibkan:
+1. `world.location_scene` ada dan bertipe String
+2. Non-empty
+3. `ResourceLoader.exists()` == true
+4. `load() as PackedScene` != null (bukan .tres atau resource non-scene)
+
+Jika gagal → save ditolak → backup recovery pipeline.
+
 ### Legacy v1/v2 Compatibility
 
 Save v1/v2 tidak memiliki `world.location_scene`. Diperlakukan sebagai save dari dunia prototype:
@@ -150,6 +163,7 @@ location_scene (missing) → res://scenes/world/world.tscn
 ```
 
 Tidak ada konversi otomatis. Save baru setelah load v2 akan menjadi v3.
+Missing `location_scene` pada v1/v2 BUKAN error — hanya pada v3+ itu menjadi wajib.
 
 ---
 

@@ -24,30 +24,34 @@ func _on_body_entered(body: Node2D) -> void:
 
 	# === PREFLIGHT: Validasi sebelum meninggalkan lokasi saat ini ===
 
-	# 1. Pastikan path tidak kosong
+	# 1. target_spawn_id wajib untuk TransitionZone generik
+	if target_spawn_id == "":
+		push_error("[TransitionZone] target_spawn_id kosong pada: " + name + " — transisi dibatalkan.")
+		return
+
+	# 2. Pastikan path tidak kosong
 	if destination_scene_path == "":
 		push_error("[TransitionZone] destination_scene_path kosong pada: " + name)
 		return
 
-	# 2. Pastikan scene tujuan ada di disk
+	# 3. Pastikan scene tujuan ada di disk
 	if not ResourceLoader.exists(destination_scene_path):
 		push_error("[TransitionZone] destination_scene_path tidak ditemukan: " + destination_scene_path)
 		return
 
-	# 3. Muat PackedScene tujuan
+	# 4. Muat PackedScene tujuan
 	var packed := load(destination_scene_path) as PackedScene
 	if packed == null:
 		push_error("[TransitionZone] Gagal memuat sebagai PackedScene: " + destination_scene_path)
 		return
 
-	# 4. Verifikasi SpawnMarker dengan ID yang diminta ada di scene tujuan
-	if target_spawn_id != "":
-		var preview := packed.instantiate()
-		var found_spawn := _find_spawn_in_preview(preview, target_spawn_id)
-		preview.queue_free()
-		if not found_spawn:
-			push_error("[TransitionZone] SpawnMarker '" + target_spawn_id + "' tidak ditemukan di: " + destination_scene_path)
-			return
+	# 5. Verifikasi SpawnMarker dengan ID yang diminta ada di scene tujuan
+	var preview := packed.instantiate()
+	var found_spawn := _find_spawn_in_preview(preview, target_spawn_id)
+	preview.queue_free()
+	if not found_spawn:
+		push_error("[TransitionZone] SpawnMarker '" + target_spawn_id + "' tidak ditemukan di: " + destination_scene_path)
+		return
 
 	# === PREFLIGHT LULUS — Mulai transisi ===
 	GameManager.is_transitioning = true

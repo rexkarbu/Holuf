@@ -14,13 +14,23 @@ func _ready() -> void:
 	# 1. MANUAL SAVE PENDING LOAD — SaveManager mendominasi seluruhnya
 	if SaveManager._has_pending_load:
 		var saved_location: String = SaveManager._pending_data.get("world", {}).get("location_scene", "")
-		if saved_location != "" and ResourceLoader.exists(saved_location):
-			# Swap ke lokasi yang disimpan sebelum apply koordinat
+		
+		# Legacy v1/v2: tidak ada location_scene → DEFAULT sudah terpasang, langsung apply
+		if saved_location == "":
+			SaveManager.apply_pending_load(player)
+			return
+		
+		# v3: harus swap ke lokasi yang disimpan SEBELUM apply koordinat
+		if saved_location != GameManager.DEFAULT_WORLD_SCENE:
 			var swapped := _swap_world(saved_location)
 			if not swapped:
-				push_error("[Main] Gagal swap ke saved location: " + saved_location)
-				# Tetap lanjutkan dengan world default yang terpasang
-		# SaveManager.apply_pending_load menangani koordinat X/Y dan current_world_scene
+				push_error("[Main] Gagal swap ke saved location: " + saved_location + " — koordinat TIDAK diaplikasikan.")
+				SaveManager.cancel_pending_load("Saved location gagal dimuat: " + saved_location)
+				# Tetap di world default, player di posisi bawaan editor
+				GameManager.current_world_scene = GameManager.DEFAULT_WORLD_SCENE
+				return
+		
+		# Swap berhasil (atau sudah default) — aman apply koordinat
 		SaveManager.apply_pending_load(player)
 		return
 
@@ -34,25 +44,23 @@ func _ready() -> void:
 			var swapped := _swap_world(scene_to_load)
 			if not swapped:
 				push_error("[Main] Gagal swap ke target world scene: " + scene_to_load)
-				# Jangan update current_world_scene dengan lokasi yang gagal di-load
+				# Jangan update current_world_scene dengan lokasi yang gagal
 				GameManager.target_world_scene = ""
 				GameManager.target_spawn_id = ""
 				return
 
-		# HANYA update current_world_scene setelah swap berhasil
-		GameManager.current_world_scene = scene_to_load
-
-		# Temukan SpawnMarker
-		if spawn_id_to_find != "":
-			var spawn := _find_spawn_marker(world_node, spawn_id_to_find)
-			if spawn:
-				player.global_position = spawn.global_position
-			else:
-				# Preflight seharusnya sudah mencegah ini — ini hanya path defensif
-				push_error("[Main] SpawnMarker tidak ditemukan (defensive): " + spawn_id_to_find)
-				# Jangan pindahkan pemain ke Vector2.ZERO
-				# Jangan simpan lokasi yang gagal sebagai current
-				GameManager.current_world_scene = GameManager.DEFAULT_WORLD_SCENE
+		# Temukan SpawnMarker — wajib ditemukan
+		var spawn := _find_spawn_marker(world_node, spawn_id_to_find)
+		if spawn:
+			player.global_position = spawn.global_position
+			# HANYA commit current_world_scene setelah arrival position berhasil
+			GameManager.current_world_scene = scene_to_load
+		else:
+			# Preflight seharusnya sudah mencegah ini — ini hanya path defensif
+			push_error("[Main] SpawnMarker tidak ditemukan (defensive): " + spawn_id_to_find)
+			# Jangan pindahkan pemain ke Vector2.ZERO
+			# State: target world IS loaded tapi spawn gagal — jangan berbohong tentang reality
+			# Target world sebenarnya aktif, tapi arrival tidak deterministik
 
 		# Konsumsi state transisi tertunda dalam semua kasus
 		GameManager.target_world_scene = ""

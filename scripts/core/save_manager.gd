@@ -274,6 +274,16 @@ func apply_pending_load(player_node: Node) -> void:
 	_apply_save_data(data, player_node)
 	print("[SaveManager] Game loaded successfully.")
 
+
+## Batalkan pending load tanpa mengaplikasikan data ke world/player.
+## Digunakan ketika lokasi yang disimpan gagal dimuat oleh main.gd.
+func cancel_pending_load(reason: String = "") -> void:
+	if not _has_pending_load:
+		return
+	push_warning("[SaveManager] Pending load dibatalkan: " + reason)
+	_has_pending_load = false
+	_pending_data = {}
+
 # ==============================================================
 # COLLECT SAVE DATA
 # ==============================================================
@@ -357,6 +367,11 @@ func _validate_save_data(data: Dictionary) -> bool:
 			return false
 		if not ResourceLoader.exists(loc):
 			push_error("[SaveManager] Save v3 'world.location_scene' does not exist: " + loc)
+			return false
+		# Buktikan resource adalah PackedScene, bukan .tres atau tipe lain
+		var packed := load(loc) as PackedScene
+		if packed == null:
+			push_error("[SaveManager] Save v3 'world.location_scene' is not a valid PackedScene: " + loc)
 			return false
 
 	# Validate active_party references valid character IDs
@@ -449,17 +464,16 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 	
 	# 6. Player position dan restorasi lokasi dunia
 	var world_data: Dictionary = data.get("world", {})
+	var save_ver := int(data.get("save_version", 1))
+	var saved_location: String = ""
 	
-	# Migrasi v1/v2: tidak ada location_scene → gunakan default
-	var saved_location: String = world_data.get("location_scene", "")
-	if saved_location == "":
+	if save_ver >= 3:
+		# v3: location_scene sudah lolos validasi ketat di _validate_save_data()
+		saved_location = world_data.get("location_scene", "")
+	else:
+		# v1/v2 legacy: tidak ada location_scene → gunakan default
 		saved_location = GameManager.DEFAULT_WORLD_SCENE
-		print("[SaveManager] Legacy save: menggunakan default world scene.")
-	
-	# Validasi scene yang disimpan masih ada
-	if not ResourceLoader.exists(saved_location):
-		push_error("[SaveManager] location_scene tidak ditemukan: " + saved_location + " — fallback ke default.")
-		saved_location = GameManager.DEFAULT_WORLD_SCENE
+		print("[SaveManager] Legacy save (v%d): menggunakan default world scene." % save_ver)
 	
 	# Simpan ke GameManager agar main.gd dapat menggunakannya
 	GameManager.current_world_scene = saved_location
