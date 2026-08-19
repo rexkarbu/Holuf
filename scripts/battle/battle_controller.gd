@@ -173,20 +173,7 @@ func _get_fallback_combatant_data(char_id: String) -> CombatantData:
 
 func _set_state(new_state: State) -> void:
 	current_state = new_state
-
-	# M75.5 Combat Help Guide
-	if event.is_action_pressed("combat_help"):
-		if current_state in [State.PLAYER_COMMAND, State.PLAYER_SKILL_SELECT, State.PLAYER_ITEM_SELECT, State.PLAYER_TARGET_SELECT, State.ALLY_TARGET_SELECT]:
-			get_viewport().set_input_as_handled()
-			_open_combat_help()
-			return
-
 	match current_state:
-
-	# Gate standard inputs if help is open
-	if ui.has_node("CombatHelpGuide"):
-		return
-
 		State.ROUND_START:
 			_process_round_start()
 		State.TURN_START:

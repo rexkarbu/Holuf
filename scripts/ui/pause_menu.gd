@@ -232,5 +232,6 @@ func _on_combat_guide_pressed() -> void:
 func _on_combat_guide_closed() -> void:
 	_panel.show()
 	_btn_combat_guide.grab_focus()
-	has_node("CombatHelpGuide").queue_free()
+	if has_node("CombatHelpGuide"):
+		get_node("CombatHelpGuide").queue_free()
 
