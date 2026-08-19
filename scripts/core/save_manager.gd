@@ -17,7 +17,7 @@ const SAVE_AUTOSAVE_PATH := "user://save_01_autosave.json"
 const SAVE_AUTOSAVE_BACKUP_PATH := "user://save_01_autosave_backup.json"
 const SAVE_AUTOSAVE_TEMP_PATH := "user://save_01_autosave.tmp"
 
-const SAVE_VERSION := 3
+const SAVE_VERSION := 4
 
 ## Flag untuk pending load (diapply setelah scene world dimuat ulang)
 var _has_pending_load: bool = false
@@ -45,6 +45,7 @@ func has_save() -> bool:
 func start_new_game() -> void:
 	PartyManager.reset_to_new_game()
 	InventoryManager.reset_to_new_game()
+	StoryManager.reset_to_new_game()  # M71: reset story state untuk new game
 	# Clear any pending load flag so main.tscn uses default spawn
 	_has_pending_load = false
 	_pending_data = {}
@@ -317,7 +318,10 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 
 	# Equipment state (M30)
 	var equipment_save = EquipmentManager.get_save_data()
-	
+
+	# Story state (M71)
+	var story_save := StoryManager.get_save_data()
+
 	return {
 		"save_version": SAVE_VERSION,
 		"gold": PartyManager.party_gold,
@@ -325,6 +329,7 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 		"active_party": active,
 		"inventory": inventory_data,
 		"character_equipment": equipment_save,
+		"story": story_save,
 		"world": {
 			"scene": "res://scenes/main/main.tscn",
 			"location_scene": GameManager.current_world_scene,
@@ -379,6 +384,32 @@ func _validate_save_data(data: Dictionary) -> bool:
 		if not PartyManager.roster.has(cid):
 			push_error("[SaveManager] Unknown character_id in active_party: %s" % cid)
 			return false
+
+	# M71: Validasi story data untuk save v4+
+	var ver_check := int(data.get("save_version", 1))
+	if ver_check >= 4:
+		if not data.has("story") or not data["story"] is Dictionary:
+			push_error("[SaveManager] Save v4 missing or invalid 'story' field.")
+			return false
+		var story_data: Dictionary = data["story"]
+		if not story_data.has("consumed_triggers") or not story_data["consumed_triggers"] is Array:
+			push_error("[SaveManager] Save v4 'story.consumed_triggers' missing or not Array.")
+			return false
+		if not story_data.has("flags") or not story_data["flags"] is Dictionary:
+			push_error("[SaveManager] Save v4 'story.flags' missing or not Dictionary.")
+			return false
+		# Validasi tipe nilai individual
+		for tid in story_data["consumed_triggers"]:
+			if not tid is String:
+				push_error("[SaveManager] Save v4 consumed_trigger ID bukan String: " + str(tid))
+				return false
+		for fkey in story_data["flags"]:
+			if not fkey is String:
+				push_error("[SaveManager] Save v4 flag key bukan String: " + str(fkey))
+				return false
+			if not story_data["flags"][fkey] is bool:
+				push_error("[SaveManager] Save v4 flag value bukan bool untuk key: " + str(fkey))
+				return false
 
 	return true
 
@@ -487,6 +518,12 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 	# 7. Reset encounter distance to prevent instant-encounter after load
 	if EncounterManager:
 		EncounterManager.reset_encounter()
+
+	# 8. Story state (M71)
+	# Untuk save v1-v3 (tanpa "story"): reset ke state kosong.
+	# Untuk save v4: apply data story yang tersimpan.
+	var story_data: Dictionary = data.get("story", {}) if data.get("story", {}) is Dictionary else {}
+	StoryManager.apply_save_data(story_data if story_data is Dictionary else {})
 
 # ==============================================================
 # HELPERS
