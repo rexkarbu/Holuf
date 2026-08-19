@@ -12,6 +12,7 @@ signal interactable_undetected()
 
 var current_interactable: Interactable = null
 var is_locked: bool = false
+var facing: StringName = &"down"
 
 # M25: Debug save/load feedback
 var _save_feedback_label: Label = null
@@ -20,6 +21,7 @@ var _feedback_timer: Timer = null
 
 func _ready() -> void:
 	add_to_group("player")
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	# Hubungkan sinyal dari DialogueManager
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
@@ -35,12 +37,13 @@ func _physics_process(_delta: float) -> void:
 		return
 
 	# --- MOVEMENT LOGIC ---
-	var direction := Vector2.ZERO
-	direction.x = Input.get_axis("move_left", "move_right")
-	direction.y = Input.get_axis("move_up", "move_down")
-
-	if direction.length() > 0.0:
-		direction = direction.normalized()
+	var direction := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	
+	if direction.length_squared() > 0.0:
+		if abs(direction.x) > abs(direction.y):
+			facing = &"right" if direction.x > 0 else &"left"
+		else:
+			facing = &"down" if direction.y > 0 else &"up"
 
 	velocity = direction * move_speed
 	var old_pos = global_position
