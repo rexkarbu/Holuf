@@ -149,7 +149,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M74** | ✅ CLOSED | Drop-Down Ledge + Anti-Stuck / Escape Refinement | REBUILT future roadmap |
 | **M75** | ✅ CLOSED | World Foundation Regression Gate | REBUILT future roadmap |
 | **M75.5** | ✅ CLOSED | Combat Tutorial / Help Guide Integration Gate | USER-ADDED release-critical gate |
-| **M75.75** | ⏳ PENDING | Equipment Progression + Regional Gear Master Table | USER-ADDED future roadmap |
+| **M75.75** | ✅ CLOSED | Equipment Progression + Regional Gear Master Table | USER-ADDED future roadmap |
 
 ### M75.75 Equipment Progression Direction
 
