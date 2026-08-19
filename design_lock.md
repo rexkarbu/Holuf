@@ -184,6 +184,71 @@ Aetherion is **not a country**.
 Locked principle:
 **Race ≠ nationality.**
 
+### Royal Residence / Government Seat
+
+Caelora memiliki kediaman kerajaan yang menjadi tempat tinggal King Vaelor
+sekaligus salah satu pusat pemerintahan Pulau Elaris.
+
+Kediaman ini berada di bagian kota yang lebih tinggi dibanding area
+residential, market, dan harbor.
+
+Bangunannya lebih besar dan lebih mewah daripada rumah warga biasa,
+tetapi tidak berupa kastel raksasa karena Elaris adalah pulau kecil
+dengan ekonomi yang stagnan.
+
+Area dapat mencakup:
+- kediaman pribadi King Vaelor
+- ruang administrasi/pemerintahan
+- halaman berpagar
+- penjagaan kerajaan
+- ruang penerimaan
+- area terbatas yang tidak bebas dimasuki warga
+
+Secara visual, bangunan ini menjadi salah satu landmark utama Caelora.
+
+Vaelor adalah penguasa Pulau Elaris, bukan secara literal "pemilik"
+seluruh pulau, meskipun secara pribadi ia cenderung memandang Elaris
+dan rakyatnya sebagai sesuatu yang berada di bawah hak kendalinya.
+
+## World Exploration — Seamless Place Rule
+
+HOLUF uses a seamless-place philosophy for overworld exploration.
+
+- A town, city, settlement, or other location that is conceptually one place
+  should, whenever practical, exist as one continuous explorable area.
+- Different districts inside the same city should NOT use map transitions
+  merely to divide production space.
+- The camera should continue following the player seamlessly while moving
+  between districts of the same location.
+- A transition represents a meaningful location change.
+
+Valid transition examples:
+- Town → Route
+- Route → Dungeon
+- Outdoor → Interior
+- Building Floor → Different Floor
+- Region → Different Region
+- Major separated dungeon area → Another dungeon area when justified
+
+Avoid:
+- Market → Plaza within the same city
+- Residential District → Commercial District within the same city
+- East Street → West Street within the same settlement
+
+Rule:
+ONE CONTIGUOUS PLACE = ONE CONTIGUOUS EXPLORABLE MAP,
+whenever technically and production-wise practical.
+
+This rule must be respected by:
+- M66 — Map Layout Production Pipeline
+- M67 — World Transition / Entrance / Exit Pipeline
+- M70 — Final Camera Behavior
+- all later regional map-production milestones.
+
+Exceptions are allowed only when there is a clear gameplay, technical,
+performance, or narrative reason. Do not split a location merely for
+development convenience.
+
 ---
 
 # 7. Playable Roster — LOCKED
