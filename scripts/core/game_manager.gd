@@ -9,6 +9,14 @@ var pending_formation: EnemyFormation = null
 
 var is_transitioning: bool = false
 
+# M67: State lokasi aktif saat ini (persistent antar battle return)
+const DEFAULT_WORLD_SCENE := "res://scenes/world/world.tscn"
+var current_world_scene: String = DEFAULT_WORLD_SCENE
+
+# M67: State transisi tertunda (sementara — dikonsumsi setelah arrival)
+var target_world_scene: String = ""
+var target_spawn_id: String = ""
+
 
 func start_battle(encounter_id: String, player_pos: Vector2, is_repeatable: bool = false) -> void:
 	if is_transitioning:

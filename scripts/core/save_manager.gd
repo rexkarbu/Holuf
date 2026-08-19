@@ -17,7 +17,7 @@ const SAVE_AUTOSAVE_PATH := "user://save_01_autosave.json"
 const SAVE_AUTOSAVE_BACKUP_PATH := "user://save_01_autosave_backup.json"
 const SAVE_AUTOSAVE_TEMP_PATH := "user://save_01_autosave.tmp"
 
-const SAVE_VERSION := 2
+const SAVE_VERSION := 3
 
 ## Flag untuk pending load (diapply setelah scene world dimuat ulang)
 var _has_pending_load: bool = false
@@ -317,6 +317,7 @@ func _collect_save_data(player_node: Node) -> Dictionary:
 		"character_equipment": equipment_save,
 		"world": {
 			"scene": "res://scenes/main/main.tscn",
+			"location_scene": GameManager.current_world_scene,
 			"player_x": player_x,
 			"player_y": player_y
 		}
@@ -431,15 +432,30 @@ func _apply_save_data(data: Dictionary, player_node: Node) -> void:
 	else:
 		EquipmentManager.apply_save_data(data.get("character_equipment", {}))
 	
-	# 6. Player position
+	# 6. Player position dan restorasi lokasi dunia
 	var world_data: Dictionary = data.get("world", {})
+	
+	# Migrasi v1/v2: tidak ada location_scene → gunakan default
+	var saved_location: String = world_data.get("location_scene", "")
+	if saved_location == "":
+		saved_location = GameManager.DEFAULT_WORLD_SCENE
+		print("[SaveManager] Legacy save: menggunakan default world scene.")
+	
+	# Validasi scene yang disimpan masih ada
+	if not ResourceLoader.exists(saved_location):
+		push_error("[SaveManager] location_scene tidak ditemukan: " + saved_location + " — fallback ke default.")
+		saved_location = GameManager.DEFAULT_WORLD_SCENE
+	
+	# Simpan ke GameManager agar main.gd dapat menggunakannya
+	GameManager.current_world_scene = saved_location
+	
 	if player_node and is_instance_valid(player_node):
 		var px = float(world_data.get("player_x", 0.0))
 		var py = float(world_data.get("player_y", 0.0))
 		if px != 0.0 or py != 0.0:
 			player_node.global_position = Vector2(px, py)
 
-	# 6. Reset encounter distance to prevent instant-encounter after load
+	# 7. Reset encounter distance to prevent instant-encounter after load
 	if EncounterManager:
 		EncounterManager.reset_encounter()
 

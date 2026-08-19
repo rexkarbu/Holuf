@@ -16,7 +16,15 @@ func _input(_event: InputEvent) -> void:
 	if _is_transitioning:
 		get_viewport().set_input_as_handled()
 
-func transition_to_scene(path: String) -> void:
+func transition_to_scene(path: String) -> bool:
+	if _is_transitioning:
+		push_warning("[TransitionManager] Transition already in progress. Ignoring request to: " + path)
+		return false
+		
+	if not ResourceLoader.exists(path):
+		push_error("[TransitionManager] Cannot transition to missing scene: " + path)
+		return false
+		
 	_is_transitioning = true
 	get_tree().root.gui_disable_input = true
 	
@@ -28,7 +36,17 @@ func transition_to_scene(path: String) -> void:
 	await tween.finished
 	
 	# Pindah scene
-	get_tree().change_scene_to_file(path)
+	var err = get_tree().change_scene_to_file(path)
+	if err != OK:
+		push_error("[TransitionManager] Failed to change scene to " + path + " with error code: " + str(err))
+		# Recovery
+		tween = create_tween()
+		tween.tween_property(color_rect, "color:a", 0.0, 0.4)
+		await tween.finished
+		color_rect.hide()
+		get_tree().root.gui_disable_input = false
+		_is_transitioning = false
+		return false
 	
 	# Tunggu satu frame agar scene baru selesai _ready
 	await get_tree().process_frame
@@ -46,3 +64,5 @@ func transition_to_scene(path: String) -> void:
 	# Reset flag transition di GameManager jika ada
 	if GameManager.is_transitioning:
 		GameManager.is_transitioning = false
+		
+	return true

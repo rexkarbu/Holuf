@@ -1,85 +1,250 @@
 # HOLUF — World Transition Pipeline (M67)
+## Canonical Reference Document
 
-## 1. Existing Transition Architecture Audit
-- **TransitionManager:** An Autoload (`transition_manager.tscn`) exists and successfully handles fade-to-black, input disabling during transition, and `get_tree().change_scene_to_file()`.
-- **GameManager:** Handles `player_return_position` (a hardcoded `Vector2`) and prevents duplicate transitions via an `is_transitioning` flag.
-- **SaveManager:** Supports pending loads (`_has_pending_load`) safely integrated into `main.gd`.
-- **Main Scene (`main.tscn`):** Acts as the root node hosting both `Player` and `World` concurrently. Currently, `world.tscn` is hardcoded as an instantiated child.
-- **Deficit:** The project lacks a dynamic map-swapping architecture inside `main.tscn` and relies on raw `Vector2` coordinates rather than robust named spawn markers for locations.
+---
 
-## 2. Existing Battle Transition Compatibility Audit
-- **Current Behavior:** World → Battle uses `TransitionManager.transition_to_scene("res://scenes/battle/battle.tscn")`. Battle → World returns to `main.tscn` and restores the player via `GameManager.player_return_position`.
-- **Safety:** The `GameManager.is_transitioning` flag successfully prevents double-triggering. The state is clean and separated.
-- **Rule:** Future world location transitions must NOT break or alter this battle transition flow. They may share `TransitionManager`, but world transitions must introduce a robust Spawn ID system instead of relying purely on `Vector2` coordinates.
+## 1. Philosophical Foundation
 
-## 3. Transition Terminology
-- **LOCATION:** A meaningful explorable place.
-- **LOCATION BOUNDARY:** The conceptual boundary between two meaningful locations.
-- **ENTRANCE/EXIT:** A player-facing entry/departure point.
-- **TRANSITION ZONE:** A runtime trigger (e.g., `Area2D`) representing a legitimate location boundary.
-- **DESTINATION:** The target location/scene file.
-- **SPAWN POINT:** A named `Marker2D` identifier in the destination (e.g., `south_gate`, `interior_door`).
-- **RETURN POINT:** The logical counterpart used when returning.
-- **TRANSITION REQUEST:** A single requested location change guarded by state.
-
-## 4. Valid vs Invalid Transitions (Seamless Place Rule)
 **ONE CONTIGUOUS PLACE = ONE CONTIGUOUS PLAYER EXPERIENCE.**
-- **VALID:** Town → Route, Route → Dungeon, Exterior → meaningful Interior, Region → Region, special narrative separation.
-- **INVALID:** Market → Plaza in the same city, Residential → Commercial District, Harbor → Main Street, one side of the same street to another. 
-- *Note: Technical scene organization (e.g., child scenes or TileMapLayers) must NOT dictate player-visible fades. A city must remain seamless.*
 
-## 5. Transition Runtime Architecture (Contract)
-When the first region maps are produced (M76+), the transition system must implement:
-1. **TransitionZone (Area2D Component):** Exports `destination_scene_path: String` and `target_spawn_id: String`.
-2. **SpawnMarker (Marker2D Component):** Exports `spawn_id: String`.
-3. **Main Scene Dynamic Loading:** `main.tscn` must be updated to dynamically instantiate the `destination_scene_path` instead of hardcoding `world.tscn`.
-4. **GameManager Expansion:** Must store `target_spawn_id` alongside `player_return_position`.
+A transition represents a **meaningful LOCATION CHANGE** — not a district boundary within one city.
 
-## 6. Destination Spawn Architecture
-- A transition must NOT rely on fragile hardcoded `Vector2` coordinates.
-- **Strategy:** Target locations must contain `SpawnMarker` nodes. Upon scene load, the map initialization logic searches for the marker matching `GameManager.target_spawn_id` and teleports the player there *before* the fade-in completes.
+### Valid Transitions (Seamless Place Rule)
+| From | To | Valid? |
+|------|----|--------|
+| Town | Route | ✅ |
+| Route | Dungeon | ✅ |
+| Exterior | Meaningful Interior | ✅ |
+| Region | Region | ✅ |
+| Dungeon Floor | Separate Floor | ✅ (when justified) |
 
-## 7. Spawn Orientation Handling
-- If the M63 player controller supports directional facing (e.g., `Vector2.DOWN`), `SpawnMarker` components may optionally export an arrival `facing_direction`.
-- *Status:* DEFERRED to implementation integration. Do not invent a facing system if unsupported by the current player controller.
+### Invalid Transitions
+| From | To | Why Invalid |
+|------|----|-------------|
+| Caelora Harbor | Caelora Plaza | Same contiguous city |
+| Residential District | Market District | Same city |
+| East Street | West Street | Same settlement |
 
-## 8. Safe Arrival Placement & Ping-Pong Protection
-- **Safe Placement:** `SpawnMarker` must be placed with a safe offset buffer, ensuring the player does not spawn directly inside collision or overlapping an encounter trigger.
-- **Ping-Pong Prevention:** The player must not immediately trigger a return transition upon spawning.
-- **Strategy:** The destination marker must be placed safely beyond the return `TransitionZone`'s collision shape. The player must actively walk into the zone to trigger it.
+---
 
-## 9. Duplicate Request Protection
-- **Strategy:** Use `TransitionManager._is_transitioning` and `GameManager.is_transitioning` (already implemented) to guard against multiple overlapping `Area2D` collisions, repeated inputs, or multi-frame physics triggers. Only the first valid request is processed.
+## 2. Terminology
 
-## 10. Fade / Input Safety
-- **Visuals:** Short fade out → scene switch → spawn player → short fade in. Elaborate VFX are deferred to later polish milestones.
-- **Input:** `get_tree().root.gui_disable_input = true` and viewport input handling (already in `TransitionManager`) must remain active during the entire fade lifecycle to prevent rogue inputs.
+| Term | Definition |
+|------|-----------|
+| **ROOT GAMEPLAY SCENE** | `res://scenes/main/main.tscn` — always the Godot scene root |
+| **ACTIVE WORLD LOCATION** | The location content currently hosted inside Main (e.g. `world.tscn`, `dungeon.tscn`) |
+| **LOCATION** | A meaningful explorable place |
+| **LOCATION BOUNDARY** | Conceptual boundary between two meaningful locations |
+| **ENTRANCE / EXIT** | Player-facing entry/departure point |
+| **TRANSITION ZONE** | Runtime `Area2D` trigger at a legitimate location boundary |
+| **DESTINATION** | Target location scene file |
+| **SPAWN POINT** | Named `Marker2D` in the destination |
+| **RETURN POINT** | Logical counterpart for reversible transitions |
+| **DISTRICT / SUBAREA** | Part of one seamless location — NOT a valid transition boundary |
 
-## 11. Failure Handling
-- A bad destination (missing scene, invalid spawn ID) must fail safely.
-- **Strategy:** If the target scene or `SpawnMarker` cannot be found, an explicit developer error must be printed via `push_error()`, and the fade must reverse to return control to the player. No permanent black screens. No silent teleports to `Vector2.ZERO`.
+---
 
-## 12. Save / Autosave Boundary
-- **Integration with M60.5:** Not every tiny interior transition warrants an autosave.
-- Checkpoint-worthy transitions (e.g., Region → Region, major story progression) may hook into `SaveManager.request_autosave()` upon safe arrival.
-- Regular doors/interiors should not trigger autosaves unless designated by the design. The existing safe public API must be used.
+## 3. Runtime Architecture
 
-## 13. Story-Lock Boundary (M71)
-- `TransitionZone` components should support an `is_locked` boolean or a generic condition check.
-- Story logic (M71) determines *if* a zone is locked, while the generic system only checks the flag. Do not hardcode quest names into the generic transition script.
+### Implemented Components
 
-## 14. Interior, Region, and Dungeon Standards
-- **Interiors:** Exterior entrance → transition → named interior spawn. Not every decorative house gets an interior.
-- **Regions:** Elaris → Lorel transitions are technically supported by this pipeline, but no Elaris/Lorel routes are to be designed in M67.
-- **Dungeons:** Support Route → Dungeon, but avoid transition spam between ordinary rooms if the dungeon is conceptually one continuous space.
+#### `scripts/world/transition_zone.gd` (`TransitionZone`, extends `Area2D`)
+**Exported properties:**
+- `destination_scene_path: String` — path ke .tscn lokasi tujuan
+- `target_spawn_id: String` — ID SpawnMarker di tujuan
+- `is_enabled: bool` — false untuk story-lock (M71 will set this externally)
 
-## 15. Technical Organization vs Player Experience
-- If future architecture streams or instantiates child scenes while keeping continuous player movement, that is NOT a player-visible M67 transition. M67 handles hard, meaningful location changes.
+**Behavior:** Saat player memasuki zona, mengisi `GameManager.target_world_scene` dan `GameManager.target_spawn_id`, lalu memulai transisi ke `main.tscn`. Jika transisi gagal, mengosongkan state.
 
-## 16. Authoring Workflow & M68+ Handoff
-1. **M66** defines a legitimate location boundary.
-2. Map author places a `TransitionZone` (exit) and a `SpawnMarker` (return).
-3. Map author links the `destination_scene_path` and `target_spawn_id`.
-4. Round-trip safety and Re-entry safety are validated.
-- **M68-M70:** Handle final player movement, collision, and camera framing.
-- **M76+:** Owns actual Elaris map production.
+#### `scripts/world/spawn_marker.gd` (`SpawnMarker`, extends `Marker2D`)
+**Exported properties:**
+- `spawn_id: String` — identifier stabil (contoh: `south_gate`, `dungeon_entrance`)
+
+**Behavior:** Komponen pasif. Posisi di-authoring di editor. Memberi peringatan jika `spawn_id` kosong.
+
+---
+
+## 4. GameManager State (M67)
+
+```gdscript
+# Lokasi aktif saat ini — persisten antar battle return
+const DEFAULT_WORLD_SCENE := "res://scenes/world/world.tscn"
+var current_world_scene: String = DEFAULT_WORLD_SCENE
+
+# State transisi tertunda — sementara, dikonsumsi setelah arrival
+var target_world_scene: String = ""
+var target_spawn_id: String = ""
+```
+
+**`current_world_scene`** = lokasi dunia yang sedang aktif. Diperbarui setelah setiap arrival berhasil. Disimpan ke save file v3.
+
+**`target_world_scene`** = permintaan transisi sementara. Dikonsumsi dan dikosongkan di `main.gd._ready()`.
+
+**`target_spawn_id`** = ID SpawnMarker tujuan. Dikonsumsi dan dikosongkan di `main.gd._ready()`.
+
+---
+
+## 5. Spawn Resolution Precedence
+
+Diimplementasikan di `scripts/core/main.gd`:
+
+```
+1. MANUAL SAVE PENDING LOAD
+   SaveManager._has_pending_load == true
+   → Baca location_scene dari save data
+   → Swap world ke scene tersebut
+   → apply_pending_load() menangani koordinat X/Y
+
+2. M67 TARGET SPAWN
+   GameManager.target_world_scene != ""
+   → Swap world ke target scene
+   → Update current_world_scene
+   → Temukan SpawnMarker dengan target_spawn_id
+   → Kosongkan target_world_scene dan target_spawn_id
+
+3. BATTLE RETURN
+   GameManager.player_return_position != Vector2.ZERO
+   → Pastikan current_world_scene ter-load (bukan hanya default)
+   → Pindahkan player ke player_return_position
+
+4. DEFAULT
+   New game atau boot pertama
+   → world.tscn sudah terpasang di main.tscn
+   → current_world_scene = DEFAULT_WORLD_SCENE
+```
+
+---
+
+## 6. Save Schema (Version 3)
+
+```json
+{
+  "save_version": 3,
+  "world": {
+    "scene": "res://scenes/main/main.tscn",
+    "location_scene": "res://scenes/world/world.tscn",
+    "player_x": 1024.0,
+    "player_y": 768.0
+  },
+  ...
+}
+```
+
+**`world.scene`** = root gameplay scene (selalu `main.tscn`)  
+**`world.location_scene`** = active world location scene yang aktif saat save  
+**`world.player_x / player_y`** = koordinat pemain di lokasi tersebut
+
+### Legacy v1/v2 Compatibility
+
+Save v1/v2 tidak memiliki `world.location_scene`. Diperlakukan sebagai save dari dunia prototype:
+
+```
+location_scene (missing) → res://scenes/world/world.tscn
+```
+
+Tidak ada konversi otomatis. Save baru setelah load v2 akan menjadi v3.
+
+---
+
+## 7. Duplicate Request Protection
+
+`TransitionManager.transition_to_scene()` mengembalikan `bool`:
+- Jika `_is_transitioning == true` saat dipanggil → `push_warning`, return `false` langsung
+- `TransitionZone` juga memeriksa `GameManager.is_transitioning` sebelum memulai
+
+---
+
+## 8. Failure Handling
+
+| Kondisi Gagal | Behavior |
+|--------------|----------|
+| Scene tujuan tidak ada | `push_error`, return `false` sebelum fade |
+| Scene load gagal (`err != OK`) | Fade balik, restore input, return `false` |
+| SpawnMarker tidak ditemukan | `push_error`, player tidak dipindah ke Vector2.ZERO |
+| Layar hitam permanen | Tidak mungkin: setiap path kegagalan memanggil fade-out recovery |
+
+---
+
+## 9. Battle Return Location Preservation
+
+Skenario:
+1. Player berada di **Location B** (`dungeon.tscn`)
+2. `start_battle()` menyimpan `player_return_position`
+3. `current_world_scene` = `dungeon.tscn`
+4. Battle selesai → `return_to_world()` → `main.tscn`
+5. `main.gd._ready()` memeriksa: `player_return_position != Vector2.ZERO`
+6. Jika `current_world_scene != DEFAULT_WORLD_SCENE`, swap ke dungeon.tscn
+7. Player kembali di posisi yang benar di Location B
+
+---
+
+## 10. Story-Lock Boundary (M71)
+
+`TransitionZone.is_enabled = false` memblokir transisi tanpa menyentuh logika quest.
+M71 akan mengontrol nilai `is_enabled` dari luar tanpa mengubah kode TransitionZone.
+
+---
+
+## 11. Checkpoint / Autosave API
+
+Untuk transisi checkpoint-worthy (region → region, story boundary):
+```gdscript
+SaveManager.request_checkpoint_autosave("region_transition")
+```
+
+Jika player node diperlukan secara langsung:
+```gdscript
+SaveManager.request_autosave(player_node)  # player_node wajib diisi
+```
+
+**Jangan panggil `SaveManager.request_autosave()` tanpa argumen.**
+
+---
+
+## 12. Authoring Workflow
+
+1. M66 mendefinisikan batas lokasi yang sah
+2. Author map menempatkan `TransitionZone` (Area2D) di titik keluar
+3. Author map menempatkan `SpawnMarker` (Marker2D) di titik kedatangan — di luar overlap TransitionZone
+4. Set `destination_scene_path` dan `target_spawn_id` di Inspector
+5. Verifikasi round-trip A ↔ B
+6. Verifikasi tidak ada ping-pong
+7. Klasifikasi save/checkpoint policy
+8. Koneksikan story availability di M71 jika diperlukan
+
+---
+
+## 13. M76+ Consumption
+
+**M76 adalah consumer M67, bukan implementor-nya.**
+
+M76 (Elaris Layout Lock) akan:
+- Menempatkan `TransitionZone` di batas kota/rute Elaris
+- Menempatkan `SpawnMarker` di setiap titik kedatangan
+- Menggunakan sistem ini tanpa memodifikasi kode inti M67
+
+---
+
+## 14. Test Results
+
+| Test | Result |
+|------|--------|
+| A → B | INCONCLUSIVE (runtime tidak tersedia) |
+| B → A | INCONCLUSIVE (runtime tidak tersedia) |
+| Correct Spawn | INCONCLUSIVE (runtime tidak tersedia) |
+| Duplicate Request | STATIC PASS |
+| Missing Spawn | STATIC PASS |
+| Save Location B | INCONCLUSIVE (runtime tidak tersedia) |
+| Reload Location B | INCONCLUSIVE (runtime tidak tersedia) |
+| Legacy v2 fallback | STATIC PASS |
+| Battle Entry | STATIC PASS |
+| Battle Return same location | STATIC PASS |
+| NPC Regression | STATIC PASS |
+| Encounter Regression | STATIC PASS |
+
+---
+
+## 15. Deferred Items
+
+- **Spawn Facing Direction**: DEFERRED ke M68 setelah arsitektur animasi direktional dikonfirmasi
+- **Runtime test harness execution**: DEFERRED — memerlukan Godot editor runtime
