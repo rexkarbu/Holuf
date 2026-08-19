@@ -44,7 +44,7 @@ A transition represents a **meaningful LOCATION CHANGE** — not a district boun
 
 ---
 
-## 3. Runtime Architecture
+## 8. Save Schema (Version 3)
 
 ### Implemented Components
 
@@ -54,7 +54,14 @@ A transition represents a **meaningful LOCATION CHANGE** — not a district boun
 - `target_spawn_id: String` — ID SpawnMarker di tujuan
 - `is_enabled: bool` — false untuk story-lock (M71 will set this externally)
 
-**Behavior:** Saat player memasuki zona, mengisi `GameManager.target_world_scene` dan `GameManager.target_spawn_id`, lalu memulai transisi ke `main.tscn`. Jika transisi gagal, mengosongkan state.
+**Preflight sebelum transisi (urutan):**
+1. `destination_scene_path` tidak kosong
+2. `ResourceLoader.exists(destination_scene_path)`
+3. Load sebagai `PackedScene` berhasil
+4. Instantiasi preview sementara, cari `SpawnMarker` dengan `spawn_id == target_spawn_id`, hapus preview
+5. Jika semua lulus → set GameManager state → mulai transisi
+
+**Jika preflight gagal:** `push_error`, return. Tidak ada fade. Tidak ada scene change. State GameManager tidak berubah. Player tetap di lokasi saat ini.
 
 #### `scripts/world/spawn_marker.gd` (`SpawnMarker`, extends `Marker2D`)
 **Exported properties:**
@@ -115,7 +122,7 @@ Diimplementasikan di `scripts/core/main.gd`:
 
 ---
 
-## 6. Save Schema (Version 3)
+## 9. Save Schema (Version 3)
 
 ```json
 {
@@ -146,7 +153,18 @@ Tidak ada konversi otomatis. Save baru setelah load v2 akan menjadi v3.
 
 ---
 
-## 7. Duplicate Request Protection
+## 7. _swap_world() Contract (Transaksional)
+
+```
+1. ResourceLoader.exists(new_scene_path)  → fail: return false, world lama aman
+2. load() sebagai PackedScene             → fail: return false, world lama aman
+3. instantiate()                          → fail: return false, world lama aman
+4. HANYA SEKARANG: world_node.queue_free()
+5. add_child(new_node), move_child ke index 0
+6. return true
+```
+
+World lama tidak pernah dihapus jika penggantinya gagal dimuat.
 
 `TransitionManager.transition_to_scene()` mengembalikan `bool`:
 - Jika `_is_transitioning == true` saat dipanggil → `push_warning`, return `false` langsung

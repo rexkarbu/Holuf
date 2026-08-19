@@ -344,6 +344,21 @@ func _validate_save_data(data: Dictionary) -> bool:
 		push_error("[SaveManager] Missing or invalid 'world' field.")
 		return false
 
+	# M67: Validasi ketat world.location_scene untuk save v3+
+	var ver := int(data.get("save_version", 1))
+	if ver >= 3:
+		var world_data: Dictionary = data["world"]
+		if not world_data.has("location_scene") or not world_data["location_scene"] is String:
+			push_error("[SaveManager] Save v3 missing or non-String 'world.location_scene'.")
+			return false
+		var loc: String = world_data["location_scene"]
+		if loc == "":
+			push_error("[SaveManager] Save v3 has empty 'world.location_scene'.")
+			return false
+		if not ResourceLoader.exists(loc):
+			push_error("[SaveManager] Save v3 'world.location_scene' does not exist: " + loc)
+			return false
+
 	# Validate active_party references valid character IDs
 	for cid in data["active_party"]:
 		if not PartyManager.roster.has(cid):
