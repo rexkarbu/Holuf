@@ -16,11 +16,35 @@ func _ready() -> void:
 	_generate_threshold()
 
 func set_table(table: EncounterTable) -> void:
+	if table != null:
+		if table.min_distance <= 0:
+			push_warning("[EncounterManager] Invalid table: min_distance must be > 0. Table rejected.")
+			table = null
+		elif table.max_distance < table.min_distance:
+			push_warning("[EncounterManager] Invalid table: max_distance < min_distance. Table rejected.")
+			table = null
+		else:
+			var has_positive_weight := false
+			for f in table.formations:
+				if f.weight > 0:
+					has_positive_weight = true
+					break
+			if not has_positive_weight:
+				push_warning("[EncounterManager] Invalid table: no positive weight formation found. Table rejected.")
+				table = null
+
 	if current_table != table:
 		current_table = table
 		# Mereset progress ketika berpindah zona
 		distance_walked = 0.0
 		_generate_threshold()
+
+func reset_location_context() -> void:
+	current_table = null
+	distance_walked = 0.0
+	is_locked = false
+	encounters_enabled = true
+	_generate_threshold()
 
 func set_encounters_enabled(enabled: bool) -> void:
 	encounters_enabled = enabled

@@ -10,6 +10,10 @@ extends Node2D
 @onready var world_node = $World
 
 func _ready() -> void:
+	# M72: Reset seluruh state encounter (tabel, jarak, safe zone) dari lokasi sebelumnya
+	if EncounterManager:
+		EncounterManager.reset_location_context()
+
 	# M67: Tentukan scene lokasi dunia yang akan diaktifkan.
 	# Prioritas: Manual Load → Target World Transition → Battle Return → Default
 

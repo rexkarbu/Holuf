@@ -29,7 +29,7 @@ func start_battle(encounter_id: String, player_pos: Vector2, is_repeatable: bool
 		consumed_encounters.append(encounter_id)
 	player_return_position = player_pos
 	
-	if encounter_id == "placeholder_battle_1":
+	if encounter_id == "placeholder_battle_1" and pending_formation == null:
 		pending_formation = load("res://data/battle/formations/prologue_tutorial.tres")
 		
 

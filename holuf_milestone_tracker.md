@@ -1,8 +1,8 @@
 # HOLUF — MASTER MILESTONE LIST (RECOVERED + REBUILT)
 
-**Updated:** 2026-08-16  
+**Updated:** 2026-08-18  
 **Master range:** M1–M220  
-**Current:** **M45 — Combat Resource Economy Audit**
+**Current:** **M61 — World Production Visual Bible**
 
 ---
 
@@ -115,10 +115,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M55** | ✅ CLOSED | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
 | **M56** | ✅ CLOSED | Level-Based Skill Unlock — Data Foundation | REBUILT from locked/current history |
 | **M57** | ✅ CLOSED | Level-Based Skill Unlock — 60 Skill Level Table | REBUILT from locked/current history |
-| **M58** | ⏳ PENDING | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
-| **M59** | ⏳ PENDING | Join-Level Rule + Reserve + Save/Load Compatibility | REBUILT from locked/current history |
-| **M60** | ⏳ PENDING | Skill Progression Full Regression | REBUILT from locked/current history |
-| **M60.5** | ⏳ PENDING | Save Safety + Autosave / Backup Foundation | USER-ADDED release-critical gate |
+| **M58** | ✅ CLOSED | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
+| **M59** | ✅ CLOSED | Join-Level Rule + Reserve + Save/Load Compatibility | REBUILT from locked/current history |
+| **M60** | ✅ CLOSED | Skill Progression Full Regression | REBUILT from locked/current history |
+| **M60.5** | ✅ CLOSED | Save Safety + Autosave / Backup Foundation | USER-ADDED release-critical gate |
 
 ### M60.5 Save Safety Direction
 
@@ -180,6 +180,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M85.5** | ⏳ PENDING | Elaris Equipment Tier / Placement | USER-ADDED future roadmap |
 | **M86** | ⏳ PENDING | Elaris Tutorial Encounter Placement | REBUILT future roadmap |
 | **M87** | ⏳ PENDING | Elaris Story Trigger Scaffolding | REBUILT future roadmap |
+| **M87.5** | ⏳ PENDING | Character Dialogue Voice + Party Chemistry + Scene Pacing Bible | USER-ADDED story-production gate |
 | **M88** | ⏳ PENDING | Prologue Opening / Daily-Life Cutscene | REBUILT future roadmap |
 | **M89** | ⏳ PENDING | Aelia Harassment + Tutorial Battle Flow | REBUILT future roadmap |
 | **M90** | ⏳ PENDING | Aren Escorts Aelia + Dream Conversation | REBUILT future roadmap |
@@ -192,6 +193,20 @@ The previous tracker incorrectly treated M35 as something to return to much late
 ### M85.5 Elaris Equipment Direction
 
 - Aren + Aelia mendapatkan starter/early gear. Ini sebelum rangkaian cerita utama Elaris berkembang.
+
+### M87.5 Dialogue / Chemistry / Pacing Direction
+
+- This milestone occurs after the generic Story/Event Trigger Pipeline foundation and Elaris Story Trigger Scaffolding, but before final Prologue dialogue writing.
+- It establishes a textual dialogue-writing source-of-truth before M88+ story scenes are authored.
+- It does NOT write every final dialogue line for the game.
+- Final dialogue remains authored scene-by-scene during each region's story-sequence milestones.
+
+**1. Character Dialogue Voice Bible:** Production-level rules for sentence length, formal/casual speech, humor, anger, etc. for all 10 playable characters and major NPCs (Lloyd, Glaisa, Vaelor, Lucien). Goal: identify speech without tags. Must not become exaggerated gimmicks (e.g., Aelia must not be a constant "u-umm" caricature).
+**2. Party Chemistry Matrix:** Defines relationship priority (Tier A, B, C) across the 10 characters (starting relationship, friction, respect, etc.). Do not invent uncanonical romance.
+**3. Scene Pacing Bible:** Defines rules for M88+ scenes (purpose, duration, emotional beat, reveal, payoff). Philosophy: exploration → dialogue → gameplay/battle → breathing room → emotional beat. Avoid repeated exposition dumps.
+**4. Party Banter Rules:** Short optional dialogue for travel/exploration that reveals relationships without interrupting gameplay.
+**5. Arc 4 / Aetherion Protection:** Protects against four disconnected subplots in Arc 4, and prevents Aetherion from becoming one continuous exposition dump.
+*(Note: M87.5 does NOT create audio voice files or implement M209/M210).*
 
 ## LOREL PRODUCTION
 
@@ -365,6 +380,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M210** | ⏳ PENDING | Dialogue Voice Profiles + Custom Asset Integration | USER-ADDED future roadmap |
 | **M211** | ⏳ PENDING | Dialogue / Cutscene Presentation Polish | REBUILT future roadmap |
 | **M212** | ⏳ PENDING | Text / Naming / Localization Consistency Pass | REBUILT future roadmap |
+| **M212.5** | ⏳ PENDING | Accessibility + Input / Readability Final Gate | USER-ADDED release-critical gate |
 
 ### M203.5 Combat Readability Direction
 
@@ -381,6 +397,17 @@ The previous tracker incorrectly treated M35 as something to return to much late
 - M209 scope: reusable playback system tied to dialogue text, per-character/NPC voice assignment, sensible character cadence, punctuation pauses, pitch/variation controls, and safe fallback when no voice is assigned.
 - M210 scope: integrate the user's custom voice samples, define per-character/NPC voice profiles, tune volume/pitch/cadence, and verify dialogue/cutscene compatibility.
 - Voice playback should be configurable/mutable through audio/options settings rather than hard-coded into individual dialogue lines.
+
+### M212.5 Accessibility / Input / Readability Direction
+
+This is a final pre-regression gate. It must audit the actual finished game's player-facing usability covering:
+- **1. Input:** Keyboard/controller consistency, menu navigation, accidental bindings, hold vs toggle behavior.
+- **2. Dialogue Accessibility:** Text speed, reliable advance, readability, bleep volume control.
+- **3. Visual Readability:** UI text size, critical info not just color-dependent, contrast between player/NPC/world, flash intensity comfort.
+- **4. Motion / Effect Comfort:** Audit screen shake, flashes, camera movement.
+- **5. Audio Readability:** Music/SFX/Voice balance, gameplay info must not depend exclusively on sound.
+- **6. Fresh Player Usability:** Controls and navigation must be understandable without external documentation.
+*(Note: Acts as a focused accessibility/readability gate before M213+ final regression).*
 
 ## FINAL QA / RELEASE CANDIDATE
 
