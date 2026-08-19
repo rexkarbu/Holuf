@@ -115,10 +115,10 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | **M55** | ✅ CLOSED | Enemy / Boss Global Regression Closure | REBUILT from locked/current history |
 | **M56** | ✅ CLOSED | Level-Based Skill Unlock — Data Foundation | REBUILT from locked/current history |
 | **M57** | ✅ CLOSED | Level-Based Skill Unlock — 60 Skill Level Table | REBUILT from locked/current history |
-| **M58** | ⏳ PENDING | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
-| **M59** | ⏳ PENDING | Join-Level Rule + Reserve + Save/Load Compatibility | REBUILT from locked/current history |
-| **M60** | ⏳ PENDING | Skill Progression Full Regression | REBUILT from locked/current history |
-| **M60.5** | ⏳ PENDING | Save Safety + Autosave / Backup Foundation | USER-ADDED release-critical gate |
+| **M58** | ✅ CLOSED | Level-Based Skill Unlock — Runtime + Menu Filtering | REBUILT from locked/current history |
+| **M59** | ✅ CLOSED | Join-Level Rule + Reserve + Save/Load Compatibility | REBUILT from locked/current history |
+| **M60** | ✅ CLOSED | Skill Progression Full Regression | REBUILT from locked/current history |
+| **M60.5** | ✅ CLOSED | Save Safety + Autosave / Backup Foundation | USER-ADDED release-critical gate |
 
 ### M60.5 Save Safety Direction
 
@@ -133,22 +133,22 @@ The previous tracker incorrectly treated M35 as something to return to much late
 
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
-| **M61** | ⏳ PENDING | World Production Visual Bible | REBUILT future roadmap |
-| **M62** | ⏳ PENDING | Final Tile / Sprite Scale Lock | REBUILT future roadmap |
-| **M63** | ⏳ PENDING | Playable Character Sprite Pipeline | REBUILT future roadmap |
-| **M64** | ⏳ PENDING | NPC Sprite Pipeline | REBUILT future roadmap |
-| **M65** | ⏳ PENDING | Tileset / Environment Production Pipeline | REBUILT future roadmap |
-| **M66** | ⏳ PENDING | Map Layout Production Pipeline | REBUILT future roadmap |
-| **M67** | ⏳ PENDING | World Transition / Entrance / Exit Pipeline | REBUILT future roadmap |
-| **M68** | ⏳ PENDING | Final Player Movement Against Production Art | REBUILT future roadmap |
-| **M69** | ⏳ PENDING | Final Player Collision Against Production Art | REBUILT future roadmap |
-| **M70** | ⏳ PENDING | Final Camera Behavior | REBUILT future roadmap |
-| **M71** | ⏳ PENDING | Story / Event Trigger Pipeline | REBUILT future roadmap |
-| **M72** | ⏳ PENDING | Encounter Placement Pipeline | REBUILT future roadmap |
-| **M73** | ⏳ PENDING | Climbable Ledges V1 — One-Ledge Prototype | REBUILT future roadmap |
-| **M74** | ⏳ PENDING | Drop-Down Ledge + Anti-Stuck / Escape Refinement | REBUILT future roadmap |
-| **M75** | ⏳ PENDING | World Foundation Regression Gate | REBUILT future roadmap |
-| **M75.5** | ⏳ PENDING | Combat Tutorial / Help Guide Integration Gate | USER-ADDED release-critical gate |
+| **M61** | ✅ CLOSED | World Production Visual Bible | REBUILT future roadmap |
+| **M62** | ✅ CLOSED | Final Tile / Sprite Scale Lock | REBUILT future roadmap |
+| **M63** | ✅ CLOSED | Playable Character Sprite Pipeline | REBUILT future roadmap |
+| **M64** | ✅ CLOSED | NPC Sprite Pipeline | REBUILT future roadmap |
+| **M65** | ✅ CLOSED | Tileset / Environment Production Pipeline | REBUILT future roadmap |
+| **M66** | ✅ CLOSED | Map Layout Production Pipeline | REBUILT future roadmap |
+| **M67** | ✅ CLOSED | World Transition / Entrance / Exit Pipeline | REBUILT future roadmap |
+| **M68** | ✅ CLOSED | Final Player Movement Against Production Art | REBUILT future roadmap |
+| **M69** | ✅ CLOSED | Final Player Collision Against Production Art | REBUILT future roadmap |
+| **M70** | ✅ CLOSED | Final Camera Behavior | REBUILT future roadmap |
+| **M71** | ✅ CLOSED | Story / Event Trigger Pipeline | REBUILT future roadmap |
+| **M72** | ✅ CLOSED | Encounter Placement Pipeline | REBUILT future roadmap |
+| **M73** | ✅ CLOSED | Climbable Ledges V1 — One-Ledge Prototype | REBUILT future roadmap |
+| **M74** | ✅ CLOSED | Drop-Down Ledge + Anti-Stuck / Escape Refinement | REBUILT future roadmap |
+| **M75** | ✅ CLOSED | World Foundation Regression Gate | REBUILT future roadmap |
+| **M75.5** | ✅ CLOSED | Combat Tutorial / Help Guide Integration Gate | USER-ADDED release-critical gate |
 | **M75.75** | ⏳ PENDING | Equipment Progression + Regional Gear Master Table | USER-ADDED future roadmap |
 
 ### M75.75 Equipment Progression Direction
