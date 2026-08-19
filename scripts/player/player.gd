@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 ## Player — menangani input movement, physics, dan interaksi.
 ## Camera2D sebagai child mengikuti player secara otomatis.
+## M70: Menyediakan API kamera untuk konfigurasi batas dan reset smoothing.
 
 signal interactable_detected(interactable: Interactable)
 signal interactable_undetected()
@@ -9,6 +10,7 @@ signal interactable_undetected()
 @export var move_speed: float = 150.0
 
 @onready var interaction_detector: Area2D = $InteractionDetector
+@onready var _camera: Camera2D = $Camera2D
 
 var current_interactable: Interactable = null
 var is_locked: bool = false
@@ -28,6 +30,8 @@ func _ready() -> void:
 	PartyManager.party_ui_toggled.connect(_on_party_ui_toggled)
 	# M25: Setup feedback label
 	_setup_save_feedback()
+	# M70: Zoom lock — pastikan zoom tidak mewarisi nilai editor yang berbeda
+	_camera.zoom = Vector2.ONE
 
 
 func _physics_process(_delta: float) -> void:
@@ -129,6 +133,46 @@ func _on_party_ui_toggled(is_open: bool) -> void:
 	if is_open:
 		current_interactable = null
 		interactable_undetected.emit()
+
+# ==============================================================
+# M70 — CAMERA API
+# ==============================================================
+
+## Konfigurasi batas Camera2D berdasarkan Rect2 yang diberikan oleh world aktif.
+## Harus dipanggil oleh Main setelah setiap world swap, load, atau battle return,
+## SETELAH player.global_position sudah diset ke posisi spawn yang benar.
+func configure_camera_bounds(bounds: Rect2) -> void:
+	if not is_node_ready():
+		await ready
+	if bounds.size.x <= 0.0 or bounds.size.y <= 0.0:
+		push_warning("[Player/Camera] camera_bounds tidak valid dari world aktif (size=%s). Menggunakan fallback: limit tidak terbatas." % str(bounds.size))
+		# Fallback aman: nonaktifkan limit finite agar tidak mewarisi batas world sebelumnya.
+		# Menggunakan nilai default Godot Camera2D (limit besar / tidak terbatas).
+		_camera.limit_left   = -10000000
+		_camera.limit_top    = -10000000
+		_camera.limit_right  =  10000000
+		_camera.limit_bottom =  10000000
+		return
+	# Konversi Rect2 lokal world ke koordinat global.
+	# Karena world_node selalu di-add sebagai child of Main (Node2D di (0,0)),
+	# dan tidak pernah di-rotate/scale, koordinat lokal = global.
+	# Jika arsitektur berubah, tambahkan konversi global_transform di sini.
+	_camera.limit_left   = int(bounds.position.x)
+	_camera.limit_top    = int(bounds.position.y)
+	_camera.limit_right  = int(bounds.position.x + bounds.size.x)
+	_camera.limit_bottom = int(bounds.position.y + bounds.size.y)
+
+
+## Reset smoothing kamera setelah teleport (SpawnMarker arrival, load, battle return).
+## Mencegah kamera meluncur secara visual dari posisi world lama.
+## Harus dipanggil SETELAH configure_camera_bounds dan SETELAH player.global_position diset.
+func reset_camera_after_teleport() -> void:
+	if not is_node_ready():
+		await ready
+	# Godot 4 Camera2D: memanggil reset_smoothing() menghapus posisi internal
+	# smoothing sehingga kamera langsung snap ke posisi player saat ini.
+	_camera.reset_smoothing()
+
 
 # ==============================================================
 # M25 — SAVE/LOAD FEEDBACK

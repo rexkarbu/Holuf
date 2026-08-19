@@ -3,6 +3,8 @@ extends Node2D
 ## Main — entry point game HOLUF.
 ## Bertanggung jawab sebagai root scene dan mengatur komponen utama:
 ## World dan Player. Jangan tambahkan logika gameplay di sini.
+## M70: Setelah setiap world swap dan posisi player ditetapkan,
+## panggil _apply_camera_for_world() untuk mengonfigurasi Camera2D Player.
 
 @onready var player = $Player
 @onready var world_node = $World
@@ -18,6 +20,7 @@ func _ready() -> void:
 		# Legacy v1/v2: tidak ada location_scene → DEFAULT sudah terpasang, langsung apply
 		if saved_location == "":
 			SaveManager.apply_pending_load(player)
+			_apply_camera_for_world()  # M70: konfigurasi kamera untuk default world
 			return
 		
 		# v3: harus swap ke lokasi yang disimpan SEBELUM apply koordinat
@@ -28,10 +31,12 @@ func _ready() -> void:
 				SaveManager.cancel_pending_load("Saved location gagal dimuat: " + saved_location)
 				# Tetap di world default, player di posisi bawaan editor
 				GameManager.current_world_scene = GameManager.DEFAULT_WORLD_SCENE
+				_apply_camera_for_world()  # M70: konfigurasi kamera meski fallback
 				return
 		
 		# Swap berhasil (atau sudah default) — aman apply koordinat
 		SaveManager.apply_pending_load(player)
+		_apply_camera_for_world()  # M70: konfigurasi kamera setelah load
 		return
 
 	# 2. M67 TARGET SPAWN — Transisi lokasi baru (preflight sudah dilakukan di TransitionZone)
@@ -60,7 +65,9 @@ func _ready() -> void:
 			push_error("[Main] SpawnMarker tidak ditemukan (defensive): " + spawn_id_to_find)
 			# Jangan pindahkan pemain ke Vector2.ZERO
 			# State: target world IS loaded tapi spawn gagal — jangan berbohong tentang reality
-			# Target world sebenarnya aktif, tapi arrival tidak deterministik
+
+		# M70: Konfigurasi kamera SETELAH posisi player ditetapkan
+		_apply_camera_for_world()
 
 		# Konsumsi state transisi tertunda dalam semua kasus
 		GameManager.target_world_scene = ""
@@ -77,11 +84,13 @@ func _ready() -> void:
 				# Fallback ke default — lebih aman daripada crash
 				GameManager.current_world_scene = GameManager.DEFAULT_WORLD_SCENE
 		player.global_position = GameManager.player_return_position
+		_apply_camera_for_world()  # M70: konfigurasi kamera setelah battle return
 		return
 
 	# 4. DEFAULT — New game atau boot pertama
 	# world_node sudah terpasang sebagai world.tscn di .tscn file
 	GameManager.current_world_scene = GameManager.DEFAULT_WORLD_SCENE
+	_apply_camera_for_world()  # M70: konfigurasi kamera untuk default world boot
 
 
 func _swap_world(new_scene_path: String) -> bool:
@@ -125,3 +134,29 @@ func _find_spawn_marker(node: Node, id: String) -> Marker2D:
 		if found:
 			return found
 	return null
+
+
+# ==============================================================
+# M70 — CAMERA CONFIGURATION
+# ==============================================================
+
+## Baca camera_bounds dari world_node aktif dan terapkan ke Player Camera2D.
+## Panggil SETELAH world_node diperbarui DAN player.global_position sudah diset.
+func _apply_camera_for_world() -> void:
+	if not is_instance_valid(world_node):
+		push_error("[Main/Camera] world_node tidak valid saat _apply_camera_for_world dipanggil.")
+		return
+	if not is_instance_valid(player):
+		push_error("[Main/Camera] player tidak valid saat _apply_camera_for_world dipanggil.")
+		return
+
+	# Baca camera_bounds dari world. Jika world tidak memiliki properti ini
+	# (bukan script world.gd), gunakan bounds kosong agar fallback warning muncul.
+	var bounds := Rect2(0, 0, 0, 0)
+	if world_node.get_script() != null and "camera_bounds" in world_node:
+		bounds = world_node.camera_bounds
+	else:
+		push_warning("[Main/Camera] world_node tidak memiliki properti camera_bounds. Menggunakan fallback limit tidak terbatas.")
+
+	player.configure_camera_bounds(bounds)
+	player.reset_camera_after_teleport()

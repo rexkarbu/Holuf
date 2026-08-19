@@ -21,12 +21,9 @@ position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_col")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1, 1)
 position_smoothing_enabled = true
 position_smoothing_speed = 5.0
-limit_left = 0
-limit_top = 0
-limit_right = 2000
-limit_bottom = 2000
 
 [node name="InteractionDetector" type="Area2D" parent="."]
 collision_layer = 0

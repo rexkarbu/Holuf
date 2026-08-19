@@ -44,6 +44,7 @@ size = Vector2(200, 200)
 
 [node name="World" type="Node2D" unique_id=582165541]
 script = ExtResource("1_world")
+camera_bounds = Rect2(0, 0, 2000, 2000)
 
 [node name="Ground" type="Polygon2D" parent="." unique_id=1048775204]
 color = Color(0.08, 0.09, 0.08, 1)
