@@ -69,7 +69,7 @@ Common required archetypes:
 ## 10. Godot Import Rules
 - **Filter:** `Nearest` (Pixel-perfect).
 - **Mipmaps:** Disabled.
-- **Compress To:** `Lossless` (Preferred production default for clean pixel art to avoid compression artifacts).
+- **Compress > Mode:** `Lossless` — preferred production default for pixel art, preserving original image quality without lossy/VRAM compression artifacts.
 - **Node Choice:** 
   - Use `Sprite2D` for 1-Directional STATIC NPCs (cheaper performance).
   - Use `AnimatedSprite2D` + `SpriteFrames` for 4-Directional / MOVING NPCs (maintains M63 consistency).
