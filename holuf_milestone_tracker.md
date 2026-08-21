@@ -168,6 +168,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
 | **M76** | ✅ CLOSED | Elaris Layout Lock | REBUILT future roadmap |
+| **M76.1** | ✅ CLOSED | Caelora Residential & Market Density Expansion (13 res. footprints, 10 commercial, 6 stalls, neighborhood + district ground breadth) | post-M76 refinement |
 | **M77** | ⏳ PENDING | Elaris Tileset + Environment Art | REBUILT future roadmap |
 | **M78** | ⏳ PENDING | Aren Final World Visual | REBUILT future roadmap |
 | **M79** | ⏳ PENDING | Aelia Final World Visual | REBUILT future roadmap |
