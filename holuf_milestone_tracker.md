@@ -167,7 +167,7 @@ The previous tracker incorrectly treated M35 as something to return to much late
 
 | Milestone | Status | Title | Recovery source |
 |---|---|---|---|
-| **M76** | ⏳ PENDING | Elaris Layout Lock | REBUILT future roadmap |
+| **M76** | ✅ CLOSED | Elaris Layout Lock | REBUILT future roadmap |
 | **M77** | ⏳ PENDING | Elaris Tileset + Environment Art | REBUILT future roadmap |
 | **M78** | ⏳ PENDING | Aren Final World Visual | REBUILT future roadmap |
 | **M79** | ⏳ PENDING | Aelia Final World Visual | REBUILT future roadmap |

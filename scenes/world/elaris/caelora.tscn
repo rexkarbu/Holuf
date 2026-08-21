@@ -1,0 +1,1070 @@
+[gd_scene load_steps=32 format=3 uid="uid://caelora_exterior_m76"]
+
+[ext_resource type="Script" uid="uid://dylawqlihp5ja" path="res://scripts/world/world.gd" id="1_world"]
+[ext_resource type="Script" uid="uid://phq5bqk8yvrq" path="res://scripts/world/spawn_marker.gd" id="2_spawn"]
+[ext_resource type="Script" uid="uid://bs0c7c62dikky" path="res://scripts/world/transition_zone.gd" id="3_transition"]
+
+[sub_resource type="RectangleShape2D" id="Shape_WallH"]
+size = Vector2(3240, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallV"]
+size = Vector2(40, 3560)
+
+[sub_resource type="CircleShape2D" id="Shape_Fountain"]
+radius = 36.0
+
+[sub_resource type="RectangleShape2D" id="Shape_BenchH"]
+size = Vector2(60, 16)
+
+[sub_resource type="RectangleShape2D" id="Shape_BenchV"]
+size = Vector2(16, 60)
+
+[sub_resource type="RectangleShape2D" id="Shape_HouseMedium"]
+size = Vector2(180, 130)
+
+[sub_resource type="RectangleShape2D" id="Shape_HouseFacade"]
+size = Vector2(160, 140)
+
+[sub_resource type="RectangleShape2D" id="Shape_ResEntry"]
+size = Vector2(180, 140)
+
+[sub_resource type="RectangleShape2D" id="Shape_RoyalBuilding"]
+size = Vector2(600, 250)
+
+[sub_resource type="RectangleShape2D" id="Shape_RoyalGate"]
+size = Vector2(200, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_RoyalFence"]
+size = Vector2(400, 30)
+
+[sub_resource type="RectangleShape2D" id="Shape_GuardBuilding"]
+size = Vector2(180, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_MarketStorefront"]
+size = Vector2(240, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_MarketStorefrontSmall"]
+size = Vector2(180, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_MarketStall"]
+size = Vector2(70, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_Blocker"]
+size = Vector2(100, 160)
+
+[sub_resource type="RectangleShape2D" id="Shape_DoorTrigger"]
+size = Vector2(60, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_AlleyWallH"]
+size = Vector2(240, 30)
+
+[sub_resource type="RectangleShape2D" id="Shape_AlleyWallV"]
+size = Vector2(30, 180)
+
+[sub_resource type="RectangleShape2D" id="Shape_PierMainSide"]
+size = Vector2(20, 500)
+
+[sub_resource type="RectangleShape2D" id="Shape_PierUtilitySide"]
+size = Vector2(20, 300)
+
+[sub_resource type="RectangleShape2D" id="Shape_PierEnd"]
+size = Vector2(180, 20)
+
+[sub_resource type="RectangleShape2D" id="Shape_CliffL3_Left"]
+size = Vector2(680, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_CliffL3_Right"]
+size = Vector2(680, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_CliffL2_West"]
+size = Vector2(1350, 50)
+
+[sub_resource type="RectangleShape2D" id="Shape_CliffL2_Middle"]
+size = Vector2(350, 50)
+
+[sub_resource type="RectangleShape2D" id="Shape_CliffL2_East"]
+size = Vector2(900, 50)
+
+[sub_resource type="RectangleShape2D" id="Shape_StairBalustrade"]
+size = Vector2(20, 70)
+
+[sub_resource type="RectangleShape2D" id="Shape_DescentOccluder"]
+size = Vector2(140, 120)
+
+[node name="Caelora" type="Node2D"]
+script = ExtResource("1_world")
+camera_bounds = Rect2(0, 0, 3200, 3520)
+
+[node name="Ground" type="Node2D" parent="."]
+
+[node name="Sea" type="Polygon2D" parent="Ground"]
+color = Color(0.08, 0.14, 0.24, 1)
+polygon = PackedVector2Array(0, 0, 3200, 0, 3200, 3520, 0, 3520)
+
+[node name="Level1_Coast" type="Polygon2D" parent="Ground"]
+color = Color(0.36, 0.33, 0.26, 1)
+polygon = PackedVector2Array(500, 1780, 2900, 1780, 2900, 2600, 500, 2600)
+
+[node name="Level1_Beach" type="Polygon2D" parent="Ground"]
+color = Color(0.72, 0.65, 0.46, 1)
+polygon = PackedVector2Array(2000, 2350, 2900, 2350, 2900, 2950, 2050, 2950)
+
+[node name="Level2_Terrain" type="Polygon2D" parent="Ground"]
+color = Color(0.25, 0.27, 0.23, 1)
+polygon = PackedVector2Array(150, 720, 3050, 720, 3050, 1780, 150, 1780)
+
+[node name="Level3_Terrace" type="Polygon2D" parent="Ground"]
+color = Color(0.32, 0.33, 0.36, 1)
+polygon = PackedVector2Array(850, 80, 2350, 80, 2350, 720, 850, 720)
+
+[node name="Paths" type="Node2D" parent="."]
+
+[node name="PlazaPaving" type="Polygon2D" parent="Paths"]
+color = Color(0.35, 0.33, 0.31, 1)
+polygon = PackedVector2Array(1200, 850, 2000, 850, 2000, 1450, 1200, 1450)
+
+[node name="PlazaToRoyalNorthRoad" type="Polygon2D" parent="Paths"]
+color = Color(0.34, 0.32, 0.3, 1)
+polygon = PackedVector2Array(1530, 760, 1670, 760, 1670, 850, 1530, 850)
+
+[node name="RoyalTerraceUpperApproach" type="Polygon2D" parent="Paths"]
+color = Color(0.38, 0.37, 0.4, 1)
+polygon = PackedVector2Array(1500, 580, 1700, 580, 1700, 700, 1500, 700)
+
+[node name="DescendingRoadUpper" type="Polygon2D" parent="Paths"]
+color = Color(0.33, 0.31, 0.29, 1)
+polygon = PackedVector2Array(1540, 1450, 1660, 1450, 1660, 1580, 1540, 1580)
+
+[node name="DescendingRoadMiddleBend" type="Polygon2D" parent="Paths"]
+color = Color(0.33, 0.31, 0.29, 1)
+polygon = PackedVector2Array(1540, 1630, 1780, 1630, 1780, 1740, 1660, 1740, 1540, 1680)
+
+[node name="DescendingRoadLowerToGuard" type="Polygon2D" parent="Paths"]
+color = Color(0.34, 0.32, 0.28, 1)
+polygon = PackedVector2Array(1660, 1790, 1780, 1790, 1780, 1900, 1620, 1900, 1620, 1850)
+
+[node name="GuardCourtyardPaving" type="Polygon2D" parent="Paths"]
+color = Color(0.34, 0.32, 0.28, 1)
+polygon = PackedVector2Array(1500, 1880, 1800, 1880, 1800, 2080, 1500, 2080)
+
+[node name="GuardToHarborRoad" type="Polygon2D" parent="Paths"]
+color = Color(0.34, 0.32, 0.28, 1)
+polygon = PackedVector2Array(1520, 2080, 1680, 2080, 1680, 2580, 1520, 2580)
+
+[node name="HarborMainPierVisual" type="Polygon2D" parent="Paths"]
+color = Color(0.38, 0.28, 0.18, 1)
+polygon = PackedVector2Array(1520, 2560, 1680, 2560, 1680, 3050, 1520, 3050)
+
+[node name="HarborUtilityPierVisual" type="Polygon2D" parent="Paths"]
+color = Color(0.35, 0.25, 0.16, 1)
+polygon = PackedVector2Array(1150, 2560, 1250, 2560, 1250, 2850, 1150, 2850)
+
+[node name="PathToBeach" type="Polygon2D" parent="Paths"]
+color = Color(0.48, 0.44, 0.34, 1)
+polygon = PackedVector2Array(1700, 2360, 2150, 2360, 2150, 2500, 1700, 2500)
+
+[node name="ResidentialEntryStreet" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(950, 1100, 1200, 1100, 1200, 1260, 950, 1260)
+
+[node name="ResidentialMainCirculation" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(540, 1120, 950, 1120, 950, 1240, 540, 1240)
+
+[node name="ArenBranchRoad" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(380, 860, 520, 860, 520, 1140, 380, 1140)
+
+[node name="AeliaBranchRoad" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(380, 1220, 520, 1220, 520, 1680, 380, 1680)
+
+[node name="ResidentialSideLane" type="Polygon2D" parent="Paths"]
+color = Color(0.28, 0.26, 0.24, 1)
+polygon = PackedVector2Array(240, 880, 340, 880, 340, 1240, 240, 1240)
+
+[node name="WestVisualContinuation" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(100, 1140, 380, 1140, 380, 1240, 100, 1240)
+
+[node name="CommercialStreet" type="Polygon2D" parent="Paths"]
+color = Color(0.32, 0.3, 0.28, 1)
+polygon = PackedVector2Array(2000, 1120, 2750, 1120, 2750, 1240, 2000, 1240)
+
+[node name="MarketPocketFloor" type="Polygon2D" parent="Paths"]
+color = Color(0.34, 0.32, 0.3, 1)
+polygon = PackedVector2Array(2280, 1020, 2620, 1020, 2620, 1360, 2280, 1360)
+
+[node name="MarketSidePocketFloor" type="Polygon2D" parent="Paths"]
+color = Color(0.3, 0.28, 0.26, 1)
+polygon = PackedVector2Array(2480, 1360, 2640, 1360, 2640, 1580, 2480, 1580)
+
+[node name="EastVisualContinuation" type="Polygon2D" parent="Paths"]
+color = Color(0.32, 0.3, 0.28, 1)
+polygon = PackedVector2Array(2750, 1140, 3100, 1140, 3100, 1240, 2750, 1240)
+
+[node name="QuietAlleyPath" type="Polygon2D" parent="Paths"]
+color = Color(0.24, 0.22, 0.21, 1)
+polygon = PackedVector2Array(2660, 1120, 2740, 1120, 2740, 880, 2920, 880, 2920, 740, 2680, 740, 2680, 940, 2660, 940)
+
+[node name="ElevationStairsAndTerraces" type="Node2D" parent="."]
+
+[node name="RoyalStairsVisual" type="Node2D" parent="ElevationStairsAndTerraces"]
+
+[node name="Step1" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+color = Color(0.44, 0.45, 0.48, 1)
+polygon = PackedVector2Array(1530, 745, 1670, 745, 1670, 760, 1530, 760)
+
+[node name="Step2" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+color = Color(0.4, 0.41, 0.44, 1)
+polygon = PackedVector2Array(1530, 730, 1670, 730, 1670, 745, 1530, 745)
+
+[node name="Step3" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+color = Color(0.36, 0.37, 0.4, 1)
+polygon = PackedVector2Array(1530, 715, 1670, 715, 1670, 730, 1530, 730)
+
+[node name="Step4" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+color = Color(0.32, 0.33, 0.36, 1)
+polygon = PackedVector2Array(1530, 700, 1670, 700, 1670, 715, 1530, 715)
+
+[node name="RoyalStairLeftBalustrade" type="StaticBody2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+position = Vector2(1520, 730)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual/RoyalStairLeftBalustrade"]
+shape = SubResource("Shape_StairBalustrade")
+
+[node name="Visual" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual/RoyalStairLeftBalustrade"]
+color = Color(0.2, 0.22, 0.25, 1)
+polygon = PackedVector2Array(-10, -35, 10, -35, 10, 35, -10, 35)
+
+[node name="RoyalStairRightBalustrade" type="StaticBody2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual"]
+position = Vector2(1680, 730)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual/RoyalStairRightBalustrade"]
+shape = SubResource("Shape_StairBalustrade")
+
+[node name="Visual" type="Polygon2D" parent="ElevationStairsAndTerraces/RoyalStairsVisual/RoyalStairRightBalustrade"]
+color = Color(0.2, 0.22, 0.25, 1)
+polygon = PackedVector2Array(-10, -35, 10, -35, 10, 35, -10, 35)
+
+[node name="CoastDescentStairsUpper" type="Node2D" parent="ElevationStairsAndTerraces"]
+
+[node name="Step1" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper"]
+color = Color(0.36, 0.34, 0.32, 1)
+polygon = PackedVector2Array(1540, 1580, 1660, 1580, 1660, 1595, 1540, 1595)
+
+[node name="Step2" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper"]
+color = Color(0.32, 0.3, 0.28, 1)
+polygon = PackedVector2Array(1540, 1595, 1660, 1595, 1660, 1610, 1540, 1610)
+
+[node name="Step3" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper"]
+color = Color(0.28, 0.26, 0.24, 1)
+polygon = PackedVector2Array(1540, 1610, 1660, 1610, 1660, 1625, 1540, 1625)
+
+[node name="UpperDescentLeftBalustrade" type="StaticBody2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper"]
+position = Vector2(1530, 1605)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper/UpperDescentLeftBalustrade"]
+shape = SubResource("Shape_StairBalustrade")
+
+[node name="Visual" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsUpper/UpperDescentLeftBalustrade"]
+color = Color(0.18, 0.16, 0.15, 1)
+polygon = PackedVector2Array(-10, -35, 10, -35, 10, 35, -10, 35)
+
+[node name="CoastDescentBendOccluder" type="StaticBody2D" parent="ElevationStairsAndTerraces"]
+position = Vector2(1540, 1710)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationStairsAndTerraces/CoastDescentBendOccluder"]
+shape = SubResource("Shape_DescentOccluder")
+
+[node name="Visual" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentBendOccluder"]
+color = Color(0.18, 0.19, 0.17, 1)
+polygon = PackedVector2Array(-70, -60, 70, -60, 70, 60, -70, 60)
+
+[node name="Label" type="Label" parent="ElevationStairsAndTerraces/CoastDescentBendOccluder"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 10
+text = "TERRACE BEND"
+horizontal_alignment = 1
+
+[node name="CoastDescentStairsLower" type="Node2D" parent="ElevationStairsAndTerraces"]
+
+[node name="Step1" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower"]
+color = Color(0.36, 0.34, 0.32, 1)
+polygon = PackedVector2Array(1660, 1740, 1780, 1740, 1780, 1755, 1660, 1755)
+
+[node name="Step2" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower"]
+color = Color(0.32, 0.3, 0.28, 1)
+polygon = PackedVector2Array(1660, 1755, 1780, 1755, 1780, 1770, 1660, 1770)
+
+[node name="Step3" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower"]
+color = Color(0.28, 0.26, 0.24, 1)
+polygon = PackedVector2Array(1660, 1770, 1780, 1770, 1780, 1785, 1660, 1785)
+
+[node name="LowerDescentRightBalustrade" type="StaticBody2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower"]
+position = Vector2(1790, 1765)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower/LowerDescentRightBalustrade"]
+shape = SubResource("Shape_StairBalustrade")
+
+[node name="Visual" type="Polygon2D" parent="ElevationStairsAndTerraces/CoastDescentStairsLower/LowerDescentRightBalustrade"]
+color = Color(0.18, 0.16, 0.15, 1)
+polygon = PackedVector2Array(-10, -35, 10, -35, 10, 35, -10, 35)
+
+[node name="Boundaries" type="Node2D" parent="."]
+
+[node name="BoundaryTop" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(1600, -20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryTop"]
+shape = SubResource("Shape_WallH")
+
+[node name="BoundaryBottom" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(1600, 3540)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryBottom"]
+shape = SubResource("Shape_WallH")
+
+[node name="BoundaryLeft" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(-20, 1760)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryLeft"]
+shape = SubResource("Shape_WallV")
+
+[node name="BoundaryRight" type="StaticBody2D" parent="Boundaries"]
+position = Vector2(3220, 1760)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundaries/BoundaryRight"]
+shape = SubResource("Shape_WallV")
+
+[node name="ElevationCliffs" type="Node2D" parent="."]
+
+[node name="CliffLevel3Left" type="StaticBody2D" parent="ElevationCliffs"]
+position = Vector2(1180, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationCliffs/CliffLevel3Left"]
+shape = SubResource("Shape_CliffL3_Left")
+
+[node name="VisualWall" type="Polygon2D" parent="ElevationCliffs/CliffLevel3Left"]
+color = Color(0.14, 0.15, 0.18, 1)
+polygon = PackedVector2Array(-340, -20, 340, -20, 340, 20, -340, 20)
+
+[node name="VisualRim" type="Polygon2D" parent="ElevationCliffs/CliffLevel3Left"]
+color = Color(0.45, 0.48, 0.52, 1)
+polygon = PackedVector2Array(-340, -20, 340, -20, 340, -15, -340, -15)
+
+[node name="CliffLevel3Right" type="StaticBody2D" parent="ElevationCliffs"]
+position = Vector2(2020, 720)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationCliffs/CliffLevel3Right"]
+shape = SubResource("Shape_CliffL3_Right")
+
+[node name="VisualWall" type="Polygon2D" parent="ElevationCliffs/CliffLevel3Right"]
+color = Color(0.14, 0.15, 0.18, 1)
+polygon = PackedVector2Array(-340, -20, 340, -20, 340, 20, -340, 20)
+
+[node name="VisualRim" type="Polygon2D" parent="ElevationCliffs/CliffLevel3Right"]
+color = Color(0.45, 0.48, 0.52, 1)
+polygon = PackedVector2Array(-340, -20, 340, -20, 340, -15, -340, -15)
+
+[node name="CliffLevel2West" type="StaticBody2D" parent="ElevationCliffs"]
+position = Vector2(865, 1780)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationCliffs/CliffLevel2West"]
+shape = SubResource("Shape_CliffL2_West")
+
+[node name="VisualWall" type="Polygon2D" parent="ElevationCliffs/CliffLevel2West"]
+color = Color(0.13, 0.15, 0.12, 1)
+polygon = PackedVector2Array(-675, -25, 675, -25, 675, 25, -675, 25)
+
+[node name="VisualRim" type="Polygon2D" parent="ElevationCliffs/CliffLevel2West"]
+color = Color(0.4, 0.44, 0.38, 1)
+polygon = PackedVector2Array(-675, -25, 675, -25, 675, -18, -675, -18)
+
+[node name="CliffLevel2Middle" type="StaticBody2D" parent="ElevationCliffs"]
+position = Vector2(1955, 1780)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationCliffs/CliffLevel2Middle"]
+shape = SubResource("Shape_CliffL2_Middle")
+
+[node name="VisualWall" type="Polygon2D" parent="ElevationCliffs/CliffLevel2Middle"]
+color = Color(0.13, 0.15, 0.12, 1)
+polygon = PackedVector2Array(-175, -25, 175, -25, 175, 25, -175, 25)
+
+[node name="VisualRim" type="Polygon2D" parent="ElevationCliffs/CliffLevel2Middle"]
+color = Color(0.4, 0.44, 0.38, 1)
+polygon = PackedVector2Array(-175, -25, 175, -25, 175, -18, -175, -18)
+
+[node name="CliffLevel2East" type="StaticBody2D" parent="ElevationCliffs"]
+position = Vector2(2600, 1780)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ElevationCliffs/CliffLevel2East"]
+shape = SubResource("Shape_CliffL2_East")
+
+[node name="VisualWall" type="Polygon2D" parent="ElevationCliffs/CliffLevel2East"]
+color = Color(0.13, 0.15, 0.12, 1)
+polygon = PackedVector2Array(-450, -25, 450, -25, 450, 25, -450, 25)
+
+[node name="VisualRim" type="Polygon2D" parent="ElevationCliffs/CliffLevel2East"]
+color = Color(0.4, 0.44, 0.38, 1)
+polygon = PackedVector2Array(-450, -25, 450, -25, 450, -18, -450, -18)
+
+[node name="Districts" type="Node2D" parent="."]
+
+[node name="Level3_Royal" type="Node2D" parent="Districts"]
+
+[node name="RoyalResidenceMass" type="StaticBody2D" parent="Districts/Level3_Royal"]
+position = Vector2(1600, 275)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level3_Royal/RoyalResidenceMass"]
+shape = SubResource("Shape_RoyalBuilding")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level3_Royal/RoyalResidenceMass"]
+color = Color(0.28, 0.25, 0.32, 1)
+polygon = PackedVector2Array(-300, -125, 300, -125, 300, 125, -300, 125)
+
+[node name="Label" type="Label" parent="Districts/Level3_Royal/RoyalResidenceMass"]
+offset_left = -250.0
+offset_top = -20.0
+offset_right = 250.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 18
+text = "ROYAL RESIDENCE / GOVERNMENT SEAT"
+horizontal_alignment = 1
+
+[node name="RoyalGateFenceLeft" type="StaticBody2D" parent="Districts/Level3_Royal"]
+position = Vector2(1300, 580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level3_Royal/RoyalGateFenceLeft"]
+shape = SubResource("Shape_RoyalFence")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level3_Royal/RoyalGateFenceLeft"]
+color = Color(0.2, 0.2, 0.25, 1)
+polygon = PackedVector2Array(-200, -15, 200, -15, 200, 15, -200, 15)
+
+[node name="RoyalGateFenceRight" type="StaticBody2D" parent="Districts/Level3_Royal"]
+position = Vector2(1900, 580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level3_Royal/RoyalGateFenceRight"]
+shape = SubResource("Shape_RoyalFence")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level3_Royal/RoyalGateFenceRight"]
+color = Color(0.2, 0.2, 0.25, 1)
+polygon = PackedVector2Array(-200, -15, 200, -15, 200, 15, -200, 15)
+
+[node name="RoyalGateBarrier" type="StaticBody2D" parent="Districts/Level3_Royal"]
+position = Vector2(1600, 580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level3_Royal/RoyalGateBarrier"]
+shape = SubResource("Shape_RoyalGate")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level3_Royal/RoyalGateBarrier"]
+color = Color(0.45, 0.35, 0.2, 1)
+polygon = PackedVector2Array(-100, -20, 100, -20, 100, 20, -100, 20)
+
+[node name="Label" type="Label" parent="Districts/Level3_Royal/RoyalGateBarrier"]
+offset_left = -90.0
+offset_top = -10.0
+offset_right = 90.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "CONTROLLED ROYAL GATE"
+horizontal_alignment = 1
+
+[node name="Level2_CentralPlaza" type="Node2D" parent="Districts"]
+
+[node name="Fountain" type="StaticBody2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1600, 1100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_CentralPlaza/Fountain"]
+shape = SubResource("Shape_Fountain")
+
+[node name="VisualOuter" type="Polygon2D" parent="Districts/Level2_CentralPlaza/Fountain"]
+color = Color(0.25, 0.3, 0.35, 1)
+polygon = PackedVector2Array(0, -36, 25, -25, 36, 0, 25, 25, 0, 36, -25, 25, -36, 0, -25, -25)
+
+[node name="VisualWater" type="Polygon2D" parent="Districts/Level2_CentralPlaza/Fountain"]
+color = Color(0.2, 0.5, 0.7, 1)
+polygon = PackedVector2Array(0, -26, 18, -18, 26, 0, 18, 18, 0, 26, -18, 18, -26, 0, -18, -18)
+
+[node name="Label" type="Label" parent="Districts/Level2_CentralPlaza/Fountain"]
+offset_left = -60.0
+offset_top = -10.0
+offset_right = 60.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "FOUNTAIN"
+horizontal_alignment = 1
+
+[node name="BenchNorth" type="StaticBody2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1600, 980)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_CentralPlaza/BenchNorth"]
+shape = SubResource("Shape_BenchH")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_CentralPlaza/BenchNorth"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-30, -8, 30, -8, 30, 8, -30, 8)
+
+[node name="BenchSouth" type="StaticBody2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1600, 1220)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_CentralPlaza/BenchSouth"]
+shape = SubResource("Shape_BenchH")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_CentralPlaza/BenchSouth"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-30, -8, 30, -8, 30, 8, -30, 8)
+
+[node name="BenchWest" type="StaticBody2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1480, 1100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_CentralPlaza/BenchWest"]
+shape = SubResource("Shape_BenchV")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_CentralPlaza/BenchWest"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-8, -30, 8, -30, 8, 30, -8, 30)
+
+[node name="BenchEast" type="StaticBody2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1720, 1100)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_CentralPlaza/BenchEast"]
+shape = SubResource("Shape_BenchV")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_CentralPlaza/BenchEast"]
+color = Color(0.4, 0.3, 0.2, 1)
+polygon = PackedVector2Array(-8, -30, 8, -30, 8, 30, -8, 30)
+
+[node name="Staging_Fountain" type="Node2D" parent="Districts/Level2_CentralPlaza"]
+position = Vector2(1600, 1050)
+
+[node name="Label" type="Label" parent="Districts/Level2_CentralPlaza/Staging_Fountain"]
+offset_left = -150.0
+offset_top = -60.0
+offset_right = 150.0
+offset_bottom = -37.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "STAGING: CENTRAL FOUNTAIN CONVERSATION"
+horizontal_alignment = 1
+
+[node name="Level2_Residential" type="Node2D" parent="Districts"]
+
+[node name="ResEntryNorth" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(1080, 980)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/ResEntryNorth"]
+shape = SubResource("Shape_ResEntry")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/ResEntryNorth"]
+color = Color(0.3, 0.24, 0.2, 1)
+polygon = PackedVector2Array(-90, -70, 90, -70, 90, 70, -90, 70)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/ResEntryNorth"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "RESIDENTIAL FACADE"
+horizontal_alignment = 1
+
+[node name="ResEntrySouth" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(1080, 1380)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/ResEntrySouth"]
+shape = SubResource("Shape_ResEntry")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/ResEntrySouth"]
+color = Color(0.3, 0.24, 0.2, 1)
+polygon = PackedVector2Array(-90, -70, 90, -70, 90, 70, -90, 70)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/ResEntrySouth"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "RESIDENTIAL FACADE"
+horizontal_alignment = 1
+
+[node name="House3" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(800, 1000)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/House3"]
+shape = SubResource("Shape_HouseFacade")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/House3"]
+color = Color(0.28, 0.22, 0.18, 1)
+polygon = PackedVector2Array(-80, -70, 80, -70, 80, 70, -80, 70)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/House3"]
+offset_left = -70.0
+offset_top = -10.0
+offset_right = 70.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 10
+text = "TOWN HOUSE"
+horizontal_alignment = 1
+
+[node name="House4" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(800, 1360)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/House4"]
+shape = SubResource("Shape_HouseFacade")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/House4"]
+color = Color(0.28, 0.22, 0.18, 1)
+polygon = PackedVector2Array(-80, -70, 80, -70, 80, 70, -80, 70)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/House4"]
+offset_left = -70.0
+offset_top = -10.0
+offset_right = 70.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 10
+text = "TOWN HOUSE"
+horizontal_alignment = 1
+
+[node name="ArenHouseMass" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(450, 800)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/ArenHouseMass"]
+shape = SubResource("Shape_HouseMedium")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/ArenHouseMass"]
+color = Color(0.35, 0.25, 0.2, 1)
+polygon = PackedVector2Array(-90, -65, 90, -65, 90, 65, -90, 65)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/ArenHouseMass"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 12
+text = "AREN HOUSE"
+horizontal_alignment = 1
+
+[node name="ArenHouseDoorTrigger" type="Area2D" parent="Districts/Level2_Residential"]
+position = Vector2(450, 865)
+script = ExtResource("3_transition")
+destination_scene_path = "res://scenes/world/elaris/aren_house.tscn"
+target_spawn_id = "spawn_from_exterior"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/ArenHouseDoorTrigger"]
+shape = SubResource("Shape_DoorTrigger")
+debug_color = Color(0.1, 0.8, 0.2, 0.3)
+
+[node name="DoorVisual" type="Polygon2D" parent="Districts/Level2_Residential/ArenHouseDoorTrigger"]
+color = Color(0.2, 0.5, 0.2, 0.8)
+polygon = PackedVector2Array(-30, -10, 30, -10, 30, 10, -30, 10)
+
+[node name="AeliaHouseMass" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(450, 1500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/AeliaHouseMass"]
+shape = SubResource("Shape_HouseMedium")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/AeliaHouseMass"]
+color = Color(0.3, 0.28, 0.35, 1)
+polygon = PackedVector2Array(-90, -65, 90, -65, 90, 65, -90, 65)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/AeliaHouseMass"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 12
+text = "AELIA HOUSE"
+horizontal_alignment = 1
+
+[node name="Staging_AeliaHouse" type="Node2D" parent="Districts/Level2_Residential"]
+position = Vector2(450, 1630)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/Staging_AeliaHouse"]
+offset_left = -160.0
+offset_top = -20.0
+offset_right = 160.0
+offset_bottom = 3.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "STAGING: AELIA HOUSE & TELEPORTATION EVENT"
+horizontal_alignment = 1
+
+[node name="WestBlocker" type="StaticBody2D" parent="Districts/Level2_Residential"]
+position = Vector2(100, 1190)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Residential/WestBlocker"]
+shape = SubResource("Shape_Blocker")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Residential/WestBlocker"]
+color = Color(0.12, 0.15, 0.12, 1)
+polygon = PackedVector2Array(-50, -80, 50, -80, 50, 80, -50, 80)
+
+[node name="Label" type="Label" parent="Districts/Level2_Residential/WestBlocker"]
+offset_left = -45.0
+offset_top = -20.0
+offset_right = 45.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 9
+text = "WEST ROAD
+CONTINUATION"
+horizontal_alignment = 1
+
+[node name="Level2_Market" type="Node2D" parent="Districts"]
+
+[node name="MarketNorthWestStorefront" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2300, 960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/MarketNorthWestStorefront"]
+shape = SubResource("Shape_MarketStorefront")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/MarketNorthWestStorefront"]
+color = Color(0.32, 0.22, 0.18, 1)
+polygon = PackedVector2Array(-120, -60, 120, -60, 120, 60, -120, 60)
+
+[node name="Label" type="Label" parent="Districts/Level2_Market/MarketNorthWestStorefront"]
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "MARKET SHOPS (NORTH)"
+horizontal_alignment = 1
+
+[node name="MarketNorthEastStorefront" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2650, 960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/MarketNorthEastStorefront"]
+shape = SubResource("Shape_MarketStorefrontSmall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/MarketNorthEastStorefront"]
+color = Color(0.32, 0.22, 0.18, 1)
+polygon = PackedVector2Array(-90, -60, 90, -60, 90, 60, -90, 60)
+
+[node name="Label" type="Label" parent="Districts/Level2_Market/MarketNorthEastStorefront"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "BAKERY & STORE"
+horizontal_alignment = 1
+
+[node name="MarketSouthWestStorefront" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2300, 1420)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/MarketSouthWestStorefront"]
+shape = SubResource("Shape_MarketStorefront")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/MarketSouthWestStorefront"]
+color = Color(0.32, 0.22, 0.18, 1)
+polygon = PackedVector2Array(-120, -60, 120, -60, 120, 60, -120, 60)
+
+[node name="Label" type="Label" parent="Districts/Level2_Market/MarketSouthWestStorefront"]
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "WAREHOUSE (SOUTH)"
+horizontal_alignment = 1
+
+[node name="StallNorth1" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2360, 1060)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/StallNorth1"]
+shape = SubResource("Shape_MarketStall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/StallNorth1"]
+color = Color(0.45, 0.35, 0.25, 1)
+polygon = PackedVector2Array(-35, -20, 35, -20, 35, 20, -35, 20)
+
+[node name="StallNorth2" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2520, 1060)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/StallNorth2"]
+shape = SubResource("Shape_MarketStall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/StallNorth2"]
+color = Color(0.45, 0.35, 0.25, 1)
+polygon = PackedVector2Array(-35, -20, 35, -20, 35, 20, -35, 20)
+
+[node name="StallSouth1" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2360, 1300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/StallSouth1"]
+shape = SubResource("Shape_MarketStall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/StallSouth1"]
+color = Color(0.45, 0.35, 0.25, 1)
+polygon = PackedVector2Array(-35, -20, 35, -20, 35, 20, -35, 20)
+
+[node name="StallSouth2" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(2520, 1300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/StallSouth2"]
+shape = SubResource("Shape_MarketStall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/StallSouth2"]
+color = Color(0.45, 0.35, 0.25, 1)
+polygon = PackedVector2Array(-35, -20, 35, -20, 35, 20, -35, 20)
+
+[node name="EastBlocker" type="StaticBody2D" parent="Districts/Level2_Market"]
+position = Vector2(3050, 1190)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/EastBlocker"]
+shape = SubResource("Shape_Blocker")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/EastBlocker"]
+color = Color(0.12, 0.15, 0.12, 1)
+polygon = PackedVector2Array(-50, -80, 50, -80, 50, 80, -50, 80)
+
+[node name="Label" type="Label" parent="Districts/Level2_Market/EastBlocker"]
+offset_left = -45.0
+offset_top = -20.0
+offset_right = 45.0
+offset_bottom = 20.0
+theme_override_font_sizes/font_size = 9
+text = "EAST ROAD
+CONTINUATION"
+horizontal_alignment = 1
+
+[node name="QuietAlley" type="Node2D" parent="Districts/Level2_Market"]
+
+[node name="AlleyNorthWall" type="StaticBody2D" parent="Districts/Level2_Market/QuietAlley"]
+position = Vector2(2800, 710)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/QuietAlley/AlleyNorthWall"]
+shape = SubResource("Shape_AlleyWallH")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/QuietAlley/AlleyNorthWall"]
+color = Color(0.18, 0.16, 0.15, 1)
+polygon = PackedVector2Array(-120, -15, 120, -15, 120, 15, -120, 15)
+
+[node name="AlleyEastWall" type="StaticBody2D" parent="Districts/Level2_Market/QuietAlley"]
+position = Vector2(2940, 810)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/QuietAlley/AlleyEastWall"]
+shape = SubResource("Shape_AlleyWallV")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/QuietAlley/AlleyEastWall"]
+color = Color(0.18, 0.16, 0.15, 1)
+polygon = PackedVector2Array(-15, -90, 15, -90, 15, 90, -15, 90)
+
+[node name="AlleySouthWall" type="StaticBody2D" parent="Districts/Level2_Market/QuietAlley"]
+position = Vector2(2820, 895)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level2_Market/QuietAlley/AlleySouthWall"]
+shape = SubResource("Shape_AlleyWallH")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level2_Market/QuietAlley/AlleySouthWall"]
+color = Color(0.18, 0.16, 0.15, 1)
+polygon = PackedVector2Array(-120, -15, 120, -15, 120, 15, -120, 15)
+
+[node name="Staging_QuietAlley" type="Node2D" parent="Districts/Level2_Market/QuietAlley"]
+position = Vector2(2800, 800)
+
+[node name="Label" type="Label" parent="Districts/Level2_Market/QuietAlley/Staging_QuietAlley"]
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = -27.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "STAGING: QUIET ALLEY (TUTORIAL CONFRONTATION)"
+horizontal_alignment = 1
+
+[node name="Level1_GuardPost" type="Node2D" parent="Districts"]
+
+[node name="GuardBuilding" type="StaticBody2D" parent="Districts/Level1_GuardPost"]
+position = Vector2(1430, 1960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_GuardPost/GuardBuilding"]
+shape = SubResource("Shape_GuardBuilding")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level1_GuardPost/GuardBuilding"]
+color = Color(0.3, 0.28, 0.25, 1)
+polygon = PackedVector2Array(-90, -80, 90, -80, 90, 80, -90, 80)
+
+[node name="Label" type="Label" parent="Districts/Level1_GuardPost/GuardBuilding"]
+offset_left = -80.0
+offset_top = -10.0
+offset_right = 80.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 12
+text = "GUARD POST"
+horizontal_alignment = 1
+
+[node name="Staging_GuardPost" type="Node2D" parent="Districts/Level1_GuardPost"]
+position = Vector2(1680, 1980)
+
+[node name="Label" type="Label" parent="Districts/Level1_GuardPost/Staging_GuardPost"]
+offset_left = -140.0
+offset_top = -50.0
+offset_right = 140.0
+offset_bottom = -27.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "STAGING: GUARD POST COURTYARD (LLOYD)"
+horizontal_alignment = 1
+
+[node name="Level1_Harbor" type="Node2D" parent="Districts"]
+
+[node name="HarborMainPierLeftRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1510, 2810)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborMainPierLeftRail"]
+shape = SubResource("Shape_PierMainSide")
+
+[node name="HarborMainPierRightRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1690, 2810)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborMainPierRightRail"]
+shape = SubResource("Shape_PierMainSide")
+
+[node name="HarborMainPierEndRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1600, 3060)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborMainPierEndRail"]
+shape = SubResource("Shape_PierEnd")
+
+[node name="HarborUtilityPierLeftRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1140, 2710)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborUtilityPierLeftRail"]
+shape = SubResource("Shape_PierUtilitySide")
+
+[node name="HarborUtilityPierRightRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1260, 2710)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborUtilityPierRightRail"]
+shape = SubResource("Shape_PierUtilitySide")
+
+[node name="HarborUtilityPierEndRail" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1200, 2860)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborUtilityPierEndRail"]
+shape = SubResource("Shape_PierEnd")
+
+[node name="HarborCoastlineWallLeft" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(900, 2580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborCoastlineWallLeft"]
+shape = SubResource("Shape_CliffL3_Left")
+
+[node name="HarborCoastlineWallRight" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(1850, 2580)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/HarborCoastlineWallRight"]
+shape = SubResource("Shape_CliffL3_Left")
+
+[node name="RockyCoastWest" type="StaticBody2D" parent="Districts/Level1_Harbor"]
+position = Vector2(400, 2600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Harbor/RockyCoastWest"]
+shape = SubResource("Shape_RoyalBuilding")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level1_Harbor/RockyCoastWest"]
+color = Color(0.2, 0.22, 0.24, 1)
+polygon = PackedVector2Array(-300, -125, 300, -125, 300, 125, -300, 125)
+
+[node name="Label" type="Label" parent="Districts/Level1_Harbor/RockyCoastWest"]
+offset_left = -100.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 23.0
+text = "ROCKY COAST (WEST)"
+horizontal_alignment = 1
+
+[node name="Level1_Beach" type="Node2D" parent="Districts"]
+
+[node name="BeachEastCliff" type="StaticBody2D" parent="Districts/Level1_Beach"]
+position = Vector2(3000, 2600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Beach/BeachEastCliff"]
+shape = SubResource("Shape_RoyalBuilding")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level1_Beach/BeachEastCliff"]
+color = Color(0.25, 0.26, 0.28, 1)
+polygon = PackedVector2Array(-300, -125, 300, -125, 300, 125, -300, 125)
+
+[node name="BeachSeaBoundary" type="StaticBody2D" parent="Districts/Level1_Beach"]
+position = Vector2(2500, 2960)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Beach/BeachSeaBoundary"]
+shape = SubResource("Shape_CliffL3_Left")
+
+[node name="SecretPocketRock" type="StaticBody2D" parent="Districts/Level1_Beach"]
+position = Vector2(2780, 2680)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Districts/Level1_Beach/SecretPocketRock"]
+shape = SubResource("Shape_MarketStall")
+
+[node name="Visual" type="Polygon2D" parent="Districts/Level1_Beach/SecretPocketRock"]
+color = Color(0.28, 0.28, 0.3, 1)
+polygon = PackedVector2Array(-35, -20, 35, -20, 35, 20, -35, 20)
+
+[node name="Staging_BeachSecret" type="Node2D" parent="Districts/Level1_Beach"]
+position = Vector2(2850, 2740)
+
+[node name="Label" type="Label" parent="Districts/Level1_Beach/Staging_BeachSecret"]
+offset_left = -80.0
+offset_top = -30.0
+offset_right = 80.0
+offset_bottom = -7.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 11
+text = "OPTIONAL SECRET POCKET"
+horizontal_alignment = 1
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="SpawnDefault" type="Marker2D" parent="Spawns"]
+position = Vector2(1600, 1260)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_default"
+
+[node name="SpawnCaeloraFromHouse" type="Marker2D" parent="Spawns"]
+position = Vector2(450, 920)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_caelora_from_house"
+
+[node name="SpawnAeliaHouse" type="Marker2D" parent="Spawns"]
+position = Vector2(450, 1630)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_aelia_house"
+
+[node name="SpawnGuardPost" type="Marker2D" parent="Spawns"]
+position = Vector2(1650, 1960)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_guard_post"
+
+[node name="SpawnMarket" type="Marker2D" parent="Spawns"]
+position = Vector2(2150, 1180)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_market"
+
+[node name="SpawnQuietAlley" type="Marker2D" parent="Spawns"]
+position = Vector2(2800, 800)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_quiet_alley"
+
+[node name="SpawnHarbor" type="Marker2D" parent="Spawns"]
+position = Vector2(1600, 2400)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_harbor"
+
+[node name="SpawnBeach" type="Marker2D" parent="Spawns"]
+position = Vector2(2400, 2600)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_beach"
+
+[node name="SpawnRoyalGate" type="Marker2D" parent="Spawns"]
+position = Vector2(1600, 620)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_royal_gate"

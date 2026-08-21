@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://jd71jv1kumd7"]
+
+[ext_resource type="Script" uid="uid://binog5adf8twj" path="res://scenes/world/elaris/caelora_test_harness.gd" id="1_harness"]
+[ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/ui/interaction_ui.tscn" id="3_ui"]
+[ext_resource type="PackedScene" path="res://scenes/ui/pause_menu.tscn" id="4_pause_menu"]
+
+[node name="CaeloraTestHarness" type="Node2D" unique_id=1542510394]
+script = ExtResource("1_harness")
+initial_world_scene = "res://scenes/world/elaris/aren_house.tscn"
+initial_spawn_id = "spawn_bedroom"
+
+[node name="WorldContainer" type="Node2D" parent="." unique_id=1526889149]
+
+[node name="Player" parent="." unique_id=2118254416 instance=ExtResource("2_player")]
+position = Vector2(1600, 1260)
+
+[node name="UI" parent="." unique_id=630570587 instance=ExtResource("3_ui")]
+
+[node name="PauseMenu" parent="." unique_id=143089928 instance=ExtResource("4_pause_menu")]

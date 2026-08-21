@@ -1,0 +1,189 @@
+[gd_scene load_steps=12 format=3 uid="uid://aren_house_m76"]
+
+[ext_resource type="Script" uid="uid://dylawqlihp5ja" path="res://scripts/world/world.gd" id="1_world"]
+[ext_resource type="Script" uid="uid://phq5bqk8yvrq" path="res://scripts/world/spawn_marker.gd" id="2_spawn"]
+[ext_resource type="Script" uid="uid://bs0c7c62dikky" path="res://scripts/world/transition_zone.gd" id="3_transition"]
+
+[sub_resource type="RectangleShape2D" id="Shape_WallTop"]
+size = Vector2(640, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallLeft"]
+size = Vector2(40, 480)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallRight"]
+size = Vector2(40, 480)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallBottomLeft"]
+size = Vector2(240, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_WallBottomRight"]
+size = Vector2(240, 40)
+
+[sub_resource type="RectangleShape2D" id="Shape_Partition"]
+size = Vector2(20, 240)
+
+[sub_resource type="RectangleShape2D" id="Shape_Bed"]
+size = Vector2(100, 120)
+
+[sub_resource type="RectangleShape2D" id="Shape_Table"]
+size = Vector2(120, 100)
+
+[sub_resource type="RectangleShape2D" id="Shape_DoorTrigger"]
+size = Vector2(80, 30)
+
+[node name="ArenHouse" type="Node2D"]
+script = ExtResource("1_world")
+camera_bounds = Rect2(0, 0, 640, 480)
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.24, 0.2, 0.16, 1)
+polygon = PackedVector2Array(0, 0, 640, 0, 640, 480, 0, 480)
+
+[node name="BedroomFloor" type="Polygon2D" parent="."]
+color = Color(0.28, 0.23, 0.18, 1)
+polygon = PackedVector2Array(40, 40, 260, 40, 260, 440, 40, 440)
+
+[node name="DiningFloor" type="Polygon2D" parent="."]
+color = Color(0.26, 0.22, 0.17, 1)
+polygon = PackedVector2Array(260, 40, 600, 40, 600, 440, 260, 440)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="WallTop" type="StaticBody2D" parent="Walls"]
+position = Vector2(320, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallTop"]
+shape = SubResource("Shape_WallTop")
+
+[node name="Visual" type="Polygon2D" parent="Walls/WallTop"]
+color = Color(0.12, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-320, -20, 320, -20, 320, 20, -320, 20)
+
+[node name="WallLeft" type="StaticBody2D" parent="Walls"]
+position = Vector2(20, 240)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallLeft"]
+shape = SubResource("Shape_WallLeft")
+
+[node name="Visual" type="Polygon2D" parent="Walls/WallLeft"]
+color = Color(0.12, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-20, -240, 20, -240, 20, 240, -20, 240)
+
+[node name="WallRight" type="StaticBody2D" parent="Walls"]
+position = Vector2(620, 240)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallRight"]
+shape = SubResource("Shape_WallRight")
+
+[node name="Visual" type="Polygon2D" parent="Walls/WallRight"]
+color = Color(0.12, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-20, -240, 20, -240, 20, 240, -20, 240)
+
+[node name="WallBottomLeft" type="StaticBody2D" parent="Walls"]
+position = Vector2(140, 460)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallBottomLeft"]
+shape = SubResource("Shape_WallBottomLeft")
+
+[node name="Visual" type="Polygon2D" parent="Walls/WallBottomLeft"]
+color = Color(0.12, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-120, -20, 120, -20, 120, 20, -120, 20)
+
+[node name="WallBottomRight" type="StaticBody2D" parent="Walls"]
+position = Vector2(500, 460)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallBottomRight"]
+shape = SubResource("Shape_WallBottomRight")
+
+[node name="Visual" type="Polygon2D" parent="Walls/WallBottomRight"]
+color = Color(0.12, 0.1, 0.08, 1)
+polygon = PackedVector2Array(-120, -20, 120, -20, 120, 20, -120, 20)
+
+[node name="PartitionWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(260, 160)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/PartitionWall"]
+shape = SubResource("Shape_Partition")
+
+[node name="Visual" type="Polygon2D" parent="Walls/PartitionWall"]
+color = Color(0.15, 0.12, 0.1, 1)
+polygon = PackedVector2Array(-10, -120, 10, -120, 10, 120, -10, 120)
+
+[node name="Furniture" type="Node2D" parent="."]
+
+[node name="Bed" type="StaticBody2D" parent="Furniture"]
+position = Vector2(130, 140)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Furniture/Bed"]
+shape = SubResource("Shape_Bed")
+
+[node name="Visual" type="Polygon2D" parent="Furniture/Bed"]
+color = Color(0.4, 0.28, 0.2, 1)
+polygon = PackedVector2Array(-50, -60, 50, -60, 50, 60, -50, 60)
+
+[node name="Label" type="Label" parent="Furniture/Bed"]
+offset_left = -40.0
+offset_top = -10.0
+offset_right = 40.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "AREN BED"
+horizontal_alignment = 1
+
+[node name="DiningTable" type="StaticBody2D" parent="Furniture"]
+position = Vector2(480, 230)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Furniture/DiningTable"]
+shape = SubResource("Shape_Table")
+
+[node name="Visual" type="Polygon2D" parent="Furniture/DiningTable"]
+color = Color(0.35, 0.24, 0.16, 1)
+polygon = PackedVector2Array(-60, -50, 60, -50, 60, 50, -60, 50)
+
+[node name="Label" type="Label" parent="Furniture/DiningTable"]
+offset_left = -55.0
+offset_top = -10.0
+offset_right = 55.0
+offset_bottom = 13.0
+theme_override_font_sizes/font_size = 11
+text = "DINING TABLE"
+horizontal_alignment = 1
+
+[node name="Staging_ArenHouse" type="Node2D" parent="."]
+position = Vector2(480, 230)
+
+[node name="Label" type="Label" parent="Staging_ArenHouse"]
+offset_left = -110.0
+offset_top = -80.0
+offset_right = 110.0
+offset_bottom = -57.0
+theme_override_colors/font_color = Color(0.9, 0.8, 0.5, 1)
+theme_override_font_sizes/font_size = 12
+text = "STAGING: BREAKFAST (AREN + GLAISA)"
+horizontal_alignment = 1
+
+[node name="DoorExitTrigger" type="Area2D" parent="."]
+position = Vector2(320, 450)
+script = ExtResource("3_transition")
+destination_scene_path = "res://scenes/world/elaris/caelora.tscn"
+target_spawn_id = "spawn_caelora_from_house"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorExitTrigger"]
+shape = SubResource("Shape_DoorTrigger")
+debug_color = Color(0.1, 0.8, 0.2, 0.3)
+
+[node name="DoorVisual" type="Polygon2D" parent="DoorExitTrigger"]
+color = Color(0.2, 0.5, 0.2, 0.8)
+polygon = PackedVector2Array(-40, -15, 40, -15, 40, 15, -40, 15)
+
+[node name="Spawns" type="Node2D" parent="."]
+
+[node name="SpawnBedroom" type="Marker2D" parent="Spawns"]
+position = Vector2(180, 320)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_bedroom"
+
+[node name="SpawnFromExterior" type="Marker2D" parent="Spawns"]
+position = Vector2(320, 380)
+script = ExtResource("2_spawn")
+spawn_id = "spawn_from_exterior"
