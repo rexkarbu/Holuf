@@ -317,7 +317,7 @@ Pagi ini ia bukan sekadar teman masa kecil yang kebetulan lewat. Ia memakai sera
 
 “Impor pribadi tanpa catatan.” Penjaga senior menunjuk paket. “Ditemukan ketika pedagang ini menyerahkannya.”
 
-Petugas pemeriksa membalik lembar manifes agar dapat dilihat Aren. Tidak ada alasan meragukan jumlahnya. Dua puluh empat buku tercatat. Paket di meja adalah barang kedua puluh lima.
+Petugas pemeriksa membalik lembar manifes agar dapat dilihat Aren. Catatan jumlah dan isi peti cocok. Paket di meja tidak termasuk di dalamnya.
 
 Aren memandang pedagang. “Kepada siapa paket itu hendak diberikan?”
 
