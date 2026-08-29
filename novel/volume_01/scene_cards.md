@@ -220,27 +220,27 @@ Rutinitas harus terasa layak dirindukan sebelum direnggut. Konflik paket muncul 
 
 Tekanan utama adalah tubuh, ketidaktahuan, dan keputusan menerima bantuan. Tidak ada aksi besar; Lyra masuk sebagai profesional berhati-hati, bukan penyelamat yang langsung percaya.
 
-### 1.1 — Inventaris Kehilangan
+### 1.1 — Titik Awal
 
-**Frame:** Hari 1, pagi · tepi teluk · target 1.100 kata · hadir: Aren  
-**Entry image:** Aren telungkup atau miring di garis air, pasir menempel pada insignia dan bahu kiri berdenyut.  
-**POV desire:** Menemukan satu tanda Aelia, Lloyd, Glaisa, atau Caelora sebelum menerima bahwa ia benar-benar terpisah.  
-**Opposition:** Dehidrasi, disorientasi, pantai asing, dan kesunyian.
+**Frame:** Hari 1, pagi · tepi teluk · target 950 kata · hadir: Aren  
+**Entry image:** Beberapa saat setelah akhir Prolog, Aren menyusun batu pertama di dekat bekas tubuhnya sebagai penanda titik awal.  
+**POV desire:** Menemukan satu tanda Aelia, Lloyd, Glaisa, atau warga Elaris dengan mengubah kepanikan menjadi pencarian yang dapat diukur.  
+**Opposition:** Dehidrasi, bahu kiri memar, seragam basah, ruang asing, dan kesunyian.
 
 **Beat dan eskalasi:**
 
-1. Aren memastikan tubuhnya dapat bergerak; bahu kiri memar, bukan patah.
-2. Ia menginventarisasi yang ikut: seragam, pedang, insignia, kantong, koin.
-3. Ketiadaan makanan, rumah, dan perlengkapan menegaskan aturan benda tanpa menjelaskannya.
-4. Ia memanggil tiga nama; setiap nama mengubah harapan menjadi kehilangan berbeda.
-5. Fragmen mikro tangan Aelia yang gagal diraih muncul lewat gerak tangan Aren sekarang, maksimal beberapa kalimat.
-6. Garis pantai dan laut tidak cocok dengan Caelora; ia memilih bergerak agar tidak membeku dalam panik.
+1. Aren menolak mengulang teriakan tanpa arah dan memilih kebiasaan patroli: menetapkan titik awal, perimeter, lalu arah pencarian.
+2. Ia menyusun penanda batu di dekat bekas tubuhnya dan memeriksa garis air, batas daratan, serta celah batu secara berurutan.
+3. Bahu kiri, haus, kain basah, dan berat sarung pedang mengganggu gerak; barang bawaan hanya disebut ketika memengaruhi tindakan.
+4. Ketiadaan makanan, air tawar, peta, dan tempat berlindung memperjelas kerentanannya tanpa mengulang inventaris P.5.
+5. Gerak tangannya pada batu memicu fragmen mikro jemari Aelia yang gagal diraih, maksimal beberapa kalimat dan tanpa merangkum bencana.
+6. Di luar area yang telah diinjaknya, Aren menemukan lekuk kaki samar yang tidak sejajar dengan jejak sepatu botnya sendiri.
 
-**Turn / keputusan POV:** Kehilangan menjadi kondisi fisik dan tugas pencarian, bukan abstraksi.  
-**Exit image / handoff:** Beberapa jejak kaki setengah terhapus menjauh dari tempat Aren bangun.  
-**Beat dialog:** Monolog lisan hanya panggilan nama dan instruksi diri; jangan membuat Aren memberi rangkuman bencana kepada dirinya sendiri.  
-**Jangkar visual:** insignia berpasir; sarung pedang basah; bekas tubuh di pasir; jejak di garis pasang.  
-**Continuity / guardrail:** Aren haus, belum makan, bahu kiri memar. Jangan menyatakan jejak milik Aelia.
+**Turn / keputusan POV:** Kepanikan berubah menjadi metode pencarian pertama, tetapi metode itu tetap tidak memberinya kendali.  
+**Exit image / handoff:** Jejak setengah terhapus berada tepat di luar lingkar batu yang ia jadikan titik awal.  
+**Beat dialog:** Monolog lisan dibatasi pada instruksi diri pendek; jangan mengulang panggilan Aelia, Lloyd, Glaisa, atau kesimpulan akhir Prolog.  
+**Jangkar visual:** lingkar batu penanda; insignia berpasir ketika Aren membungkuk; sarung pedang basah; lekuk kaki di luar perimeter.  
+**Continuity / guardrail:** Mulai setelah P.5, bukan kebangkitan kedua. Aren haus, belum makan, bahu kiri memar. Jangan menyatakan jejak milik Aelia.
 
 ### 1.2 — Jejak yang Tidak Menjawab
 
@@ -288,7 +288,7 @@ Tekanan utama adalah tubuh, ketidaktahuan, dan keputusan menerima bantuan. Tidak
 
 ### 1.4 — Meninggalkan Pantai
 
-**Frame:** Hari 1, awal sore · titik temu → awal jalan pesisir · target 1.050 kata · hadir: Aren, Lyra  
+**Frame:** Hari 1, awal sore · titik temu → awal jalan pesisir · target 1.200 kata · hadir: Aren, Lyra  
 **Entry image:** Aren menghadap dua arah: teluk kosong di belakang dan jalan pesisir yang tidak dikenalnya di depan.  
 **POV desire:** Tetap mencari Aelia tanpa menggantungkan harapan pada orang asing.  
 **Opposition:** Pasang, ketiadaan air, jarak Virella, dan ilusi bahwa mencari sendiri berarti lebih setia.
