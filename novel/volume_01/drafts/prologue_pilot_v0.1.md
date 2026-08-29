@@ -133,7 +133,7 @@ Suara Lloyd datang dari halaman Pos Penjaga.
 
 Aren mengalihkan pandangan dari kapal. Ayahnya berdiri di samping meja pengarahan, sudah berseragam lengkap, dengan papan jadwal tergantung di dinding belakangnya.
 
-“Pagi juga,” kata Aren.
+“Pagi” kata Aren.
 
 ***
 
