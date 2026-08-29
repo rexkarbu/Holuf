@@ -27,8 +27,8 @@ Titik berhenti tersebut sah untuk pilot karena sudah menguji suara, POV, dialog,
 |---|---:|
 | P.1 — rumah sampai Pos Penjaga | 886 |
 | P.2 — Lloyd sampai awal patroli | 768 |
-| Awal P.3 — gang sampai pilihan Aren | 936 |
-| **Total prosa** | **2.590** |
+| Awal P.3 — gang sampai pilihan Aren | 931 |
+| **Total prosa** | **2.585** |
 
 Hitungan memakai pemisahan kata berbasis spasi dan tidak memasukkan metadata, judul, atau dua penanda pergantian adegan. Aplikasi pengolah kata dapat menghasilkan selisih kecil.
 
