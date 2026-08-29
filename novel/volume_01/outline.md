@@ -486,20 +486,21 @@ Aturan emosional:
 | **Hasil** | Aren menerima bantuan terbatas dari orang asing |
 | **Hook** | Aren bukan korban pertama yang ditemukan di Lorel |
 
-### 1.1 — Inventaris Kehilangan
+### 1.1 — Titik Awal
 
-**Target:** 1.100 kata  
+**Target:** 950 kata  
 **Lokasi:** tepi teluk
 
-- Aren bangun dengan dehidrasi ringan, memar pada bahu kiri, kulit asin, dan orientasi buruk.
-- Ia memeriksa benda yang ikut: pakaian, seragam, pedang, insignia, kantong kecil, dan koin Elaris.
-- Ia menyadari barang yang tidak melekat—rumah, perlengkapan, makanan—tidak ada.
-- Ia memanggil Aelia, Lloyd, dan Glaisa. Tidak ada jawaban.
-- Laut dan garis pantai tidak cocok dengan Caelora.
-- Ia menolak duduk terlalu lama karena diam terasa seperti menyerah.
+- Bab dibuka beberapa saat setelah kalimat terakhir Prolog; Aren tidak bangun atau menginventarisasi barang untuk kedua kalinya.
+- Ia menyusun batu di dekat bekas tubuhnya sebagai titik awal agar pencarian tidak berputar tanpa arah.
+- Ia memeriksa garis air, batas daratan, dan celah batu secara berurutan, memakai kebiasaan patroli Elaris pada tempat yang tidak dikenalnya.
+- Bahu kiri, haus, seragam basah, dan sarung pedang yang berat mengganggu gerak. Benda yang dibawa hanya disebut ketika memengaruhi tindakan.
+- Tidak ada makanan, air tawar, peta, atau tempat berlindung. Koin Elaris tidak memberinya jawaban maupun arah.
+- Ia menahan dorongan untuk terus memanggil nama tanpa rencana dan memilih memperluas perimeter pencarian.
+- Di luar area yang sudah diinjaknya, ia menemukan lekuk kaki samar yang tidak sejajar dengan jejak sepatu botnya sendiri.
 
-**Perubahan:** Kehilangan menjadi fisik, bukan ringkasan abstrak.  
-**Exit:** Jejak kaki setengah terhapus di pasir memberinya arah.
+**Perubahan:** Kepanikan berubah menjadi metode pencarian pertama, tetapi metode itu tetap tidak memberinya kendali.  
+**Exit:** Jejak kaki setengah terhapus di luar perimeter memberinya arah.
 
 ### 1.2 — Jejak yang Tidak Menjawab
 
@@ -535,7 +536,7 @@ Aturan emosional:
 
 ### 1.4 — Meninggalkan Pantai
 
-**Target:** 1.050 kata  
+**Target:** 1.200 kata  
 **Lokasi:** titik temu dan awal jalan pesisir
 
 - Aren ingin kembali menyisir teluk.
