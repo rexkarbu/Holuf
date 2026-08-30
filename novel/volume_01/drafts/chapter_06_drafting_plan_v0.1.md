@@ -304,7 +304,7 @@ Chapter 6 direncanakan menjadi **empat episode**. Tidak ada aturan yang membatas
 |---|---|---:|---|---|
 | **Bab 19** | 6.1 | sekitar 1.100 | `Jalan Palsu Menuju Utara I — Lingkaran Tipis` | Pengamatan Old Warehouse disetujui |
 | **Bab 20** | 6.2 | sekitar 1.200 | `Jalan Palsu Menuju Utara II — Mengikuti tanpa Menyerbu` | Cart masuk gudang; Aren memilih menunggu |
-| **Bab 21** | 6.3–6.4 | sekitar 1.800 | `Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja yang Tidak Ada` | Tim melihat lampu Old Harbor |
+| **Bab 21** | 6.3–6.4 | sekitar 1.800 | `Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja` | Tim melihat lampu Old Harbor |
 | **Bab 22** | 6.5 | sekitar 1.200 | `Jalan Palsu Menuju Utara IV — Gudang yang Tidak Mempunyai Bawah` | Ketukan dan rantai dari bawah lantai |
 
 Aturan final setelah prosa selesai:

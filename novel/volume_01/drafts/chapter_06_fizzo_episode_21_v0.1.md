@@ -1,4 +1,4 @@
-# Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja yang Tidak Ada
+# Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja
 
 Nomor paket yang dicatat Doran membawa mereka kembali ke rumah kurir pada awal siang.
 

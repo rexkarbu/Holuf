@@ -182,7 +182,7 @@ Chapter 6 sebaiknya tetap menjadi **empat episode**, bukan tiga. Jika 6.3–6.5 
 |---|---|---:|---|---|
 | Bab 19 | 6.1 | 1.133 | `Jalan Palsu Menuju Utara I — Lingkaran Tipis` | Siap dimasukkan ke draf |
 | Bab 20 | 6.2 | 1.298 | `Jalan Palsu Menuju Utara II — Mengikuti tanpa Menyerbu` | Siap dimasukkan ke draf |
-| Bab 21 | 6.3–6.4 | 1.563 | `Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja yang Tidak Ada` | Siap dimasukkan ke draf |
+| Bab 21 | 6.3–6.4 | 1.563 | `Jalan Palsu Menuju Utara III — Tujuh Belas Pekerja` | Siap dimasukkan ke draf |
 | Bab 22 | 6.5 | 1.164 | `Jalan Palsu Menuju Utara IV — Gudang yang Tidak Mempunyai Bawah` | Siap dimasukkan ke draf |
 
 Semua episode melewati minimum 1.000 kata. Nomor `Bab 19–22` dibuat otomatis oleh Fizzo; kolom judul hanya memakai judul pada tabel. Isi ditempel mulai paragraf pertama setelah baris judul file.
