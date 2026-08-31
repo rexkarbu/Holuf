@@ -306,15 +306,15 @@ Epilog tidak boleh menambah serangan di jalan, pesan anonim, simbol misterius, p
 
 ## 12. Proyeksi Panjang Volume 1
 
-Prosa yang sudah selesai sebelum Epilog berjumlah sekitar **45.121 kata**. Dengan target Epilog 2.300 kata, Volume 1 diproyeksikan selesai pada sekitar **47.421 kata**.
+Prosa yang sudah selesai sebelum Epilog berjumlah sekitar **45.099 kata**. Dengan target Epilog 2.300 kata, Volume 1 diproyeksikan selesai pada sekitar **47.399 kata**.
 
 | Ukuran | Kata |
 |---|---:|
 | Target awal Volume 1 | 46.800 |
-| Prosa selesai sampai Chapter 8 | 45.121 |
+| Prosa selesai sampai Chapter 8 | 45.099 |
 | Target Epilog | 2.300 |
-| Proyeksi final | 47.421 |
-| Selisih dari target awal | +621 / +1,3% |
+| Proyeksi final | 47.399 |
+| Selisih dari target awal | +599 / +1,3% |
 
 Proyeksi tersebut berada aman dalam rentang 45.000–52.000 kata. Tidak ada alasan untuk memotong aftermath atau menambah subplot demi mengejar angka 46.800 secara tepat.
 
